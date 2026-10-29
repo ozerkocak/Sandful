@@ -95,4 +95,10 @@ Yelken yarışında süs düşerken kavanoz sallandığı için kayıyordu.
   Kaynak: VSCO-2 Community Edition (Versilian Studios), CC0 (kamu malı). Marimba 8 nota (MIDI 48-89), glockenspiel 3 nota (91-103);
   mono 32 kHz, 48 kbps MP3, dosyaya gömülü (~165 KB). En yakın kaydın hızı değiştirilerek çalınır. Not: dosya adları bir oktav aşağıyı gösteriyordu, perdeler ölçülerek eşlendi.
   Kayıtlar çözülene kadar eski sentez çalar. Ses seviyesi eski sentezle eşitlendi (tepe/RMS ölçümü).
-- Kum sesi: Ozer'in telefonla kaydını bekliyor (ince akış, kalın akış, boş cama düşüş, yığına düşüş, kayma).
+- Kum sesi: Ozer "sesi sen yapamaz mısın?" dedi; kayıt yerine yeni bir sentez modeli: **Doğal** (varsayılan).
+  Önceki üç deneme: düz gürültü (boğuk), perdeli tane "bip"leri (cızırtılı/tıpırtılı). Gerçek kum dökülürken sesi binlerce tanenin
+  kuma çarpmasıdır: perdesiz, çok kısa sürtünme patlamaları. Model: ince taneler 4200/sn (0,4-1,5 ms), iri taneler 320/sn (1-2,5 ms),
+  genlik lognormal (σ 0,3; sivri çıtırtı yok), yavaş akış dalgalanması; 300 Hz yüksek geçiren (2 kat), 4,6/5,2 kHz alçak geçiren, 1,9 kHz +2 dB.
+  Ölçüm: merkez 2,4 kHz, 500 Hz altı %2,7, 6 kHz üstü %1,7, tepe/RMS ~10 (eski çıtırtılı modelde 30+). Cam (boş cama düşüş) ve kayma da aynı tane modeliyle.
+  Rafta seçenekler: Doğal, Tıpırtı, Kadife (İnce kaldırıldı). Tercih yeni anahtarla (kum7) sıfırlandı, herkes Doğal'dan başlar.
+  Gerçek kum kaydı gelirse aynı yere konabilir.
