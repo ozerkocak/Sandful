@@ -273,6 +273,7 @@ const LEVELS=[
 ];
 let STAR_TH=[72,79,86];
 const DUNYA=['Kıyı ve Kara','Okyanus'];
+const UNLOCK=!NATIVE&&/^#tum$/.test(location.hash); // tarayıcı önizlemesinde bütün bölümler açık (deneme için); uygulamada yok
 
 // Camın iç yarı genişliği (eski hücre biriminde; dy dipten yukarı). Hepsi yukarı doğru genişler, böylece her köşeye kum ulaşır.
 function halfW(s,dy){const t=dy/213;
@@ -1273,7 +1274,7 @@ function openRaf(){clearStars();if(state!=='menu'){prevState=state;state='menu';
  worlds.forEach((ks,w)=>{const hd=document.createElement('div');hd.className='wh';let ws=0;ks.forEach(k=>{ws+=SAVE.lv[k]?SAVE.lv[k].s:0;});
   hd.innerHTML='<span>'+t(DUNYA[w])+'</span><small>'+ws+' / '+ks.length*3+' ★</small>';sh.appendChild(hd);
  for(let r=0;r<ks.length;r+=3){const row=document.createElement('div');row.className='shelf';
-  for(let k=ks[r];k<=ks[Math.min(r+2,ks.length-1)];k++){const rec=SAVE.lv[k],open=k===0||(SAVE.lv[k-1]&&SAVE.lv[k-1].s>=1),s=rec?rec.s:0;total+=s;
+  for(let k=ks[r];k<=ks[Math.min(r+2,ks.length-1)];k++){const rec=SAVE.lv[k],open=k===0||(SAVE.lv[k-1]&&SAVE.lv[k-1].s>=1)||UNLOCK,s=rec?rec.s:0;total+=s;
    if(open&&!rec&&nextIdx<0)nextIdx=k;
    const b=document.createElement('button');b.className='slot'+(open?'':' lock')+(k===nextIdx?' next':'');
    b.innerHTML='<div class="jar">'+(rec&&rec.img?'<img alt="" src="'+rec.img+'">':'<div class="empty">'+(open?(k+1):'🔒')+'</div>')+'</div><div class="nm">'+(k+1)+' · '+t(LEVELS[k].ad)+'</div><div class="st">'+'★'.repeat(s)+'<i>'+'★'.repeat(3-s)+'</i></div>';
