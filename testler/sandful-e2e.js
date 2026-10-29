@@ -26,14 +26,15 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
   const first=await p.evaluate(()=>({state:__game.state().state,level:__game.state().level,hand:document.getElementById('hand').classList.contains('show'),gfx:!!RD}));
   ok('İlk açılış doğrudan 1. bölüm, el ipucu görünür, 3D açık',first.state==='ready'&&first.level===0&&first.hand&&first.gfx,first);
   const rows=[];
-  for(let lv=0;lv<10;lv++){const r=await p.evaluate(lv=>{__game.setTS(0);__game.start(lv);__game.autoplay('insan');__game.begin();let k=0;
+  const NL=await p.evaluate(()=>__game.levels);
+  for(let lv=0;lv<NL;lv++){const r=await p.evaluate(lv=>{__game.setTS(0);__game.start(lv);__game.autoplay('insan');__game.begin();let k=0;
     while(k<4000){__game.sim(50);k++;const s=__game.state().state;if(s==='result')break;}__game.autoplay(null);
     return {lv:lv+1,state:__game.state().state,pct:__game.state().pct,stars:__game.state().stars,sn:+(k*.05).toFixed(1)};},lv);
    await p.waitForTimeout(150);rows.push(r);}
-  ok('10 bölüm sonuca ulaşıyor',rows.every(r=>r.state==='result'),rows.map(r=>r.lv+':'+r.pct+'%★'+r.stars+' '+r.sn+'sn').join(' | '));
+  ok(NL+' bölüm sonuca ulaşıyor',rows.every(r=>r.state==='result'),rows.map(r=>r.lv+':'+r.pct+'%★'+r.stars+' '+r.sn+'sn').join(' | '));
   ok('Bölüm süreleri 20-60 sn arası',rows.every(r=>r.sn>=15&&r.sn<=70),rows.map(r=>r.sn).join(','));
   const sv=await p.evaluate(()=>JSON.parse(localStorage.getItem(SKEY)));
-  ok('Kayıt: 10 bölüm, yıldız ve küçük resim',sv&&Object.keys(sv.lv).length===10&&Object.values(sv.lv).every(v=>typeof v.s==='number'&&v.img&&v.img.startsWith('data:image/jpeg')),{n:sv&&Object.keys(sv.lv).length,seen:sv&&sv.seen});
+  ok('Kayıt: '+NL+' bölüm, yıldız ve küçük resim',sv&&Object.keys(sv.lv).length===NL&&Object.values(sv.lv).every(v=>typeof v.s==='number'&&v.img&&v.img.startsWith('data:image/jpeg')),{n:sv&&Object.keys(sv.lv).length,seen:sv&&sv.seen});
   const mem=await p.evaluate(()=>{if(window.gc){gc();gc();}return {geo:RD.r.info.memory.geometries,tex:RD.r.info.memory.textures,prog:RD.r.info.programs.length,heap:performance.memory?Math.round(performance.memory.usedJSHeapSize/1048576):-1};});
   // aynı bölümleri bir tur daha: bellek büyümesi
   for(let lv=0;lv<10;lv++){await p.evaluate(lv=>{__game.start(lv);__game.autoplay('kusursuz');__game.begin();let k=0;while(k<4000&&__game.state().state!=='result'){__game.sim(50);k++;}__game.autoplay(null);},lv);await p.waitForTimeout(100);}
@@ -42,8 +43,8 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
   ok('Sayfa hatası yok (10 bölüm)',errs.length===0,errs.slice(0,3));
   // yeniden açılış: raf açılır, sıradaki bölüm hazır
   await p.reload();await p.waitForTimeout(1500);
-  const re=await p.evaluate(()=>({raf:document.getElementById('raf').classList.contains('show'),slots:document.querySelectorAll('.slot').length,imgs:document.querySelectorAll('.slot img').length,close:getComputedStyle(document.getElementById('rafClose')).display,state}));
-  ok('Yeniden açılışta raf görünür, 10 yuva ve küçük resimler',re.raf&&re.slots===10&&re.imgs===10,re);
+  const re=await p.evaluate(()=>({raf:document.getElementById('raf').classList.contains('show'),slots:document.querySelectorAll('.slot').length,imgs:document.querySelectorAll('.slot img').length,wh:document.querySelectorAll('.wh').length,close:getComputedStyle(document.getElementById('rafClose')).display,state}));
+  ok('Yeniden açılışta raf görünür, '+NL+' yuva ve küçük resimler, dünya başlıkları',re.raf&&re.slots===NL&&re.imgs===NL&&re.wh===2,re);
   await b.close();}
  // 2) uç durumlar (3D'siz mantık + 3D ile birkaç durum)
  {const {b,p,errs}=await launch();
@@ -103,8 +104,9 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
  {const trChars=/[ğüşıöçĞÜŞİÖÇ]/;
   for(const loc of ['en-US','de-DE','tr-TR']){const {b,p,errs}=await launch({locale:loc,no3d:true});
    const r=await p.evaluate(()=>{const got=new Set();const orig=toast;window.toast=s=>{got.add(s);orig(s);};__game.setTS(0);
-    for(const lv of [0,3,7,9]){__game.start(lv);__game.autoplay('insan');__game.begin();let k=0;while(k<4000&&__game.state().state!=='result'){__game.sim(50);k++;}__game.autoplay(null);}
-    const res=document.body.innerText;openRaf();
+    for(const lv of [0,3,7,9,10,13,15,19]){__game.start(lv);__game.autoplay('insan');__game.begin();let k=0;while(k<4000&&__game.state().state!=='result'){__game.sim(50);k++;}__game.autoplay(null);}
+    const miss=LEVELS.flatMap(l=>[l.ad,l.ipucu]).concat(DUNYA).filter(x=>EN[x]==null);
+    const res=document.body.innerText+'\n'+miss.join('\n');openRaf();
     return {lang:LANG,html:document.documentElement.lang,lines:[...got,...(res+'\n'+document.body.innerText).split('\n')].map(l=>l.trim()).filter(Boolean),rafH:document.getElementById('rafH').textContent};});
    if(loc==='tr-TR')ok('Türkçe telefonda oyun Türkçe',r.lang==='tr'&&r.html==='tr'&&r.rafH==='Rafım',{lang:r.lang,rafH:r.rafH});
    else{const bad=r.lines.filter(l=>trChars.test(l));ok(loc+' telefonda oyun İngilizce, Türkçe harfli metin yok',r.lang==='en'&&r.html==='en'&&r.rafH==='My Shelf'&&bad.length===0,{lang:r.lang,rafH:r.rafH,tr:bad.slice(0,5)});}

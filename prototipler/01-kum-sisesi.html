@@ -76,6 +76,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webki
 #raf.show{display:block}
 #raf h1{margin:4px 0 0;font-size:30px;font-weight:900;text-align:center}
 #raf .sub{text-align:center;color:var(--ink2);font-weight:800;font-size:14px;margin-bottom:16px}
+.wh{display:flex;justify-content:space-between;align-items:baseline;margin:6px 8px 12px;font-weight:900;font-size:18px}
+.wh small{font-size:13px;color:var(--ink2);font-weight:800}
 .shelf{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 6px;position:relative;margin-bottom:24px}
 .shelf::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:12px;border-radius:4px;background:linear-gradient(#d0a275,#a67a50);box-shadow:0 7px 12px rgba(74,56,38,.22)}
 .slot{display:flex;flex-direction:column;align-items:center;gap:3px;padding-bottom:4px;min-width:0}
@@ -163,6 +165,16 @@ const EN={
  'Katmanlar yay gibi: kenarlara daha çok dök, ortası çukur kalsın. Fazla yığılan yeri 💨 ile üfle.':'The layers curve like a smile: pour more at the sides and keep the middle low. Blow away extra sand with 💨.',
  'Toprağı sağa yığ, göl solda düz kalsın. Kuğu göle, ağaç tepeye.':'Pile the soil on the right and keep the lake flat on the left. The swan goes on the lake, the tree on the hill.',
  'Önce dağlar, sonra gece. Yıldız ve ay gökyüzünün içinde asılı kalsın.':'Mountains first, then the night. The star and the moon hang inside the sky.',
+ 'Kıyı ve Kara':'Coast & Land','Okyanus':'Ocean','Mercan':'Coral','Deniz feneri':'Lighthouse','Balina':'Whale','Ada':'Island','Gün doğumu':'Sunrise','Fırtına':'Storm','Deniz kabuğu':'Seashell','Yelken yarışı':'Regatta','Buzdağı':'Iceberg','Işıldayan deniz':'Glowing Sea',
+ 'Kayaları sağa yığ, fener tepeye. Denizden sonra çubukla küçük dalgalar çiz.':'Pile the rocks on the right, the lighthouse on top. After the sea, draw small waves with the stick.',
+ 'Derin deniz düz. Balina mavinin ortasında yüzsün, martı göğe.':'Keep the deep sea flat. The whale swims in the middle of the blue, the gull goes in the sky.',
+ 'Adayı sola yığ, palmiye tepesine. Deniz döküldükçe koyudan açığa döner: kenarlardan başla, her yere eşit yay.':'Pile the island on the left, the palm on top. The sea turns from deep to light as you pour: start at the edges and spread it evenly.',
+ 'Önce deniz. Güneş ufka, sonra gökyüzü turuncudan pembeye döner: düz yay.':'Sea first. The sun sits on the horizon, then the sky turns from orange to pink: spread it flat.',
+ 'Kavanoz sallanıyor: kum hep yere paralel yatar. Kavanoz sağa yatınca dök, katman eğik kalır.':'The jar is rocking: sand always settles level with the ground. Pour while the jar leans right and the layer stays tilted.',
+ 'Kumsal düz. Kabuk ve deniz yıldızı kuma, sonra dalgaları çubukla çiz.':'Keep the beach flat. The shell and the starfish go on the sand, then draw the waves with the stick.',
+ 'Dalgalar eğik: kavanoz yatınca dök. İki yelkenli dalgaların üstüne.':'The waves are tilted: pour while the jar leans. Two sailboats ride on the waves.',
+ 'Deniz koyudan açığa döner, düz yay. Buzu sağa sivri yığ, sonra çubukla buza çatlaklar aç.':'The sea turns from deep to light: spread it flat. Pile the ice into a sharp peak on the right, then crack it with the stick.',
+ 'Işıldayan kumu dalgalı dök, üstüne gece mavisi. Çubukla dalgaları çiz. Sonunda ışıklar söner.':'Pour the glowing sand, then night blue on top. Draw the waves with the stick. At the end the lights go out.','Önce kum ve mercan. Biraz mavi gelince çubukla mercanın içine it: kesik V çizgilerine göre aşağı çek.':'Sand and coral first. When a little blue is in, push it into the coral with the stick: drag down along the dashed V lines.',
  'Bölüm {0}':'Level {0}',' · süslü':' · with decorations','Akış {0}':'Flow {0}','Kusursuz katman!':'Perfect layer!','Güzel katman':'Nice layer',
  'Yerine getir, parmağını kaldır':'Move it into place, lift your finger','Tam yerinde! ✨':'Perfect spot! ✨','Biraz kaydı':'A little off',
  'Şişe hazır':'Jar finished','Güzel bir şişe':'A lovely jar','Çok güzel!':'Beautiful!','Kusursuz şişe!':'Perfect jar!','benzerlik':'match',
@@ -172,7 +184,8 @@ const EN={
  'Üçüncü yıldız için {0}.':'The third star needs {0}.','Rafına eklendi.':'Added to your shelf.',' Süs: {0}/{1}.':' Decorations: {0}/{1}.',
  'Raf':'Shelf','Sonraki':'Next','Tekrar':'Again','Devam':'Continue','Rafım':'My Shelf','Baştan':'Restart',
  'Ses: {0}':'Sound: {0}','Müzik: {0}':'Music: {0}','Kum sesi: {0}':'Sand sound: {0}','Titreşim: {0}':'Haptics: {0}','Dil: {0}':'Language: {0}','açık':'on','kapalı':'off',
- 'Geri alındı':'Undone','Geri al':'Undo','Tıpırtı':'Patter','Kadife':'Velvet','İnce':'Fine','Bu cihazda 3D grafik açılamadı.':'3D graphics could not start on this device.'};
+ 'Geri alındı':'Undone','Çubukla aşağı çiz':'Draw down with the stick',' Çubuk: {0}/{1}.':' Stick: {0}/{1}.',
+ 'Üçüncü yıldız için çubuk izlerini kesik çizgilere göre çiz.':'For the third star, draw the stick marks along the dashed lines.','Geri al':'Undo','Tıpırtı':'Patter','Kadife':'Velvet','İnce':'Fine','Bu cihazda 3D grafik açılamadı.':'3D graphics could not start on this device.'};
 let LANG='en';
 const langNow=()=>SAVE.lang||((navigator.language||'en').toLowerCase().startsWith('tr')?'tr':'en');
 function t(s,...a){let r=LANG==='en'&&EN[s]!=null?EN[s]:s;a.forEach((v,i)=>{r=r.split('{'+i+'}').join(v);});return r;}
@@ -181,13 +194,16 @@ const pctS=p=>LANG==='tr'?'%'+p:p+'%';
 // ───────── Renkler, süsler, bölümler ─────────
 const PAL={kum:'#e8c483',deniz:'#4d93cf',gok:'#b4dcf0',toprak:'#8f6343',cimen:'#86c063',turuncu:'#ef9d55',pembe:'#ec93aa',mor:'#9175c4',
  dag:'#958fb0',kar:'#f3f4f8',nehir:'#5cb3df',koyuDeniz:'#336fa8',sari:'#f3d66a',colKumu:'#e6ab66',acikSari:'#f8e4ab',lacivert:'#414d8c',
- gece:'#232c58',koyuToprak:'#53413a'};
+ gece:'#232c58',koyuToprak:'#53413a',
+ mercan:'#f2826f',turkuaz:'#3fb7c6',isilti:'#5ff2e6',geceMavi:'#16244a',kaya:'#8d8a86',beyaz:'#f5f6f7',buz:'#cfe9f5',firtina:'#5d6b80',kumAcik:'#f1d9a6'};
 // süsler: dünya biriminde boyut, ikon (sıra çubuğu için) ve tuvale çizim
 // Işıldayan kumlar karanlıkta parlar (finalde ışık söner). Canlanan finalde su kumu parıldar, gece kumunda yıldızlar kırpışır.
 const GLOW={isilti:1,kuzey:.9},FX_SU=new Set(['deniz','koyuDeniz','nehir','turkuaz']),FX_YILDIZ=new Set(['gece','geceMavi']);
 const DEC={
  tekne:{e:'⛵',w:.3,h:.27},kaktus:{e:'🌵',w:.18,h:.29},gunes:{e:'☀️',w:.24,h:.24},kugu:{e:'🦢',w:.26,h:.22},
- agac:{e:'🌳',w:.24,h:.32},ay:{e:'🌙',w:.18,h:.21},yildiz:{e:'⭐',w:.16,h:.16}};
+ agac:{e:'🌳',w:.24,h:.32},ay:{e:'🌙',w:.18,h:.21},yildiz:{e:'⭐',w:.16,h:.16},
+ fener:{e:'🗼',w:.14,h:.36},balina:{e:'🐋',w:.4,h:.2},mart:{e:'🕊️',w:.2,h:.1},palmiye:{e:'🌴',w:.28,h:.36},kabuk:{e:'🐚',w:.18,h:.15},
+ denizyildizi:{e:'🌟',w:.17,h:.16},yelkenli:{e:'⛵',w:.26,h:.3}};
 
 // Katman üst sınırları u∈[0,1] (camın sol→sağ) için dolgu yüksekliğinin oranı. Eğim ≤ 0,5 kalmalı (kum 34°'de durur).
 const flat=h=>()=>h, lin=(a,b)=>u=>a+(b-a)*u;
@@ -223,9 +239,40 @@ const LEVELS=[
   sus:[{id:'kugu',katman:1,oran:1,u:.2},{id:'agac',katman:2,oran:1,u:.75}]},
  {ad:'Gece',sekil:'kavanoz',ortam:'gece',akis:660,kok:57,minor:true,ufle:3,ipucu:'Önce dağlar, sonra gece. Yıldız ve ay gökyüzünün içinde asılı kalsın.',
   katman:[['koyuToprak',flat(.1)],['lacivert',dag10],['gece',flat(1)]],
-  sus:[{id:'yildiz',katman:2,oran:.3,u:.2},{id:'ay',katman:2,oran:.65,u:.66}]}
+  sus:[{id:'yildiz',katman:2,oran:.3,u:.2},{id:'ay',katman:2,oran:.65,u:.66}]},
+ // ── Okyanus
+ {ad:'Mercan',sekil:'kavanoz',ortam:'deniz',akis:560,kok:62,dunya:1,ipucu:'Önce kum ve mercan. Biraz mavi gelince çubukla mercanın içine it: kesik V çizgilerine göre aşağı çek.',
+  katman:[['kumAcik',flat(.16)],['mercan',flat(.36)],['turkuaz',flat(.7)],['gok',flat(1)]],
+  cubuk:[{katman:2,oran:.16,gen:.06,izler:[{u:.14,d:.3},{u:.3,d:.38},{u:.46,d:.32},{u:.62,d:.4},{u:.78,d:.33},{u:.92,d:.27}]}]},
+ {ad:'Deniz feneri',sekil:'silindir',ortam:'deniz',akis:580,kok:64,dunya:1,ipucu:'Kayaları sağa yığ, fener tepeye. Denizden sonra çubukla küçük dalgalar çiz.',
+  katman:[['kaya',mx(flat(.1),tri(.74,.44,.5))],['turkuaz',mx(flat(.4),u=>tri(.74,.44,.5)(u)+.02)],['gok',flat(1)]],
+  sus:[{id:'fener',katman:0,oran:1,u:.74}],cubuk:[{katman:2,oran:.06,gen:.05,izler:[{u:.14,d:.09},{u:.3,d:.11},{u:.46,d:.09}]}]},
+ {ad:'Balina',sekil:'kavanoz',ortam:'deniz',akis:600,kok:60,dunya:1,ipucu:'Derin deniz düz. Balina mavinin ortasında yüzsün, martı göğe.',
+  katman:[['koyuDeniz',flat(.3)],['turkuaz',flat(.64)],['gok',flat(1)]],
+  sus:[{id:'balina',katman:1,oran:.45,u:.42},{id:'mart',katman:2,oran:.5,u:.72}]},
+ {ad:'Ada',sekil:'lale',ortam:'deniz',akis:600,kok:65,dunya:1,ipucu:'Adayı sola yığ, palmiye tepesine. Deniz döküldükçe koyudan açığa döner: kenarlardan başla, her yere eşit yay.',
+  katman:[['kumAcik',mx(flat(.06),tri(.36,.52,.5))],['koyuDeniz',mx(flat(.44),u=>tri(.36,.52,.5)(u)+.015),{gecis:'turkuaz'}],['gok',flat(1)]],
+  sus:[{id:'palmiye',katman:0,oran:1,u:.36}]},
+ {ad:'Gün doğumu',sekil:'kadeh',ortam:'deniz',akis:620,kok:66,dunya:1,ipucu:'Önce deniz. Güneş ufka, sonra gökyüzü turuncudan pembeye döner: düz yay.',
+  katman:[['koyuDeniz',flat(.24)],['deniz',flat(.38)],['turuncu',flat(.78),{gecis:'pembe'}],['mor',flat(1)]],
+  sus:[{id:'gunes',katman:2,oran:.06,u:.5}]},
+ {ad:'Fırtına',sekil:'kavanoz',ortam:'firtina',akis:620,kok:57,minor:true,dunya:1,salla:{a:9,p:6.5},ipucu:'Kavanoz sallanıyor: kum hep yere paralel yatar. Kavanoz sağa yatınca dök, katman eğik kalır.',
+  katman:[['koyuDeniz',lin(.3,.14)],['firtina',lin(.34,.54)],['gok',flat(1)]]},
+ {ad:'Deniz kabuğu',sekil:'kase',ortam:'deniz',akis:620,kok:64,dunya:1,ipucu:'Kumsal düz. Kabuk ve deniz yıldızı kuma, sonra dalgaları çubukla çiz.',
+  katman:[['kum',flat(.3)],['turkuaz',flat(.62)],['gok',flat(1)]],
+  sus:[{id:'kabuk',katman:0,oran:1,u:.3},{id:'denizyildizi',katman:0,oran:1,u:.7}],cubuk:[{katman:2,oran:.07,gen:.055,izler:[{u:.2,d:.12},{u:.5,d:.14},{u:.8,d:.12}]}]},
+ {ad:'Yelken yarışı',sekil:'silindir',ortam:'firtina',akis:640,kok:62,dunya:1,salla:{a:7,p:7.5},ipucu:'Dalgalar eğik: kavanoz yatınca dök. İki yelkenli dalgaların üstüne.',
+  katman:[['koyuDeniz',lin(.18,.3)],['deniz',u=>.5-.12*Math.abs(u-.5)*2+.05],['gok',flat(1)]],
+  sus:[{id:'yelkenli',katman:1,oran:1,u:.28},{id:'yelkenli',katman:1,oran:1,u:.7}]},
+ {ad:'Buzdağı',sekil:'lale',ortam:'ruzgar',akis:640,kok:59,minor:true,dunya:1,ipucu:'Deniz koyudan açığa döner, düz yay. Buzu sağa sivri yığ, sonra çubukla buza çatlaklar aç.',
+  katman:[['koyuDeniz',flat(.34),{gecis:'turkuaz'}],['buz',mx(flat(.34),tri(.62,.66,.5))],['gok',flat(1)]],
+  cubuk:[{katman:2,oran:.05,gen:.045,izler:[{u:.54,d:.17},{u:.69,d:.15}]}]},
+ {ad:'Işıldayan deniz',sekil:'kavanoz',ortam:'gece',akis:660,kok:57,minor:true,dunya:1,ipucu:'Işıldayan kumu dalgalı dök, üstüne gece mavisi. Çubukla dalgaları çiz. Sonunda ışıklar söner.',
+  katman:[['koyuDeniz',flat(.16)],['isilti',flat(.34)],['geceMavi',flat(.58)],['gece',flat(1)]],
+  sus:[{id:'ay',katman:3,oran:.6,u:.7}],cubuk:[{katman:2,oran:.12,gen:.07,izler:[{u:.18,d:.2},{u:.4,d:.24},{u:.62,d:.2},{u:.84,d:.22}]}]}
 ];
 let STAR_TH=[72,79,86];
+const DUNYA=['Kıyı ve Kara','Okyanus'];
 
 // Camın iç yarı genişliği (eski hücre biriminde; dy dipten yukarı). Hepsi yukarı doğru genişler, böylece her köşeye kum ulaşır.
 function halfW(s,dy){const t=dy/213;
@@ -233,6 +280,8 @@ function halfW(s,dy){const t=dy/213;
  if(s==='kase')return t<.55?Math.max(11,RMAX*Math.sqrt(1-((.55-t)/.55)**2)):RMAX;
  if(s==='kadeh')return 22+66*Math.pow(t,.75);
  if(s==='vazo')return 56+32*Math.pow(t,1.6);
+ if(s==='lale')return 30+58*Math.sqrt(t);
+ if(s==='silindir'){const r=7;return dy<r?RMAX-r+Math.sqrt(r*r-(r-dy-.5)**2):RMAX;}
  return RMAX;}
 const rIn=Y=>halfW(L.sekil,clamp(Y/CELL,0,213))*CELL;
 
@@ -245,7 +294,7 @@ const dc=k=>k>=100?k-100:k>=64?k-64:k;let NCODE=0,CL=new Int8Array(16),CODES=[];
 let LV=0,L=null,BOT=false,ncol=0,pr=[],pg=[],pb=[],amounts=[],queue=[],qi=0,tTop=[],scoreCols=[],layerScore=[],layerY=[],rTop=RW,rMouth=RW,decorList=[];
 let slices=[],noz=0,nozT=0,state='ready',T=0,pourStart=0,pouring=false,flowNow=0,emitting=false,wasEmit=false,pourGroup=0,landed=0,glassLand=0,impact=0,landX=0,landY=0,landC=0,slideFlux=0;
 let onTarget=false,streakT=0,offT=9,streakLvl=0,nextBeat=0,mi=0,melody=[],pct=0,puffs=0,decor=null,holdT=0,settleT=0,finT=0,popped=false,waveY=-9,sweep=-1,lidY=null;
-let undoLeft=1,snaps=[];
+let undoLeft=1,snaps=[],stickMarks=[],stick=null,spikes=[],poured=[];
 let resultShown=false,snapped=false,pendingCheck=null,nextTick=0,tickDue=false,wavePlayed=[],prevState=null,finalStars=0,nextCricket=0;
 const colOf=x=>clamp(Math.floor((x+RW)/DX),0,NC-1),xOf=c=>-RW+(c+.5)*DX;
 
@@ -260,15 +309,21 @@ function buildLevel(){
  amounts=[];for(let k=0;k<ncol;k++){let a=0;for(let c=0;c<NC;c++)if(valid[c])a+=(tTop[k][c]-(k?tTop[k-1][c]:floorY[c]))*DX;amounts.push(a);}
  scoreCols=[];for(let c=0;c<NC;c++)if(valid[c]&&tTop[ncol-1][c]>floorY[c]+CELL)scoreCols.push(c);
  layerY=[];for(let k=0;k<ncol;k++){let s=0;for(const c of scoreCols)s+=tTop[k][c];layerY.push(s/scoreCols.length);}
- queue=[];decorList=[];
- for(let k=0;k<ncol;k++){const ds=(L.sus||[]).filter(s=>s.katman===k).sort((a,b)=>a.oran-b.oran);let used=0;
-  for(const s of ds){const upto=amounts[k]*s.oran;if(upto>used+1e-6){queue.push({t:'kum',c:k,a:upto-used,a0:upto-used});used=upto;}
-   const rec=decorRec(s,k);decorList.push(rec);queue.push({t:'sus',rec});}
+ queue=[];decorList=[];stickMarks=[];
+ for(let k=0;k<ncol;k++){const ev=[...(L.sus||[]).filter(s=>s.katman===k).map(s=>({o:s.oran,s})),...(L.cubuk||[]).filter(s=>s.katman===k).map(s=>({o:s.oran,cb:s}))].sort((a,b)=>a.o-b.o);let used=0;
+  for(const e of ev){const upto=amounts[k]*e.o;if(upto>used+1e-6){queue.push({t:'kum',c:k,a:upto-used,a0:upto-used});used=upto;}
+   if(e.s){const rec=decorRec(e.s,k);decorList.push(rec);queue.push({t:'sus',rec});}
+   else{const marks=e.cb.izler.map(m=>({x:-rTop+m.u*2*rTop,d:m.d,ok:false}));queue.push({t:'cubuk',marks,done:0,w:e.cb.gen||SPW});stickMarks.push(...marks);}}
   if(amounts[k]>used+1e-6)queue.push({t:'kum',c:k,a:amounts[k]-used,a0:amounts[k]-used});}
  // süs camda yer kaplar: alanı sonraki kumdan düşülür (yoksa kavanoz hedef çizgisinin üstüne taşar)
  let carry=0;for(const it of queue){if(it.t==='sus')carry+=it.rec.D.w*it.rec.D.h*.92;else if(carry>0){const sub=Math.min(carry,it.a*.5);it.a-=sub;it.a0-=sub;carry-=sub;}}
- qi=0;}
-function buildCodes(){} // geçişli kum ara kodları (sonraki adımda)
+ qi=0;poured=new Array(ncol).fill(0);}
+// Geçişli kum: katman {gecis:'renk'} ile verilir. Döküldükçe huni rengi A'dan B'ye 6 adımda geçer; ara adımlar
+// iki rengin tanelerinin karışımıdır (gerçek kum sanatındaki gibi). Ara adımlar paletin sonuna eklenen kodlardır, puanda aynı katman sayılır.
+const GSTEP=[.2,.4,.6,.8,1];
+function buildCodes(){L.katman.forEach((k,i)=>{const g=k[2]&&k[2].gecis;CODES[i].g=null;if(!g)return;const gc=[i];
+  for(const m of GSTEP){gc.push(CODES.length);CODES.push({ad:k[0],ad2:g,m,layer:i});}CODES[i].g=gc;});}
+function codeFor(k){const g=CODES[k].g;if(!g)return k;const f=poured[k]/Math.max(1e-9,amounts[k]);return g[Math.min(g.length-1,Math.floor(f*g.length))];}
 function decorRec(s,k){const D=DEC[s.id],zx=-rTop+s.u*2*rTop,c0=colOf(zx-D.w/2),c1=colOf(zx+D.w/2);
  const base=c=>k>0?tTop[k-1][c]:floorY[c],top=c=>tTop[k][c];let bot=0;
  if(s.oran>=1){for(let c=c0;c<=c1;c++)bot=Math.max(bot,top(c));}
@@ -291,25 +346,29 @@ function transfer(s,d,m){let moved=0;const b=s*MAXS;while(m>1e-9&&segN[s]>0){con
 const TSTOP=Math.tan(36.5*Math.PI/180)*DX,TCRIT=Math.tan(38*Math.PI/180)*DX,TDYN=Math.tan(31.5*Math.PI/180)*DX,AVW=45;
 let avs=[],avMoved=0;
 function avCheck(c){for(const s of[-1,1]){const n=c+s;if(n<0||n>=NC||!valid[n]||!valid[c])continue;
- if(topY[c]-topY[n]>TCRIT&&!avs.some(a=>a.s===s&&(c-a.lo)*s>=-6&&(c-a.hi)*s<=6)){avs.push({c,s,t:0,lo:c,hi:c});if(!BOT)vib(6,true);}}}
+ if(he(c)-he(n)>TCRIT&&!avs.some(a=>a.s===s&&(c-a.lo)*s>=-6&&(c-a.hi)*s<=6)){avs.push({c,s,t:0,lo:c,hi:c});if(!BOT)vib(6,true);}}}
 // Kayan bölge [lo..hi] canlı izlenir: içinde eğim TDYN'e iner; kum aktıkça alt uç aşağı uzar,
 // üst uçtaki yamaç da kritik açıya yakınsa kayma yukarı genişler (yamaçta basamak kalmaz).
 function avStep(){avMoved=0;
  for(let i=avs.length-1;i>=0;i--){const a=avs[i],s=a.s;let moved=0;if(a.lo==null){a.lo=a.c;a.hi=a.c;}
-  for(let g=0;g<4;g++){const u=a.lo-s;if(u<0||u>=NC||!valid[u]||Math.abs(u-a.c)>30||topY[u]-topY[a.lo]<=TCRIT*.92)break;a.lo=u;}
+  for(let g=0;g<4;g++){const u=a.lo-s;if(u<0||u>=NC||!valid[u]||Math.abs(u-a.c)>30||he(u)-he(a.lo)<=TCRIT*.92)break;a.lo=u;}
   const len=Math.abs(a.hi-a.lo)+1;
-  for(let k=0;k<=len;k++){const p=a.lo+s*k,q=p+s;if(q<0||q>=NC||!valid[p]||!valid[q])break;const d=topY[p]-topY[q];
+  for(let k=0;k<=len;k++){const p=a.lo+s*k,q=p+s;if(q<0||q>=NC||!valid[p]||!valid[q])break;const d=he(p)-he(q);
    if(d>TDYN){const m=transfer(p,q,(d-TDYN)*.35);if(m>0){moved+=m;if((q-a.hi)*s>0&&m>1e-5)a.hi=q;}}
    else if((p-a.hi)*s>=0)break;}
   a.t+=DT;avMoved+=moved;
   if(!BOT&&moved>2e-5){const n=segN[a.lo];spawnTrickle(a.lo,a.hi,n?Math.min(dc(segC[a.lo*MAXS+n-1]),NCODE-1):0);}
   if((a.t>.08&&moved<4e-5)||a.t>.5)avs.splice(i,1);}}
+let tiltK=0,tiltS=0,tiltC=1,tiltA=0;
+const he=c=>topY[c]-tiltK*xOf(c); // eğik yerçekiminde etkin yükseklik
+function tiltStep(){const sl=L.salla,act=sl&&(state==='pour'||state==='stick'),tw=act?sl.a*Math.PI/180*Math.sin(6.2832*(T-pourStart)/sl.p):0;
+ tiltA+=(tw-tiltA)*Math.min(1,DT*(act?6:1.5));if(Math.abs(tiltA)<1e-5)tiltA=0;tiltK=Math.tan(tiltA);tiltS=Math.sin(tiltA);tiltC=Math.cos(tiltA);}
 const CEIL=HJ-.012; // kum cam ağzını aşmaz: tavana ulaşan sütun dolu sayılır, pay yana yuvarlanır
 function pourAt(c,a,col){let g=0,c0=c;const T=TSTOP*(.9+rnd()*.2);
- while(a>1e-9&&g++<NC*2){const hl=valid[c-1]?topY[c-1]:1e9,hr=valid[c+1]?topY[c+1]:1e9,h=topY[c],low=Math.min(hl,hr);
-  if(h-low>T||h>=CEIL){if(low>=CEIL)break;c=hl<hr?c-1:c+1;continue;}
-  const put=Math.min(a,Math.max(low+T-h,0),CEIL-h);if(put>0){addTop(c,col,put);a-=put;}
-  if(a>1e-9)c=hl<hr?c-1:c+1;}
+ while(a>1e-9&&g++<NC*2){const hl=valid[c-1]?he(c-1):1e9,hr=valid[c+1]?he(c+1):1e9,h=he(c),low=Math.min(hl,hr),cl=hl<hr?c-1:c+1;
+  if(h-low>T||topY[c]>=CEIL){if(topY[cl]>=CEIL)break;c=cl;continue;}
+  const put=Math.min(a,Math.max(low+T-h,0),CEIL-topY[c]);if(put>0){addTop(c,col,put);a-=put;}
+  if(a>1e-9)c=cl;}
  return c-c0;}
 function deposit(x,col,area){const c0=colOf(x);let ws=0;const w=[];
  for(let k=-7;k<=7;k++){const c=c0+k,v=(c>=0&&c<NC&&valid[c])?Math.exp(-((k/SIG)**2)):0;w.push(v);ws+=v;}
@@ -318,12 +377,12 @@ function deposit(x,col,area){const c0=colOf(x);let ws=0;const w=[];
  if(!BOT&&Math.abs(far)>4){slideFlux+=Math.min(1,Math.abs(far)/40);spawnTrickle(c0,c0+far,col);}}
 // üfleme ya da süs sonrası dikleşen yerleri düzelt (tam dengeleme, ileri-geri taramalar)
 function relax(){for(let it=0;it<60;it++){let f=0;const fw=it&1;
- for(let k=0;k<NC-1;k++){const c=fw?k:NC-2-k;if(!valid[c]||!valid[c+1])continue;const d=topY[c]-topY[c+1];
+ for(let k=0;k<NC-1;k++){const c=fw?k:NC-2-k;if(!valid[c]||!valid[c+1])continue;const d=he(c)-he(c+1);
   if(d>TALUS)f+=transfer(c,c+1,(d-TALUS)/2);else if(-d>TALUS)f+=transfer(c+1,c,(-d-TALUS)/2);}
  if(f<1e-7)break;}}
 // akış dilimleri: huniden çıkar, düşer, çarptığı yere kum bırakır
 function updateSlices(){let w=0;
- for(const s of slices){s.vy+=GRAVW*DT;s.y-=s.vy*DT;const c=colOf(s.x);
+ for(const s of slices){s.vy+=GRAVW*DT*tiltC;s.y-=s.vy*DT;s.vx=(s.vx||0)+GRAVW*DT*tiltS;s.x=clamp(s.x+s.vx*DT,-rMouth+.01,rMouth-.01);const c=colOf(s.x);
   if(s.y<=topY[c]+.002){if(topY[c]-floorY[c]<.012)glassLand+=s.a;deposit(s.x,s.c,s.a);landed+=s.a;landX=s.x;landY=topY[c];landC=s.c;impact=Math.max(impact,s.vy);if(!BOT)spawnSplash(s.x,topY[c],s.c,s.vy);continue;}
   slices[w++]=s;}
  slices.length=w;}
@@ -333,9 +392,9 @@ let starTimers=[];function clearStars(){starTimers.forEach(clearTimeout);starTim
 function startLevel(n,opt={}){clearStars();down=false;activeId=null;
  LV=n;L=LEVELS[n];BOT=!!opt.bot;seed=(opt.seed!=null?opt.seed:(Date.now()&0xffffff))||1;
  buildLevel();
- slices=[];avs=[];avMoved=0;noz=nozT=0;state='ready';T=0;pourStart=1e9;pouring=false;flowNow=0;emitting=false;wasEmit=false;landed=0;slideFlux=0;onTarget=false;streakT=0;offT=9;streakLvl=0;
+ slices=[];avs=[];avMoved=0;noz=nozT=0;state='ready';tiltK=tiltS=tiltA=0;tiltC=1;T=0;pourStart=1e9;pouring=false;flowNow=0;emitting=false;wasEmit=false;landed=0;slideFlux=0;onTarget=false;streakT=0;offT=9;streakLvl=0;
  nextBeat=0;mi=0;melody=makeMelody(!!L.minor,n*7919+13);pct=0;puffs=L.ufle||0;decor=null;holdT=0;settleT=0;popped=false;waveY=-9;sweep=-1;lidY=null;
- resultShown=false;snapped=false;pendingCheck=null;nextTick=0;wavePlayed=[];finalStars=0;undoLeft=1;snaps=[];
+ resultShown=false;snapped=false;pendingCheck=null;nextTick=0;wavePlayed=[];finalStars=0;undoLeft=1;snaps=[];stick=null;spikes=[];
  if(BOT)return;
  $('title').firstChild.innerHTML='<b>'+(n+1)+'</b>'+t(L.ad);$('hint').textContent=t(L.ipucu);
  buildQueueBar();lastPct=-1;hudDirty=true;
@@ -359,14 +418,15 @@ function step(){
  if(state==='pour')emit();
  else if(state==='hold'){holdT+=DT;decorFollow();}
  else if(state==='drop')dropDecor();
+ else if(state==='stick')stickStep();
  wasEmit=emitting;
- updateSlices();avStep();
+ tiltStep();updateSlices();avStep();
  if(state==='settle'){settleT+=DT;if(!slices.length&&(!avs.length||settleT>2)&&settleT>.45)startFinale();}
  if(state==='finale')finaleStep();
  if(state!=='ready'&&state!=='result'&&(Math.round(T/DT)%6===0))pct=score();
  if(pendingCheck&&T>=pendingCheck.at&&!slices.length){layerCheck(pendingCheck.c);pendingCheck=null;}
  // akış serisi: kum doğru yere düştükçe büyür; döküş durunca bekler
- if(landed>0){const c=colOf(landX);onTarget=tTop[landC][c]-topY[c]>-TOL*1.5;
+ if(landed>0){const c=colOf(landX);onTarget=tTop[CL[landC]][c]-topY[c]>-TOL*1.5;
   if(onTarget){streakT+=DT;offT=0;}else{offT+=DT;if(offT>.45)streakT=0;}}
  const nl=streakT>=14?3:streakT>=8?2:streakT>=3?1:0;
  if(nl>streakLvl&&!BOT){toast(t('Akış {0}','♪'.repeat(nl)));vib(12);}
@@ -380,18 +440,20 @@ function step(){
  // kum tanesi titreşimi: yere düşen kum kadar
  const lr=Math.min(1.2,landed/(L.akis*FLOWK*DT+1e-12)),gf=landed>0?glassLand/landed:0,sp=clamp(impact/6,.35,1);
  if(landed>0&&T>=nextTick){nextTick=T+.055+.07*(1-Math.min(1,lr))+Math.random()*.04;if(PLG.Haptics||navigator.vibrate)vib(onTarget?7:5,true);else tickDue=true;}
- setPour(lr*(1-gf)*(.55+.45*sp),lr*gf,Math.min(1,slideFlux/6+avMoved*30),clamp(landX/RW,-1,1)*.45);
+ const kayS=state==='stick'&&stick?Math.min(.9,stick.dv*2.5):0;
+ setPour(lr*(1-gf)*(.55+.45*sp),lr*gf,Math.max(kayS,Math.min(1,slideFlux/6+avMoved*30)),clamp((stick&&state==='stick'?stick.x:landX)/RW,-1,1)*.45);
  if(AC)padTick();
  if(hapSel&&!down&&landed===0&&!avs.length&&performance.now()-hapLast>600)hapEnd();
  if(L.ortam==='gece'&&T>=nextCricket){nextCricket=T+.9+Math.random()*.9;cricket();}}
 function emit(){
  const it=queue[qi];if(!it){if(!slices.length){state='settle';settleT=0;}return;}
  if(it.t==='sus'){if(!slices.length)beginHold(it.rec);return;}
+ if(it.t==='cubuk'){if(!slices.length&&!avs.length)beginStick(it);return;}
  if(flowNow<.03||T<pourStart)return;
  if(!snaps[qi]&&it.a>=it.a0-1e-12)snaps[qi]=snapTake(qi);
  if(!wasEmit)pourGroup++;
- const amt=Math.min(it.a,L.akis*FLOWK*DT*flowNow);slices.push({x:noz+(rnd()-.5)*.004,y:FUNY,vy:.25,c:it.c,a:amt,g:pourGroup});
- it.a-=amt;emitting=true;
+ const amt=Math.min(it.a,L.akis*FLOWK*DT*flowNow);slices.push({x:noz+(rnd()-.5)*.004,y:FUNY,vx:.25*tiltS,vy:.25*tiltC,c:codeFor(it.c),a:amt,g:pourGroup});
+ it.a-=amt;poured[it.c]+=amt;emitting=true;
  if(it.a<=1e-9){qi++;itemDone(it);}}
 function itemDone(it){const nx=queue[qi];
  if(!queue.slice(qi).some(q=>q.t==='kum'&&q.c===it.c))pendingCheck={c:it.c,at:T+.6};
@@ -408,7 +470,7 @@ function score(){let tot=0;layerScore=new Array(ncol).fill(0);const acc=new Floa
    y+=h;}
   let cum=floorY[c];for(let k=0;k<ncol;k++){cum+=acc[k];const e=Math.max(0,Math.abs(cum-tTop[k][c])-TOL),sc=Math.max(0,1-e/SCALE);layerScore[k]+=sc;tot+=sc;}}
  const n=scoreCols.length;for(let k=0;k<ncol;k++)layerScore[k]/=n;return n?tot/(n*ncol)*100:0;}
-function starsFor(p){p=Math.round(p);let s=p>=STAR_TH[2]?3:p>=STAR_TH[1]?2:p>=STAR_TH[0]?1:0;if(s===3&&decorList.some(d=>!d.ok))s=2;return s;}
+function starsFor(p){p=Math.round(p);let s=p>=STAR_TH[2]?3:p>=STAR_TH[1]?2:p>=STAR_TH[0]?1:0;if(s===3&&(decorList.some(d=>!d.ok)||stickMarks.some(m=>!m.ok)))s=2;return s;}
 
 // ───────── Süsler ─────────
 // Süs huninin altında asılı gelir; sürükleyerek yerine getirip parmağını kaldırınca düşer.
@@ -417,7 +479,7 @@ function beginHold(rec){state='hold';holdT=0;decor={rec,x:noz,y:0,vy:0,held:true
 function decorFollow(){const D=decor.rec.D;decor.x=noz;decor.y=FUNY-D.h-.03;}
 function releaseDecor(){if(state!=='hold')return;state='drop';decor.held=false;decor.vy=.3;}
 function decorLandY(){const D=decor.rec.D,c0=colOf(decor.x-D.w/2),c1=colOf(decor.x+D.w/2);let m=0;for(let c=c0;c<=c1;c++)if(valid[c])m=Math.max(m,topY[c]);return m;}
-function dropDecor(){decor.vy+=GRAVW*DT;decor.y-=decor.vy*DT;const ly=decorLandY();if(decor.y<=ly){decor.y=ly;landDecor();}}
+function dropDecor(){decor.vy+=GRAVW*DT*tiltC;decor.y-=decor.vy*DT;decor.x=clamp(decor.x+decor.vy*tiltS/Math.max(.2,tiltC)*DT,-rMouth+decor.rec.D.w/2,rMouth-decor.rec.D.w/2);const ly=decorLandY();if(decor.y<=ly){decor.y=ly;landDecor();}}
 function landDecor(){const r=decor.rec,D=r.D,c0=colOf(decor.x-D.w/2),c1=colOf(decor.x+D.w/2),ly=decor.y;
  const la=Math.min(ncol-1,r.s.oran>=1?r.k+1:r.k);
  for(let c=c0;c<=c1;c++)if(valid[c])addTop(c,100+la,ly+D.h-topY[c]);
@@ -425,18 +487,50 @@ function landDecor(){const r=decor.rec,D=r.D,c0=colOf(decor.x-D.w/2),c1=colOf(de
  if(!BOT){thunk();vib(40);if(r.ok){toast(t('Tam yerinde! ✨'));chime();}else toast(t('Biraz kaydı'));gfxDecorPlaced(r);}
  decor=null;qi++;state='pour';pourStart=T+.1;}
 
+// ───────── Çubuk ─────────
+// Kum sanatçılarının tekniği: ince çubuğu camın önünden aşağı it, üstteki renk alttakine sivri bir V gibi batar.
+// Sağa sola sürükle: çubuk gezer. Aşağı çek: kuma girer (iz kilitlenir). Bırak: iz kalır. Kesik V çizgileri hedef izlerdir.
+// İtilen kum 64+kod olarak saklanır: görüntüde rengi, puanda tarafsız (bulunduğu hedef katmana sayılır).
+const SPW=.045;
+function beginStick(it){state='stick';stick={it,act:false,x:noz,d:0,dT:0,dv:0,y0:0,base:null,lock:false,w:it.w};if(!BOT){toast(t('Çubukla aşağı çiz'));softBell();}}
+function stickDown(cy){if(state!=='stick'||!stick)return;Object.assign(stick,{act:true,y0:cy,dT:0,d:0,base:null,lock:false});}
+function stickMove(cy){if(!stick||!stick.act)return;stick.dT=clamp((cy-stick.y0)/cellPx*CELL*1.25-.01,0,.42);}
+function stickUp(){if(!stick||!stick.act)return;const S=stick;S.act=false;
+ if(S.base&&S.d>.015){spikes.push({x:S.x,d:S.d,qi});S.it.done++;evalMarks();if(!BOT){stickTick();vib(20);}
+  if(S.it.done>=S.it.marks.length){qi++;state='pour';pourStart=T+.2;stick=null;return;}}
+ else if(S.base)restoreBand(S);
+ S.base=null;S.d=S.dT=S.dv=0;}
+function stickCancel(){if(!stick||!stick.act)return;stick.act=false;if(stick.base)restoreBand(stick);stick.base=null;stick.d=stick.dT=stick.dv=0;}
+function saveBand(S){const c0=colOf(S.x-S.w-DX),c1=colOf(S.x+S.w+DX);S.c0=c0;S.c1=c1;
+ S.base={c:segC.slice(c0*MAXS,(c1+1)*MAXS),h:segH.slice(c0*MAXS,(c1+1)*MAXS),n:segN.slice(c0,c1+1),top:topY.slice(c0,c1+1)};
+ const cc=colOf(S.x),nn=segN[cc];S.tc=nn?dc(segC[cc*MAXS+nn-1]):0;}
+function restoreBand(S){const B=S.base;segC.set(B.c,S.c0*MAXS);segH.set(B.h,S.c0*MAXS);segN.set(B.n,S.c0);topY.set(B.top,S.c0);for(let c=S.c0;c<=S.c1;c++)dirty[c]=1;}
+function applySpike(S){for(let c=S.c0;c<=S.c1;c++){if(!valid[c])continue;const dx=Math.abs(xOf(c)-S.x);if(dx>=S.w)continue;
+  const top=topY[c],b=c*MAXS,n=segN[c];let cut=Math.max(floorY[c],top-S.d*(1-dx/S.w)),y=floorY[c];
+  for(let j=0;j<n;j++){if(segC[b+j]>=100)cut=Math.max(cut,y+segH[b+j]);y+=segH[b+j];} // süse dokunma
+  if(top-cut<1e-4)continue;
+  y=floorY[c];let m=0;for(let j=0;j<n;j++){const h=segH[b+j];if(y+h<=cut+1e-7){m=j+1;y+=h;continue;}const keep=cut-y;if(keep>1e-6){segH[b+j]=keep;m=j+1;}break;}
+  m=Math.min(m,MAXS-1);segC[b+m]=64+S.tc;segH[b+m]=top-cut;segN[c]=m+1;dirty[c]=1;}}
+function stickStep(){const S=stick;if(!S)return;if(!S.lock)S.x=noz;S.dv=0;
+ if(S.act){const d0=S.d;S.d+=(S.dT-S.d)*Math.min(1,DT*14);S.dv=Math.abs(S.d-d0)/DT;
+  if(S.d>.004&&!S.base){saveBand(S);S.lock=true;}
+  if(S.base){restoreBand(S);applySpike(S);}}}
+function evalMarks(){for(const m of stickMarks)m.ok=false;
+ queue.forEach((it,k)=>{if(it.t!=='cubuk')return;for(const m of it.marks)m.ok=spikes.some(sp=>sp.qi===k&&Math.abs(sp.x-m.x)<=.055&&sp.d>=m.d*.55&&sp.d<=m.d*1.7);});}
+
 // ───────── Geri al ─────────
 // Her kum maddesi başlarken sütunların, havadaki kumun ve kaymaların kopyası alınır. Geri al, son başlamış rengi baştan döktürür
 // (arada süs yerleştiyse o da geri alınır). Bölüm başına bir hak.
 const SNAPP=[]; // kopya dizileri bölümler arasında yeniden kullanılır (çöp birikmez)
 function snapTake(j){let S=SNAPP[j];if(!S)S=SNAPP[j]={c:new Uint8Array(NC*MAXS),h:new Float32Array(NC*MAXS),n:new Uint8Array(NC),top:new Float32Array(NC)};
- S.c.set(segC);S.h.set(segH);S.n.set(segN);S.top.set(topY);S.sl=slices.map(o=>Object.assign({},o));S.av=avs.map(o=>Object.assign({},o));S.puffs=puffs;return S;}
+ S.c.set(segC);S.h.set(segH);S.n.set(segN);S.top.set(topY);S.sl=slices.map(o=>Object.assign({},o));S.av=avs.map(o=>Object.assign({},o));S.puffs=puffs;S.poured=poured.slice();return S;}
 function undoTarget(){for(let j=Math.min(qi,queue.length-1);j>=0;j--){const it=queue[j];if(it.t==='kum'&&snaps[j]&&(j<qi||it.a<it.a0-1e-9))return j;}return -1;}
-function canUndo(){return undoLeft>0&&(state==='pour'||state==='hold')&&undoTarget()>=0;}
+function canUndo(){return undoLeft>0&&(state==='pour'||state==='hold'||state==='stick')&&undoTarget()>=0;}
 function doUndo(){if(!canUndo())return;const j=undoTarget(),S=snaps[j];
  segC.set(S.c);segH.set(S.h);segN.set(S.n);topY.set(S.top);dirty.fill(1);
- slices=S.sl.map(o=>Object.assign({},o));avs=S.av.map(o=>Object.assign({},o));
- for(let k=j;k<queue.length;k++){const it=queue[k];if(it.t==='kum')it.a=it.a0;if(k>j)snaps[k]=null;}
+ slices=S.sl.map(o=>Object.assign({},o));avs=S.av.map(o=>Object.assign({},o));poured=S.poured.slice();
+ for(let k=j;k<queue.length;k++){const it=queue[k];if(it.t==='kum')it.a=it.a0;if(it.t==='cubuk')it.done=0;if(k>j)snaps[k]=null;}
+ spikes=spikes.filter(sp=>sp.qi<j);stick=null;evalMarks();
  decorList.forEach(r=>{if(r.placed&&r.qi>j){r.placed=false;r.ok=false;}});
  if(RD){RD.placed=RD.placed.filter(m=>{if(m.userData.qi>j){RD.scene.remove(m);m.geometry.dispose();m.material.dispose();const i=RD.lvl.indexOf(m);if(i>=0)RD.lvl.splice(i,1);return false;}return true;});
   decorList.forEach((r,i)=>{if(!r.placed&&RD.ghosts[i])RD.ghosts[i].visible=true;});}
@@ -476,8 +570,9 @@ function showResult(){
  stars.forEach((e,k)=>{if(k<s)starTimers.push(setTimeout(()=>{e.classList.add('on');starPop(k);vib(25);},380+k*360));});
  let msg=s===0?t('Bir yıldız için {0} gerekli. Kumu silik çizgilere yakın dök.',pctS(STAR_TH[0])):
   s<2?t('İki yıldız için {0}. Parlayan bölgeye dök, ses kesilirse yer değiştir.',pctS(STAR_TH[1])):
-  s<3?(p>=STAR_TH[2]&&decorList.some(d=>!d.ok)?t('Üçüncü yıldız için süsler halkanın içine düşmeli.'):t('Üçüncü yıldız için {0}.',pctS(STAR_TH[2]))):t('Rafına eklendi.');
+  s<3?(p>=STAR_TH[2]&&decorList.some(d=>!d.ok)?t('Üçüncü yıldız için süsler halkanın içine düşmeli.'):p>=STAR_TH[2]&&stickMarks.some(m=>!m.ok)?t('Üçüncü yıldız için çubuk izlerini kesik çizgilere göre çiz.'):t('Üçüncü yıldız için {0}.',pctS(STAR_TH[2]))):t('Rafına eklendi.');
  if(decorList.length)msg+=t(' Süs: {0}/{1}.',decorList.filter(d=>d.ok).length,decorList.length);
+ if(stickMarks.length)msg+=t(' Çubuk: {0}/{1}.',stickMarks.filter(m=>m.ok).length,stickMarks.length);
  $('rMsg').textContent=msg;
  const last=LV>=LEVELS.length-1;$('rNext').textContent=t(last?'Raf':'Sonraki');$('rNext').disabled=!last&&s<1;
  $('result').classList.add('show');}
@@ -570,6 +665,7 @@ function ambient(kind){if(!AC)return;ambNodes.forEach(n=>{try{n.stop?n.stop():n.
  const s=AC.createBufferSource();s.buffer=noiseBuf;s.loop=true;const f=AC.createBiquadFilter(),gg=AC.createGain(),lfo=AC.createOscillator(),lg=AC.createGain(),lfo2=AC.createOscillator(),lg2=AC.createGain();
  if(kind==='deniz'){f.type='lowpass';f.frequency.value=650;f.Q.value=.5;gg.gain.value=.03;lfo.frequency.value=.075;lg.gain.value=.022;lfo.connect(lg);lg.connect(gg.gain);lfo2.frequency.value=.075;lg2.gain.value=260;lfo2.connect(lg2);lg2.connect(f.frequency);}
  else if(kind==='ruzgar'){f.type='bandpass';f.frequency.value=480;f.Q.value=1;gg.gain.value=.017;lfo.frequency.value=.05;lg.gain.value=280;lfo.connect(lg);lg.connect(f.frequency);lfo2.frequency.value=.031;lg2.gain.value=.01;lfo2.connect(lg2);lg2.connect(gg.gain);}
+ else if(kind==='firtina'){f.type='bandpass';f.frequency.value=900;f.Q.value=.6;gg.gain.value=.026;lfo.frequency.value=.09;lg.gain.value=500;lfo.connect(lg);lg.connect(f.frequency);lfo2.frequency.value=.05;lg2.gain.value=.016;lfo2.connect(lg2);lg2.connect(gg.gain);}
  else{f.type='lowpass';f.frequency.value=500;f.Q.value=.5;gg.gain.value=.006;lfo.frequency.value=.1;lg.gain.value=0;lfo.connect(lg);lfo2.frequency.value=.1;lg2.gain.value=0;lfo2.connect(lg2);}
  s.connect(f);f.connect(gg);gg.connect(master);s.start();lfo.start();lfo2.start();ambNodes=[s,lfo,lfo2,gg];
  if(!pad){const pf=AC.createBiquadFilter(),pg=AC.createGain();pf.type='lowpass';pf.frequency.value=900;pf.Q.value=.3;pg.gain.value=0;pf.connect(pg);pg.connect(musicBus);pg.gain.setTargetAtTime(.015,AC.currentTime,2.5);
@@ -597,6 +693,7 @@ function chord(v){[0,4,7,12].forEach((d,k)=>pluck(L.kok+12+d+(L.minor&&d===4?-1:
 function chime(){[12,16,19,24].forEach((d,k)=>pluck(L.kok+d,.08,k*.08));}
 function thunk(){if(!AC)return;const t=AC.currentTime,o=AC.createOscillator(),gg=AC.createGain();o.frequency.setValueAtTime(170,t);o.frequency.exponentialRampToValueAtTime(80,t+.2);
  gg.gain.setValueAtTime(.18,t);gg.gain.exponentialRampToValueAtTime(.0001,t+.25);o.connect(gg);gg.connect(sandBus);o.start(t);o.stop(t+.3);nz(2600,.8,.1,.16,0,'bandpass');}
+function stickTick(){nz(1900,1.2,.07,.07);tone(330,'sine',.05,.14,0,.004,sandBus);}
 function undoSnd(){nz(700,.7,.09,.4,0,'bandpass',2400);pluck(L.kok+19,.05);pluck(L.kok+12,.05,.1);}
 function puffSnd(){nz(3200,.5,.16,.45,0,'bandpass',900);}
 function pop(){if(!AC)return;const t=AC.currentTime,o=AC.createOscillator(),gg=AC.createGain();o.frequency.setValueAtTime(900,t);o.frequency.exponentialRampToValueAtTime(260,t+.09);
@@ -706,7 +803,9 @@ void main(){if(vE<.999)discard;
 // Hedef çizgileri: kumun gelmediği yerde şimdiki katmanın bölgesi ve kesik çizgiler; kumun üstünde sadece şimdiki katmanın çizgisi.
 // Kum çizgiye yetişince çizgi o noktada altın rengi ve kesintisiz olur.
 const GUIDE_FS=`uniform sampler2D uTop;uniform sampler2D uTgt;uniform sampler2D uCurT;uniform sampler2D uPalT;uniform float uCur;uniform float uTime;uniform vec4 uZone[3];uniform float uRW;uniform float uYT;uniform float uTol;
+uniform vec4 uMark[6];uniform float uMarkOk[6];
 varying vec3 vN;varying vec3 vW;
+float segD(vec2 p,vec2 a,vec2 b){vec2 pa=p-a,ba=b-a;float h=clamp(dot(pa,ba)/dot(ba,ba),0.,1.);return length(pa-ba*h);}
 float h16(vec4 t){return (t.r*65280.+t.g*255.)/65535.*uYT;}
 vec3 palS(float k){return pow(texture2D(uPalT,vec2((k+.5)/16.,.125)).rgb,vec3(2.2));}
 void main(){float u=(vW.x+uRW)/(2.*uRW);float top=h16(texture2D(uTop,vec2(u,.5)));
@@ -721,6 +820,10 @@ void main(){float u=(vW.x+uRW)/(2.*uRW);float top=h16(texture2D(uTop,vec2(u,.5))
  for(int k=0;k<3;k++){vec4 z=uZone[k];if(z.w<.5)continue;float dd=length(vW.xy-z.xy);
   float ring=1.-smoothstep(.003,.009,abs(dd-z.z));float an=atan(vW.y-z.y,vW.x-z.x);ring*=step(0.,sin(an*12.+uTime*(z.w>1.5?3.:1.)));
   float ra=z.w>1.5?.95:.5;if(ring*ra>a){a=ring*ra;c=vec3(1.,.97,.9);}}
+ for(int k=0;k<6;k++){vec4 m=uMark[k];if(m.w<=0.)continue;vec2 P=vW.xy,B=vec2(m.x,m.y-m.z);
+  float dd=min(segD(P,vec2(m.x-m.w*.9,m.y+.004),B),segD(P,B,vec2(m.x+m.w*.9,m.y+.004)));
+  float ln=1.-smoothstep(.0028,.0052,dd),ok=uMarkOk[k];float dsh=mix(step(.42,fract(P.y*34.-uTime*1.2)),1.,ok);
+  float la=ln*dsh*mix(.62+.3*sin(uTime*4.),.95,ok);if(la>a){a=la;c=mix(vec3(1.),vec3(1.,.86,.42),ok);}}
  if(a<.01)discard;
  gl_FragColor=vec4(c,a);`+OUT;
 // renk ayarı (ekran uzayında): hafif S eğrisi (orta tonlarda kontrast), biraz doygunluk, hafif sıcaklık
@@ -821,6 +924,27 @@ function drawDecor(id,x,w,h){x.lineJoin='round';x.lineCap='round';const G=(x0,y0
   blob(w*.32,h*.5,w*.22);blob(w*.68,h*.48,w*.22);blob(w*.5,h*.3,w*.28);}
  else if(id==='ay'){const g=x.createRadialGradient(w*.4,h*.45,w*.05,w*.45,h*.5,w*.5);g.addColorStop(0,'#fffbe0');g.addColorStop(1,'#f2dc8a');x.fillStyle=g;
   x.beginPath();x.arc(w*.45,h*.5,w*.42,0,6.283);x.fill();x.globalCompositeOperation='destination-out';x.beginPath();x.arc(w*.72,h*.42,w*.36,0,6.283);x.fill();x.globalCompositeOperation='source-over';}
+ else if(id==='fener'){x.fillStyle=G(0,0,w,0,[[0,'#d9d4cc'],[.5,'#ffffff'],[1,'#cfc8be']]);x.beginPath();x.moveTo(w*.28,h);x.lineTo(w*.36,h*.3);x.lineTo(w*.64,h*.3);x.lineTo(w*.72,h);x.closePath();x.fill();
+  x.fillStyle='#d8433a';for(const y0 of[.42,.64,.86]){const y1=y0+.1,lx=t=>w*(.28+(.36-.28)*(1-t)),rx=t=>w*(.72-(.72-.64)*(1-t));x.beginPath();x.moveTo(lx((y0-.3)/.7*0+1-(1-y0)/.7),h*y0);x.lineTo(rx(1-(1-y0)/.7),h*y0);x.lineTo(rx(1-(1-y1)/.7),h*y1);x.lineTo(lx(1-(1-y1)/.7),h*y1);x.closePath();x.fill();}
+  x.fillStyle='#3d3f48';x.fillRect(w*.32,h*.24,w*.36,h*.07);const lg=x.createRadialGradient(w*.5,h*.18,1,w*.5,h*.18,w*.5);lg.addColorStop(0,'rgba(255,245,180,.95)');lg.addColorStop(1,'rgba(255,230,140,0)');x.fillStyle=lg;x.fillRect(0,0,w,h*.32);
+  x.fillStyle='#ffe98a';x.fillRect(w*.38,h*.12,w*.24,h*.12);x.fillStyle='#3d3f48';x.beginPath();x.moveTo(w*.34,h*.12);x.lineTo(w*.5,h*.02);x.lineTo(w*.66,h*.12);x.closePath();x.fill();}
+ else if(id==='balina'){x.fillStyle=G(0,0,0,h,[[0,'#4a6fa5'],[1,'#2c4a78']]);x.beginPath();x.moveTo(w*.05,h*.55);x.bezierCurveTo(w*.08,h*.15,w*.55,h*.1,w*.78,h*.45);x.lineTo(w*.95,h*.22);x.lineTo(w*.92,h*.6);x.lineTo(w*.99,h*.8);x.lineTo(w*.8,h*.62);x.bezierCurveTo(w*.6,h*.95,w*.15,h*.95,w*.05,h*.55);x.fill();
+  x.fillStyle='#d8e4ef';x.beginPath();x.moveTo(w*.08,h*.62);x.bezierCurveTo(w*.2,h*.9,w*.55,h*.88,w*.72,h*.7);x.bezierCurveTo(w*.5,h*.78,w*.25,h*.76,w*.08,h*.62);x.fill();
+  x.fillStyle='#111';x.beginPath();x.arc(w*.2,h*.48,w*.018,0,6.283);x.fill();x.strokeStyle='rgba(255,255,255,.7)';x.lineWidth=w*.012;x.beginPath();x.moveTo(w*.3,h*.18);x.quadraticCurveTo(w*.26,h*.02,w*.2,h*.05);x.moveTo(w*.3,h*.18);x.quadraticCurveTo(w*.34,h*.02,w*.4,h*.05);x.stroke();}
+ else if(id==='mart'){x.strokeStyle='#4b4f58';x.lineWidth=h*.12;x.beginPath();x.moveTo(w*.04,h*.55);x.quadraticCurveTo(w*.25,h*.05,w*.5,h*.55);x.quadraticCurveTo(w*.75,h*.05,w*.96,h*.55);x.stroke();}
+ else if(id==='palmiye'){x.strokeStyle=G(0,h,w,0,[[0,'#7a5232'],[1,'#a27346']]);x.lineWidth=w*.07;x.beginPath();x.moveTo(w*.46,h);x.quadraticCurveTo(w*.42,h*.6,w*.54,h*.3);x.stroke();
+  const leaf=(a,l)=>{x.save();x.translate(w*.54,h*.3);x.rotate(a);x.fillStyle=G(0,0,l,0,[[0,'#2e7d3a'],[1,'#5fb35a']]);x.beginPath();x.moveTo(0,0);x.quadraticCurveTo(l*.5,-l*.4,l,l*.12);x.quadraticCurveTo(l*.5,l*.04,0,0);x.fill();x.restore();};
+  for(const [a,l] of [[-2.7,w*.48],[-2.2,w*.42],[-1.6,w*.32],[-1.0,w*.42],[-.4,w*.48],[.2,w*.36],[-3.3,w*.36]])leaf(a,l);
+  x.fillStyle='#6b4a2a';for(const [cx,cy] of [[.5,.33],[.58,.34],[.54,.38]]){x.beginPath();x.arc(w*cx,h*cy,w*.035,0,6.283);x.fill();}}
+ else if(id==='kabuk'){const cx=w*.5,cy=h*.95;for(let k=0;k<9;k++){const a=Math.PI*(.12+.76*k/8);x.fillStyle=k%2?'#f6d7c3':'#f0bfa4';x.beginPath();x.moveTo(cx,cy);x.lineTo(cx+Math.cos(Math.PI-a)*w*.48,cy-Math.sin(a)*h*.9);x.lineTo(cx+Math.cos(Math.PI-a-.2)*w*.48,cy-Math.sin(a+.2)*h*.9);x.closePath();x.fill();}
+  x.strokeStyle='rgba(160,90,60,.5)';x.lineWidth=w*.015;for(let k=0;k<9;k++){const a=Math.PI*(.12+.76*k/8);x.beginPath();x.moveTo(cx,cy);x.lineTo(cx+Math.cos(Math.PI-a)*w*.46,cy-Math.sin(a)*h*.86);x.stroke();}
+  x.fillStyle='#e8a98a';x.beginPath();x.ellipse(cx,cy-h*.04,w*.12,h*.08,0,0,6.283);x.fill();}
+ else if(id==='denizyildizi'){const cx=w/2,cy=h*.55;x.fillStyle=G(0,0,0,h,[[0,'#ffb35c'],[1,'#ef7e3a']]);x.beginPath();
+  for(let k=0;k<10;k++){const r=k%2?w*.17:w*.48,a=-Math.PI/2+k*Math.PI/5;x.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a)*.95);}x.closePath();x.fill();
+  x.fillStyle='rgba(255,240,200,.75)';for(let k=0;k<5;k++){const a=-Math.PI/2+k*Math.PI*2/5;for(let j=1;j<4;j++){x.beginPath();x.arc(cx+Math.cos(a)*w*.1*j,cy+Math.sin(a)*w*.1*j,w*.022,0,6.283);x.fill();}}}
+ else if(id==='yelkenli'){x.fillStyle=G(0,h*.75,0,h,[[0,'#3c5a80'],[1,'#22385a']]);x.beginPath();x.moveTo(w*.06,h*.78);x.lineTo(w*.94,h*.78);x.lineTo(w*.78,h*.97);x.lineTo(w*.22,h*.97);x.closePath();x.fill();
+  x.fillStyle='#4a3424';x.fillRect(w*.48,h*.04,w*.035,h*.75);x.fillStyle=G(w*.5,0,w*.92,0,[[0,'#ffffff'],[1,'#e5ebf2']]);x.beginPath();x.moveTo(w*.53,h*.05);x.lineTo(w*.9,h*.72);x.lineTo(w*.53,h*.72);x.closePath();x.fill();
+  x.fillStyle=G(w*.1,0,w*.47,0,[[0,'#f5c84c'],[1,'#ffe08a']]);x.beginPath();x.moveTo(w*.47,h*.16);x.lineTo(w*.47,h*.72);x.lineTo(w*.14,h*.72);x.closePath();x.fill();}
  else if(id==='yildiz'){const cx=w/2,cy=h*.53;x.fillStyle=G(0,0,0,h,[[0,'#fff6c2'],[1,'#f4c84a']]);x.beginPath();
   for(let k=0;k<10;k++){const r=k%2?w*.2:w*.47,a=-Math.PI/2+k*Math.PI/5;x.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));}x.closePath();x.fill();}}
 
@@ -869,7 +993,8 @@ function initGfx(){
   const SM=(u,vs,fs,o)=>new T3.ShaderMaterial(Object.assign({uniforms:u,vertexShader:vs,fragmentShader:fs},o||{}));
   const wallMat=SM(Object.assign({uIdx:{value:idxTex},uL:{value:Ldir},uKey:{value:uKey},uAmb:{value:uAmb},uTime:{value:0},uWave:{value:-9},uRW:{value:RW},uYT:{value:YT},uLife:{value:0},uNight:{value:0}},Gu),WALL_VS,WALL_FS,{extensions:{derivatives:true}});
   const hfMat=SM(Object.assign({uTop:{value:topTex},uGrainM:{value:grainM},uL:{value:Ldir},uKey:{value:uKey},uAmb:{value:uAmb},uTime:{value:0},uRW:{value:RW},uLife:{value:0},uNight:{value:0}},Gu),HF_VS,HF_FS,{extensions:{derivatives:true}});
-  const guideMat=SM({uTop:{value:topTex},uTgt:{value:tgtTex},uCurT:{value:curTex},uPalT:{value:palTex},uCur:{value:-1},uTime:{value:0},uZone:{value:zones},uRW:{value:RW},uYT:{value:YT},uTol:{value:TOL}},WALL_VS,GUIDE_FS,{transparent:true,depthWrite:false});
+  const marks6=[0,1,2,3,4,5].map(()=>new T3.Vector4());
+  const guideMat=SM({uTop:{value:topTex},uTgt:{value:tgtTex},uCurT:{value:curTex},uPalT:{value:palTex},uCur:{value:-1},uTime:{value:0},uZone:{value:zones},uRW:{value:RW},uYT:{value:YT},uTol:{value:TOL},uMark:{value:marks6},uMarkOk:{value:[0,0,0,0,0,0]}},WALL_VS,GUIDE_FS,{transparent:true,depthWrite:false});
   const PM={transparent:true,depthWrite:false,blending:T3.CustomBlending,blendSrc:T3.OneFactor,blendDst:T3.OneMinusSrcAlphaFactor};
   const backMat=SM({uSweep:{value:-1},uEnvK:{value:1}},GLASS_VS,GLASS_BACK_FS,Object.assign({side:T3.BackSide},PM));
   // iki geçiş: sahne önce bir dokuya çizilir, ön cam o dokuyu kırarak üstüne çizilir (WebGL2). Yoksa yarı saydam cam.
@@ -905,13 +1030,14 @@ function initGfx(){
   // süs dokuları
   const decTex={};for(const id in DEC){const D=DEC[id],s=256,t=new T3.CanvasTexture(mkCanvas(s,Math.round(s*D.h/D.w),(x,w,h)=>drawDecor(id,x,w,h)));t.encoding=T3.sRGBEncoding;decTex[id]=t;}
   const decorM=new T3.Mesh(new T3.PlaneGeometry(1,1),new T3.MeshBasicMaterial({transparent:true,toneMapped:false,depthWrite:false}));decorM.visible=false;decorM.renderOrder=4;scene.add(decorM);
+  const stickM=new T3.Mesh(new T3.CylinderGeometry(.009,.0075,1.3,12),new T3.MeshStandardMaterial({color:0xc29262,roughness:.65}));stickM.visible=false;stickM.renderOrder=4;scene.add(stickM);
   const dropLine=new T3.Line(new T3.BufferGeometry().setFromPoints([new T3.Vector3(),new T3.Vector3(0,-1,0)]),new T3.LineDashedMaterial({color:0xffffff,dashSize:.025,gapSize:.025,transparent:true,opacity:.75}));dropLine.visible=false;scene.add(dropLine);
   const corkT=new T3.CanvasTexture(mkCanvas(256,256,(x,w,h)=>{x.fillStyle='#c79a68';x.fillRect(0,0,w,h);for(let k=0;k<1400;k++){x.fillStyle=Math.random()<.5?'rgba(120,80,45,'+(.2+Math.random()*.35)+')':'rgba(235,205,160,'+(.15+Math.random()*.3)+')';x.beginPath();x.arc(Math.random()*w,Math.random()*h,.6+Math.random()*2.4,0,6.283);x.fill();}}));
   corkT.encoding=T3.sRGBEncoding;
   RD={T3,r,scene,cam,Ldir,Lv,idxData,idxTex,topData,topTex,curData,curTex,palData,palTex,tgtData,tgtTex,zones,wallMat,guideMat,hfMat,backMat,frontMat,rt,post,postCam,gScene,
    fun,fTop,fSandM,rg,rPos,rCol,rUv,rW,ribMat,grains,conf,decTex,decorM,dropLine,curK:-2,
    corkM:new T3.MeshStandardMaterial({map:corkT,roughness:.92}),sh1,sh2,caus,lvl:[],placed:[],v3:new T3.Vector3(),v2:new T3.Vector2(),
-   hemi,key,rimL,wallM:wall,sunP,brass,life:0,night:0,nightSet:-1};
+   hemi,key,rimL,wallM:wall,sunP,brass,life:0,night:0,nightSet:-1,stickM,marks6};
   cv.addEventListener('webglcontextlost',e=>e.preventDefault());
  }catch(e){console.error(e);RD=null;gfxFail();}}
 function gfxFail(){$('gfxErr').style.display='block';}
@@ -996,7 +1122,7 @@ function fillIdx(){const d=RD.idxData,rowH=YT/NVH;let any=false;
   for(let r=0;r<NVH;r++){const o=(r*NC+c)*2,Y=(r+.5)*rowH;
    if(Y>ext){d[o+1]=0;continue;}
    while(j<n-1&&Y>y0+segH[b+j]){y0+=segH[b+j];j++;}
-   const li=dc(segC[b+j]);d[o]=li*16+lamH(Math.floor(Math.max(0,Y-y0)/LAMT),li);d[o+1]=255;}}
+   const sc=segC[b+j];let li;if(sc>=100){li=0;while(li<ncol-1&&Y>tTop[li][c])li++;}else li=dc(sc);d[o]=li*16+lamH(Math.floor(Math.max(0,Y-y0)/LAMT),li);d[o+1]=255;}}
  if(any)RD.idxTex.needsUpdate=true;}
 // üst yüzey ve duvarın üst kenarı: yumuşatılmış yükseklik S; tepeler içeride kabarık (B), çukurlar gölgeli (A)
 function updateSurf(){const hf=RD.hf,S=hf.S,RT=RD.rTab,W=RD.wall;
@@ -1024,7 +1150,7 @@ function updateSurf(){const hf=RD.hf,S=hf.S,RT=RD.rTab,W=RD.wall;
 
 function frameCamera(){const c=RD.cam,top=hudBottom()+4,bot=vh-frameBotNow,frac=Math.max(.3,(bot-top)/vh),aspect=vw/vh;
  const tanH=Math.tan(c.fov*Math.PI/360),Wc=2.0,D=Math.max(camHc/(2*tanH*frac),Wc/(2*tanH*aspect*.95))*zoom,el=.13;
- c.aspect=aspect;c.position.set(Math.sin(orbit)*D*Math.cos(el),camYc+D*Math.sin(el),Math.cos(orbit)*D*Math.cos(el));c.lookAt(0,camYc,0);
+ c.aspect=aspect;c.position.set(Math.sin(orbit)*D*Math.cos(el),camYc+D*Math.sin(el),Math.cos(orbit)*D*Math.cos(el));c.up.set(-tiltS,tiltC,0);c.lookAt(0,camYc,0);
  c.setViewOffset(vw,vh,0,vh/2-(top+bot)/2,vw,vh);c.updateProjectionMatrix();c.updateMatrixWorld();
  const a=projectPx(-.5,camYc,.6),b=projectPx(.5,camYc,.6);cellPx=Math.max(1,Math.abs(b.x-a.x)/100);
  const sc=RD.r.getDrawingBufferSize(RD.v2).y/(2*tanH)*CELL;RD.grains.m.uniforms.uScale.value=sc;RD.conf.m.uniforms.uScale.value=sc;}
@@ -1053,8 +1179,8 @@ function gfxFrame(now){if(!RD)return;const t=now/1000,fdt=clamp((now-lastGfx)/10
  fillIdx();updateSurf();
  // huni
  const showF=state==='ready'||state==='pour'||state==='hold'||state==='drop'||state==='settle';RD.fun.visible=showF;
- if(showF){RD.fun.position.set(noz,FUNY,0);const it=queue[qi];
-  if(it&&it.t==='kum'){const fr=it.a/it.a0,h=.12+fr*.2,rr=.014+(h-.1)/.24*.116;RD.fTop.visible=true;RD.fSandM.color.setRGB(RD.plin[it.c][0],RD.plin[it.c][1],RD.plin[it.c][2]);RD.fTop.scale.set(rr,rr,1);RD.fTop.position.y=h;}
+ if(showF){RD.fun.position.set(noz,FUNY,0);RD.fun.rotation.z=tiltA;const it=queue[qi];
+  if(it&&it.t==='kum'){const fr=it.a/it.a0,h=.12+fr*.2,rr=.014+(h-.1)/.24*.116,pc=RD.plin[codeFor(it.c)];RD.fTop.visible=true;RD.fSandM.color.setRGB(pc[0],pc[1],pc[2]);RD.fTop.scale.set(rr,rr,1);RD.fTop.position.y=h;}
   else RD.fTop.visible=false;}
  // akış şeridi: dilimler gruplar halinde, dökerken üst ucu huniye bağlı. Kalınlık döküş hızıyla (başta ve sonda incelir);
  // huniden çıkınca biraz daralır, aşağı indikçe açılır. Noktalar arası eğri (Catmull-Rom) ile doldurulur, kalınlık akışa dik.
@@ -1062,7 +1188,7 @@ function gfxFrame(now){if(!RD)return;const t=now/1000,fdt=clamp((now-lastGfx)/10
  const pushV=(x,y,u,c,w)=>{const o=nv*3;rp[o]=x;rp[o+1]=y;rp[o+2]=0;rc[o]=c[0];rc[o+1]=c[1];rc[o+2]=c[2];ru[nv*2]=u;ru[nv*2+1]=y;rw[nv]=w;nv++;};
  const wOf=(y,wf)=>{const f=FUNY-y;return .0135*wf*(1-.2*smooth(0,.3,f)+.38*smooth(.35,1.9,f));};
  const pts=[];for(const s of slices)pts.push({x:s.x,y:s.y,c:s.c,g:s.g,wf:Math.sqrt(clamp(s.a/AM,.05,1))});
- if(emitting&&queue[qi]&&queue[qi].t==='kum')pts.push({x:noz,y:FUNY,c:queue[qi].c,g:pourGroup,wf:Math.sqrt(Math.max(.05,flowNow))});
+ if(emitting&&queue[qi]&&queue[qi].t==='kum')pts.push({x:noz,y:FUNY,c:codeFor(queue[qi].c),g:pourGroup,wf:Math.sqrt(Math.max(.05,flowNow))});
  pts.sort((a,b)=>a.g-b.g||b.y-a.y);
  for(let i=0;i<pts.length;){let j=i;while(j+1<pts.length&&pts[j+1].g===pts[i].g&&pts[j].y-pts[j+1].y<.6)j++;
   const grp=pts.slice(i,j+1);i=j+1;if(grp.length<2)continue;
@@ -1085,7 +1211,7 @@ function gfxFrame(now){if(!RD)return;const t=now/1000,fdt=clamp((now-lastGfx)/10
  let n=0;const G=GRAVW;
  P.a=P.a.filter(p=>{p.t+=fdt;if(p.t>2.5)return false;
   if(p.tr){p.v=(p.v||.35)+fdt*1.6;p.p+=fdt*p.sp*p.v/Math.max(.03,Math.abs(p.c1-p.c0)*DX);if(p.p>=1)return false;const x=xOf(p.c0)+(xOf(p.c1)-xOf(p.c0))*p.p,zm=RD.hf.Z[colOf(x)]||0,z=p.z*zm*Math.min(1,.15+p.p*1.1);p.x=x;p.zz=z;p.y=surfY(x,z)+.0025;return true;}
-  p.vy-=G*fdt;p.x+=p.vx*fdt;p.y+=p.vy*fdt;p.z+=(p.vz||0)*fdt;if(p.vy<0&&p.y<surfY(p.x,p.z))return false;return true;});
+  p.vy-=G*tiltC*fdt;p.vx+=G*tiltS*fdt;p.x+=p.vx*fdt;p.y+=p.vy*fdt;p.z+=(p.vz||0)*fdt;if(p.vy<0&&p.y<surfY(p.x,p.z))return false;return true;});
  for(const p of P.a){if(n>=P.max)break;const o=n*3,c=RD.plin[Math.min(p.col,NCODE-1)]||[1,1,1],sh=p.sh||1;P.pos[o]=p.x;P.pos[o+1]=p.y;P.pos[o+2]=p.tr?p.zz:p.z;P.col[o]=c[0]*sh;P.col[o+1]=c[1]*sh;P.col[o+2]=c[2]*sh;P.size[n]=p.s;n++;}
  P.geo.setDrawRange(0,n);const pa=P.geo.attributes;pa.position.needsUpdate=pa.aCol.needsUpdate=pa.aSize.needsUpdate=true;
  // süs: tutulurken huninin altında, düşerken ön cama doğru
@@ -1095,6 +1221,11 @@ function gfxFrame(now){if(!RD)return;const t=now/1000,fdt=clamp((now-lastGfx)/10
   else RD.dropLine.visible=false;}
  else{RD.decorM.visible=false;RD.dropLine.visible=false;}
  (RD.ghosts||[]).forEach((g,k)=>{if(!g.visible)return;g.material.opacity=decor&&decor.rec===decorList[k]?.3+.2*Math.sin(t*5):.22;});
+ // çubuk: yüzeyin üstünde bekler, itince camın önünden kuma girer; hedef izler kesik V çizgileri (tutturulunca altın rengi)
+ const sOn=state==='stick'&&stick;RD.stickM.visible=!!sOn;
+ if(sOn){const S=stick,top=surfY(S.x,0),tip=S.act?top-S.d:top+.1;RD.stickM.position.set(S.x,tip+.65,Math.max(.02,zFront(S.x,clamp(tip,0,HJ))-.007));}
+ const ci=sOn?queue[qi]:null,gu=RD.guideMat.uniforms;
+ for(let k=0;k<6;k++){const m=ci&&ci.marks[k],v=RD.marks6[k];if(!m){v.w=0;continue;}v.set(m.x,surfY(m.x,0),m.d,ci.w);gu.uMarkOk.value[k]=m.ok?1:0;}
  // hedef çizgileri: şimdiki katmanın hedef yüksekliği küçük bir dokuda
  const it=queue[qi],cur=it&&it.t==='kum'?it.c:-1,gm=RD.guideMat.uniforms;gm.uCur.value=cur;gm.uTime.value=t;
  if(cur!==RD.curK){RD.curK=cur;if(cur>=0){const cd=RD.curData;for(let c=0;c<NC;c++){const h=Math.round(clamp(tTop[cur][c]/YT,0,1)*65535);cd[c*4]=h>>8;cd[c*4+1]=h&255;}RD.curTex.needsUpdate=true;}}
@@ -1125,8 +1256,8 @@ function snapshot(){if(!RD)return null;try{gfxFrame(performance.now());const c=R
 let lastPct=-1,toastT=null;
 function toast(s){if(BOT)return;const e=$('toast');e.textContent=s;e.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('show'),1100);}
 function buildQueueBar(){const q=$('queue');q.innerHTML='';queue.forEach(it=>{const e=document.createElement('div');
- if(it.t==='kum'){e.className='seg';e.style.flexGrow=Math.round(it.a0*1000);e.style.background=PAL[L.katman[it.c][0]];e.innerHTML='<div class="f"></div>';}
- else{e.className='chip';e.textContent=it.rec.D.e;}it.el=e;q.appendChild(e);});}
+ if(it.t==='kum'){const kk=L.katman[it.c];e.className='seg';e.style.flexGrow=Math.round(it.a0*1000);e.style.background=kk[2]&&kk[2].gecis?'linear-gradient(90deg,'+PAL[kk[0]]+','+PAL[kk[2].gecis]+')':PAL[kk[0]];e.innerHTML='<div class="f"></div>';}
+ else{e.className='chip';e.textContent=it.t==='sus'?it.rec.D.e:'🥢';}it.el=e;q.appendChild(e);});}
 function updateHud(){const p=Math.round(pct);
  if(p!==lastPct){lastPct=p;$('pct').textContent=pctS(p);$('pfill').style.width=p+'%';['m1','m2','m3'].forEach((id,k)=>$(id).classList.toggle('on',p>=STAR_TH[k]));}
  queue.forEach((it,k)=>{if(!it.el)return;it.el.classList.toggle('cur',k===qi&&state!=='finale'&&state!=='result');
@@ -1137,13 +1268,17 @@ function updateUndo(){const ok=canUndo(),b=$('bUndo');if(b.classList.contains('s
 function updatePuffBtn(){$('bPuff').querySelector('b').textContent=puffs;$('bPuff').classList.toggle('off',puffs<=0);}
 function openRaf(){clearStars();if(state!=='menu'){prevState=state;state='menu';}pouring=false;setPour(0,0,0,null,null);$('result').classList.remove('show');
  const sh=$('shelves');sh.innerHTML='';let total=0,nextIdx=-1;
- for(let r=0;r<LEVELS.length;r+=3){const row=document.createElement('div');row.className='shelf';
-  for(let k=r;k<Math.min(r+3,LEVELS.length);k++){const rec=SAVE.lv[k],open=k===0||(SAVE.lv[k-1]&&SAVE.lv[k-1].s>=1),s=rec?rec.s:0;total+=s;
+ // dünyalar: her biri kendi başlığı ve yıldız sayısıyla
+ const worlds=[];LEVELS.forEach((l,k)=>{const w=l.dunya||0;(worlds[w]=worlds[w]||[]).push(k);});
+ worlds.forEach((ks,w)=>{const hd=document.createElement('div');hd.className='wh';let ws=0;ks.forEach(k=>{ws+=SAVE.lv[k]?SAVE.lv[k].s:0;});
+  hd.innerHTML='<span>'+t(DUNYA[w])+'</span><small>'+ws+' / '+ks.length*3+' ★</small>';sh.appendChild(hd);
+ for(let r=0;r<ks.length;r+=3){const row=document.createElement('div');row.className='shelf';
+  for(let k=ks[r];k<=ks[Math.min(r+2,ks.length-1)];k++){const rec=SAVE.lv[k],open=k===0||(SAVE.lv[k-1]&&SAVE.lv[k-1].s>=1),s=rec?rec.s:0;total+=s;
    if(open&&!rec&&nextIdx<0)nextIdx=k;
    const b=document.createElement('button');b.className='slot'+(open?'':' lock')+(k===nextIdx?' next':'');
    b.innerHTML='<div class="jar">'+(rec&&rec.img?'<img alt="" src="'+rec.img+'">':'<div class="empty">'+(open?(k+1):'🔒')+'</div>')+'</div><div class="nm">'+(k+1)+' · '+t(LEVELS[k].ad)+'</div><div class="st">'+'★'.repeat(s)+'<i>'+'★'.repeat(3-s)+'</i></div>';
    if(open)b.onclick=()=>{closeRaf(true);startLevel(k);};row.appendChild(b);}
-  sh.appendChild(row);}
+  sh.appendChild(row);}});
  $('rafSub').textContent=total+' / '+LEVELS.length*3+' ★';
  setTexts();
  $('rafClose').style.display=prevState&&L?'block':'none';$('raf').classList.add('show');}
@@ -1153,11 +1288,11 @@ function closeRaf(skip){$('raf').classList.remove('show');if(!skip&&prevState){s
 // Basılı tut: kum akar. Sürükle: huni gezer. Bırak: akış durur (süs varsa düşer).
 let down=false,lastX=0,activeId=null;
 cv.addEventListener('pointerdown',e=>{if(state==='menu'||state==='result'||state==='finale')return;if(down&&e.pointerId!==activeId)return;activeId=e.pointerId;down=true;lastX=e.clientX;
- try{cv.setPointerCapture(e.pointerId);}catch(_){}initAudio();if(state==='ready')beginPour();pouring=true;hapBegin();});
-cv.addEventListener('pointermove',e=>{if(!down||e.pointerId!==activeId)return;nozT+=(e.clientX-lastX)/cellPx*CELL*GAIN;lastX=e.clientX;if(tickDue){tickDue=false;iosTap();}});
-const up=e=>{if(!down||e.pointerId!==activeId)return;down=false;activeId=null;pouring=false;if(state==='hold'&&holdT>.3)releaseDecor();};
+ try{cv.setPointerCapture(e.pointerId);}catch(_){}initAudio();if(state==='ready')beginPour();if(state==='stick')stickDown(e.clientY);pouring=true;hapBegin();});
+cv.addEventListener('pointermove',e=>{if(!down||e.pointerId!==activeId)return;nozT+=(e.clientX-lastX)/cellPx*CELL*GAIN;lastX=e.clientX;if(state==='stick')stickMove(e.clientY);if(tickDue){tickDue=false;iosTap();}});
+const up=e=>{if(!down||e.pointerId!==activeId)return;down=false;activeId=null;pouring=false;if(state==='hold'&&holdT>.3)releaseDecor();if(state==='stick')stickUp();};
 // sistem hareketi (ana ekran çubuğu, bildirim merkezi) dokunmayı iptal ederse süs düşmez, sadece akış durur
-const cancel=e=>{if(!down||e.pointerId!==activeId)return;down=false;activeId=null;pouring=false;};
+const cancel=e=>{if(!down||e.pointerId!==activeId)return;down=false;activeId=null;pouring=false;stickCancel();};
 cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',cancel);
 ['pointerup','touchend','click','keydown'].forEach(ev=>addEventListener(ev,()=>initAudio(),{passive:true}));
 $('bRaf').onclick=()=>openRaf();
@@ -1198,6 +1333,13 @@ function deficits(k,pn){const out=new Float32Array(NC),fl=new Float32Array(NC),r
  for(let c=0;c<NC;c++){let s=0,n=0;for(let q=-5;q<=5;q++){const cc=c+q;if(cc>=0&&cc<NC&&valid[cc]){s+=raw[cc];n++;}}out[c]=n?s/n:-99;}
  return out;}
 function botThink(pf,B){const lim=rMouth-.04;
+ if(state==='stick'){pouring=false;const it=queue[qi],m=it&&it.marks[it.done];if(!m||!stick)return;
+  if(pf==='dokunmayan'||pf==='supurucu'){if(!stick.act){stickDown(0);stick.dT=.1;}else if(stick.d>.095)stickUp();return;}
+  const P2={kusursuz:[3,0,0],insan:[1.6,.025,.22],daginik:[1.4,.07,.5]}[pf]||[2,0,0];
+  if(B.stk!==m){B.stk=m;B.sx=m.x+gauss()*P2[1];B.sd=Math.max(.02,m.d*(1+gauss()*P2[2]));}
+  if(!stick.act){nozT=noz+clamp(B.sx-noz,-P2[0]*DT,P2[0]*DT);if(Math.abs(noz-B.sx)<.006)stickDown(0);}
+  else{stick.dT=B.sd;if(stick.d>=B.sd*.97)stickUp();}
+  return;}
  if(state==='hold'){pouring=false;if(pf==='dokunmayan'||pf==='supurucu'){if(holdT>.4)releaseDecor();return;}
   const P2={kusursuz:[3,0],insan:[1.6,.03],daginik:[1.4,.09]}[pf];if(B.hold!==decor.rec){B.hold=decor.rec;B.haim=decor.rec.zx+gauss()*P2[1];}
   nozT=noz+clamp(B.haim-noz,-P2[0]*DT,P2[0]*DT);if(Math.abs(noz-B.haim)<.01&&holdT>.4)releaseDecor();return;}
@@ -1221,7 +1363,7 @@ function runBot(pf,n,sd){startLevel(n,{bot:true,seed:sd||1});beginPour();pourSta
  BOT=false;pouring=false;return res;}
 
 window.__game={setTS:v=>{TS=v;},sim:ms=>{const n=Math.round(ms/1000/DT);for(let k=0;k<n;k++)step();},
- state:()=>({state,level:LV,pct:+pct.toFixed(1),stars:starsFor(pct),qi,ql:queue.length,slices:slices.length,noz:+noz.toFixed(3),onTarget,streakLvl,puffs,gfx:!!RD}),
+ state:()=>({state,level:LV,pct:+pct.toFixed(1),stars:starsFor(pct),qi,ql:queue.length,marks:stickMarks.map(m=>m.ok?1:0).join(''),slices:slices.length,noz:+noz.toFixed(3),onTarget,streakLvl,puffs,gfx:!!RD}),
  autoplay:pf=>{AUTO=pf?{pf,B:{dir:1,next:0}}:null;},tune:o=>{if(o.SCALE!=null)SCALE=o.SCALE*CELL;if(o.TH)STAR_TH=o.TH;},
  start:n=>startLevel(n),undo:()=>doUndo(),canUndo:()=>canUndo(),sand:()=>{let a=0;for(let c=0;c<NC;c++)if(valid[c])a+=(topY[c]-floorY[c])*DX;return a;},freeze:v=>{FREEZE=!!v;},run:n=>{let v=lastGfx;for(let k=0;k<n;k++){step();v+=1000/60;gfxFrame(v);}},begin:()=>beginPour(),pour:v=>{pouring=!!v;},input:x=>{nozT=x;},release:()=>releaseDecor(),puff:()=>puff(),bot:runBot,levels:LEVELS.length};
 

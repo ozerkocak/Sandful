@@ -50,3 +50,44 @@ Reddedilmiş yönlere girmiyor: süre baskısı, durduran sınır, uzun düşün
 1. Ses: Kötü olan kum sesi mi, müzik mi, ikisi de mi? Telefonla kum dökme kaydı yapabilir misin?
 2. Yenilikler: Listeden çıkarmak ya da öne almak istediğin var mı?
 3. Kapsam: 1.1 / 1.2 bölmesi uygun mu? Para kazanma 1.2'de mi kalsın?
+
+## Ozer'in kararı
+
+"Ses ikisi de (kum sesi ve müzik). Söylediğin görselleri deneyelim. 1.1 / 1.2 bölmesi uygun, 1.1 ile başlayalım."
+Kum sesi için Ozer'den telefonla kum dökme kaydı istendi (kesme, döngü, temizlik bende). Müzik için CC0 lisanslı VSCO-2 Community Edition marimba ve glockenspiel kayıtları.
+
+## Geliştirme durumu
+
+**1. parça (yapıldı):** Canlanan final (su kumu parıldar, gece kumunda yıldız kırpışır, tekne/kuğu/yelkenli sallanır, güneş döner, ay ve fener nabız gibi parlar).
+Işıldayan kum (finalde sahne kararır, ışıldayan taneler parlar). Geri al (bölüm başına 1; son başlamış rengi baştan döktürür, havadaki kum ve kaymalar da geri gelir).
+WebGL1 yedeğinde renk kodlaması yorum satırında kalmıştı, düzeltildi.
+
+**2-3. parça (yapıldı):**
+- Çubukla çizme: sağa sola sürükle, aşağı çek (iz kilitlenir), bırak. Üstteki renk alttakine V gibi batar. Hedef izler kesik V çizgileri, tutunca altın rengi.
+  İtilen kum puanda tarafsız (64+renk kodu); izler üçüncü yıldızı belirler (süsler gibi).
+- Geçişli kum: katman `{gecis:'renk'}`. Döküldükçe renk 6 adımda geçer; ara adımlar iki rengin tanelerinin karışımı (gölgelendiricide tane başına seçim).
+- Sallanan kavanoz: yerçekimi kavanoza göre eğilir (etkin yükseklik `topY − tan(açı)·x`); kum yere paralel yatar, kavanoz düzelince katmanlar eğik kalır.
+  Kamera kavanozla döner, akış ekranda dik düşer. Süs tutulup düşerken kavanoz durulur.
+- Okyanus dünyası (11-20): Mercan, Deniz feneri, Balina, Ada, Gün doğumu, Fırtına, Deniz kabuğu, Yelken yarışı, Buzdağı, Işıldayan deniz.
+  Yeni süsler: deniz feneri, balina, martı, palmiye, deniz kabuğu, deniz yıldızı, yelkenli. Yeni cam şekilleri: lale, silindir. Fırtına ortam sesi.
+- Raf dünyalara ayrıldı (başlık ve dünya yıldız sayısı). Süsün kapladığı alan o yükseklikteki hedef katmanın rengini alır (palmiyenin arkasında kutu görünmüyordu).
+
+### Bot tablosu (Okyanus; bölüm başına 3 koşu, ortalama yüzde ve yıldız)
+
+| Bölüm | Kusursuz | İnsan | Dağınık | Süpürücü | Dokunmayan |
+|---|---|---|---|---|---|
+| 11 Mercan | 97 ★3 | 89 ★3 | 69 ★1,3 | 88 ★2 | 45 ★0 |
+| 12 Deniz feneri | 96 ★3 | 88 ★2,3 | 76 ★1 | 67 ★0 | 29 ★0 |
+| 13 Balina | 96 ★3 | 86 ★2,7 | 79 ★1,7 | 61 ★0 | 49 ★0 |
+| 14 Ada | 96 ★3 | 82 ★2 | 78 ★1,3 | 72 ★1 | 58 ★0 |
+| 15 Gün doğumu | 99 ★3 | 87 ★2,7 | 84 ★2,3 | 84 ★2 | 70 ★0 |
+| 16 Fırtına | 93 ★3 | 83 ★2,3 | 77 ★1,3 | 75 ★1 | 57 ★0 |
+| 17 Deniz kabuğu | 98 ★3 | 88 ★3 | 81 ★1,7 | 71 ★0,3 | 53 ★0 |
+| 18 Yelken yarışı | 96 ★3 | 83 ★2,3 | 71 ★0,7 | 76 ★1 | 54 ★0 |
+| 19 Buzdağı | 97 ★3 | 79 ★1,7 | 70 ★0,3 | 69 ★0 | 64 ★0 |
+| 20 Işıldayan deniz | 98 ★3 | 84 ★2,3 | 81 ★1,7 | 91 ★2 | 38 ★0 |
+
+Düzeltilenler: Buzdağı tepesi kumun durabileceğinden dikti (eğim ≤ 0,5); Ada ortadaydı, hiç oynamayan bot 1 yıldız alıyordu (sola alındı);
+Yelken yarışında süs düşerken kavanoz sallandığı için kayıyordu.
+
+**4. parça (sırada):** Müzik (marimba, glockenspiel kayıtları), kum sesi (Ozer'in kaydı gelince), uygulama 1.1 derlemesi.
