@@ -525,7 +525,7 @@ dil (İngilizce ve Almanca telefonda İngilizce, Türkçe harf kalmıyor; Türk�
 
 | Sürüm (derleme) | Tarih | Not |
 |---|---|---|
-| 1.0 (1) | 13 Ekim 2026 | İlk yükleme, Ozer Mac'te Xcode ile (Distribute App). Ozer iPhone'da denedi: "Her şey güzel şu anda." Aynı gün App Store incelemesine gönderildi (elle yayın) |
+| 1.0 (1) | 13 Ekim 2026 | İlk yükleme, Ozer Mac'te Xcode ile (Distribute App). Ozer iPhone'da denedi: "Her şey güzel şu anda." Aynı gün App Store incelemesine gönderildi (elle yayın). 29 Ekim 2026'da onaylandı (yaklaşık 16 gün "Waiting for Review"; Ekim 2026'da Apple'da genel yığılma vardı) |
 
 App Store hazırlığı: mağaza metinleri (`uygulamalar/sandful/magaza/app-store-metinleri.md`), iki dilde 6'şar ekran görüntüsü (1206×2622, başlıklı; App Store Connect 1290×2796'yı kabul etmedi),
 gizlilik ve destek sayfaları (`magaza/site/`). Para kazanma önerisi ayrı dosyada: `fikirler/03-sandful-gelir.md` (Ozer'in onayına).
