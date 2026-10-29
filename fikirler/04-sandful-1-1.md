@@ -102,3 +102,18 @@ Yelken yarışında süs düşerken kavanoz sallandığı için kayıyordu.
   Ölçüm: merkez 2,4 kHz, 500 Hz altı %2,7, 6 kHz üstü %1,7, tepe/RMS ~10 (eski çıtırtılı modelde 30+). Cam (boş cama düşüş) ve kayma da aynı tane modeliyle.
   Rafta seçenekler: Doğal, Tıpırtı, Kadife (İnce kaldırıldı). Tercih yeni anahtarla (kum7) sıfırlandı, herkes Doğal'dan başlar.
   Gerçek kum kaydı gelirse aynı yere konabilir.
+
+### Kum sesi: "zıtırtı" ve pürüzsüz adaylar
+
+Ozer "Doğal" sesi dinledi: "Çok zıtırtı gibi geliyor." Ölçünce sebebi çıktı: **basıklık** (kurtosis) 6,2. Pürüzsüz bir hışırtıda bu sayı ~3'tür;
+büyüdükçe seste sivri tıkırtılar duyulur (zıtırtı, cızırtı). Kısa ve sert başlayan taneler bunu yapıyordu. Önceki "cızırtılı" geri bildirimleri de büyük ihtimalle aynı sebepten.
+Yeni adaylar (hepsi basıklık 3,0-3,7), rafta Kum sesi düğmesiyle seçilir:
+
+| Ses | Karakter | Merkez | Basıklık |
+|---|---|---|---|
+| Kumsal (varsayılan) | Sıcak, yumuşak hışırtı (450-3200 Hz, 1,6 kHz +3 dB) | 1,8 kHz | 3,0 |
+| İpek | İnce kum gibi parlak ama pürüzsüz "sss" (900-5000 Hz) | 3,0 kHz | 3,0 |
+| Yağmur çubuğu | Yumuşak (Hann zarflı) tanelerle hafif dokulu akış | 3,2 kHz | 3,7 |
+
+Kayma sesi pürüzsüz hışırtıya döndü (3,5), boş cama düşüş daha sık ve uzun çınlamalarla yumuşadı (10,1 → 4,5). Kum sesi biraz kısıldı, müzik önde.
+Ders (TASARIM-ILKELERI'ne): sürekli seslerde basıklığı ölç, ~3-4 tut; 5'in üstü kulağa zıtırtı gelir.
