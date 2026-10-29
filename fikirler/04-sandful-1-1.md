@@ -90,4 +90,9 @@ WebGL1 yedeğinde renk kodlaması yorum satırında kalmıştı, düzeltildi.
 Düzeltilenler: Buzdağı tepesi kumun durabileceğinden dikti (eğim ≤ 0,5); Ada ortadaydı, hiç oynamayan bot 1 yıldız alıyordu (sola alındı);
 Yelken yarışında süs düşerken kavanoz sallandığı için kayıyordu.
 
-**4. parça (sırada):** Müzik (marimba, glockenspiel kayıtları), kum sesi (Ozer'in kaydı gelince), uygulama 1.1 derlemesi.
+**4. parça (müzik yapıldı, kum sesi bekliyor):**
+- Müzik gerçek enstrüman kayıtlarıyla: melodi, akor ve bas marimba; parıltılar (renk değişimi, süs, yıldız, kapak) glockenspiel.
+  Kaynak: VSCO-2 Community Edition (Versilian Studios), CC0 (kamu malı). Marimba 8 nota (MIDI 48-89), glockenspiel 3 nota (91-103);
+  mono 32 kHz, 48 kbps MP3, dosyaya gömülü (~165 KB). En yakın kaydın hızı değiştirilerek çalınır. Not: dosya adları bir oktav aşağıyı gösteriyordu, perdeler ölçülerek eşlendi.
+  Kayıtlar çözülene kadar eski sentez çalar. Ses seviyesi eski sentezle eşitlendi (tepe/RMS ölçümü).
+- Kum sesi: Ozer'in telefonla kaydını bekliyor (ince akış, kalın akış, boş cama düşüş, yığına düşüş, kayma).

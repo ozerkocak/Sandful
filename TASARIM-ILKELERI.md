@@ -84,7 +84,8 @@ Telefonda "güzel his" üç katmanda verilir. Her oyun tasarımında bu tablo do
 | **Orta** | Birkaç saniyede bir (seri, bölge tamamlama) | Akor, yükselen arpej, yeni müzik katmanı | Orta (MEDIUM), tek atım |
 | **Makro** | Bölüm sonu, final | Melodinin tamamı, büyük çökme ya da açılma sesi | Güçlü (HEAVY) ve desenli dizi |
 
-- Ses Web Audio ile sentezlenir (dosya yok, uygulama küçük kalır). Pentatonik ya da tanıdık telifsiz melodiler; yanlış hamle sert bir ses değil, sadece "sessizlik" ya da kuru bir tık.
+- Ses Web Audio ile çalınır. Sentez yetmediğinde gerçek kayıt kullanılır: Sandful 1.1'de müzik CC0 marimba/glockenspiel kayıtlarıyla, kum sesi gerçek kum kaydıyla (sentezle üç denemede beğenilmedi). Kayıtlar küçük tutulur (mono, düşük örnekleme, MP3) ve dosyaya gömülür; lisansı CC0 ya da kendi kaydımız olmalı.
+  Pentatonik ya da tanıdık telifsiz melodiler; yanlış hamle sert bir ses değil, sadece "sessizlik" ya da kuru bir tık.
 - Ortam sesi (rüzgâr, gece böcekleri, yağmur) çok düşük seviyede sürekli çalar; rahatlamayı o taşır.
 - Sürekli sesler (akış, hışırtı) boğuk olmasın: alçak frekansı kes, parlak ama yumuşak tut (sert tiz de yorar). Müzik ve efektler hafif bir oda yankısından geçerse daha sakin duyulur.
 - Titreşim seviyeleri: hafif < 14 ms, orta 14-50 ms, güçlü ≥ 50 ms (Domino Chase'teki `vib()` eşlemesi). Uygulamada Capacitor Haptics `impact` kullanılır.
