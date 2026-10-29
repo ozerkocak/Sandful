@@ -34,10 +34,10 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
   ok('Bölüm süreleri 20-60 sn arası',rows.every(r=>r.sn>=15&&r.sn<=70),rows.map(r=>r.sn).join(','));
   const sv=await p.evaluate(()=>JSON.parse(localStorage.getItem(SKEY)));
   ok('Kayıt: 10 bölüm, yıldız ve küçük resim',sv&&Object.keys(sv.lv).length===10&&Object.values(sv.lv).every(v=>typeof v.s==='number'&&v.img&&v.img.startsWith('data:image/jpeg')),{n:sv&&Object.keys(sv.lv).length,seen:sv&&sv.seen});
-  const mem=await p.evaluate(()=>{if(window.gc)gc();return {geo:RD.r.info.memory.geometries,tex:RD.r.info.memory.textures,prog:RD.r.info.programs.length,heap:performance.memory?Math.round(performance.memory.usedJSHeapSize/1048576):-1};});
+  const mem=await p.evaluate(()=>{if(window.gc){gc();gc();}return {geo:RD.r.info.memory.geometries,tex:RD.r.info.memory.textures,prog:RD.r.info.programs.length,heap:performance.memory?Math.round(performance.memory.usedJSHeapSize/1048576):-1};});
   // aynı bölümleri bir tur daha: bellek büyümesi
   for(let lv=0;lv<10;lv++){await p.evaluate(lv=>{__game.start(lv);__game.autoplay('kusursuz');__game.begin();let k=0;while(k<4000&&__game.state().state!=='result'){__game.sim(50);k++;}__game.autoplay(null);},lv);await p.waitForTimeout(100);}
-  const mem2=await p.evaluate(()=>{if(window.gc)gc();return {geo:RD.r.info.memory.geometries,tex:RD.r.info.memory.textures,prog:RD.r.info.programs.length,heap:performance.memory?Math.round(performance.memory.usedJSHeapSize/1048576):-1};});
+  const mem2=await p.evaluate(()=>{if(window.gc){gc();gc();}return {geo:RD.r.info.memory.geometries,tex:RD.r.info.memory.textures,prog:RD.r.info.programs.length,heap:performance.memory?Math.round(performance.memory.usedJSHeapSize/1048576):-1};});
   ok('Bellek: ikinci turda geometri/doku/program sayısı büyümüyor',mem2.geo<=mem.geo+4&&mem2.tex<=mem.tex+2&&mem2.prog<=mem.prog+1&&mem2.heap<=mem.heap+12,{once:mem,sonra:mem2});
   ok('Sayfa hatası yok (10 bölüm)',errs.length===0,errs.slice(0,3));
   // yeniden açılış: raf açılır, sıradaki bölüm hazır
@@ -65,6 +65,10 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
    __game.start(7);__game.begin();__game.pour(true);__game.sim(3000);for(let i=0;i<5;i++)__game.puff();out.puff=S().puffs;__game.pour(false);
    // görünürlük: arka plana geçince döküş durur
    __game.start(0);__game.begin();__game.pour(true);__game.sim(500);Object.defineProperty(document,'hidden',{value:true,configurable:true});document.dispatchEvent(new Event('visibilitychange'));out.vis=[pouring,down];Object.defineProperty(document,'hidden',{value:false,configurable:true});document.dispatchEvent(new Event('visibilitychange'));
+   // geri al: ikinci rengin ortasında; renk baştan dökülür, hak biter, bölüm yine kusursuz biter
+   __game.start(0);__game.autoplay('kusursuz');__game.begin();let u=0;while(u<3000&&S().qi<1){__game.sim(50);u++;}__game.sim(2500);
+   const p1=__game.sand(),c1=__game.canUndo();__game.undo();const p2=__game.sand(),q2=S().qi,c2=__game.canUndo();u=0;while(u<5000&&S().state!=='result'){__game.sim(50);u++;}__game.autoplay(null);
+   out.undo=[c1,p2<p1,q2===1,c2,S().state,S().stars];
    // dar ekran: yeniden boyutlandırma
    return out;});
   ok('Döküşte raf aç/kapat: menüye geçer, kapatınca döküşe döner, akış durur',r.rafPour[0]==='menu'&&r.rafPour[1]==='pour'&&r.rafPour[2]===false,r.rafPour);
@@ -75,6 +79,7 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
   ok('pointercancel akışı durdurur',r.cancel[1]===false&&r.cancel[2],r.cancel);
   ok('Üfleme hakkı 3 ile sınırlı',r.puff===0,r.puff);
   ok('Arka plana geçiş akışı durdurur',r.vis[0]===false&&r.vis[1]===false,r.vis);
+  ok('Geri al: son renk baştan dökülür, hak biter, bölüm üç yıldızla biter',r.undo[0]&&r.undo[1]&&r.undo[2]&&!r.undo[3]&&r.undo[4]==='result'&&r.undo[5]===3,r.undo);
   await p.setViewportSize({width:320,height:568});await p.waitForTimeout(800);await p.setViewportSize({width:430,height:932});await p.waitForTimeout(800);
   ok('Uç durumlarda ve yeniden boyutlandırmada sayfa hatası yok',errs.length===0,errs.slice(0,3));
   await b.close();}
