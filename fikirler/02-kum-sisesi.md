@@ -526,7 +526,7 @@ dil (İngilizce ve Almanca telefonda İngilizce, Türkçe harf kalmıyor; Türk�
 | Sürüm (derleme) | Tarih | Not |
 |---|---|---|
 | 1.0 (1) | 13 Ekim 2026 | İlk yükleme, Ozer Mac'te Xcode ile (Distribute App). Ozer iPhone'da denedi: "Her şey güzel şu anda." Aynı gün App Store incelemesine gönderildi (elle yayın). 29 Ekim 2026'da onaylandı (yaklaşık 16 gün "Waiting for Review"; Ekim 2026'da Apple'da genel yığılma vardı). Ülke ayarı (App Availability) eksik kalmıştı; 2 Kasım'da 175 ülkede açıldı |
-| 1.1 (2) | 2 Kasım 2026 (hazır) | 30 bölüm (Okyanus, Dört Mevsim), çubuk, renk geçişi, sallanan kavanoz, ışıldayan kum, canlanan final, geri al, yeni ana ekran ve ayarlar, gerçek kum kaydı. 3 Kasım'da TestFlight'a yüklendi (depo iCloud'daki Belgeler'den `~/Developer`'a taşındıktan sonra), Ozer telefonda denedi: "Tamam, şimdi oldu." TestFlight derlemesi telefondaki App Store sürümünün yerine geçti (normal) |
+| 1.1 (2) | 2 Kasım 2026 (hazır) | 30 bölüm (Okyanus, Dört Mevsim), çubuk, renk geçişi, sallanan kavanoz, ışıldayan kum, canlanan final, geri al, yeni ana ekran ve ayarlar, gerçek kum kaydı. 3 Kasım'da TestFlight'a yüklendi (depo iCloud'daki Belgeler'den `~/Developer`'a taşındıktan sonra), Ozer telefonda denedi: "Tamam, şimdi oldu." TestFlight derlemesi telefondaki App Store sürümünün yerine geçti (normal). 3 Kasım'da App Store incelemesine gönderildi (otomatik yayın) |
 
 App Store hazırlığı: mağaza metinleri (`uygulamalar/sandful/magaza/app-store-metinleri.md`), iki dilde 6'şar ekran görüntüsü (1206×2622, başlıklı; App Store Connect 1290×2796'yı kabul etmedi),
 gizlilik ve destek sayfaları (`magaza/site/`). Para kazanma önerisi ayrı dosyada: `fikirler/03-sandful-gelir.md` (Ozer'in onayına).
