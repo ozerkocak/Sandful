@@ -1303,35 +1303,49 @@ function gfxDecorPlaced(r){if(!RD)return;const T3=RD.T3,m=new T3.Mesh(new T3.Pla
 
 // katman dizini: kirli sütunlar yeniden yazılır. L = katman×16 + ince tabaka tonu, A = kum var. Üstte 0,05 boyunca en üst renk sürer.
 function lamH(i,li){let h=(Math.imul(i,374761393)+Math.imul(li+1,668265263))|0;h=Math.imul(h^(h>>>13),1274126177);return (h>>>24)&15;}
+// Görünen üst (VT): süs bloğuyla biten sütunda komşu kumun yüksekliği. Süs, çevresini kum doldurana kadar boşlukta durur
+// (yoksa süsün kapladığı blok henüz dökülmemiş katmanın rengiyle kutu gibi görünür). Fizik topY ile çalışmaya devam eder.
+const VT=new Float32Array(NC),NL=new Float32Array(NC),decorCols=[],hasDec=new Uint8Array(NC);
+const decTop=c=>{const n=segN[c];return n>0&&segC[c*MAXS+n-1]>=100;};
+// NL: süslü sütunda, süssüz en yakın sol ve sağ sütunun kum yüksekliği (arası doğrusal). Süs bloğunun bu seviyenin üstü boş çizilir;
+// bloğun üstüne düşen kum (çatıdaki kar gibi) görünür kalır.
+function visTops(){decorCols.length=0;for(let c=0;c<NC;c++){VT[c]=topY[c];let h=0;if(valid[c]){const b=c*MAXS;for(let j=0;j<segN[c];j++)if(segC[b+j]>=100){h=1;break;}}hasDec[c]=h;if(h)decorCols.push(c);}
+ for(const c of decorCols){let l=-1,r=-1;
+  for(let q=c-1;q>=0;q--)if(valid[q]&&!hasDec[q]){l=q;break;}
+  for(let q=c+1;q<NC;q++)if(valid[q]&&!hasDec[q]){r=q;break;}
+  NL[c]=l<0&&r<0?0:l<0?topY[r]:r<0?topY[l]:topY[l]+(topY[r]-topY[l])*(c-l)/(r-l);
+  if(decTop(c)){const bot=topY[c]-segH[c*MAXS+segN[c]-1];VT[c]=clamp(NL[c],bot,topY[c]);}}}
 // süsün kapladığı yer, aynı sütunda süsün hemen altındaki (alt yarı) ya da üstündeki (üst yarı) kumun rengini alır: geçişli katmanda kare iz kalmaz
 function nearCode(b,n,j,li,down){const look=dir=>{for(let q=j+dir;q>=0&&q<n;q+=dir){const v=segC[b+q];if(v<100)return CL[dc(v)]===li?dc(v):-1;}return -1;};
  let k=look(down?-1:1);if(k<0)k=look(down?1:-1);return k<0?li:k;}
 function fillIdx(){const d=RD.idxData,rowH=YT/NVH;let any=false;
+ if(decorCols.length&&dirty.some(v=>v))for(const c of decorCols)dirty[c]=1;
  for(let c=0;c<NC;c++){if(!dirty[c])continue;dirty[c]=0;any=true;const n=segN[c];
   if(!valid[c]||!n){for(let r=0;r<NVH;r++)d[(r*NC+c)*2+1]=0;continue;}
-  const b=c*MAXS,ext=topY[c]+.05;let y0=floorY[c],j=0;
+  const b=c*MAXS,ext=VT[c]+.05;let y0=floorY[c],j=0;
   for(let r=0;r<NVH;r++){const o=(r*NC+c)*2,Y=(r+.5)*rowH;
    if(Y>ext){d[o+1]=0;continue;}
    while(j<n-1&&Y>y0+segH[b+j]){y0+=segH[b+j];j++;}
-   const sc=segC[b+j];let li;if(sc>=100){li=0;while(li<ncol-1&&Y>tTop[li][c])li++;li=nearCode(b,n,j,li,Y<y0+segH[b+j]/2);}else li=dc(sc);d[o]=li*16+lamH(Math.floor(Math.max(0,Y-y0)/LAMT),li);d[o+1]=255;}}
+   const sc=segC[b+j];if(sc>=100&&Y>NL[c]+.01){d[o+1]=0;continue;}let li;if(sc>=100){li=0;while(li<ncol-1&&Y>tTop[li][c])li++;li=nearCode(b,n,j,li,Y<y0+segH[b+j]/2);}else li=dc(sc);d[o]=li*16+lamH(Math.floor(Math.max(0,Y-y0)/LAMT),li);d[o+1]=255;}}
  if(any)RD.idxTex.needsUpdate=true;}
 // üst yüzey ve duvarın üst kenarı: yumuşatılmış yükseklik S; tepeler içeride kabarık (B), çukurlar gölgeli (A)
 function updateSurf(){const hf=RD.hf,S=hf.S,RT=RD.rTab,W=RD.wall;
  const rAt=y=>{const f=clamp(y/HJ,0,1)*512,i=Math.min(511,f|0);return RT[i]+(RT[i+1]-RT[i])*(f-i);};
- for(let c=0;c<NC;c++){let s=0,w=0;if(valid[c])for(let k=-4;k<=4;k++){const q=c+k;if(q>=0&&q<NC&&valid[q]){const ww=1-Math.abs(k)/5;s+=topY[q]*ww;w+=ww;}}S[c]=w?s/w:topY[c];}
+ for(let c=0;c<NC;c++){let s=0,w=0;if(valid[c])for(let k=-4;k<=4;k++){const q=c+k;if(q>=0&&q<NC&&valid[q]){const ww=1-Math.abs(k)/5;s+=VT[q]*ww;w+=ww;}}S[c]=w?s/w:VT[c];}
  for(let c=0;c<NC;c++){let s2=0,n2=0;for(let k=-18;k<=18;k++){const q=c+k;if(q>=0&&q<NC&&valid[q]&&segN[q]){s2+=S[q];n2++;}}
   const dv=n2?S[c]-s2/n2:0;hf.A[c]=dv;hf.B[c]=segN[c]?Math.max(0,dv)*1.15:0;
   const X=xOf(c),rr=rAt(S[c])-.003;hf.Z[c]=valid[c]&&segN[c]?Math.sqrt(Math.max(0,rr*rr-X*X)):0;}
  let mt=0;for(let c=0;c<NC;c++)if(valid[c]&&topY[c]>mt)mt=topY[c];hf.maxTop=mt;
  const Hh=(c,q)=>{c=clamp(c,0,NC-1);return S[c]+hf.B[c]*(1-q*q);};
- for(let c=0;c<NC;c++){const X=xOf(c),zm=hf.Z[c],e=valid[c]&&segN[c]?1:0,cv=clamp(hf.A[c]/.06,-1,1)*.13,tk=clamp((topY[c]-floorY[c])/.014,0,1);
+ for(let c=0;c<NC;c++){const X=xOf(c),zm=hf.Z[c],e=valid[c]&&segN[c]?1:0,cv=clamp(hf.A[c]/.06,-1,1)*.13,tk=clamp((VT[c]-floorY[c])/.014,0,1);
   for(let j=0;j<=hf.K;j++){const v=c*(hf.K+1)+j,o=v*3,q=-1+2*j/hf.K,H=Hh(c,q),dx=(Hh(c+3,q)-Hh(c-3,q))/(6*DX),dz=zm>1e-4?-2*hf.B[c]*q/zm:0,il=1/Math.hypot(dx,1,dz);
    hf.pos[o]=X;hf.pos[o+1]=H;hf.pos[o+2]=zm*q;hf.nor[o]=-dx*il;hf.nor[o+1]=il;hf.nor[o+2]=-dz*il;hf.e[v]=e;hf.th[v]=tk;hf.cav[v]=cv*(1-.4*q*q);}}
  const ga=hf.geo.attributes;ga.position.needsUpdate=ga.normal.needsUpdate=ga.aE.needsUpdate=ga.aCav.needsUpdate=ga.aT.needsUpdate=true;
  // üst yüzey dokusu: yükseklik (16 bit), en üst ve altındaki katman, en üst katmanın ne kadar örttüğü (ince serpinti tane tane görünür)
  const td=RD.topData;
  for(let c=0;c<NC;c++){const h=Math.round(clamp(S[c]/YT,0,1)*65535),o=c*4,n=segN[c],b=c*MAXS;td[o]=h>>8;td[o+1]=h&255;
-  const top=n?dc(segC[b+n-1]):0,bel=n>1?dc(segC[b+n-2]):top;td[o+2]=top*16+bel;td[o+3]=n?clamp(segH[b+n-1]/.018,0,1)*255:255;}
+  let m=n;while(m>1&&segC[b+m-1]>=100)m--; // süs bloğunun üstü değil, altındaki kumun rengi
+  const top=m?dc(segC[b+m-1]):0,bel=m>1?dc(segC[b+m-2]):top;td[o+2]=top*16+bel;td[o+3]=m?clamp(segH[b+m-1]/.018,0,1)*255:255;}
  RD.topTex.needsUpdate=true;
  const topAt=x=>{const f=clamp((x+RW)/DX-.5,0,NC-1),i=Math.min(NC-2,f|0);return S[i]+(S[i+1]-S[i])*(f-i);};
  const wp=W.pos,NA=W.NA,NR=W.NR;
@@ -1367,7 +1381,7 @@ function gfxFrame(now){if(!RD)return;const t=now/1000,fdt=clamp((now-lastGfx)/10
  const fin=state==='finale'||state==='result';camHc+=((fin?2.5:2.78)-camHc)*ease(5);camYc+=((fin?1.15:1.3)-camYc)*ease(5);
  if(state==='finale'){const f=T-finT,q=clamp((f-.7)/1.9,0,1);orbit=Math.sin(Math.PI*q)*.3;zoom=1-.07*Math.sin(Math.PI*q);}else{orbit-=orbit*ease(6);zoom+=(1-zoom)*ease(6);}
  frameCamera();
- fillIdx();updateSurf();
+ visTops();fillIdx();updateSurf();
  // huni
  const showF=state==='ready'||state==='pour'||state==='hold'||state==='drop'||state==='settle';RD.fun.visible=showF;
  if(showF){RD.fun.position.set(noz,FUNY,0);RD.fun.rotation.z=tiltA;const it=queue[qi];

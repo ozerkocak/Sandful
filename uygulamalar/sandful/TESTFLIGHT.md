@@ -9,10 +9,10 @@ Uygulama internetsiz çalışır.
 | Konu | Durum |
 |---|---|
 | İlk açılış | Doğrudan 1. bölüm; elle sürükleme ipucu ve "Basılı tut: kum akar" yazısı |
-| Sonraki açılışlar | Raf (bölümler, yıldızlar, bitmiş şişelerin küçük resimleri); sıradaki bölümden devam |
-| Bölümler | 10 bölüm; bir bölümü açmak için öncekinden en az 1 yıldız |
-| Dil | Telefon Türkçeyse Türkçe, değilse İngilizce. Raftaki "Dil" düğmesiyle değişir |
-| Ses | Sentezlenen kum sesi (rafta seçilir: Tıpırtı, Kadife, İnce), melodi ve ortam. Rafta "Ses" ve "Müzik" ayrı kapatılır |
+| Sonraki açılışlar | Ana ekran: Sıradaki kartı ("Oyna"), dünya kartları, raflarda bölümler, yıldızlar ve bitmiş şişelerin küçük resimleri |
+| Bölümler | 30 bölüm, 3 dünya (Kıyı ve Kara, Okyanus, Dört Mevsim); bir bölümü açmak için öncekinden en az 1 yıldız |
+| Dil | Telefon Türkçeyse Türkçe, değilse İngilizce. Ayarlar'daki (dişli) "Dil" ile değişir |
+| Ses | Gerçek kum kaydı (Pixabay), marimba ve glockenspiel müziği (VSCO-2, CC0). Ayarlar'da Ses, Müzik ve Kum sesi (Gerçek kum, Yumuşak, Kapalı) |
 | Sessiz anahtar | iPhone sessizdeyse oyun sesi çıkmaz (oyunlarda olağan davranış). Arkada çalan müzik kesilmez, oyunla karışır |
 | Titreşim | iPhone titreşim motoru: kum düşerken en hafif "seçim" tıkları, kayma ve renk değişiminde hafif, kapakta ve yıldızlarda güçlü |
 | Kayıt | Yıldızlar, en iyi yüzde, ayarlar cihazda saklanır (iOS'un silebileceği tarayıcı deposu yerine uygulama tercihleri) |
@@ -26,7 +26,7 @@ Varsayılanlar:
 |---|---|
 | Uygulama adı | Sandful (App Store başlığı: "Sandful: Relaxing Sand Art") |
 | Paket kimliği (Bundle ID) | `com.investateknoloji.sandful` |
-| Sürüm | 1.0, derleme 2 hazır (1 yüklendi; her yeni yüklemede Claude artırır) |
+| Sürüm | 1.1, derleme 2 hazır (1.0 derleme 1 yayında; her yeni yüklemede Claude artırır) |
 | Cihaz | Sadece iPhone, dikey, tam ekran |
 | Ekip | İnvesta Teknoloji (`3ANJ967SS2`) |
 
@@ -72,6 +72,17 @@ Uygulama Bilgileri'nde **Türkçe** yerelleştirmeyi ekle; ad her dilde aynı ka
 4. **Dış test**: bir grup oluştur, derlemeyi ekle, `magaza/testflight-metinleri.md`'deki metinleri gir.
    İlk dış derleme kısa bir Apple incelemesinden geçer (genelde 1 gün). Sonra herkese açık bağlantı oluşturup paylaşabilirsin.
 
+### 6. Güncelleme yayınlama (1.1 gibi)
+
+1. Yukarıdaki 4. adımla yeni derlemeyi yükle; TestFlight'ta görünür, telefonda dene.
+2. App Store Connect > Sandful > Distribution: sol menüde **iOS App** başlığının yanındaki **+** (ya da "+ Version or Platform") > **iOS** > sürüm numarası **1.1** > Create.
+3. 1.1 sayfasında: **What's New in This Version** (İngilizce ve Türkçe), tanıtım metni, açıklama, ekran görüntüleri: `magaza/app-store-metinleri.md`.
+   Dil değiştirmeden önce **Save**.
+4. **Build** bölümünde **+** > TestFlight'taki 1.1 (2) derlemesini seç.
+5. App Information > **Content Rights**: "Yes, it contains, shows, or accesses third-party content, and I have the necessary rights" (ses kayıtları).
+6. **Version Release**: "Manually release" ya da "Automatically release". **Add for Review** > **Submit for Review**.
+   Fiyat, ülkeler, gizlilik beyanı ve yaş derecesi 1.0'dan aynen kalır; yeniden girmen gerekmez.
+
 ## Yedek yol: Codemagic (Mac gerekmez)
 
 Mac'e erişemediğin zamanlar için kökteki `codemagic.yaml` hazır (Apple Kimliği işli). Kullanmak istersen:
@@ -85,7 +96,7 @@ Bütün alanların değerleri: `magaza/app-store-metinleri.md` (ad, alt başlık
 
 1. **Gizlilik ve destek sayfası:** `magaza/site/` klasöründeki iki dosya şirket sitesinde `sandful` klasörüne yüklenir:
    destek `https://www.investa.com.tr/sandful/`, gizlilik `https://www.investa.com.tr/sandful/privacy.html`. Bu adresler App Store Connect'te Support URL ve Privacy Policy URL alanlarına girilir; Apple göndermeden önce açılıp açılmadığına bakar.
-2. **Ekran görüntüleri:** `magaza/ekran-goruntuleri/en/` ve `tr/` (6'şar, 1206×2622). "iPhone with Dynamic Island (medium display)" kutusuna 01 → 06 sırasıyla sürüklenir.
+2. **Ekran görüntüleri:** `magaza/ekran-goruntuleri/en/` ve `tr/` (1.1'de 7'şer, 1206×2622). "iPhone with Dynamic Island (medium display)" kutusuna 01 → 07 sırasıyla sürüklenir.
 3. **Metinler** İngilizce ve Türkçe sayfaya girilir, **Build** olarak TestFlight'taki derleme seçilir.
 4. **App Privacy:** "Data Not Collected". **Age Rating:** bütün cevaplar "None/No" → 4+.
 5. **Business:** AB'de yayın için "trader" (DSA) bilgisi girilmiş olmalı (hesap düzeyinde, bir kez).

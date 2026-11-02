@@ -7,12 +7,13 @@ const font=[700,800,900].map(w=>['latin','latin-ext'].map(s=>`@font-face{font-fa
 const OUT=path.join(__dirname,'..','magaza','ekran-goruntuleri');
 // sıra, ham dosya, başlık (en/tr), arka plan, yazı rengi
 const S=[
- ['01','2-gunbatimi',{en:'Pour sand.<br>Watch a scene appear.',tr:'Kum dök,<br>manzara ortaya çıksın.'},['#fbe3d6','#f3c0a8','#e79a86'],'#4a2a22'],
- ['02','5-gece',{en:'Close the lid on<br>a perfect jar',tr:'Kapağı kapat,<br>yıldızları topla'},['#2c3566','#1d2350','#121636'],'#fff6e6'],
- ['03','3-daglar',{en:'Sand that piles<br>and slides for real',tr:'Gerçek gibi yığılan,<br>kayan kum'},['#ece4f2','#d6c8e4','#bba7d2'],'#3a2c4a'],
- ['04','4-tekne',{en:'Drop a boat,<br>a swan or the moon',tr:'Tekne, kuğu ya da<br>ayı yerine bırak'},['#e3f0f6','#bcdcea','#93c4dc'],'#1f3a4a'],
- ['05','1-plaj',{en:'Follow the lines,<br>layer by layer',tr:'Çizgileri izle,<br>katman katman'},['#f6ecd9','#ecd7b1','#dfc08e'],'#4a3826'],
- ['06','6-raf',{en:'Fill your shelf<br>with calm',tr:'Rafını sakin<br>manzaralarla doldur'},['#f4e7d4','#e6cfae','#d4b28a'],'#4a3826'],
+ ['01','01-ana',{en:'Three worlds,<br>thirty calm scenes',tr:'Üç dünya,<br>otuz sakin manzara'},['#f6ecd9','#ecd7b1','#dfc08e'],'#4a3826'],
+ ['02','02-kuzey',{en:'Glowing sand<br>under the night sky',tr:'Gece göğünde<br>ışıldayan kum'},['#2c3566','#1d2350','#121636'],'#fff6e6'],
+ ['03','03-gunbatimi',{en:'Pour sand.<br>Watch a scene appear.',tr:'Kum dök,<br>manzara ortaya çıksın.'},['#fbe3d6','#f3c0a8','#e79a86'],'#4a2a22'],
+ ['04','04-yagmur',{en:'Draw rain and waves<br>with a stick',tr:'Çubukla yağmur<br>ve dalga çiz'},['#e6ecf2','#c9d4e0','#a9b8ca'],'#2a3442'],
+ ['05','05-ilkkar',{en:'Pour while<br>the jar rocks',tr:'Kavanoz sallanırken<br>dök'},['#eef3f8','#d5e2ee','#b8cde0'],'#2a3a4a'],
+ ['06','06-lale',{en:'Sand that changes<br>color as you pour',tr:'Döktükçe renk<br>değiştiren kum'},['#fde8e2','#f6c6b8','#eea08f'],'#4a2522'],
+ ['07','07-koy',{en:'Place a house,<br>a pine, a star',tr:'Ev, çam, yıldız:<br>yerine bırak'},['#e3e9f6','#c3cde8','#9eabd6'],'#232c58'],
 ];
 (async()=>{const b=await chromium.launch({args:['--allow-file-access-from-files']});
  const VW=402,VH=874,Z=VW/430;const p=await (await b.newContext({viewport:{width:VW,height:VH},deviceScaleFactor:3})).newPage();

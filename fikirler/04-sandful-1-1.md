@@ -43,6 +43,7 @@ Reddedilmiş yönlere girmiyor: süre baskısı, durduran sınır, uzun düşün
 
 - **1.1:** Gerçek kum sesi + müzik örnekleri, canlanan final, geri al, Okyanus dünyası (11-20) ile çubukla çizme, geçişli kum, sallanan kavanoz, ışıldayan kum.
 - **1.2:** Dört mevsim dünyası (21-30), atölye, para kazanma (`03-sandful-gelir.md`).
+  (2 Kasım 2026: Ozer "bölüm sayısını artıralım, ana ekranı daha güzel hale getirelim" dedi; Dört Mevsim ve yeni ana ekran 1.1'e alındı. Atölye ve para kazanma 1.2'de.)
 - Her adımda bot simülasyonu (zorluk), uçtan uca test ve telefonda TestFlight denemesi.
 
 ## Ozer'e sorular
@@ -150,3 +151,40 @@ Ozer sentezle yapılan sakin karışımı da beğenmedi. Yöntem değişti: Ozer
 deniz/rüzgâr ortam sesi (13 sn'de bir yavaşça yükselip alçalan süzülmüş gürültü) ve müziğin altındaki alçak ped (7,5 sn'de bir akor değiştirirken perdesi kayan üçgen dalgalar).
 İkisi de kaldırıldı. Gece bölümlerinde sadece çok kısık cırcır böceği kaldı. Ses artık: gerçek kum kaydı, marimba melodisi, parıltılar ve olay sesleri.
 Ders: yavaşça süzülen gürültü ya da perdesi kayan alçak ses kulağa motor/uçak gibi gelir; arka plan sesi kullanılacaksa gerçek kayıt olmalı.
+
+### 5. parça: Dört Mevsim ve yeni ana ekran (Ozer: "1.1 derlemesine geçelim. Bölüm sayısını artıralım. Ana ekranı daha güzel hale getirelim; sadece camlar, 'My Shelf' ve altta ayarlar çıkıyor.")
+
+- **Dört Mevsim (21-30):** Kiraz çiçeği, Lale tarlası (kırmızıdan sarıya geçiş), Yaz tarlası, Bağ bozumu (çubukla üzüm salkımı + turuncudan pembeye gök),
+  Yağmur (çubukla yağmur çizgileri), Sonbahar ormanı (üfleme), İlk kar (sallanan kavanoz), Karlı köy (3 süs, kararan gece), Kuzey ışıkları (ışıldayan, yeşilden mora), Kar tanesi (çubuk + geçiş + 2 süs).
+  Yeni renkler: kiraz, yaprak, lale, buğday, asma, üzüm, sonbahar, kızıl, bulut, kuzey (ışıldar). Yeni süsler: kiraz ağacı, kelebek, ayçiçeği, mantar, akçaağaç yaprağı, şemsiye, kardan adam, çam, ev, kar tanesi.
+- Düzeltme: geçişli katmandaki süsün kapladığı yer katmanın ilk rengini alıyordu (kar tanesinin arkasında koyu kare). Artık aynı sütunda süsün hemen altındaki/üstündeki kumun tonunu alıyor.
+  Döküş sırasında da süsün kapladığı blok, henüz dökülmemiş katmanın rengiyle kutu gibi görünüyordu (karlı köyde çamın arkasında lacivert blok).
+  Artık blok, çevresindeki kum seviyesinin üstünde boş çiziliyor: süs boşlukta durur, kum çevresini doldurdukça arkası dolar; çatıya düşen kum görünür kalır. Bitmiş şişeler değişmedi.
+- **Ana ekran:** üstte Sandful adı, toplam yıldız ve ayar (dişli) düğmesi. **Sıradaki** kartı: sıradaki bölümün cam şekli ve hedef katmanlarıyla küçük önizleme, bölümün mekanikleri (çubuk, renk geçişi, süs…), büyük "Oyna".
+  Oyun ortasında açılınca aynı kart "Devam" der. Her dünya bir kart: kendi kum renkleriyle simge ve ilerleme çubuğu (alttan üste döküldüğü sırayla), yıldız sayısı, 5'li iki ahşap rafta kavanozlar;
+  bitmiş şişe küçük resmi, oynanmamış bölüm silik önizleme, sıradaki parlar, kilitli bölüm boş cam ve kilit. Kilitli dünya kısa tanıtım ("20. bölümü bitirince açılır. 10 yeni sahne").
+- **Ayarlar** ayrı pencerede: Ses, Müzik, Titreşim anahtarları; Kum sesi ve Dil seçenek düğmeleri; altta sürüm.
+
+#### Bot tablosu (Dört Mevsim; bölüm başına 3 koşu)
+
+| Bölüm | Kusursuz | İnsan | Dağınık | Süpürücü | Dokunmayan |
+|---|---|---|---|---|---|
+| 21 Kiraz çiçeği | 98 ★3 | 86 ★2,3 | 85 ★1,7 | 90 ★2 | 46 ★0 |
+| 22 Lale tarlası | 99 ★3 | 91 ★3 | 81 ★1,3 | 83 ★2 | 47 ★0 |
+| 23 Yaz tarlası | 97 ★3 | 85 ★2,7 | 79 ★1,3 | 74 ★1 | 60 ★0 |
+| 24 Bağ bozumu | 97 ★3 | 90 ★2,7 | 77 ★1 | 86 ★2 | 46 ★0 |
+| 25 Yağmur | 96 ★3 | 91 ★3 | 85 ★2 | 79 ★1,7 | 45 ★0 |
+| 26 Sonbahar ormanı | 97 ★3 | 83 ★2 | 65 ★0 | 65 ★0 | 62 ★0 |
+| 27 İlk kar | 94 ★3 | 84 ★2,3 | 71 ★0,7 | 62 ★0 | 54 ★0 |
+| 28 Karlı köy | 97 ★3 | 81 ★2 | 75 ★1,3 | 64 ★0 | 49 ★0 |
+| 29 Kuzey ışıkları | 95 ★3 | 87 ★2,3 | 85 ★2 | 58 ★0 | 55 ★0 |
+| 30 Kar tanesi | 95 ★3 | 83 ★2,3 | 74 ★1 | 70 ★0 | 59 ★0 |
+
+Sonbahar ormanı 25. sıradayken dünyanın en zoruydu; Yağmur ile yer değiştirdi. Karlı köyde insan botu evi hep ıskalıyor (tepe yeterince yükselmezse ev aşağıda kalıyor): geç bölüm için uygun zorluk.
+
+### 1.1 derlemesi (2 Kasım 2026)
+
+- Sürüm 1.1, derleme 2 (`MARKETING_VERSION 1.1`, `CURRENT_PROJECT_VERSION 2`; Android 1.1 / 2). Uçtan uca test 30/30 (prototip ve uygulama derlemesi, 30 bölüm, 3 dünya, 3 dil).
+- Mağaza: What's New, yeni açıklama ve tanıtım metni, 7 yeni ekran görüntüsü (ana ekran, kuzey ışıkları, gün batımı, yağmur, ilk kar, lale tarlası, karlı köy) (`uygulamalar/sandful/magaza/app-store-metinleri.md`).
+  Ses kayıtları üçüncü taraf içerik olduğu için App Information > Content Rights "Yes … I have the necessary rights" olacak.
+- Destek sayfasında ses ayarının yeri güncellendi (rafta → ana ekrandaki dişli); `magaza/site/index.html` siteye yeniden yüklenebilir (zorunlu değil).
