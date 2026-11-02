@@ -131,3 +131,15 @@ Yapılan:
 - Müzik: melodi 0,5 sn yerine 0,9 sn'de bir; en yüksek seride çalan çanlar kaldırıldı; bas ve akor yumuşadı; müziğe biraz daha yankı.
 - Ortam: deniz, rüzgâr, fırtına daha kısık ve koyu; cırcır böceği daha alçak ve kısık.
 - Dinleme örneği: oyundaki karışımın çevrimdışı benzeri (kum + marimba + deniz + yankı), iki kum sesiyle.
+
+### Kum sesi: Ozer'in seçtiği gerçek kayıt
+
+Ozer sentezle yapılan sakin karışımı da beğenmedi. Yöntem değişti: Ozer Pixabay'den "Pouring Sand onto Sand" (artificiallyinspired) kaydını seçti
+(Pixabay İçerik Lisansı: uygulamada ücretsiz, ticari kullanılabilir, kaynak gösterme zorunlu değil).
+- Kayıt ölçümü: merkez ~6,5 kHz, basıklık 25: gerçek kum benim sentezlerimden çok daha tiz ve taneli. Kulak sentezin yapaylığını yakalıyordu;
+  "cızırtı" şikâyeti tınının kendisinden çok yapaylıktandı.
+- İşlem: 3,4-7,2 sn arası (sondaki tok vuruş hariç), 150 Hz altı uğultu temizlendi, 0,3 sn eşit güçte çapraz geçişle dikişsiz 3,5 sn döngü,
+  0,5 sn pencereyle seviye dengelendi; mono 32 kHz 64 kbps MP3 (~29 KB), dosyaya gömülü.
+- Oyunda: tek döngü, akışa göre açılıp kısılır, düştüğü yere göre sağ-sol. Kayma aynı kaydın 0,78 hızda, 2,6 kHz alçak geçirenden geçmiş hali.
+- Rafta: Gerçek kum (varsayılan), Yumuşak (sentez), Kapalı. Tercih kum10 ile sıfırlandı.
+- Ders (TASARIM-ILKELERI): doğal bir sesin (kum, su) sentezi kolay beğenilmiyor; Ozer'e lisansı uygun kayıtlardan seçtirmek en hızlı yol.
