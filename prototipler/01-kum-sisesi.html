@@ -135,7 +135,7 @@ const RW=.88,HJ=2.13,HF=1.96,NC=256,DX=2*RW/NC,TALUS=Math.tan(34*Math.PI/180)*DX
 const NV=384,YT=2.2;          // kum dokusu: 256 sütun × 384 satır
 const TOL=3*CELL;let SCALE=20*CELL;
 const GRAVW=14,FLOWK=2.25e-4,SIG=2.2,FUNY=2.38; // akış dilimlerinin yerçekimi, akış katsayısı, döküş izi (sütun), huni ucu
-const BEAT=.5,GAIN=1.25,RMAX=88;
+const BEAT=.9,GAIN=1.25,RMAX=88;
 const IS_IOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 const CPX=window.Capacitor,NATIVE=!!(CPX&&CPX.isNativePlatform&&CPX.isNativePlatform()),PLG=(NATIVE&&CPX.Plugins)||{};
 
@@ -146,7 +146,7 @@ const hex=h=>{const n=parseInt(h.slice(1),16);return[n>>16&255,n>>8&255,n&255];}
 
 // ───────── Kayıt ─────────
 const SKEY='kumSisesi.v3';
-let SAVE={lv:{},snd:true,hap:true,seen:false,kum8:0,muz:true};
+let SAVE={lv:{},snd:true,hap:true,seen:false,kum9:0,muz:true};
 try{const s=JSON.parse(localStorage.getItem(SKEY)||'null');if(s&&typeof s==='object')SAVE=Object.assign(SAVE,s);}catch(e){}
 function persist(){const v=JSON.stringify(SAVE);try{localStorage.setItem(SKEY,v);}catch(e){}if(PLG.Preferences)PLG.Preferences.set({key:SKEY,value:v}).catch(()=>{});}
 
@@ -185,7 +185,7 @@ const EN={
  'Raf':'Shelf','Sonraki':'Next','Tekrar':'Again','Devam':'Continue','Rafım':'My Shelf','Baştan':'Restart',
  'Ses: {0}':'Sound: {0}','Müzik: {0}':'Music: {0}','Kum sesi: {0}':'Sand sound: {0}','Titreşim: {0}':'Haptics: {0}','Dil: {0}':'Language: {0}','açık':'on','kapalı':'off',
  'Geri alındı':'Undone','Çubukla aşağı çiz':'Draw down with the stick',' Çubuk: {0}/{1}.':' Stick: {0}/{1}.',
- 'Üçüncü yıldız için çubuk izlerini kesik çizgilere göre çiz.':'For the third star, draw the stick marks along the dashed lines.','Geri al':'Undo','İpek':'Silk','Yağmur çubuğu':'Rain stick','Bu cihazda 3D grafik açılamadı.':'3D graphics could not start on this device.'};
+ 'Üçüncü yıldız için çubuk izlerini kesik çizgilere göre çiz.':'For the third star, draw the stick marks along the dashed lines.','Geri al':'Undo','Yumuşak':'Soft','Şarkı söyleyen kum':'Singing sand','Bu cihazda 3D grafik açılamadı.':'3D graphics could not start on this device.'};
 let LANG='en';
 const langNow=()=>SAVE.lang||((navigator.language||'en').toLowerCase().startsWith('tr')?'tr':'en');
 function t(s,...a){let r=LANG==='en'&&EN[s]!=null?EN[s]:s;a.forEach((v,i)=>{r=r.split('{'+i+'}').join(v);});return r;}
@@ -405,7 +405,7 @@ function startLevel(n,opt={}){clearStars();down=false;activeId=null;
  const bn=$('banner');bn.querySelector('.bt').textContent=t(L.ad);bn.querySelector('.bs').textContent=t('Bölüm {0}',n+1)+(L.sus?t(' · süslü'):'');
  bn.classList.add('show');clearTimeout(bn._t);bn._t=setTimeout(()=>bn.classList.remove('show'),1900);
  $('hand').classList.toggle('show',n===0||!SAVE.seen);
- ambient(L.ortam);if(RD)gfxLevel();}
+ ambient(L.ortam);if(pourG)tuneSing(pourG[0]);if(RD)gfxLevel();}
 function beginPour(){if(state!=='ready')return;state='pour';pourStart=T+.12;
  if(!BOT){$('hand').classList.remove('show');$('banner').classList.remove('show');if(!SAVE.seen){SAVE.seen=true;persist();}}}
 
@@ -442,7 +442,7 @@ function step(){
  const lr=Math.min(1.2,landed/(L.akis*FLOWK*DT+1e-12)),gf=landed>0?glassLand/landed:0,sp=clamp(impact/6,.35,1);
  if(landed>0&&T>=nextTick){nextTick=T+.055+.07*(1-Math.min(1,lr))+Math.random()*.04;if(PLG.Haptics||navigator.vibrate)vib(onTarget?7:5,true);else tickDue=true;}
  const kayS=state==='stick'&&stick?Math.min(.9,stick.dv*2.5):0;
- setPour(lr*(1-gf)*(.55+.45*sp),lr*gf,Math.max(kayS,Math.min(1,slideFlux/6+avMoved*30)),clamp((stick&&state==='stick'?stick.x:landX)/RW,-1,1)*.45);
+ setPour(lr*(.6+.4*sp),0,Math.max(kayS,Math.min(1,slideFlux/6+avMoved*30)),clamp((stick&&state==='stick'?stick.x:landX)/RW,-1,1)*.45);
  if(AC)padTick();
  if(hapSel&&!down&&landed===0&&!avs.length&&performance.now()-hapLast>600)hapEnd();
  if(L.ortam==='gece'&&T>=nextCricket){nextCricket=T+.9+Math.random()*.9;cricket();}}
@@ -644,35 +644,39 @@ function* grainGen(o){const sr=SR0,n=Math.floor(sr*o.sec),d=new Float32Array(n);
  if(o.hp2)yield*biq(d,'hp',o.hp2,.7);if(o.lp2)yield*biq(d,'lp',o.lp2,.7);if(o.pk)yield*biq(d,'pk',o.pk,.9,o.pkDb);
  rmsN(d,.2);
  return d;}
-// Kum sesleri (rafta seçilir). Sürüm 7'deki "doğal" (kısa, sönen gürültü taneleri) Ozer'e "zıtırtı" gibi geldi: ölçünce basıklığı 6,2 çıktı
-// (sivri tıkırtılar; pürüzsüz hışırtıda 3). Yeni adayların hepsi pürüzsüz (basıklık 3,1-3,9):
-//  kumsal (varsayılan): sıcak, yumuşak hışırtı, 450-3200 Hz, 1,6 kHz +3 dB, merkez ~1,8 kHz; yavaş akış dalgalanması
-//  ipek: ince kum gibi parlak ama pürüzsüz "sss", 900-5000 Hz, 3 kHz +2 dB, merkez ~3 kHz
-//  cubuk (yağmur çubuğu): yumuşak (Hann) tanelerden hafif dokulu akış, 700-6000 Hz, merkez ~3,2 kHz
-// cam: boş cama düşüş (seyrek, yumuşak çınlamalar), kay: yamaçtan kayma (pes, dalgalanan pürüzsüz hışırtı).
+// Kum sesleri (rafta seçilir). Ozer: "Hâlâ cızırtı ve karışıklık var; çok soft, rahatlatan bir ses olmalı."
+// Telefon hoparlöründe 2-5 kHz'teki her sürekli hışırtı parazit gibi duyulur; kum sesi oraya çıkmaz. Ses kısık, müzik önde.
+//  yumusak (varsayılan): nefes gibi alçak "fff", 220-1500 Hz, 650 Hz +2 dB, yavaş dalgalanma
+//  sarki (şarkı söyleyen kum): canlı; beyaz gürültü bölümün tonundaki üç notaya akortlu dar süzgeçlerden geçer (havadar, müzikal uğultu)
+//  kumsal: sıcak, yumuşak hışırtı (450-3200 Hz)
+// kay: yamaçtan kayma (çok alçak, kısa dalgalanan hışırtı). Cam tıkırtısı kaldırıldı.
 const SND={
+ yumusak:{sec:6,bw:1,bhp:220,blp:1500,mod:.25,modHz:.5,mod2:.08,mod2Hz:2.5,hp:120,lp:2400,pk:650,pkDb:2},
  kumsal:{sec:6,bw:1,bhp:450,blp:3200,mod:.22,modHz:.7,mod2:.08,mod2Hz:5,hp:150,lp:9000,pk:1600,pkDb:3},
- ipek:{sec:6,bw:1,bhp:900,blp:5000,mod:.2,modHz:.9,mod2:.1,mod2Hz:3,hp:150,lp:9000,pk:3000,pkDb:2},
- cubuk:{sec:6,lay:[{rate:1600,u0:.003,u1:.01,sig:.25,a:1,h:1}],mod:.18,modHz:1.1,hp:700,hp2:700,lp:6000,lp2:6000,pk:2500,pkDb:2},
- cam:{sec:3.3,kind:'ring',rate:150,f0:2200,f1:4200,u0:.02,u1:.05,sig:.3,gw:1,hp:900,lp:6500},
- kay:{sec:3.7,bw:1,bhp:300,blp:1500,mod:.3,modHz:3,mod2:.2,mod2Hz:1.1,hp:200,lp:3000}};
-const KUM_SES=['kumsal','ipek','cubuk'],KUM_AD=['Kumsal','İpek','Yağmur çubuğu']; // ekranda t() ile
-const kumAdi=()=>KUM_SES[SAVE.kum8|0]||'kumsal';
+ kay:{sec:3.7,bw:1,bhp:200,blp:900,mod:.3,modHz:2.5,mod2:.2,mod2Hz:1.1,hp:120,lp:1400}};
+const KUM_SES=['yumusak','sarki','kumsal'],KUM_AD=['Yumuşak','Şarkı söyleyen kum','Kumsal']; // ekranda t() ile
+const kumAdi=()=>KUM_SES[SAVE.kum9|0]||'yumusak';
 function sndNeed(names){names.forEach(nm=>{if(!sndCache[nm]&&!sndQ.includes(nm)&&!(sndJob&&sndJob.nm===nm))sndQ.push(nm);});if(!sndJob)sndNext();}
 function sndNext(){const nm=sndQ.shift();if(!nm){sndJob=null;return;}const g=grainGen(SND[nm]);
  sndJob={nm,run(ms){const t=performance.now();while(performance.now()-t<ms){const r=g.next();if(r.done){sndCache[nm]=r.value;sndNext();attachPour();return;}}}};}
-function sndStart(){sndNeed([kumAdi(),'cam','kay']);}
+function sndStart(){sndNeed([kumAdi(),'kay'].filter(n=>SND[n]));}
 // her katman iki çalardan: aynı tampon farklı yerden ve biraz farklı hızda; döngünün tekrarı duyulmaz
 function mkLayer(d){const buf=AC.createBuffer(1,d.length,SR0);buf.getChannelData(0).set(d);const g=AC.createGain();g.gain.value=0;g.connect(pourPan||sandBus);const dur=buf.duration,ss=[];
  for(const rt of [1,.968]){const s=AC.createBufferSource();s.buffer=buf;s.loop=true;s.playbackRate.value=rt;const h=AC.createGain();h.gain.value=.72;s.connect(h);h.connect(g);s.start(AC.currentTime,Math.random()*dur*.95);ss.push(s);}
  return{g,ss};}
-function attachPour(){if(!AC)return;if(!pourG)pourG=[null,null,null];const want=[kumAdi(),'cam','kay'];
- for(let k=0;k<3;k++){const nm=want[k];if((pourG[k]&&pourG[k].nm===nm)||!sndCache[nm])continue;
+// şarkı söyleyen kum: gürültü → bölümün tonundaki üç notada dar süzgeçler (+ çok az alçak hışırtı); bölüm değişince akort edilir
+function mkSing(){const s=AC.createBufferSource();s.buffer=noiseBuf;s.loop=true;const g=AC.createGain();g.gain.value=0;g.connect(pourPan||sandBus);const fs=[];
+ for(const k of [0,1,2]){const f=AC.createBiquadFilter();f.type='bandpass';f.Q.value=12;const fg=AC.createGain();fg.gain.value=[1.6,1.2,.9][k];s.connect(f);f.connect(fg);fg.connect(g);fs.push(f);}
+ const lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.value=700;const lg=AC.createGain();lg.gain.value=.12;s.connect(lp);lp.connect(lg);lg.connect(g);
+ s.start();const ly={g,ss:[s],fs,nm:'sarki'};tuneSing(ly);return ly;}
+function tuneSing(ly){if(!ly||!ly.fs||!L)return;const iv=L.minor?[0,7,15]:[0,7,16];ly.fs.forEach((f,k)=>f.frequency.setTargetAtTime(mf(L.kok+iv[k]),AC.currentTime,.3));}
+function attachPour(){if(!AC)return;if(!pourG)pourG=[null,null,null];const want=[kumAdi(),null,'kay'];
+ for(let k=0;k<3;k++){const nm=want[k];if(!nm||(pourG[k]&&pourG[k].nm===nm)||(nm!=='sarki'&&!sndCache[nm]))continue;
   const old=pourG[k];if(old){old.g.gain.setTargetAtTime(0,AC.currentTime,.05);setTimeout(()=>{old.ss.forEach(x=>{try{x.stop();}catch(e){}});old.g.disconnect();},500);}
-  try{const ly=mkLayer(sndCache[nm]);ly.nm=nm;pourG[k]=ly;pourNow[k]=0;}catch(e){}
+  try{const ly=nm==='sarki'?mkSing():mkLayer(sndCache[nm]);ly.nm=nm;pourG[k]=ly;pourNow[k]=0;}catch(e){}
   if(k===0&&sndPreview){sndPreview=false;previewKum();}}}
 function previewKum(){if(!AC||!pourG||!pourG[0]||pourG[0].nm!==kumAdi()){sndPreview=true;return;}const g=pourG[0].g.gain,t=AC.currentTime;
- g.cancelScheduledValues(t);g.setTargetAtTime(.38,t,.06);g.setTargetAtTime(0,t+1.4,.2);pourNow[0]=-1;}
+ g.cancelScheduledValues(t);g.setTargetAtTime(.3,t,.12);g.setTargetAtTime(0,t+1.4,.2);pourNow[0]=-1;}
 function makeVerb(){const sr=AC.sampleRate,len=Math.floor(sr*1.8),b=AC.createBuffer(2,len,sr);
  for(let ch=0;ch<2;ch++){const d=b.getChannelData(ch);let lp=0;for(let i=0;i<len;i++){const t=i/sr;lp=lp*.55+(Math.random()*2-1)*.45;d[i]=lp*Math.exp(-t*2.6)*(t<.01?t/.01:1)*.5;}}
  const c=AC.createConvolver();c.buffer=b;return c;}
@@ -680,21 +684,21 @@ function initAudio(){if(AC){if(AC.state!=='running')unlockAudio();return;}
  try{AC=new(window.AudioContext||window.webkitAudioContext)();master=AC.createGain();master.gain.value=SAVE.snd===false?0:.75;master.connect(AC.destination);
   const verb=makeVerb(),vOut=AC.createGain();vOut.gain.value=.55;verb.connect(vOut);vOut.connect(master);
   const bus=(dry,wet)=>{const g=AC.createGain(),s=AC.createGain();g.gain.value=dry;s.gain.value=wet;g.connect(master);g.connect(s);s.connect(verb);return g;};
-  musicBus=bus(SAVE.muz===false?0:1,.38);sandBus=bus(1,.08);
+  musicBus=bus(SAVE.muz===false?0:1,.46);sandBus=bus(1,.1);
   const len=AC.sampleRate*2;noiseBuf=AC.createBuffer(1,len,AC.sampleRate);const a=noiseBuf.getChannelData(0);for(let i=0;i<len;i++)a[i]=Math.random()*2-1;
   if(AC.createStereoPanner){pourPan=AC.createStereoPanner();pourPan.connect(sandBus);}
   if(L)ambient(L.ortam);unlockAudio();
   attachPour();loadSamples();}catch(e){AC=null;}}
 // kum: kumun kuma düşmesi, cam: boş cama düşmesi, kay: yamaçtan kayma, pan: düştüğü yer (sol-sağ), br: düşme hızına göre parlaklık
-function setPour(kum,cam,kay,pan){if(!AC||!pourG)return;const v=[kum*.38,cam*.18,kay*.28],t=AC.currentTime;
- for(let k=0;k<3;k++){if(!pourG[k]||Math.abs(v[k]-pourNow[k])<.004)continue;const up=v[k]>pourNow[k];pourNow[k]=v[k];pourG[k].g.gain.setTargetAtTime(v[k],t,up?.04:.16);}
+function setPour(kum,cam,kay,pan){if(!AC||!pourG)return;const v=[kum*.3,0,kay*.16],t=AC.currentTime;
+ for(let k=0;k<3;k++){if(!pourG[k]||Math.abs(v[k]-pourNow[k])<.004)continue;const up=v[k]>pourNow[k];pourNow[k]=v[k];pourG[k].g.gain.setTargetAtTime(v[k],t,up?.12:.25);}
  if(pourPan&&pan!=null&&Math.abs(pan-pourNow[3])>.03){pourNow[3]=pan;pourPan.pan.setTargetAtTime(pan,t,.12);}}
 // ortam: deniz (yavaş dalga hışırtısı), rüzgâr, gece; altında çok alçak, yavaş akor değiştiren yumuşak bir ped
 function ambient(kind){if(!AC)return;ambNodes.forEach(n=>{try{n.stop?n.stop():n.disconnect();}catch(e){}});ambNodes=[];
  const s=AC.createBufferSource();s.buffer=noiseBuf;s.loop=true;const f=AC.createBiquadFilter(),gg=AC.createGain(),lfo=AC.createOscillator(),lg=AC.createGain(),lfo2=AC.createOscillator(),lg2=AC.createGain();
- if(kind==='deniz'){f.type='lowpass';f.frequency.value=650;f.Q.value=.5;gg.gain.value=.03;lfo.frequency.value=.075;lg.gain.value=.022;lfo.connect(lg);lg.connect(gg.gain);lfo2.frequency.value=.075;lg2.gain.value=260;lfo2.connect(lg2);lg2.connect(f.frequency);}
- else if(kind==='ruzgar'){f.type='bandpass';f.frequency.value=480;f.Q.value=1;gg.gain.value=.017;lfo.frequency.value=.05;lg.gain.value=280;lfo.connect(lg);lg.connect(f.frequency);lfo2.frequency.value=.031;lg2.gain.value=.01;lfo2.connect(lg2);lg2.connect(gg.gain);}
- else if(kind==='firtina'){f.type='bandpass';f.frequency.value=900;f.Q.value=.6;gg.gain.value=.026;lfo.frequency.value=.09;lg.gain.value=500;lfo.connect(lg);lg.connect(f.frequency);lfo2.frequency.value=.05;lg2.gain.value=.016;lfo2.connect(lg2);lg2.connect(gg.gain);}
+ if(kind==='deniz'){f.type='lowpass';f.frequency.value=480;f.Q.value=.5;gg.gain.value=.022;lfo.frequency.value=.075;lg.gain.value=.016;lfo.connect(lg);lg.connect(gg.gain);lfo2.frequency.value=.075;lg2.gain.value=180;lfo2.connect(lg2);lg2.connect(f.frequency);}
+ else if(kind==='ruzgar'){f.type='bandpass';f.frequency.value=380;f.Q.value=1;gg.gain.value=.011;lfo.frequency.value=.05;lg.gain.value=280;lfo.connect(lg);lg.connect(f.frequency);lfo2.frequency.value=.031;lg2.gain.value=.01;lfo2.connect(lg2);lg2.connect(gg.gain);}
+ else if(kind==='firtina'){f.type='bandpass';f.frequency.value=520;f.Q.value=.7;gg.gain.value=.017;lfo.frequency.value=.09;lg.gain.value=260;lfo.connect(lg);lg.connect(f.frequency);lfo2.frequency.value=.05;lg2.gain.value=.016;lfo2.connect(lg2);lg2.connect(gg.gain);}
  else{f.type='lowpass';f.frequency.value=500;f.Q.value=.5;gg.gain.value=.006;lfo.frequency.value=.1;lg.gain.value=0;lfo.connect(lg);lfo2.frequency.value=.1;lg2.gain.value=0;lfo2.connect(lg2);}
  s.connect(f);f.connect(gg);gg.connect(master);s.start();lfo.start();lfo2.start();ambNodes=[s,lfo,lfo2,gg];
  if(!pad){const pf=AC.createBiquadFilter(),pg=AC.createGain();pf.type='lowpass';pf.frequency.value=900;pf.Q.value=.3;pg.gain.value=0;pf.connect(pg);pg.connect(musicBus);pg.gain.setTargetAtTime(.015,AC.currentTime,2.5);
@@ -721,10 +725,9 @@ function pluck(m,gain,delay){if(playS(MAR,'m',m,gain*1.2,delay))return;const f=m
 // glockenspiel: notayı en az 88'e (oktavlarla) taşır
 function bell(m,gain,delay){while(m<88)m+=12;if(playS(GLK,'g',m,gain,delay))return;tone(mf(m),'sine',gain*.6,.9,delay,.004);}
 function beat(){const n=melody[mi%melody.length],root=L.kok;mi++;
- if(n!==null)pluck(root+n,.085);
- if(streakLvl>=1&&mi%4===1){const pr2=[0,-3,5,7][Math.floor(mi/4)%4];if(!playS(MAR,'m',root-12+pr2,.075))tone(mf(root-12+pr2),'sine',.09,1.1);}
- if(streakLvl>=2&&mi%8===1){[0,4,7].forEach((d,k)=>tone(mf(root+d+(L.minor&&d===4?-1:0)),'sine',.022,2,k*.01,.3));}
- if(streakLvl>=3&&n!==null&&mi%2===0)bell(root+n+12,.022,.17);}
+ if(n!==null)pluck(root+n,.07);
+ if(streakLvl>=1&&mi%4===1){const pr2=[0,-3,5,7][Math.floor(mi/4)%4];if(!playS(MAR,'m',root-12+pr2,.05))tone(mf(root-12+pr2),'sine',.06,1.1);}
+ if(streakLvl>=2&&mi%8===1){[0,4,7].forEach((d,k)=>tone(mf(root+d+(L.minor&&d===4?-1:0)),'sine',.014,2.4,k*.01,.4));}}
 function ding(){bell(L.kok+24,.05);bell(L.kok+31,.035,.09);pluck(L.kok+12,.05);}
 function softBell(){pluck(L.kok+19,.06);bell(L.kok+24,.03,.12);}
 function chord(v){[0,4,7,12].forEach((d,k)=>pluck(L.kok+12+d+(L.minor&&d===4?-1:0),.06*v,k*.06));}
@@ -739,7 +742,7 @@ function pop(){if(!AC)return;const t=AC.currentTime,o=AC.createOscillator(),gg=A
  bell(L.kok+24,.05,.06);bell(L.kok+31,.03,.1);}
 function layerNote(k){const sc=L.minor?[0,3,7,10,12,15,19]:[0,4,7,9,12,16,19];pluck(L.kok+sc[k%sc.length],.11);}
 function starPop(k){pluck(L.kok+12+[0,4,7][k],.1);bell(L.kok+24+[0,4,7][k],.04,.05);}
-function cricket(){for(let k=0;k<3;k++)tone(4300,'sine',.007,.03,k*.06,0,master);}
+function cricket(){for(let k=0;k<3;k++)tone(3400,'sine',.0035,.03,k*.06,.004,master);}
 
 // Titreşim: uygulamada Capacitor Haptics, Android tarayıcıda vibrate, iPhone tarayıcıda gizli switch hilesi (iOS 18+, deneysel).
 // Kum tanesi titreşimi uygulamada en hafif "seçim" tıkıdır (selectionChanged); dökmeye başlarken selectionStart, bırakınca selectionEnd.
@@ -1342,12 +1345,12 @@ $('rNext').onclick=()=>{if(LV>=LEVELS.length-1){prevState=null;openRaf();}else s
 $('rafClose').onclick=()=>closeRaf();
 $('sSnd').onclick=()=>{SAVE.snd=SAVE.snd===false;persist();if(master)master.gain.value=SAVE.snd?.75:0;setTexts();};
 $('sMuz').onclick=()=>{SAVE.muz=SAVE.muz===false;persist();if(musicBus)musicBus.gain.value=SAVE.muz?1:0;setTexts();};
-$('sKum').onclick=()=>{initAudio();SAVE.kum8=((SAVE.kum8|0)+1)%3;persist();setTexts();sndNeed([kumAdi()]);attachPour();previewKum();};
+$('sKum').onclick=()=>{initAudio();SAVE.kum9=((SAVE.kum9|0)+1)%3;persist();setTexts();if(SND[kumAdi()])sndNeed([kumAdi()]);attachPour();previewKum();};
 $('sHap').onclick=()=>{SAVE.hap=SAVE.hap===false;persist();setTexts();if(SAVE.hap)vib(20);};
 $('sLang').onclick=()=>{SAVE.lang=LANG==='tr'?'en':'tr';persist();setTexts();openRaf();};
 // sabit metinler ve ayar düğmeleri seçili dilde; bölüm açıksa başlık ve ipucu da
 function setTexts(){LANG=langNow();document.documentElement.lang=LANG;const oo=v=>t(v===false?'kapalı':'açık');
- $('sSnd').textContent=t('Ses: {0}',oo(SAVE.snd));$('sMuz').textContent=t('Müzik: {0}',oo(SAVE.muz));$('sKum').textContent=t('Kum sesi: {0}',t(KUM_AD[SAVE.kum8|0]));
+ $('sSnd').textContent=t('Ses: {0}',oo(SAVE.snd));$('sMuz').textContent=t('Müzik: {0}',oo(SAVE.muz));$('sKum').textContent=t('Kum sesi: {0}',t(KUM_AD[SAVE.kum9|0]));
  $('sHap').textContent=t('Titreşim: {0}',oo(SAVE.hap));$('sLang').textContent=t('Dil: {0}',LANG==='tr'?'Türkçe':'English');
  $('rafH').textContent=t('Rafım');$('rafClose').textContent=t('Devam');$('rAgain').textContent=t('Tekrar');$('gfxErr').textContent=t('Bu cihazda 3D grafik açılamadı.');
  $('bRaf').setAttribute('aria-label',t('Raf'));$('bRe').setAttribute('aria-label',t('Baştan'));$('bUndo').setAttribute('aria-label',t('Geri al'));

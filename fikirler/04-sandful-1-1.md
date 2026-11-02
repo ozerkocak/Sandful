@@ -117,3 +117,17 @@ Yeni adaylar (hepsi basıklık 3,0-3,7), rafta Kum sesi düğmesiyle seçilir:
 
 Kayma sesi pürüzsüz hışırtıya döndü (3,5), boş cama düşüş daha sık ve uzun çınlamalarla yumuşadı (10,1 → 4,5). Kum sesi biraz kısıldı, müzik önde.
 Ders (TASARIM-ILKELERI'ne): sürekli seslerde basıklığı ölç, ~3-4 tut; 5'in üstü kulağa zıtırtı gelir.
+
+### Sakin karışım (Ozer: "Hâlâ cızırtı ve karışıklık var; çok soft, rahatlatan bir ses olmalı.")
+
+Teşhis: (1) Telefon hoparlöründe 2-5 kHz'teki her sürekli hışırtı, ne kadar pürüzsüz olursa olsun parazit gibi duyuluyor.
+(2) Aynı anda çok katman vardı: kum, cam tıkırtısı, kayma, yarım saniyede bir melodi notası, bas, akor, çan, ortam, cırcır böceği.
+
+Yapılan:
+- Kum sesi: **Yumuşak** (varsayılan): nefes gibi alçak "fff", 220-1500 Hz, merkez ~820 Hz, 2 kHz üstü %0,9.
+  **Şarkı söyleyen kum**: canlı; gürültü bölümün tonundaki üç notaya (kök, beşli, onlu) akortlu dar süzgeçlerden geçer, müzikle karışan havadar uğultu
+  (merkez ~740 Hz, 2 kHz üstü %3). Üçüncü seçenek Kumsal. Tercih kum9 ile sıfırlandı.
+- Cam tıkırtısı kaldırıldı; kayma çok alçak (200-900 Hz) ve kısık. Kum sesi kısıldı (0,38 → 0,30), daha yavaş açılıp kapanır.
+- Müzik: melodi 0,5 sn yerine 0,9 sn'de bir; en yüksek seride çalan çanlar kaldırıldı; bas ve akor yumuşadı; müziğe biraz daha yankı.
+- Ortam: deniz, rüzgâr, fırtına daha kısık ve koyu; cırcır böceği daha alçak ve kısık.
+- Dinleme örneği: oyundaki karışımın çevrimdışı benzeri (kum + marimba + deniz + yankı), iki kum sesiyle.
