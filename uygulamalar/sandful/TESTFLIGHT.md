@@ -97,6 +97,8 @@ Bütün alanların değerleri: `magaza/app-store-metinleri.md` (ad, alt başlık
 - Ekran görüntüsü kutusu "iPhone with Dynamic Island (medium display)": 1206×2622 ya da 1179×2556 istiyor.
 - Sürüm sayfasında **Sign-in required** ve **Game Center** işaretli gelebiliyor; ikisi de kaldırılır.
 - App Privacy cevapları **Publish** edilmeden inceleme başlamıyor. AB için DSA "trader" beyanı Business sayfasında, bir kez.
+- **Pricing and Availability'de fiyat ile ülke ayrı ayrı kurulur.** Fiyat 175 ülke için girilmişti ama **App Availability > Set Up Availability** yapılmamıştı:
+  uygulama 29 Ekim'de onaylandı, "Ready for Distribution" göründü ama hiçbir ülkede yayına çıkmadı ("ülkenizde kullanılamıyor"). 2 Kasım'da kuruldu: "175 Available".
 
 ## Android deneyiciler için
 
