@@ -62,3 +62,19 @@ Sonra yeni temalar güncellemeyle eklenir; istenirse üretici sonu olmayan bir "
 1. El yapımı + üretilmiş karışım uygun mu, yoksa bütün bölümler el yapımı mı olsun? (El yapımı 200 bölüm aylar sürer.)
 2. Hedef kaç bölüm: 200 mü, daha çok mu, yoksa sonsuz yol mu?
 3. 1.1 şimdi mi gitsin (A), yoksa beklesin mi (B)?
+
+## Ozer'in kararı (2 Kasım 2026)
+
+"Tamam, ne yapıyoruz şimdi?" Öneri olduğu gibi kabul edildi: **A** (1.1 şimdi yüklenir, çok bölümlü yol 1.2), el yapımı + üretilmiş karışım, hedef 200 bölüm.
+İlk adım: üretici ayrı dosyada (`araclar/`) yazılır, oyun dosyasına dokunulmaz (Ozer 1.1'i aynı daldan yüklüyor). İlk iki temanın üretilmiş bölümleri 3D küçük resimlerle Ozer'e gösterilir; görünüm onaylanınca oyuna alınır.
+
+## İlk deneme (2 Kasım 2026)
+
+- Üretici: `araclar/uretici.js` (oyun sayfasında çalışır; Kıyı ve Kış temaları, 10 tarif: kumsal, dalgalar, akşam bantları, gece kıyısı, fırtına, karlı tepe, karlı dağ, donmuş göl, kuzey ışıkları, tipi).
+  Mekanikler el yapımı bölümde tanıtıldıktan sonra çıkar (üfleme 8, çubuk 11, renk geçişi 14, sallanan kavanoz 16, ışıltı 20).
+- Eleme: `araclar/uretici-sec.js`. Kusursuz bot 2 koşuda 3 yıldız (≥ %90, süsler ve çubuk izleri tam, 15-60 sn), dokunmayan 0 yıldız,
+  insan botunun ortalaması sıraya göre bantta (1-20: 2,3-3; 21-60: 2-3; 61-120: 1,7-2,7; sonrası 1,4-2,5), dağınık bot insandan iyi değil,
+  art arda aynı tarif yok, bir tarif temanın en fazla %30'u, ad tekrarı yok. 32 yerin hepsi doldu (bölüm başına 1-12 deneme, toplam ~1 dakika).
+- Önizleme: `araclar/uretici-onizleme.js` (3D'de bitirip görüntü alır). 32 bölüm Ozer'e gösterildi.
+- Kendi değerlendirmem: el yapımılardan sade ve birbirine benziyor. Gökyüzü kavanozun yarısından fazlası (özellikle gri bulutlu kış göğü), süs az, art arda yelkenli.
+  Sıradaki düzeltmeler: yer katmanları daha yüksek (gökyüzü ≤ %40), renkli/geçişli gökler, bulut bantları, daha çok süs ve süs çeşitliliği kuralı, ada/fener/kaya gibi yeni kompozisyonlar.
