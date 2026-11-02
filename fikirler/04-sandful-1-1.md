@@ -143,3 +143,10 @@ Ozer sentezle yapılan sakin karışımı da beğenmedi. Yöntem değişti: Ozer
 - Oyunda: tek döngü, akışa göre açılıp kısılır, düştüğü yere göre sağ-sol. Kayma aynı kaydın 0,78 hızda, 2,6 kHz alçak geçirenden geçmiş hali.
 - Rafta: Gerçek kum (varsayılan), Yumuşak (sentez), Kapalı. Tercih kum10 ile sıfırlandı.
 - Ders (TASARIM-ILKELERI): doğal bir sesin (kum, su) sentezi kolay beğenilmiyor; Ozer'e lisansı uygun kayıtlardan seçtirmek en hızlı yol.
+
+### "Arkada uçak gibi bir ses" (Ozer)
+
+"Arkada uçak gibi ses geliyor, vuuu, sürekli artıyor bazen sonra azalıyor." İki kaynak vardı:
+deniz/rüzgâr ortam sesi (13 sn'de bir yavaşça yükselip alçalan süzülmüş gürültü) ve müziğin altındaki alçak ped (7,5 sn'de bir akor değiştirirken perdesi kayan üçgen dalgalar).
+İkisi de kaldırıldı. Gece bölümlerinde sadece çok kısık cırcır böceği kaldı. Ses artık: gerçek kum kaydı, marimba melodisi, parıltılar ve olay sesleri.
+Ders: yavaşça süzülen gürültü ya da perdesi kayan alçak ses kulağa motor/uçak gibi gelir; arka plan sesi kullanılacaksa gerçek kayıt olmalı.
