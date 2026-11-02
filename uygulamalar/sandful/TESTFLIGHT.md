@@ -46,8 +46,9 @@ Uygulama Bilgileri'nde **Türkçe** yerelleştirmeyi ekle; ad her dilde aynı ka
 
 ### 3. Bir kerelik kurulum (Mac)
 
-1. **GitHub Desktop**'ta File > Clone Repository > GitHub.com sekmesi > `ozerkocak/Sandful` > **Clone**
-   (varsayılan klasör: `~/Documents/GitHub/Sandful`).
+1. **GitHub Desktop**'ta File > Clone Repository > GitHub.com sekmesi > `ozerkocak/Sandful`.
+   **Local Path** olarak iCloud'a eşitlenmeyen bir klasör seç: ev klasöründe `Developer` (`~/Developer/Sandful`). > **Clone**
+   (Varsayılan `~/Documents/GitHub` iCloud'un "Masaüstü ve Belgeler" eşitlemesi açıksa sorun çıkarır: aşağıdaki "Sorunlar" bölümü.)
 2. Üstteki **Current Branch** menüsünden `claude/clever-wright-10sbmw` dalını seç.
 
 ### 4. Her yeni sürümde
@@ -56,7 +57,7 @@ Uygulama Bilgileri'nde **Türkçe** yerelleştirmeyi ekle; ad her dilde aynı ka
    Sol tarafta "Changes" listesinde dosya görünürse (Xcode bazen proje dosyasını değiştirir): sağ tık > **Discard All Changes**, sonra Pull.
 2. Terminal'de:
    ```bash
-   cd ~/Documents/GitHub/Sandful/uygulamalar/sandful
+   cd ~/Developer/Sandful/uygulamalar/sandful
    sh scripts/ios-hazirla.sh
    ```
    Paketleri kurar, oyunu uygulamaya kopyalar ve Xcode'u açar.
@@ -82,6 +83,15 @@ Uygulama Bilgileri'nde **Türkçe** yerelleştirmeyi ekle; ad her dilde aynı ka
 5. App Information > **Content Rights**: "Yes, it contains, shows, or accesses third-party content, and I have the necessary rights" (ses kayıtları).
 6. **Version Release**: "Manually release" ya da "Automatically release". **Add for Review** > **Submit for Review**.
    Fiyat, ülkeler, gizlilik beyanı ve yaş derecesi 1.0'dan aynen kalır; yeniden girmen gerekmez.
+
+### Sorunlar
+
+- **Pull sırasında `fatal: mmap failed: Operation canceled`** (3 Kasım 2026): depo iCloud'a eşitlenen `~/Documents` içindeydi;
+  iCloud yer açmak için bazı dosyaları buluta taşıyınca git onları okuyamıyor ve güncelleme yarıda kalıyor (Changes listesinde değiştirilmiş dosyalar görünür).
+  Çözüm: GitHub Desktop'ta Repository > **Remove…** ("Also move this repository to Trash" işaretli; her şey GitHub'da olduğu için bir şey kaybolmaz),
+  sonra depoyu `~/Developer` gibi iCloud dışı bir klasöre yeniden klonla ve `claude/clever-wright-10sbmw` dalını seç.
+  iCloud dışı klasör `npm ci`'nin kurduğu binlerce paket dosyasının buluta yüklenmesini de önler.
+- **Changes listesinde `.DS_Store`**: Mac Finder'ın kendi dosyası; artık `.gitignore`'da, görünmez.
 
 ## Yedek yol: Codemagic (Mac gerekmez)
 
