@@ -188,3 +188,10 @@ Sonbahar ormanı 25. sıradayken dünyanın en zoruydu; Yağmur ile yer değişt
 - Mağaza: What's New, yeni açıklama ve tanıtım metni, 7 yeni ekran görüntüsü (ana ekran, kuzey ışıkları, gün batımı, yağmur, ilk kar, lale tarlası, karlı köy) (`uygulamalar/sandful/magaza/app-store-metinleri.md`).
   Ses kayıtları üçüncü taraf içerik olduğu için App Information > Content Rights "Yes … I have the necessary rights" olacak.
 - Destek sayfasında ses ayarının yeri güncellendi (rafta → ana ekrandaki dişli); `magaza/site/index.html` siteye yeniden yüklenebilir (zorunlu değil).
+
+### Hata: süsün üstünde kum kulesi (Ozer, 4 Kasım 2026, TestFlight 1.1 (2))
+
+"Kum içine obje atıp devamını kumla doldurunca objenin üstünde farklı renk kum oluyor, sonra daha fazla kum dökünce düzeliyor. Bazen de objenin bir kısmı kayboluyor."
+Süsün düz tepesine düşen kum kaymadığı için tepede dar bir kule oluşuyor, kule ve süsün üstüne örtülen kum süsün bir kısmını kapatıyordu.
+Düzeltme: süsün üstüne düşen kum en yakın kenardan kayar (`decSlide`), çevre süsün tepesine ulaşınca üstü örtülür, kalan boşluk yandan dolar (`fillWells`).
+Bot tablosu değişmedi. Derleme numarası 3'e çıkarıldı.

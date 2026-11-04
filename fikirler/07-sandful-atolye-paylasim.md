@@ -68,3 +68,7 @@ Aşama 1 aşağı yukarı 1.1'deki Okyanus dünyası kadar iş. Aşama 2 bunun i
 1. Aşamalı yol uygun mu (önce atölye + dışarıya paylaşım, sonra topluluk)?
 2. Sıra: 1.2'de ne olsun? Seçenekler: (a) 200 bölüm + ölçüm, atölye 1.3'te; (b) atölye + paylaşım + ölçüm, 200 bölüm 1.3'te; (c) hepsi 1.2'de (daha geç çıkar).
 3. Topluluk aşamasında şikâyetlere kim bakacak? (Haftada birkaç dakika; çoğunu otomatik gizleme halleder.)
+
+## Ozer'in kararı (4 Kasım 2026)
+
+"Şimdilik o paylaşım tarafını yapmayalım. Üçüncü aşamada olabilir belki." 1.2 çok bölüm, çeşitlilik ve gelir modeline ayrıldı (`08-sandful-1-2.md`).
