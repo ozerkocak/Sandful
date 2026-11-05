@@ -98,4 +98,8 @@ Teknik ve hesap işleri:
   - Not: Apple'ın adres doğrulaması Türkiye adresini tanımadı, adres olduğu gibi onaylandı (kritik değil).
 - **5 Kasım 2026, aynı gün:** Paid Apps Agreement, banka hesabı ve iki vergi formu **Active**. Satın alma ürünleri açılabilir.
 - Sırada: AdMob hesabı, Firebase projesi; satın alma ürünleri 1.2 geliştirilirken açılacak (kimlikleri ben veririm).
+- **5 Kasım 2026:** AdMob'a uygulama eklendi (iOS, App Store'daki Sandful). Yayıncı kimliği `pub-2387022770405877`.
+  Doğrulama için `app-ads.txt` (`uygulamalar/sandful/magaza/site/app-ads.txt`) sitenin **kökünde** olmalı: `https://www.investa.com.tr/app-ads.txt`
+  (sandful klasöründe değil). AdMob iOS'ta dosyayı App Store sayfasındaki **Marketing URL**'nin alan adında arıyor; Marketing URL boştu,
+  `https://www.investa.com.tr` olarak girilecek (sürüm bilgisi; düzenlenebilir bir sürümde: 1.1 (3) değişikliği ya da 1.2). Doğrulama bir haftaya kadar sürebilir.
 
