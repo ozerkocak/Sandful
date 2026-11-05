@@ -88,3 +88,13 @@ Teknik ve hesap işleri:
 3. Gelir: tablo uygun mu? Sandful+ olsun mu? Takip izni (ATT) penceresi gösterelim mi?
 4. 1.1 (3): incelemedeki 1.1'i çekip düzeltilmiş derlemeyi koyalım mı, yoksa düzeltme 1.2 ile mi gelsin?
 5. Hesap işlerine (AdMob, Paid Apps Agreement, Firebase) şimdi başlayabilir misin? Apple'ın sözleşme onayı birkaç gün sürebiliyor.
+
+## Hesap işleri: ilerleme
+
+- **5 Kasım 2026:** Paid Apps Agreement için banka hesabı eklendi (Garanti BBVA, TRY, durum "Processing"), vergi formları gönderildi:
+  - U.S. Certificate of Foreign Status of Beneficial Owner: Corporation; ABD'de çalışan ve varlık yok beyanı.
+  - U.S. Substitute Form W-8BEN-E: Corporation, Türkiye vergi numarası, ABD vergi numarası yok; Türkiye mukimi, ownership and base erosion test,
+    Madde 12(2)(b), %10, "Income from the sale of applications". İmzalayan: Özer Koçak, Vice Chairman of the Board.
+  - Not: Apple'ın adres doğrulaması Türkiye adresini tanımadı, adres olduğu gibi onaylandı (kritik değil).
+- Sırada: Apple'ın onayı (sözleşme "Active" olunca satın alma ürünleri açılabilir), AdMob hesabı, Firebase projesi.
+
