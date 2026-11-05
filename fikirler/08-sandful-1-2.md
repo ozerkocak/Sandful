@@ -96,5 +96,6 @@ Teknik ve hesap işleri:
   - U.S. Substitute Form W-8BEN-E: Corporation, Türkiye vergi numarası, ABD vergi numarası yok; Türkiye mukimi, ownership and base erosion test,
     Madde 12(2)(b), %10, "Income from the sale of applications". İmzalayan: Özer Koçak, Vice Chairman of the Board.
   - Not: Apple'ın adres doğrulaması Türkiye adresini tanımadı, adres olduğu gibi onaylandı (kritik değil).
-- Sırada: Apple'ın onayı (sözleşme "Active" olunca satın alma ürünleri açılabilir), AdMob hesabı, Firebase projesi.
+- **5 Kasım 2026, aynı gün:** Paid Apps Agreement, banka hesabı ve iki vergi formu **Active**. Satın alma ürünleri açılabilir.
+- Sırada: AdMob hesabı, Firebase projesi; satın alma ürünleri 1.2 geliştirilirken açılacak (kimlikleri ben veririm).
 
