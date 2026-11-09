@@ -116,4 +116,4 @@ Teknik ve hesap işleri:
 | 5. Kimlikleri gönder | Uygulama ayarları ve reklam birimleri | Uygulama kimliği (`ca-app-pub-…~…`) ve iki reklam biriminin kimliği (`ca-app-pub-…/…`) Claude'a |
 
 Uygulama çocuklara yönelik olarak işaretlenmez (Kids kategorisinde değil). iPhone takip izni (ATT) kararı açık; onay mesajında "IDFA açıklama mesajı" ATT gösterilecekse eklenir.
-
+- **9 Kasım 2026:** AdMob reklam birimleri açıldı: geçiş `Sandful Bolum Sonu` ve ödüllü `Sandful Odullu`. Kimlikler `uygulamalar/sandful/admob.json`'da. Ödeme profili tamam (uyarı kalktı), hesap onayı bekleniyor. Sırada: Avrupa onay mesajı, engelleme kontrolleri (G).

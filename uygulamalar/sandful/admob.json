@@ -1,0 +1,9 @@
+{
+  "_not": "Sandful AdMob kimlikleri (iOS). Gizli değildir, uygulamanın içine gömülür. Geliştirme ve TestFlight'ta Google'ın test reklam birimleri kullanılır; bunlar sadece App Store derlemesinde.",
+  "yayinci": "pub-2387022770405877",
+  "ios": {
+    "uygulama": "ca-app-pub-2387022770405877~2752081913",
+    "gecis_bolum_sonu": "ca-app-pub-2387022770405877/8673265075",
+    "odullu": "ca-app-pub-2387022770405877/9999769129"
+  }
+}
