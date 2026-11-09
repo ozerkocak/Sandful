@@ -102,4 +102,4 @@ Teknik ve hesap işleri:
   Doğrulama için `app-ads.txt` (`uygulamalar/sandful/magaza/site/app-ads.txt`) sitenin **kökünde** olmalı: `https://www.investa.com.tr/app-ads.txt`
   (sandful klasöründe değil). AdMob iOS'ta dosyayı App Store sayfasındaki **Marketing URL**'nin alan adında arıyor; Marketing URL boştu,
   `https://www.investa.com.tr` olarak girilecek (sürüm bilgisi; düzenlenebilir bir sürümde: 1.1 (3) değişikliği ya da 1.2). Doğrulama bir haftaya kadar sürebilir.
-
+- **9 Kasım 2026:** `app-ads.txt` sitenin kökünde yayında (Ozer tarayıcıda doğruladı). Kalan: Marketing URL (`https://www.investa.com.tr`), AdMob ödeme profili, sonra AdMob'da "Check for updates".
