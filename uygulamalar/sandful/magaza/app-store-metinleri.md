@@ -5,6 +5,17 @@ App Store Connect > Sandful > Distribution > **iOS App Version 1.1** ve **App In
 Birincil dil İngilizce (ABD); Türkçe yerelleştirmede (sağ üstteki dil menüsü > Türkçe) Türkçe sütun girilir.
 Karakter sınırları kontrol edildi.
 
+## 1.1.1: düzeltme sürümü (9 Kasım 2026)
+
+1.1 yayında (9 Kasım'da "Ready for Distribution"). 1.1.1'de sadece iki şey değişiyor: süsün üstünde kum kulesi hatası düzeltildi ve **Marketing URL** eklendi
+(AdMob, `app-ads.txt` dosyasını bu adresin alan adında arıyor). Metinler, ekran görüntüleri, anahtar kelimeler 1.1'den kopyalanır.
+
+| Alan | İngilizce | Türkçe |
+|---|---|---|
+| What's New | `Sand no longer piles up on top of decorations: it slides off, and the decorations stay fully visible while you pour.` | `Kum artık süslerin üstünde birikmiyor: kenardan kayıyor, döküş sırasında süsler tamamen görünüyor.` |
+| Marketing URL | `https://www.investa.com.tr` | `https://www.investa.com.tr` |
+| Build | 1.1.1 (3) | |
+
 ## 1.1: Bu sürümde yenilikler (What's New, 4000)
 
 ### İngilizce

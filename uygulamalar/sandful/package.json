@@ -1,6 +1,6 @@
 {
   "name": "sandful",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "description": "Sandful: iOS ve Android uygulama paketi (Capacitor)",
   "scripts": {
