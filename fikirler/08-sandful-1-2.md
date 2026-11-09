@@ -103,3 +103,17 @@ Teknik ve hesap işleri:
   (sandful klasöründe değil). AdMob iOS'ta dosyayı App Store sayfasındaki **Marketing URL**'nin alan adında arıyor; Marketing URL boştu,
   `https://www.investa.com.tr` olarak girilecek (sürüm bilgisi; düzenlenebilir bir sürümde: 1.1 (3) değişikliği ya da 1.2). Doğrulama bir haftaya kadar sürebilir.
 - **9 Kasım 2026:** `app-ads.txt` sitenin kökünde yayında (Ozer tarayıcıda doğruladı). Kalan: Marketing URL (`https://www.investa.com.tr`), AdMob ödeme profili, sonra AdMob'da "Check for updates".
+- **9 Kasım 2026:** 1.1.1 (4) incelemeye gönderildi (süs düzeltmesi + Marketing URL).
+
+### AdMob kurulumu (Ozer'in yapacakları, sırayla)
+
+| Adım | Nerede | Ne |
+|---|---|---|
+| 1. Ödeme profili | Üstteki kırmızı uyarı > "Sorunu giderin" (ya da Ödemeler) | İşletme hesabı, Investa Teknoloji A.Ş., adres, iletişim. ABD vergi bilgisi sorulursa: ABD'de faaliyet yok |
+| 2. Reklam birimleri | Uygulamalar > Sandful > Reklam birimleri > Reklam birimi ekle | **Geçiş** (Interstitial): `Sandful Bolum Sonu`; **Ödüllü** (Rewarded): `Sandful Odullu`, ödül 1 / `hak`. Banner ve uygulama açılış reklamı yok |
+| 3. Avrupa onay mesajı | Gizlilik ve mesajlaşma > Avrupa düzenlemeleri | Sandful için mesaj oluştur; diller İngilizce + Türkçe; gizlilik politikası `https://www.investa.com.tr/sandful/privacy.html`; yayınla |
+| 4. Reklam içeriği | Engelleme kontrolleri > İçerik / Hassas kategoriler | En yüksek reklam içerik derecesi **G** (uygulama 4+; Apple reklamların yaş derecesine uygun olmasını istiyor); kumar, flört, alkol gibi hassas kategoriler engelli |
+| 5. Kimlikleri gönder | Uygulama ayarları ve reklam birimleri | Uygulama kimliği (`ca-app-pub-…~…`) ve iki reklam biriminin kimliği (`ca-app-pub-…/…`) Claude'a |
+
+Uygulama çocuklara yönelik olarak işaretlenmez (Kids kategorisinde değil). iPhone takip izni (ATT) kararı açık; onay mesajında "IDFA açıklama mesajı" ATT gösterilecekse eklenir.
+
