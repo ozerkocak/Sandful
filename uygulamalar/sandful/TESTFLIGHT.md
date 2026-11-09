@@ -26,7 +26,7 @@ Varsayılanlar:
 |---|---|
 | Uygulama adı | Sandful (App Store başlığı: "Sandful: Relaxing Sand Art") |
 | Paket kimliği (Bundle ID) | `com.investateknoloji.sandful` |
-| Sürüm | 1.1.1, derleme 3 hazır (1.1 (2) yayında; her yeni yüklemede Claude artırır) |
+| Sürüm | 1.1.1 (4) yüklendi (1.1 (2) yayında). Projede derleme 4; bir sonraki yüklemeden önce Claude 5'e çıkarır |
 | Cihaz | Sadece iPhone, dikey, tam ekran |
 | Ekip | İnvesta Teknoloji (`3ANJ967SS2`) |
 
@@ -85,6 +85,9 @@ Uygulama Bilgileri'nde **Türkçe** yerelleştirmeyi ekle; ad her dilde aynı ka
    Fiyat, ülkeler, gizlilik beyanı ve yaş derecesi 1.0'dan aynen kalır; yeniden girmen gerekmez.
 
 ### Sorunlar
+
+- **Xcode'da `Missing package product 'app_CapacitorApp'`** (9 Kasım 2026, depo yeni klasöre klonlandıktan sonra): File > Packages > **Reset Package Caches**, "Resolving packages" bitince Product > **Clean Build Folder**, sonra Archive. Olmazsa Xcode kapalıyken `rm -rf ~/Library/Developer/Xcode/DerivedData/App-*` ve `sh scripts/ios-hazirla.sh`.
+- **Yüklenen derleme numarası projedekinden büyük çıkabilir:** Distribute App'teki "Manage Version and Build Number" açıkken Xcode numarayı kendisi artırır (1.1.1'de 3 yerine 4). Sonraki sürümde projedeki numara yüklenenin üstüne çıkarılır.
 
 - **Pull sırasında `fatal: mmap failed: Operation canceled`** (3 Kasım 2026): depo iCloud'a eşitlenen `~/Documents` içindeydi;
   iCloud yer açmak için bazı dosyaları buluta taşıyınca git onları okuyamıyor ve güncelleme yarıda kalıyor (Changes listesinde değiştirilmiş dosyalar görünür).
