@@ -120,3 +120,11 @@ Uygulama çocuklara yönelik olarak işaretlenmez (Kids kategorisinde değil). i
 - **9 Kasım 2026:** Avrupa onay mesajı (GDPR) yayınlandı: Sandful, İngilizce + Türkçe, İzin / Seçenekleri yönetin / İzin vermeyin (bütün ülkelerde açık). Oyuna Google UMP kodu 1.2'de eklenecek.
 - **9 Kasım 2026:** Firebase projesi `sandful-47489` açıldı, iOS uygulaması eklendi; `GoogleService-Info.plist` `uygulamalar/sandful/resources/firebase/`'da. Kontrol edilecek: Google Analytics bağlı mı, AdMob bağlantısı, veri saklama 14 ay.
 - **9 Kasım 2026:** Firebase'de Google Analytics etkin; AdMob uygulaması Firebase'e bağlandı (Sandful iOS), gösterim düzeyinde reklam geliri açılıyor. Engelleme: hassas kategoriler (cinsellik, flört, kolay zengin olma, sosyal kumar, alkol, kumar) kapalı, içerik derecesi G.
+
+## Ozer'in kararları (10 Kasım 2026)
+
+- **Takip izni (ATT): gösterilmez.** Reklamlar kişiselleştirilmemiş gider; gelir görülünce yeniden düşünülür.
+- **Satın alma: sadece "Reklamsız"** (tek seferlik, yaklaşık 3,99 $): geçiş reklamları kalkar, ödüllü reklamla açılan haklar (geri al, üfleme) reklamsız gelir. Sandful+ sonraki bir sürümde (önce satılacak özel içerik gerekir).
+- 1.2'ye başlandı. Mekanikler için Ozer'in ayrıca seçimi olmadığından önerilen ilk dört: ayırıcı kart, rüzgâr, ıslak kum, ince/geniş uç.
+- 1.1.1 onaylandı (10 Kasım). AdMob doğrulaması: "Güncellemeleri kontrol edin" basıldı, sonuç bekleniyor.
+
