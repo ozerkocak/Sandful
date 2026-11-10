@@ -128,3 +128,35 @@ Uygulama çocuklara yönelik olarak işaretlenmez (Kids kategorisinde değil). i
 - 1.2'ye başlandı. Mekanikler için Ozer'in ayrıca seçimi olmadığından önerilen ilk dört: ayırıcı kart, rüzgâr, ıslak kum, ince/geniş uç.
 - 1.1.1 onaylandı (10 Kasım). AdMob doğrulaması: "Güncellemeleri kontrol edin" basıldı, sonuç bekleniyor.
 
+
+## 6. Yeni mekanikler: ilk sürüm (10 Kasım 2026)
+
+Dördü de prototipte (`prototipler/01-kum-sisesi.html`), her biri bir tanıtım bölümüyle. Bölümler şimdilik geçici bir 4. dünyada (**Yeni Bölümler**, 31-34);
+uzun yol kurulunca yerlerine (her temanın mekanik bölümleri) taşınacak.
+
+| Bölüm | Mekanik | Nasıl çalışıyor |
+|---|---|---|
+| 31 Kum fırtınası | **Rüzgâr** | İki dalganın toplamı olan esinti akan kumu yana iter; yönü ve gücü yavaşça değişir. Üstte 🍃 ve ok yönü ve gücü gösterir, akış da görünür şekilde eğilir. Huniyi rüzgârın geldiği yana kaydırırsın. |
+| 32 Üç tepe | **İnce ve geniş uç** | Sağ alttaki düğme. Geniş uç 1,4 kat hızlı ve düşerken açılan düz bir perde gibi döker (iz ~22 sütun); ince uç 0,6 kat hızla ince bir çizgi döker. Tepeler iki renkli; tepeleri ince uçla yapmak fark ediyor. |
+| 33 Kum kulesi | **Islak kum** | Islak kum koyu renkli (`islakKum`), sırada 💧 işareti var. Taneleri su tuttuğu için yamacı ~60-65°'ye kadar dik durur (kuru kum ~36°). Kuru kumla yapılamayan sivri bir kule. Üstüne dökülen kuru kum kuleden kayar. |
+| 34 Gece ve gündüz | **Ayırıcı kart** | Kavanozun ortasında ince bir kart: kum karttan geçmez. Sola gündüz, sağa gece; sıra gelince kart yukarı çekilir (ses, titreşim, "Kart çekildi"), üstüne alacakaranlık dökülür. İki yarının buluştuğu çizgi dimdik kalır. |
+
+Botlar (3'er koşu):
+
+| Bölüm | Kusursuz | İnsan | Dağınık | Süpürücü | Dokunmayan |
+|---|---|---|---|---|---|
+| 31 Kum fırtınası | %95 ★3 | %87 ★3 | ★1 | ★0 | ★0 |
+| 32 Üç tepe | %94 ★3 | %87 ★2,7 | ★0 | ★0 | ★0 |
+| 33 Kum kulesi | %96 ★3 | %87 ★2,7 | ★0,3 | ★0 | ★0 |
+| 34 Gece ve gündüz | %97 ★3 | %89 ★3 | ★0 | ★0 | ★0 |
+
+Kontroller: kart olmadan kusursuz bot Gece ve gündüz'de %73'te kalıyor (keskin dikey sınır kartsız yapılamıyor); kule kuru kumla dökülünce kusursuz %85 ★2.
+Eski bölümlerin bot sonuçları değişmedi. Uçtan uca test 30/30.
+
+Tasarım notları:
+- **Uç seçiminde hile yok:** ince uç her yerde daha hassas, geniş uç daha hızlı. Sabırlı oyuncu hep ince uçla 3 yıldız alabilir; bu rahatlatan oyunda doğru.
+  Geniş uç ilk denemede (dağınık iz) hem yavaş hem kötüydü; düz perdeye çevrilince geniş düz alanları gerçekten çabuk ve düzgün dolduruyor.
+- **Islak kum şimdilik hazır malzeme:** sırada ıslak bir renk geliyor. Fikirdeki "su damlat, kum koyulaşsın" (önce kuru dök, sonra ıslat) ikinci adım olarak eklenebilir.
+- Bot "insan" yeni mekaniklerde gerçek bir oyuncu gibi davranacak şekilde genişletildi: rüzgârı kısmen telafi ediyor, hedefte sivri yer varsa ince uca geçiyor,
+  kart dururken iki yanın hedefi farklıysa bir yana odaklanıyor.
+- Uygulama derlemesi (`npm run build`) prototipten yapıldığı için 1.2 bitene kadar bu daldan TestFlight'a yükleme yapılmamalı.

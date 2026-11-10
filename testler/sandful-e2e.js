@@ -43,8 +43,8 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
   ok('Sayfa hatası yok (10 bölüm)',errs.length===0,errs.slice(0,3));
   // yeniden açılış: raf açılır, sıradaki bölüm hazır
   await p.reload();await p.waitForTimeout(1500);
-  const re=await p.evaluate(()=>({raf:document.getElementById('raf').classList.contains('show'),slots:document.querySelectorAll('.slot').length,imgs:document.querySelectorAll('.slot img').length,wh:document.querySelectorAll('.wh').length,close:getComputedStyle(document.getElementById('rafClose')).display,state}));
-  ok('Yeniden açılışta raf görünür, '+NL+' yuva ve küçük resimler, dünya başlıkları',re.raf&&re.slots===NL&&re.imgs===NL&&re.wh===3,re);
+  const re=await p.evaluate(()=>({raf:document.getElementById('raf').classList.contains('show'),slots:document.querySelectorAll('.slot').length,imgs:document.querySelectorAll('.slot img').length,wh:document.querySelectorAll('.wh').length,nw:DUNYA.length,close:getComputedStyle(document.getElementById('rafClose')).display,state}));
+  ok('Yeniden açılışta raf görünür, '+NL+' yuva ve küçük resimler, dünya başlıkları',re.raf&&re.slots===NL&&re.imgs===NL&&re.wh===re.nw,re);
   await b.close();}
  // 2) uç durumlar (3D'siz mantık + 3D ile birkaç durum)
  {const {b,p,errs}=await launch();
@@ -104,7 +104,7 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
  {const trChars=/[ğüşıöçĞÜŞİÖÇ]/;
   for(const loc of ['en-US','de-DE','tr-TR']){const {b,p,errs}=await launch({locale:loc,no3d:true});
    const r=await p.evaluate(()=>{const got=new Set();const orig=toast;window.toast=s=>{got.add(s);orig(s);};__game.setTS(0);
-    for(const lv of [0,3,7,9,10,13,15,19,20,23,24,26,28,29]){__game.start(lv);__game.autoplay('insan');__game.begin();let k=0;while(k<4000&&__game.state().state!=='result'){__game.sim(50);k++;}__game.autoplay(null);}
+    for(const lv of [0,3,7,9,10,13,15,19,20,23,24,26,28,29,30,31,32,33]){__game.start(lv);__game.autoplay('insan');__game.begin();let k=0;while(k<4000&&__game.state().state!=='result'){__game.sim(50);k++;}__game.autoplay(null);}
     const miss=LEVELS.flatMap(l=>[l.ad,l.ipucu]).concat(DUNYA).filter(x=>EN[x]==null);
     const res=document.body.innerText+'\n'+miss.join('\n');openRaf();
     return {lang:LANG,html:document.documentElement.lang,lines:[...got,...(res+'\n'+document.body.innerText).split('\n')].map(l=>l.trim()).filter(Boolean),rafH:document.getElementById('rafH').textContent};});
