@@ -160,3 +160,15 @@ Tasarım notları:
 - Bot "insan" yeni mekaniklerde gerçek bir oyuncu gibi davranacak şekilde genişletildi: rüzgârı kısmen telafi ediyor, hedefte sivri yer varsa ince uca geçiyor,
   kart dururken iki yanın hedefi farklıysa bir yana odaklanıyor.
 - Uygulama derlemesi (`npm run build`) prototipten yapıldığı için 1.2 bitene kadar bu daldan TestFlight'a yükleme yapılmamalı.
+
+### Yeni mekanik kartı (Ozer, 10 Kasım 2026)
+
+> "Yeni bir şey geldiğinde, örneğin rüzgâr, onu bölüme başlarken belli eden bir şey olmalı, bir uyarı vs. gibi."
+
+- Oyuncu bir mekaniği **ilk kez** gördüğü bölümün başında ortada bir kart çıkar: "YENİ" etiketi, hareketli ikon (yaprak sallanır, damla düşer, kart kalkar),
+  mekaniğin adı, tek cümlelik açıklama ve **Başla** düğmesi. Kart açıkken kavanoza dokunulmaz; Başla'ya (ya da kartın dışına) basınca kapanır, bölüm adı afişi gelir.
+- Bütün mekaniklerde var: süsler, üfleme, çubuk, renk geçişi, sallanan kavanoz, ışıldayan kum, rüzgâr, ince/geniş uç, ıslak kum, ayırıcı kart.
+  Bir bölümde iki yeni mekanik varsa ikisi aynı kartta.
+- Bir kez görülen mekanik için kart bir daha çıkmaz (kayıtta `mek`). 1.1'de o mekaniğin bölümünü oynamış oyuncu da kartı görmez.
+- Sonraki bölümlerde bölüm adı afişinin altında mekaniğin adı yazar ("BÖLÜM 31 · RÜZGÂR"); ana ekrandaki bölüm rozetlerine yeni mekanikler eklendi.
+- Uçtan uca teste eklendi: kart ilk kez çıkar, dokunmayı tutar, Başla ile kapanır, aynı mekanik için tekrar çıkmaz; kart metinlerinin İngilizcesi var (31/31).

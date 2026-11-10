@@ -53,6 +53,28 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webki
 #bPuff{position:fixed;right:14px;bottom:calc(var(--safeB) + 62px);height:50px;padding:0 16px;border-radius:25px;font-size:20px;display:none;pointer-events:auto}
 #bPuff b{font-size:17px;font-weight:900}
 #bPuff.off{opacity:.4}
+/* Yeni mekanik kartı: bir mekanik ilk kez çıkınca bölüm başında */
+#mek{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:0 22px;background:rgba(74,56,38,.22);opacity:0;pointer-events:none;transition:opacity .35s}
+#mek.show{opacity:1;pointer-events:auto}
+#mek .mcard{width:100%;max-width:340px;border-radius:28px;padding:20px 20px 18px;text-align:center;background:rgba(255,251,244,.9);transform:translateY(18px) scale(.96);transition:transform .45s cubic-bezier(.2,.9,.3,1.15)}
+#mek.show .mcard{transform:none}
+#mek .kick{display:inline-block;padding:4px 12px;border-radius:12px;background:var(--amber);color:#fff;font-weight:900;font-size:12px;letter-spacing:1.6px;text-transform:uppercase}
+#mek .row{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:14px}
+#mek .row+.row{padding-top:14px;border-top:1px solid rgba(74,56,38,.1)}
+#mek .ic{width:76px;height:76px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;line-height:1;background:radial-gradient(circle at 50% 40%,#fff,#f6ead6);box-shadow:inset 0 -3px 0 rgba(74,56,38,.08),0 4px 12px rgba(74,56,38,.12);overflow:hidden}
+#mek .ic>*{display:block}
+#mek h3{margin:2px 0 0;font-size:22px;font-weight:900}
+#mek p{margin:0;max-width:30ch;color:var(--ink2);font-size:14.5px;font-weight:700;line-height:1.38;text-wrap:balance}
+#mek .btn{flex:none;width:100%;margin-top:18px}
+#mek .a-ruzgar>*{animation:mkWind 2.4s ease-in-out infinite}
+#mek .a-islak>*{animation:mkDrip 1.8s ease-in infinite}
+#mek .a-kart>*{animation:mkCard 2.6s ease-in-out infinite}
+#mek .a-uc>*{animation:mkBob 2.4s ease-in-out infinite}
+#mek .a-diger>*{animation:mkBob 2.4s ease-in-out infinite}
+@keyframes mkWind{0%,100%{transform:translateX(-9px) rotate(-12deg)}50%{transform:translateX(9px) rotate(14deg)}}
+@keyframes mkDrip{0%{transform:translateY(-14px);opacity:0}25%{opacity:1}80%{transform:translateY(8px);opacity:1}100%{transform:translateY(12px);opacity:0}}
+@keyframes mkCard{0%,35%{transform:translateY(0)}65%,80%{transform:translateY(-16px)}100%{transform:translateY(0)}}
+@keyframes mkBob{0%,100%{transform:translateY(-3px)}50%{transform:translateY(3px)}}
 #queue .wet{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:9px;line-height:1;pointer-events:none}
 #bUc{position:fixed;right:14px;bottom:calc(var(--safeB) + 62px);height:50px;padding:0 18px;border-radius:25px;font-size:16px;font-weight:900;display:none;pointer-events:auto;white-space:nowrap}
 #bUc i{display:inline-block;vertical-align:-2px;margin-right:8px;background:var(--ink);border-radius:50%}
@@ -151,7 +173,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webki
 #setDone{width:100%;margin-top:12px}
 .ver{margin-top:10px;text-align:center;font-size:12px;font-weight:700;color:var(--ink2)}
 button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
-@media (prefers-reduced-motion:reduce){#hand.show,.slot.next .jar svg,#setSheet.show,#setBg.show{animation:none}.sheet,.stars span,#toast,#banner,#pfill{transition:none}}
+@media (prefers-reduced-motion:reduce){#mek .ic>*,#hand.show,.slot.next .jar svg,#setSheet.show,#setBg.show{animation:none}.sheet,.stars span,#toast,#banner,#pfill{transition:none}}
 </style>
 </head>
 <body>
@@ -171,6 +193,7 @@ button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
 <button id="bPuff" class="frost">💨 <b>3</b></button>
 <button id="bUc" class="frost"></button>
 <button id="bUndo" class="frost" aria-label="Geri al">↶<b>1</b></button>
+<div id="mek"><div class="mcard frost" role="dialog" aria-modal="true"><span class="kick"></span><div id="mekRows"></div><button class="btn pri" id="mekGo"></button></div></div>
 <div id="result" class="sheet frost">
   <h2 id="rTitle"></h2>
   <div class="big" id="rPct"></div>
@@ -276,7 +299,17 @@ const EN={
  'Rüzgâr kumu savuruyor: huniyi rüzgârın geldiği yana kaydır.':'The wind blows the sand sideways: move the funnel into the wind.',
  'Geniş uç hızlı doldurur, ince uç ince çizer. Kuleleri ince uçla yap.':'The wide spout fills fast, the thin spout draws fine. Build the towers with the thin one.',
  'Kart kavanozu ikiye böler: sola gündüz, sağa gece. Sonra kart kalkar.':'A card splits the jar: day on the left, night on the right. Then the card lifts.',
- 'Kart çekildi':'Card pulled','Geniş uç':'Wide spout','İnce uç':'Thin spout',
+ 'Kart çekildi':'Card pulled','Yeni':'New','Başla':'Start','Rüzgâr':'Wind','İnce ve geniş uç':'Thin and wide spout','Islak kum':'Wet sand','Ayırıcı kart':'Divider card',
+ 'Sırası gelince bir süs gelir: kesikli halkanın üstüne getir, parmağını kaldır. Kum onu sarar.':'When its turn comes, a decoration appears: move it onto the dashed ring and lift your finger. The sand wraps around it.',
+ '💨 düğmesi fazla yığılan yeri düzler. Hakkın sınırlı, gerektiğinde kullan.':'The 💨 button flattens a spot that piled up too high. You only have a few, so use them when needed.',
+ 'Sırası gelince çubukla kumu it: kesikli çizgileri izleyerek aşağı çek.':'When its turn comes, push the sand with the stick: follow the dashed lines downward.',
+ 'Bu kum döküldükçe renk değiştirir. Her yere eşit yayarsan çizgi çizgi olur.':'This sand changes color as you pour. Spread it evenly and it forms neat bands.',
+ 'Kavanoz sallanıyor, kum hep yere paralel yatar. Eğik katman için kavanoz yatınca dök.':'The jar rocks and the sand always settles level with the ground. Pour while it leans to make a slanted layer.',
+ 'Bu kum karanlıkta parlar. Sonunda ışıklar söner, kavanoz ışıldar.':'This sand glows in the dark. At the end the lights go out and the jar shines.',
+ 'Esinti akan kumu yana savurur. Üstteki ok yönünü ve gücünü gösterir: huniyi rüzgârın geldiği yana tut.':'Gusts blow the falling sand sideways. The arrow at the top shows direction and strength: hold the funnel into the wind.',
+ 'Sağ alttaki düğmeyle ucu değiştir: geniş uç hızlı doldurur, ince uç ince çizer.':'Switch the spout with the button at the bottom right: the wide one fills fast, the thin one draws fine.',
+ 'Koyu renkli ıslak kum dik durur: kuru kumun tutamadığı sivri kuleler yapabilirsin.':'Dark wet sand stands steep: you can build pointed towers that dry sand can\'t hold.',
+ 'Kart kavanozu ikiye böler, kum karttan geçmez. Sırası gelince kart kalkar, iki yan buluşur.':'A card splits the jar and the sand can\'t pass it. When its turn comes, the card lifts and the two sides meet.','Geniş uç':'Wide spout','İnce uç':'Thin spout',
  'Bölüm {0}':'Level {0}',' · süslü':' · with decorations','Akış {0}':'Flow {0}','Kusursuz katman!':'Perfect layer!','Güzel katman':'Nice layer',
  'Yerine getir, parmağını kaldır':'Move it into place, lift your finger','Tam yerinde! ✨':'Perfect spot! ✨','Biraz kaydı':'A little off',
  'Şişe hazır':'Jar finished','Güzel bir şişe':'A lovely jar','Çok güzel!':'Beautiful!','Kusursuz şişe!':'Perfect jar!','benzerlik':'match',
@@ -585,11 +618,35 @@ function startLevel(n,opt={}){clearStars();down=false;activeId=null;
  ['m1','m2','m3'].forEach((id,k)=>{$(id).style.left=STAR_TH[k]+'%';$(id).classList.remove('on');});
  $('result').classList.remove('show');
  $('bPuff').style.display=puffs>0?'block':'none';updatePuffBtn();
- const bn=$('banner');bn.querySelector('.bt').textContent=t(L.ad);bn.querySelector('.bs').textContent=t('Bölüm {0}',n+1)+(L.sus?t(' · süslü'):'');
- bn.classList.add('show');clearTimeout(bn._t);bn._t=setTimeout(()=>bn.classList.remove('show'),1900);
+ const yeni=mekOf(L).filter(m=>!mekSeen(m)).slice(-2);
+ if(yeni.length)showMek(yeni);else showBanner();
  $('hand').classList.toggle('show',n===0||!SAVE.seen);
  ambient(L.ortam);if(RD)gfxLevel();}
-function beginPour(){if(state!=='ready')return;state='pour';pourStart=T+.12;
+function showBanner(){const bn=$('banner'),ms=mekOf(L).filter(m=>m.k!=='sus').map(m=>t(m.ad));bn.querySelector('.bt').textContent=t(L.ad);
+ bn.querySelector('.bs').textContent=t('Bölüm {0}',LV+1)+(ms.length?' · '+ms.slice(-2).join(' · '):L.sus?t(' · süslü'):'');
+ bn.classList.add('show');clearTimeout(bn._t);bn._t=setTimeout(()=>bn.classList.remove('show'),1900);}
+// Yeni mekanik kartı: oyuncu bir mekaniği ilk kez görünce bölüm başında kısa bir tanıtım (sonraki bölümlerde başlıkta adı yazar)
+const SVG_UC='<svg width="50" height="50" viewBox="0 0 50 50"><path d="M5 7h17l-6 13h-5z" fill="#a8774a"/><path d="M28 7h17l-7 13h-3z" fill="#a8774a"/><path d="M11.5 20h4l4 25h-12z" fill="#e8c483"/><rect x="35.6" y="20" width="1.8" height="25" rx=".9" fill="#e8c483"/></svg>';
+const SVG_KART='<svg width="50" height="50" viewBox="0 0 50 50"><path d="M9 14v26a4 4 0 0 0 4 4h24a4 4 0 0 0 4-4V14" fill="none" stroke="#9db4c2" stroke-width="2.5"/><path d="M11 30h12v12h-10z" fill="#b4dcf0"/><path d="M27 30h12v12H27z" fill="#232c58"/><rect x="23.6" y="6" width="2.8" height="38" rx="1" fill="#e9dcc3" stroke="#c9b48f" stroke-width=".8"/></svg>';
+const MEK=[
+ {k:'sus',has:l=>!!l.sus,ic:l=>DEC[l.sus[0].id].e,ad:'Süsler',tx:'Sırası gelince bir süs gelir: kesikli halkanın üstüne getir, parmağını kaldır. Kum onu sarar.'},
+ {k:'ufle',has:l=>!!l.ufle,ic:()=>'💨',ad:'Üfleme',tx:'💨 düğmesi fazla yığılan yeri düzler. Hakkın sınırlı, gerektiğinde kullan.'},
+ {k:'cubuk',has:l=>!!l.cubuk,ic:()=>'🥢',ad:'Çubuk',tx:'Sırası gelince çubukla kumu it: kesikli çizgileri izleyerek aşağı çek.'},
+ {k:'gecis',has:l=>l.katman.some(q=>q[2]&&q[2].gecis),ic:()=>'🌈',ad:'Renk geçişi',tx:'Bu kum döküldükçe renk değiştirir. Her yere eşit yayarsan çizgi çizgi olur.'},
+ {k:'salla',has:l=>!!l.salla,ic:()=>'〰️',ad:'Sallanan kavanoz',tx:'Kavanoz sallanıyor, kum hep yere paralel yatar. Eğik katman için kavanoz yatınca dök.'},
+ {k:'isilti',has:l=>l.katman.some(q=>GLOW[q[0]]),ic:()=>'✨',ad:'Işıldayan kum',tx:'Bu kum karanlıkta parlar. Sonunda ışıklar söner, kavanoz ışıldar.'},
+ {k:'ruzgar',has:l=>!!l.ruzgar,ic:()=>'🍃',ad:'Rüzgâr',tx:'Esinti akan kumu yana savurur. Üstteki ok yönünü ve gücünü gösterir: huniyi rüzgârın geldiği yana tut.'},
+ {k:'uc',has:l=>!!l.uc,ic:()=>SVG_UC,ad:'İnce ve geniş uç',tx:'Sağ alttaki düğmeyle ucu değiştir: geniş uç hızlı doldurur, ince uç ince çizer.'},
+ {k:'islak',has:l=>l.katman.some(q=>q[2]&&q[2].islak),ic:()=>'💧',ad:'Islak kum',tx:'Koyu renkli ıslak kum dik durur: kuru kumun tutamadığı sivri kuleler yapabilirsin.'},
+ {k:'kart',has:l=>!!l.kart,ic:()=>SVG_KART,ad:'Ayırıcı kart',tx:'Kart kavanozu ikiye böler, kum karttan geçmez. Sırası gelince kart kalkar, iki yan buluşur.'}];
+const mekOf=l=>MEK.filter(m=>m.has(l));
+const mekSeen=m=>!!(SAVE.mek&&SAVE.mek[m.k])||LEVELS.some((q,i)=>SAVE.lv[i]&&m.has(q)); // önceki sürümde oynanmış bölümler de sayılır
+let mekOn=false,mekT0=0;
+function showMek(list){$('mek').querySelector('.kick').textContent=t('Yeni');$('mekGo').textContent=t('Başla');
+ $('mekRows').innerHTML=list.map(m=>'<div class="row"><div class="ic a-'+(['ruzgar','islak','kart','uc'].includes(m.k)?m.k:'diger')+'"><span>'+m.ic(L)+'</span></div><h3>'+t(m.ad)+'</h3><p>'+t(m.tx)+'</p></div>').join('');
+ $('mek').classList.add('show');mekOn=true;mekT0=performance.now();if(!BOT)vib(12);}
+function closeMek(){if(!mekOn)return;mekOn=false;$('mek').classList.remove('show');SAVE.mek=Object.assign({},SAVE.mek);for(const m of mekOf(L))SAVE.mek[m.k]=1;persist();if(state==='ready')showBanner();}
+function beginPour(){if(state!=='ready')return;if(mekOn)closeMek();state='pour';pourStart=T+.12;
  if(!BOT){$('hand').classList.remove('show');$('banner').classList.remove('show');if(!SAVE.seen){SAVE.seen=true;persist();}}}
 
 function step(){
@@ -1565,7 +1622,8 @@ function jarSVG(k,pre,mode){const l=LEVELS[k],sk=l.sekil,N=24,H=62,Y0=72,FH=HF/H
   (lay?'<g opacity="'+(mode==='ghost'?.5:1)+'">'+lay+'</g>':'')+'</g><path d="'+body+'" fill="none" stroke="rgba(255,255,255,.95)" stroke-width="1.6"/>'+
   '<path d="M'+(30-top+4).toFixed(1)+' 16V'+(Y0-16)+'" stroke="rgba(255,255,255,.55)" stroke-width="2.2" stroke-linecap="round"/><rect x="'+(30-lw).toFixed(1)+'" y="3" width="'+(lw*2).toFixed(1)+'" height="7.5" rx="2.5" fill="#c8945f"/><rect x="'+(30-lw).toFixed(1)+'" y="3" width="'+(lw*2).toFixed(1)+'" height="2.5" rx="1.2" fill="#ddb07c"/></svg>';}
 function feats(l){const f=[];if(l.cubuk)f.push('🥢 '+t('Çubuk'));if(l.katman.some(q=>q[2]&&q[2].gecis))f.push('🌈 '+t('Renk geçişi'));if(l.salla)f.push('〰️ '+t('Sallanan kavanoz'));
- if(l.katman.some(q=>GLOW[q[0]]))f.push('✨ '+t('Işıldayan kum'));if(l.ufle)f.push('💨 '+t('Üfleme'));if(l.sus)f.push(DEC[l.sus[0].id].e+' '+t('Süsler'));return f.slice(0,3);}
+ if(l.katman.some(q=>GLOW[q[0]]))f.push('✨ '+t('Işıldayan kum'));if(l.ufle)f.push('💨 '+t('Üfleme'));if(l.ruzgar)f.push('🍃 '+t('Rüzgâr'));if(l.uc)f.push(t('İnce ve geniş uç'));if(l.katman.some(q=>q[2]&&q[2].islak))f.push('💧 '+t('Islak kum'));if(l.kart)f.push(t('Ayırıcı kart'));
+ if(l.sus)f.push(DEC[l.sus[0].id].e+' '+t('Süsler'));return f.slice(-3);}
 const starRow=s=>'★'.repeat(s)+'<i>'+'★'.repeat(3-s)+'</i>';
 const lvOpen=k=>k===0||(SAVE.lv[k-1]&&SAVE.lv[k-1].s>=1)||UNLOCK;
 function openRaf(){clearStars();if(state!=='menu'){prevState=state;state='menu';}pouring=false;setPour(0,0,0,null,null);$('result').classList.remove('show');
@@ -1616,6 +1674,8 @@ $('bRe').onclick=()=>startLevel(LV);
 $('bPuff').onclick=()=>puff();
 $('bUndo').onclick=()=>doUndo();
 $('bUc').onclick=()=>setUc(UC===1?2:1);
+$('mekGo').onclick=e=>{e.stopPropagation();closeMek();};
+$('mek').addEventListener('click',e=>{if(e.target===$('mek')&&performance.now()-mekT0>600)closeMek();});
 $('rAgain').onclick=()=>startLevel(LV);
 $('rNext').onclick=()=>{if(LV>=LEVELS.length-1){state='menu';prevState=null;openRaf();}else startLevel(LV+1);};
 $('rafClose').onclick=()=>closeRaf();$('bSet').onclick=openSet;$('setDone').onclick=closeSet;$('setBg').onclick=closeSet;
@@ -1694,7 +1754,7 @@ initGfx();resize();
 function boot(){setTexts();sndStart();if(!SAVE.seen)startLevel(0);else{startLevel(Math.min(LEVELS.length-1,Object.keys(SAVE.lv).length));state='menu';prevState=null;openRaf();}}
 // iki kopyadan (tarayıcı deposu, uygulama tercihleri) her bölüm için en iyi sonucu al; biri kaybolsa da ilerleme gitmez
 function mergeSave(v){if(!v||typeof v!=='object')return;const lv=Object.assign({},SAVE.lv);for(const k in v.lv||{}){const a=lv[k],b=v.lv[k];if(!b)continue;if(!a){lv[k]=b;continue;}
- lv[k]={p:Math.max(a.p||0,b.p||0),s:Math.max(a.s||0,b.s||0),img:(b.p||0)>(a.p||0)?(b.img||a.img):(a.img||b.img)};}SAVE=Object.assign(SAVE,v,{lv,seen:!!(SAVE.seen||v.seen)});}
+ lv[k]={p:Math.max(a.p||0,b.p||0),s:Math.max(a.s||0,b.s||0),img:(b.p||0)>(a.p||0)?(b.img||a.img):(a.img||b.img)};}SAVE=Object.assign(SAVE,v,{lv,seen:!!(SAVE.seen||v.seen),mek:Object.assign({},v.mek,SAVE.mek)});}
 if(PLG.Preferences)PLG.Preferences.get({key:SKEY}).then(r=>{if(r&&r.value){try{mergeSave(JSON.parse(r.value));}catch(e){}}}).catch(()=>{}).then(boot);
 else boot();
 requestAnimationFrame(frame);

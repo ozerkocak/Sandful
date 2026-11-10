@@ -70,6 +70,10 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
    __game.start(0);__game.autoplay('kusursuz');__game.begin();let u=0;while(u<3000&&S().qi<1){__game.sim(50);u++;}__game.sim(2500);
    const p1=__game.sand(),c1=__game.canUndo();__game.undo();const p2=__game.sand(),q2=S().qi,c2=__game.canUndo();u=0;while(u<5000&&S().state!=='result'){__game.sim(50);u++;}__game.autoplay(null);
    out.undo=[c1,p2<p1,q2===1,c2,S().state,S().stars];
+   // yeni mekanik kartı: ilk kez çıkar, kanvası örter, Başla ile kapanır, afiş görünür, bir daha çıkmaz; begin() de kapatır
+   SAVE.mek={};SAVE.lv={};__game.start(30);const m1=mekOn,rows=document.querySelectorAll('#mekRows .row').length,top=document.elementFromPoint(200,600),blocked=!!(top&&top.closest&&top.closest('#mek'));
+   document.getElementById('mekGo').click();const m2=mekOn,bn=document.getElementById('banner').classList.contains('show'),seen=!!(SAVE.mek&&SAVE.mek.ruzgar);
+   __game.start(30);const m3=mekOn;__game.start(31);const m4=mekOn;__game.begin();out.mek=[m1,rows>=1,blocked,m2,bn,seen,m3,m4,mekOn,S().state];
    // dar ekran: yeniden boyutlandırma
    return out;});
   ok('Döküşte raf aç/kapat: menüye geçer, kapatınca döküşe döner, akış durur',r.rafPour[0]==='menu'&&r.rafPour[1]==='pour'&&r.rafPour[2]===false,r.rafPour);
@@ -80,6 +84,7 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
   ok('pointercancel akışı durdurur',r.cancel[1]===false&&r.cancel[2],r.cancel);
   ok('Üfleme hakkı 3 ile sınırlı',r.puff===0,r.puff);
   ok('Arka plana geçiş akışı durdurur',r.vis[0]===false&&r.vis[1]===false,r.vis);
+  ok('Yeni mekanik kartı: ilk kez çıkar, dokunmayı tutar, Başla ile kapanır, afiş gelir, aynı mekanik için bir daha çıkmaz',r.mek[0]&&r.mek[1]&&r.mek[2]&&!r.mek[3]&&r.mek[4]&&r.mek[5]&&!r.mek[6]&&r.mek[7]&&!r.mek[8]&&r.mek[9]==='pour',r.mek);
   ok('Geri al: son renk baştan dökülür, hak biter, bölüm üç yıldızla biter',r.undo[0]&&r.undo[1]&&r.undo[2]&&!r.undo[3]&&r.undo[4]==='result'&&r.undo[5]===3,r.undo);
   await p.setViewportSize({width:320,height:568});await p.waitForTimeout(800);await p.setViewportSize({width:430,height:932});await p.waitForTimeout(800);
   ok('Uç durumlarda ve yeniden boyutlandırmada sayfa hatası yok',errs.length===0,errs.slice(0,3));
@@ -104,8 +109,8 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
  {const trChars=/[ğüşıöçĞÜŞİÖÇ]/;
   for(const loc of ['en-US','de-DE','tr-TR']){const {b,p,errs}=await launch({locale:loc,no3d:true});
    const r=await p.evaluate(()=>{const got=new Set();const orig=toast;window.toast=s=>{got.add(s);orig(s);};__game.setTS(0);
-    for(const lv of [0,3,7,9,10,13,15,19,20,23,24,26,28,29,30,31,32,33]){__game.start(lv);__game.autoplay('insan');__game.begin();let k=0;while(k<4000&&__game.state().state!=='result'){__game.sim(50);k++;}__game.autoplay(null);}
-    const miss=LEVELS.flatMap(l=>[l.ad,l.ipucu]).concat(DUNYA).filter(x=>EN[x]==null);
+    for(const lv of [0,3,7,9,10,13,15,19,20,23,24,26,28,29,30,31,32,33]){__game.start(lv);if(mekOn)document.getElementById('mek').innerText.split('\n').forEach(x=>got.add(x));__game.autoplay('insan');__game.begin();let k=0;while(k<4000&&__game.state().state!=='result'){__game.sim(50);k++;}__game.autoplay(null);}
+    const miss=LEVELS.flatMap(l=>[l.ad,l.ipucu]).concat(DUNYA,MEK.flatMap(m=>[m.ad,m.tx])).filter(x=>EN[x]==null);
     const res=document.body.innerText+'\n'+miss.join('\n');openRaf();
     return {lang:LANG,html:document.documentElement.lang,lines:[...got,...(res+'\n'+document.body.innerText).split('\n')].map(l=>l.trim()).filter(Boolean),rafH:document.getElementById('rafH').textContent};});
    if(loc==='tr-TR')ok('Türkçe telefonda oyun Türkçe',r.lang==='tr'&&r.html==='tr'&&r.rafH==='Rafım',{lang:r.lang,rafH:r.rafH});
