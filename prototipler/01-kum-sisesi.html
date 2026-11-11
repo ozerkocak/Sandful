@@ -1054,6 +1054,44 @@ void main(){float r=length(vW.xz),th=atan(vW.z,-vW.x);
  col+=vec3(1.,.96,.86)*fx.g*uLife*step(.986,fract(g.r*17.1))*pow(.5+.5*sin(uTime*2.6+g.r*91.),5.)*1.5;
  col*=1.+.45*exp(-pow((vW.y-uWave)*22.,2.));
  gl_FragColor=vec4(col,1.);`+OUT;
+// Kuma gömülü süs: renk dokusu + biçim dokusu (R: kenardan içeri uzaklık, G: dışarı hale, B: kabartma ışığı).
+// Süs kabarık ve ışıklı görünür, kenarında kum taneleri üstüne biner, çevresindeki kumda ince bir gölge olur (camın arkasında kumun içinde).
+const DEC_PAD=.1;
+function decShape(id){const D=DEC[id],s=256,hc=Math.round(s*D.h/D.w),P=Math.round(s*DEC_PAD),W=s+2*P,H=hc+2*P;
+ const col=mkCanvas(W,H,(x)=>{x.translate(P,P);drawDecor(id,x,s,hc);});const im=col.getContext('2d').getImageData(0,0,W,H).data;
+ const N=W*H,inD=new Float32Array(N),outD=new Float32Array(N),BIG=1e6;
+ for(let i=0;i<N;i++){const o=im[i*4+3]>127;inD[i]=o?BIG:0;outD[i]=o?0:BIG;}
+ const cham=a=>{for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=y*W+x;let v=a[i];if(!v)continue;
+   if(x>0)v=Math.min(v,a[i-1]+1);if(y>0){v=Math.min(v,a[i-W]+1);if(x>0)v=Math.min(v,a[i-W-1]+1.414);if(x<W-1)v=Math.min(v,a[i-W+1]+1.414);}a[i]=v;}
+  for(let y=H-1;y>=0;y--)for(let x=W-1;x>=0;x--){const i=y*W+x;let v=a[i];if(!v)continue;
+   if(x<W-1)v=Math.min(v,a[i+1]+1);if(y<H-1){v=Math.min(v,a[i+W]+1);if(x<W-1)v=Math.min(v,a[i+W+1]+1.414);if(x>0)v=Math.min(v,a[i+W-1]+1.414);}a[i]=v;}};
+ cham(inD);cham(outD);
+ const E=Math.max(6,Math.min(s,hc)*.11),HL=P*.7,hg=new Float32Array(N);
+ for(let i=0;i<N;i++){const t=Math.min(1,inD[i]/E);hg[i]=t>0?Math.pow(t*(2-t),.8):0;}
+ const sh=mkCanvas(W,H,()=>{}),sx=sh.getContext('2d'),od=sx.createImageData(W,H),q=od.data,Lx=-.45,Ly=.62,Lz=.64,k=E*.55;
+ for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=y*W+x,o=i*4;
+  const gx=(hg[y*W+Math.min(W-1,x+1)]-hg[y*W+Math.max(0,x-1)])*.5,gy=(hg[Math.max(0,y-1)*W+x]-hg[Math.min(H-1,y+1)*W+x])*.5;
+  let nx=-gx*k,ny=-gy*k,nz=1;const l=Math.hypot(nx,ny,nz);const d=(nx*Lx+ny*Ly+nz*Lz)/l/Lz;
+  q[o]=Math.round(255*Math.min(1,inD[i]/E));q[o+1]=inD[i]>0?255:Math.round(255*Math.pow(Math.max(0,1-outD[i]/HL),1.6));q[o+2]=Math.round(255*Math.max(0,Math.min(1,d*.5)));q[o+3]=255;}
+ sx.putImageData(od,0,0);return {col,sh,fx:W/s,fy:H/hc};}
+const DEC_VS='varying vec2 vUv;varying vec3 vW;\nvoid main(){vUv=uv;vec4 w=modelMatrix*vec4(position,1.);vW=w.xyz;gl_Position=projectionMatrix*viewMatrix*w;}';
+const DEC_FS=`uniform sampler2D uMap;uniform sampler2D uShape;uniform sampler2D uIdx;uniform vec3 uL;uniform vec3 uKey;uniform vec3 uAmb;uniform float uRW;uniform float uYT;uniform float uDim;uniform float uK;
+varying vec2 vUv;varying vec3 vW;
+${GR}
+void main(){vec4 c=texture2D(uMap,vUv);vec3 s=texture2D(uShape,vUv).rgb;float din=s.r,sh=s.b*2.;
+ float hs=texture2D(uShape,vUv+vec2(-.014,.02)).g;
+ vec4 id=texture2D(uIdx,vec2((vW.x+uRW)/(2.*uRW),clamp(vW.y,0.,uYT-.001)/uYT));float sand=step(.5,id.a),code=floor(floor(id.r*255.+.5)/16.);
+ float th=atan(vW.z,-vW.x);vec2 p=vec2(th*uRW,vW.y)/uGS;vec4 g=texture2D(uGrain,p);
+ vec3 n=normalize(vec3(vW.x,0.,vW.z));float dif=max(dot(n,uL),0.);
+ vec3 sandC=grainAlb(palG(code,g.r),g.r,p)*(g.g*1.15)*(uAmb+uKey*(.2+.8*dif))*uK;
+ vec3 base=pow(c.rgb,vec3(2.2));
+ float ao=mix(.6,1.,smoothstep(0.,.6,din));
+ vec3 obj=(base*(.55+.45*sh)*ao+vec3(1.,.97,.9)*pow(max(sh-1.,0.),2.)*.3)*uDim;
+ float cov=sand*(1.-smoothstep(0.,.42,din))*(.55+.45*(1.-vUv.y));
+ float gm=step(fract(g.r*37.3),cov)*step(.5,c.a);
+ vec3 col=mix(obj,sandC,gm);float a=c.a;
+ float sa=sand*(1.-a)*(.1*pow(s.g,2.)+.3*pow(hs,1.5));float al=a+sa*(1.-a); // çevredeki kumda yumuşak gölge (kumun koyu tonu)
+ gl_FragColor=vec4((col*a+sandC*.42*sa*(1.-a))/max(al,1e-4),al);`+OUT;
 // Üst yüzey: aynı tane malzemesi, renk her sütunun en üst katmanından; tepeler biraz aydınlık, çukurlar biraz gölgeli.
 const HF_VS='attribute float aE;attribute float aCav;attribute float aT;varying vec3 vN;varying vec3 vW;varying float vE;varying float vCav;varying float vT;\nvoid main(){vE=aE;vCav=aCav;vT=aT;vec4 w=modelMatrix*vec4(position,1.);vW=w.xyz;vN=normalize(mat3(modelMatrix)*normal);gl_Position=projectionMatrix*viewMatrix*w;}';
 const HF_FS=`uniform sampler2D uTop;uniform sampler2D uGrainM;uniform vec3 uL;uniform vec3 uKey;uniform vec3 uAmb;uniform float uTime;uniform float uRW;uniform float uLife;uniform float uNight;
@@ -1339,14 +1377,15 @@ function initGfx(){
    geo.setAttribute('position',new T3.BufferAttribute(pos,3));geo.setAttribute('aCol',new T3.BufferAttribute(col,3));geo.setAttribute('aSize',new T3.BufferAttribute(size,1));geo.setAttribute('aRot',new T3.BufferAttribute(rot,2));geo.setDrawRange(0,0);
    const m=SM({uScale:{value:100}},CONF_VS,CONF_FS);const p=new T3.Points(geo,m);p.frustumCulled=false;scene.add(p);return{geo,pos,col,size,rot,max,m,obj:p,a:[]};})();
   // süs dokuları
-  const decTex={};for(const id in DEC){const D=DEC[id],s=256,t=new T3.CanvasTexture(mkCanvas(s,Math.round(s*D.h/D.w),(x,w,h)=>drawDecor(id,x,w,h)));t.encoding=T3.sRGBEncoding;decTex[id]=t;}
+  const decTex={},dec3={};for(const id in DEC){const D=DEC[id],s=256,t=new T3.CanvasTexture(mkCanvas(s,Math.round(s*D.h/D.w),(x,w,h)=>drawDecor(id,x,w,h)));t.encoding=T3.sRGBEncoding;decTex[id]=t;
+   const q=decShape(id),tc=new T3.CanvasTexture(q.col),ts=new T3.CanvasTexture(q.sh);ts.generateMipmaps=false;ts.minFilter=T3.LinearFilter;dec3[id]={col:tc,sh:ts,fx:q.fx,fy:q.fy};}
   const decorM=new T3.Mesh(new T3.PlaneGeometry(1,1),new T3.MeshBasicMaterial({transparent:true,toneMapped:false,depthWrite:false}));decorM.visible=false;decorM.renderOrder=4;scene.add(decorM);
   const stickM=new T3.Mesh(new T3.CylinderGeometry(.009,.0075,1.3,12),new T3.MeshStandardMaterial({color:0xc29262,roughness:.65}));stickM.visible=false;stickM.renderOrder=4;scene.add(stickM);
   const dropLine=new T3.Line(new T3.BufferGeometry().setFromPoints([new T3.Vector3(),new T3.Vector3(0,-1,0)]),new T3.LineDashedMaterial({color:0xffffff,dashSize:.025,gapSize:.025,transparent:true,opacity:.75}));dropLine.visible=false;scene.add(dropLine);
   const corkT=new T3.CanvasTexture(mkCanvas(256,256,(x,w,h)=>{x.fillStyle='#c79a68';x.fillRect(0,0,w,h);for(let k=0;k<1400;k++){x.fillStyle=Math.random()<.5?'rgba(120,80,45,'+(.2+Math.random()*.35)+')':'rgba(235,205,160,'+(.15+Math.random()*.3)+')';x.beginPath();x.arc(Math.random()*w,Math.random()*h,.6+Math.random()*2.4,0,6.283);x.fill();}}));
   corkT.encoding=T3.sRGBEncoding;
   RD={T3,r,scene,cam,Ldir,Lv,idxData,idxTex,topData,topTex,curData,curTex,palData,palTex,tgtData,tgtTex,zones,wallMat,guideMat,hfMat,backMat,frontMat,rt,post,postCam,gScene,
-   fun,fTop,fSandM,rg,rPos,rCol,rUv,rW,ribMat,grains,conf,decTex,decorM,dropLine,curK:-2,
+   fun,fTop,fSandM,rg,rPos,rCol,rUv,rW,ribMat,grains,conf,decTex,dec3,Gu,uKey,uAmb,decorM,dropLine,curK:-2,
    corkM:new T3.MeshStandardMaterial({map:corkT,roughness:.92}),sh1,sh2,caus,lvl:[],placed:[],v3:new T3.Vector3(),v2:new T3.Vector2(),
    hemi,key,rimL,wallM:wall,sunP,brass,life:0,night:0,nightSet:-1,stickM,marks6};
   cv.addEventListener('webglcontextlost',e=>e.preventDefault());
@@ -1420,10 +1459,12 @@ function setNight(nf,force){if(!RD||(!force&&Math.abs(nf-RD.nightSet)<.004))retu
  RD.wallMat.uniforms.uNight.value=nf;RD.hfMat.uniforms.uNight.value=nf;RD.frontMat.uniforms.uEnvK.value=RD.backMat.uniforms.uEnvK.value=1-.75*nf;
  RD.hemi.intensity=.5*k;RD.key.intensity=1.1*k;RD.rimL.intensity=.4*k;RD.wallM.material.color.setScalar(k);RD.sunP.material.opacity=.55*k;RD.caus.material.opacity=.55*k;
  RD.scene.background.setHex(0xcdb592).multiplyScalar(k);RD.scene.fog.color.setHex(0xc8ae8c).multiplyScalar(k);
- RD.placed.forEach(m=>m.material.color.setScalar(LUMDEC.has(m.userData.dec)?.93:.93*k));(RD.ghosts||[]).forEach(g=>g.material.color.setScalar(k));}
+ RD.placed.forEach(m=>{const u=m.material.uniforms;u.uDim.value=LUMDEC.has(m.userData.dec)?.93:.93*k;u.uK.value=k;});(RD.ghosts||[]).forEach(g=>g.material.color.setScalar(k));}
 function zFront(x,y){const rr=rIn(clamp(y,0,HJ))-.0022;return Math.sqrt(Math.max(0,rr*rr-x*x));} // kum duvarının (-.003) önünde, camın arkasında
-function gfxDecorPlaced(r){if(!RD)return;const T3=RD.T3,m=new T3.Mesh(new T3.PlaneGeometry(r.D.w,r.D.h),new T3.MeshBasicMaterial({map:RD.decTex[r.s.id],transparent:true,toneMapped:false,depthWrite:false}));
- m.material.color.setScalar(.93);const zf=zFront(r.wx,r.wy+r.D.h/2);m.position.set(r.wx,r.wy+r.D.h/2,zf);m.rotation.y=Math.atan2(r.wx,zf);m.renderOrder=4;RD.scene.add(m);RD.lvl.push(m);
+function gfxDecorPlaced(r){if(!RD)return;const T3=RD.T3,q=RD.dec3[r.s.id],k=1-.8*(RD.nightSet||0);
+ const mat=new T3.ShaderMaterial({uniforms:Object.assign({uMap:{value:q.col},uShape:{value:q.sh},uIdx:{value:RD.idxTex},uL:{value:RD.Ldir},uKey:{value:RD.uKey},uAmb:{value:RD.uAmb},uRW:{value:RW},uYT:{value:YT},
+  uDim:{value:LUMDEC.has(r.s.id)?.93:.93*k},uK:{value:k}},RD.Gu),vertexShader:DEC_VS,fragmentShader:DEC_FS,transparent:true,depthWrite:false,toneMapped:false});
+ const m=new T3.Mesh(new T3.PlaneGeometry(r.D.w*q.fx,r.D.h*q.fy),mat);const zf=zFront(r.wx,r.wy+r.D.h/2);m.position.set(r.wx,r.wy+r.D.h/2,zf);m.rotation.y=Math.atan2(r.wx,zf);m.renderOrder=4;RD.scene.add(m);RD.lvl.push(m);
  m.userData={dec:r.s.id,y0:m.position.y,ph:Math.random()*6.28,qi:r.qi};RD.placed.push(m);
  const gi=decorList.indexOf(r);if(RD.ghosts[gi])RD.ghosts[gi].visible=false;}
 

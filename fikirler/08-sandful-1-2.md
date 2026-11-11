@@ -172,3 +172,13 @@ Tasarım notları:
 - Bir kez görülen mekanik için kart bir daha çıkmaz (kayıtta `mek`). 1.1'de o mekaniğin bölümünü oynamış oyuncu da kartı görmez.
 - Sonraki bölümlerde bölüm adı afişinin altında mekaniğin adı yazar ("BÖLÜM 31 · RÜZGÂR"); ana ekrandaki bölüm rozetlerine yeni mekanikler eklendi.
 - Uçtan uca teste eklendi: kart ilk kez çıkar, dokunmayı tutar, Başla ile kapanır, aynı mekanik için tekrar çıkmaz; kart metinlerinin İngilizcesi var (31/31).
+
+### Süsler kuma gömülü görünsün (Ozer, 11 Kasım 2026)
+
+> "Kumun içine obje attığımızda o obje sanki 2 boyutlu gibi duruyor, cama yapışık gibi duruyor. Daha iyi olmalı."
+
+Sebep: yerleşen süs ışıksız, düz bir resimdi; kenarı keskin, gölgesi yoktu, kumla hiç karışmıyordu. Düzeltme (yerleşen süslerde, kendi gölgelendiricisiyle):
+- **Kabartma:** süsün biçiminden bir yükseklik haritası çıkarılıyor; kenarlar yuvarlak ve sol üstten ışık alıyor, kenara yakın yerler biraz koyu (kum arasında kalmış gibi).
+- **Kenarda kum taneleri:** süsün arkasındaki kumun rengi okunuyor, kenarına o renkte taneler biniyor (altta daha çok). Kum henüz yetişmemişse (süs kumun üstünde duruyorsa) tane yok.
+- **Yumuşak gölge:** süsün çevresindeki kumda, ışığın tersine (sağ alta) hafif kaymış, kumun koyu tonunda bir gölge.
+- Gece bölümlerinde süsler kumla birlikte kararıyor; ay, yıldız, güneş, fener parlak kalıyor.
