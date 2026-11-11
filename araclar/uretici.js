@@ -36,7 +36,12 @@ const TEMA={
  bahce:{ad:'Bahçe ve Çiçekler',en:'Garden and Flowers',gok:1,sekil:[['kavanoz',3],['vazo',1.4],['lale',1.2],['silindir',1]],
   tarif:g=>({cicekTarlasi:3,bahceTepe:2,gokkusagi:1.4,cicekUc:g>=ACIL.uc?1.6:0,ikiBahce:g>=ACIL.kart?1.2:0})},
  tatli:{ad:'Tatlı Kavanozları',en:'Dessert Jars',sekil:[['kase',2],['kadeh',1.6],['silindir',1.4],['kavanoz',1.4]],
-  tarif:g=>({katmanli:3,cikolatali:2,dondurma:1.6,mermer:g>=ACIL.cubuk?1.8:0,ikiTat:g>=ACIL.kart?1.4:0})}};
+  tarif:g=>({katmanli:3,cikolatali:2,dondurma:1.6,mermer:g>=ACIL.cubuk?1.8:0,ikiTat:g>=ACIL.kart?1.4:0})},
+ sehir:{ad:'Şehir Silüetleri',en:'City Skylines',gok:1,sekil:[['kavanoz',3],['silindir',2]],
+  tarif:g=>({siluet:3,geceSehri:g>=ACIL.isilti?2:0,rihtim:1.6,yagmur:g>=ACIL.cubuk?1.4:0})},
+ dag:{ad:'Dağlar',en:'Mountains',gok:1,sekil:[['kavanoz',3],['silindir',1.4],['vazo',1],['lale',1]],
+  tarif:g=>({sirtlar:3,karliDoruk:2,dagGolu:1.6,gecit:g>=ACIL.ruzgar?1.2:0,geceDoruk:g>=ACIL.isilti?1.4:0})}};
+const TEKIP=new Set(['siluet','geceSehri','rihtim','yagmur','sirtlar','karliDoruk','dagGolu','gecit','geceDoruk','ikiTat','ikiBahce']); // ipucu tek cümle, ek yok
 const GOKR=new Set(['gok','bulut','gece','geceMavi','turuncu','pembe','mor','sari','firtina']); // gökyüzü olabilecek renkler
 // adlar: tarife uygun sıfat + isim (iki dilde)
 const SIFAT={kumsal:[['Sakin','Calm'],['Sessiz','Quiet'],['Gizli','Hidden'],['Berrak','Clear'],['Altın','Golden'],['Küçük','Little'],['Uzak','Distant']],
@@ -51,7 +56,11 @@ const SIFAT={kumsal:[['Sakin','Calm'],['Sessiz','Quiet'],['Gizli','Hidden'],['Be
  cicekTarlasi:[['Renkli','Colorful'],['Bahar','Spring'],['Kırmızı','Red'],['Pembe','Pink'],['Güneşli','Sunny']],bahceTepe:[['Yeşil','Green'],['Yumuşak','Soft'],['Sakin','Calm'],['Çiçekli','Blooming']],
  gokkusagi:[['Parlak','Bright'],['Renkli','Colorful'],['Büyük','Big'],['Yumuşak','Soft']],cicekUc:[['İnce','Delicate'],['Bahar','Spring'],['Küçük','Little']],ikiBahce:[['İki','Twin'],['Komşu','Neighbor']],
  katmanli:[['Çilekli','Strawberry'],['Kremalı','Creamy'],['Yumuşak','Soft'],['Tatlı','Sweet']],cikolatali:[['Çikolatalı','Chocolate'],['Karamelli','Caramel'],['Sıcak','Warm']],
- dondurma:[['Naneli','Mint'],['Limonlu','Lemon'],['Serin','Cool'],['Yaban Mersinli','Blueberry']],mermer:[['Mermer','Marble'],['Dalgalı','Swirled']],ikiTat:[['Damalı','Checkered'],['İki Renkli','Two-Tone'],['Kareli','Patchwork']]};
+ dondurma:[['Naneli','Mint'],['Limonlu','Lemon'],['Serin','Cool'],['Yaban Mersinli','Blueberry']],
+ siluet:[['Altın','Golden'],['Sıcak','Warm'],['Sessiz','Quiet'],['Uzak','Distant'],['Pembe','Pink']],geceSehri:[['Işıklı','Bright'],['Uyumayan','Sleepless'],['Sessiz','Quiet'],['Mavi','Blue']],
+ rihtim:[['Sakin','Calm'],['Eski','Old'],['Serin','Cool'],['Güneşli','Sunny']],yagmur:[['Yağmurlu','Rainy'],['Gri','Grey'],['Islak','Wet']],
+ sirtlar:[['Mavi','Blue'],['Uzak','Distant'],['Sisli','Misty'],['Sessiz','Silent'],['Mor','Purple']],karliDoruk:[['Karlı','Snowy'],['Yüce','Lofty'],['Beyaz','White'],['Yalnız','Lone']],
+ dagGolu:[['Gizli','Hidden'],['Durgun','Still'],['Serin','Cool'],['Turkuaz','Turquoise']],gecit:[['Rüzgârlı','Windy'],['Dar','Narrow'],['Yüksek','High']],geceDoruk:[['Yıldızlı','Starry'],['Işıltılı','Shimmering'],['Sessiz','Silent']],mermer:[['Mermer','Marble'],['Dalgalı','Swirled']],ikiTat:[['Damalı','Checkered'],['İki Renkli','Two-Tone'],['Kareli','Patchwork']]};
 const ISIM={kumsal:[['Koy','Cove'],['Kumsal','Beach'],['Kıyı','Shore'],['Liman','Harbor'],['Lagün','Lagoon']],dalgalar:[['Dalgalar','Waves'],['Gelgit','Tide'],['Köpükler','Surf']],
  aksam:[['Akşam','Evening'],['Ufuk','Horizon'],['Alacakaranlık','Dusk']],gece:[['Gece','Night'],['Mehtap','Moonlight']],firtina:[['Fırtına','Storm'],['Rüzgâr','Gale']],
  karliTepe:[['Tepeler','Hills'],['Yamaç','Slope'],['Orman','Woods']],dagKar:[['Zirve','Peak'],['Dağlar','Mountains']],gol:[['Göl','Lake'],['Gölet','Pond']],kuzey:[['Işıklar','Lights'],['Gökyüzü','Sky']],tipi:[['Tipi','Blizzard'],['Ayaz','Frost']],
@@ -60,7 +69,10 @@ const ISIM={kumsal:[['Koy','Cove'],['Kumsal','Beach'],['Kıyı','Shore'],['Liman
  cicekTarlasi:[['Tarla','Field'],['Lale Bahçesi','Tulip Garden'],['Çayır','Meadow']],bahceTepe:[['Bahçe','Garden'],['Tepe','Hill'],['Bostan','Orchard']],
  gokkusagi:[['Gökkuşağı','Rainbow']],cicekUc:[['Çiçekler','Flowers'],['Filizler','Sprouts']],ikiBahce:[['Bahçeler','Gardens'],['Tarlalar','Fields']],
  katmanli:[['Kup','Trifle'],['Pasta','Cake'],['Parfe','Parfait']],cikolatali:[['Puding','Pudding'],['Kup','Trifle'],['Pasta','Cake']],dondurma:[['Dondurma','Ice Cream'],['Sorbe','Sorbet']],
- mermer:[['Kek','Cake'],['Puding','Pudding']],ikiTat:[['Kup','Cup'],['Pasta','Cake'],['Kek','Cake']]};
+ mermer:[['Kek','Cake'],['Puding','Pudding']],ikiTat:[['Kup','Cup'],['Pasta','Cake'],['Kek','Cake']],
+ siluet:[['Silüet','Skyline'],['Şehir','City'],['Akşamüstü','Sundown']],geceSehri:[['Şehir','City'],['Gece','Night'],['Işıklar','Lights']],rihtim:[['Rıhtım','Quay'],['Nehir Kıyısı','Riverside'],['Liman','Harbor']],
+ yagmur:[['Şehir','City'],['Sokaklar','Streets'],['Öğleden Sonra','Afternoon']],sirtlar:[['Sırtlar','Ridges'],['Dağlar','Mountains'],['Doruklar','Summits']],karliDoruk:[['Doruk','Summit'],['Zirve','Peak'],['Dağ','Mountain']],
+ dagGolu:[['Dağ Gölü','Mountain Lake'],['Göl','Lake'],['Vadi','Valley']],gecit:[['Geçit','Pass'],['Boyun','Saddle']],geceDoruk:[['Doruklar','Summits'],['Gece','Night']]};
 const IPUCU={kumsal:['Kumu silik çizgilere göre yığ, sonra denizi düz yay.','Pile the sand along the faint lines, then spread the sea flat.'],
  dalgalar:['Dalgaları çizgileri izleyerek dök: tepelerde biraz bekle.','Pour the waves along the lines: wait a little on the crests.'],
  aksam:['Katmanları sırayla, çizgileri izleyerek dök.','Pour the layers one by one along the lines.'],
@@ -85,25 +97,53 @@ const IPUCU={kumsal:['Kumu silik çizgilere göre yığ, sonra denizi düz yay.'
  cikolatali:['Çikolatayı dalga gibi dök, üstüne krema.','Pour the chocolate in waves, cream on top.'],
  dondurma:['Topları kubbe gibi yığ, ortası yüksek.','Pile the scoops like domes, high in the middle.'],
  mermer:['Kremayı dök, çubukla çikolataya it.','Pour the cream and push it into the chocolate with the stick.'],
+ siluet:['Binaları sırayla yerlerine bırak, gökyüzünü aralarına doldur.','Drop the buildings in place one by one, then fill the sky between them.'],
+ geceSehri:['Binaları yerleştir, ışıldayan kumu aralarına dök. Sonunda ışıklar söner.','Place the buildings and pour the glowing sand between them. At the end the lights go out.'],
+ rihtim:['Önce su, üstüne rıhtım. Binaları rıhtıma diz.','Water first, then the quay on top. Line the buildings up on the quay.'],
+ yagmur:['Binaları yerleştir. Bulutlar gelince çubukla yağmur çiz.','Place the buildings. When the clouds come, draw the rain with the stick.'],
+ sirtlar:['Islak kum dik durur: her sırtın zirvelerini sivri yığ.','Wet sand stands steep: pile the peaks of each ridge to a point.'],
+ karliDoruk:['Doruğu sivri yığ, kar sadece tepesine.','Pile the summit to a point, snow only on its top.'],
+ dagGolu:['Yamaçları kenarlara yığ, göl ortada düz kalsın.','Pile the slopes at the sides and keep the lake flat in the middle.'],
+ gecit:['Rüzgâr kumu savuruyor: huniyi rüzgârın geldiği yana tut.','The wind blows the sand: hold the funnel into the wind.'],
+ geceDoruk:['Zirveleri sivri yığ, ışıldayan kumu dalga gibi dök. Sonunda ışıklar söner.','Pile the peaks to a point and pour the glowing sand like a wave. At the end the lights go out.'],
  ikiTat:['Kart girince iki yana iki tat dök, üst sırada renkleri çaprazla.','When the card drops in, pour a flavor on each side, then swap them for the top row.']};
 const EK={sus:['Süsleri halkaların içine bırak.','Drop the decorations inside their rings.'],cubuk:['Çubukla kesik çizgilere göre aşağı çek.','Drag down along the dashed lines with the stick.'],
  gecis:['Renk döküldükçe değişir: her yere eşit yay.','The color changes as you pour: spread it evenly.'],ufle:['Fazla kumu 💨 ile üfle.','Blow away extra sand with 💨.']};
 
 // Gökyüzü: yer alçaksa tek renk koca bir gök yerine 2-3 bant (gündüz bulut şeridi, gün batımı, gece). Son bant ≤ %40.
 const ortTop=kat=>{let s=0;const N=24;for(let j=0;j<=N;j++){let b=0;for(const q of kat)b=Math.max(b,q[1](j/N));s+=b;}return s/(N+1);};
-function gokEkle(K,kat,mod){const t0=ortTop(kat),R=1-t0;
+function gokEkle(K,kat,mod,W){kat.gok0=kat.length;const t0=ortTop(kat),R=1-t0,bf=h=>W?(u=>h+W.a*Math.sin(6.2832*(W.f*u+W.ph))):flat(h);
  const tek={gun:['gok'],aksam:['turuncu',{gecis:'pembe'}],gece:['gece'],sari:['sari',{gecis:'turuncu'}]}[mod];
  if(R<=.4){kat.push(tek[1]?[tek[0],flat(1),tek[1]]:[tek[0],flat(1)]);return;}
  const n=R>.62?3:2,hs=[];for(let i=1;i<n;i++)hs.push(t0+R*i/n+K.u(-.03,.03));
  if(mod==='gun'){const W={a:K.u(.02,.035),f:K.p([1,1.5,2]),ph:K.r()},hc=t0+R*K.u(.5,.58);const cl=u=>hc+W.a*Math.sin(6.2832*(W.f*u+W.ph));
   kat.push(['gok',cl]);kat.push(['beyaz',u=>cl(u)+K0,{ince:1}]);kat.push(['gok',flat(1)]);return;}
  const seri={aksam:K.p([['sari','turuncu','pembe'],['turuncu','pembe','mor'],['sari','turuncu','mor']]),gece:['mor','geceMavi','gece'],sari:['sari','turuncu','pembe']}[mod].slice(3-n);
- for(let i=0;i<n-1;i++)kat.push([seri[i],flat(hs[i])]);kat.push([seri[n-1],flat(1)]);}
+ for(let i=0;i<n-1;i++)kat.push([seri[i],bf(hs[i])]);kat.push([seri[n-1],flat(1)]);}
 const K0=.045; // bulut şeridinin kalınlığı
+// Dağ sırtı: birkaç zirve, aralarında boyun (eğim kuru kumun tutacağı kadar)
+function sirt(K,h,n,amp,k0,k1){const ps=[];for(let i=0;i<n;i++)ps.push([(i+.5)/n+K.u(-.09,.09),h+amp*K.u(.55,1),K.u(k0||.4,k1||.5)]);
+ const f=mx(flat(h),...ps.map(q=>tri(q[0],q[1],q[2])));let bi=0;ps.forEach((q,i)=>{if(q[1]>ps[bi][1])bi=i;});
+ let lu=.5,lv=9;for(let i=0;i<=30;i++){const u=.12+.76*i/30,v=f(u);if(v<lv){lv=v;lu=u;}}
+ return {tur:'sirt',f,h,min:h,max:ps[bi][1],peaks:[ps[bi][0],...ps.filter((q,i)=>i!==bi).map(q=>q[0])],low:lu};}
+const ustune=(a,b,d)=>u=>Math.max(a(u)+d,b(u)); // arkadaki sırt öndekinin her yerde en az d üstünde
+// Yan yana binalar: soldan sağa, aralarında boşluk (bırakırken üst üste binmesin); kavanoz iç genişliği ~1,76
+function binaDiz(K,k,n){const ids=['gokdelen','kule','blok','bina','saatKulesi','kubbe'],sec=[];
+ for(let t=0;t<30&&sec.length<n;t++){const id=K.p(ids);if(!sec.includes(id))sec.push(id);}
+ const gaps=sec.map(()=>K.u(.09,.13)),W=sec.reduce((a,id)=>a+DEC[id].w,0)+gaps.slice(1).reduce((a,b)=>a+b,0);if(W>1.5)return null;
+ let x=-W/2+K.u(-1,1)*(1.5-W)/2;const out=[];
+ sec.forEach((id,i)=>{if(i)x+=gaps[i];const w=DEC[id].w;out.push(susYer(id,k,1,(x+w/2+.88)/1.76));x+=w;});return out;}
 // süs yerleştirme yardımcıları
 const susYer=(id,k,o,u)=>({id,katman:k,oran:o,u:+clamp01(u).toFixed(3)});
 const uzak=(us,u,m)=>us.every(v=>Math.abs(v-u)>=m);
 function gokSus(K,sus,k,ids,n){const us=sus.filter(s=>s.katman===k).map(s=>s.u);for(let i=0;i<n;i++){let u=K.u(.2,.8),t=0;while(!uzak(us,u,.28)&&t++<8)u=K.u(.2,.8);if(!uzak(us,u,.28))return;us.push(u);sus.push(susYer(K.p(ids),k,+K.u(.3,.62).toFixed(2),u));}}
+// Gökyüzü süsü (yeni tarifler): gök bantlarından birine, cama sığacak yüksekliğe ve yerdeki süslerin (bina, ağaç) üstüne gelmeyecek yere koyar
+function gokSus2(K,sus,kat,ids,n){const g0=kat.gok0==null?kat.length-1:kat.gok0,son=kat.length-1,tops=[];for(let i=0;i<=son;i++)tops.push(i===son?1:ortTop(kat.slice(0,i+1)));
+ const yer=sus.filter(q=>q.oran>=1).map(q=>{let b=0;for(let i=0;i<=q.katman;i++)b=Math.max(b,kat[i][1](q.u));return {u:q.u,w:DEC[q.id].w,top:b+DEC[q.id].h/1.96};}),gk=[];
+ for(let m=0;m<n;m++){for(let t=0;t<24;t++){const id=K.p(ids),D=DEC[id],i=g0+Math.floor(K.r()*(son-g0+1)),o=+K.u(.2,.75).toFixed(2),u=K.u(.14,.86),lv=(i?tops[i-1]:0)+o*(tops[i]-(i?tops[i-1]:0));
+   if(lv+D.h/1.96>.94)continue;if(!uzak(gk,u,.24))continue;
+   if(yer.some(y=>Math.abs(u-y.u)<(y.w+D.w)/2/1.76+.03&&lv<y.top+.03))continue;
+   gk.push(u);sus.push(susYer(id,i,o,u));break;}}}
 // çubuk izleri: üstteki renk alttakine iner; derinlik alttaki katmanın o noktadaki kalınlığına göre (dünya birimi, HF=1,96)
 function cubukEkle(K,kat,k,n,us0){const izler=[],alt=u=>{let b0=0,b1=0;for(let i=0;i<k;i++){b0=b1;b1=Math.max(b1,kat[i][1](u));}return b1-b0;};
  const us=[];for(let i=0;i<n;i++)us.push(.14+.72*(i+.5)/n+K.u(-.03,.03));
@@ -267,6 +307,56 @@ const TARIF={
   const kat=[['biskuvi',flat(h0)],[pr[0],sol(h1)],[pr[1],sag(h1)],[pr[1],sol(h2)],[pr[0],sag(h2)],[pr[2],flat(h2+K.u(.07,.09))],['krema',flat(1)]];
   const sus=[susYer(K.p(['cilekMeyve','kirazMeyve']),6,.5,K.u(.24,.4))];if(K.c(.6))sus.push(susYer(K.p(['nane','limonDilim']),6,.5,K.u(.6,.76)));
   return {katman:kat,sus,ortam:'deniz',kart:{u:.5,gir:1,katman:5}};},
+ // ── Şehir Silüetleri: zemine yan yana büyük binalar bırakılır, gökyüzü aralarına dolar
+ siluet(K,d,g){const h0=K.u(.13,.17),kat=[[K.p(['asfalt','lacivert','koyuToprak']),flat(h0)]];
+  const sus=binaDiz(K,0,K.p(d>.3?[3,4,4]:[3]));if(!sus)return null;
+  gokEkle(K,kat,K.w([['aksam',2],['sari',1],['gun',1]]),d>.25?{a:K.u(.02,.04),f:K.p([1,1.5]),ph:K.r()}:null);
+  gokSus2(K,sus,kat,['gunes','balon','mart'],1);
+  return {katman:kat,sus,ortam:'ruzgar'};},
+ geceSehri(K,d,g){const h0=K.u(.13,.17),kat=[[K.p(['asfalt','lacivert']),flat(h0)]];
+  const sus=binaDiz(K,0,K.p([3,4]));if(!sus)return null;
+  const W=profil(K,'dalga',h0+K.u(.13,.17));kat.push(['isik',W.f]);kat.push(['mor',kopya(W,K.u(.15,.2))]);kat.gok0=kat.length;kat.push(['geceMavi',flat(K.u(.72,.78))]);kat.push(['gece',flat(1)]);
+  gokSus2(K,sus,kat,['ay','yildiz','yildiz'],K.p([1,2]));
+  return {katman:kat,sus,ortam:'gece',minor:true};},
+ rihtim(K,d,g){const W=profil(K,'dalga',K.u(.1,.13)),h0=W.max+K.u(.05,.07),kat=[[K.p(['koyuDeniz','deniz']),W.f],[K.p(['kaya','asfalt']),flat(h0)]];
+  const sus=binaDiz(K,1,3);if(!sus)return null;
+  gokEkle(K,kat,K.c(.5)?'gun':'aksam',d>.25?{a:K.u(.02,.035),f:K.p([1,1.5]),ph:K.r()}:null);
+  gokSus2(K,sus,kat,['mart','balon','gunes'],1);
+  return {katman:kat,sus,ortam:'deniz'};},
+ yagmur(K,d,g){const h0=K.u(.13,.17),kat=[[K.p(['asfalt','koyuToprak']),flat(h0)]],sus=binaDiz(K,0,3);if(!sus)return null;
+  kat.push(['gok',flat(K.u(.62,.68))]);kat.push(['bulut',flat(1)]);
+  // yağmur çizgileri binaların arasına ve yanlarına (çubuk binaya değmesin)
+  const dolu=u=>sus.some(s=>Math.abs(u-s.u)<(DEC[s.id].w/2+.055)/1.76),izler=[];
+  for(let u=.09;u<=.91&&izler.length<5;u+=.03)if(!dolu(u)&&(!izler.length||u-izler[izler.length-1].u>.1))izler.push({u:+u.toFixed(3),d:+K.u(.14,.2).toFixed(3)});
+  if(izler.length<2)return null;
+  return {katman:kat,sus,ortam:'firtina',cubuk:[{katman:2,oran:+K.u(.1,.16).toFixed(2),gen:.045,izler}]};},
+ // ── Dağlar: ıslak kumdan sivri, zikzak sırtlar (kuru kum bu kadar dik durmaz); öndeki koyu, arkadaki açık
+ sirtlar(K,d,g){const pal=K.p([['lacivert','dag','sis'],['uzum','mor','gul'],['orman','bag','yaprak'],['lacivert','mor','pembe']]),ISL={islak:true};
+  const h0=K.u(.1,.13),S1=sirt(K,h0+.04,K.p([2,3]),K.u(.2,.28),.8,1.1),S2=sirt(K,S1.h+K.u(.15,.19),K.p([3,4]),K.u(.18,.26),.8,1.1),f2=ustune(S1.f,S2.f,.05);
+  const kat=[[K.p(['koyuToprak','toprak','orman']),flat(h0)],[pal[0],S1.f,ISL],[pal[1],f2,ISL]];
+  if(d>.2&&K.c(.5)){const S3=sirt(K,S2.h+K.u(.13,.16),K.p([2,3]),K.u(.14,.2),.8,1.1);kat.push([pal[2],ustune(f2,S3.f,.05),ISL]);}
+  gokEkle(K,kat,K.w([['gun',1],['aksam',1.2]]));
+  const sus=[];gokSus2(K,sus,kat,['gunes','balon','mart'],K.p([1,1,2]));
+  return {katman:kat,sus,ortam:'ruzgar'};},
+ karliDoruk(K,d,g){const h0=K.u(.1,.14),c=K.u(.38,.62),hp=K.u(.6,.7),k=K.u(1,1.3),c2=c<.5?c+K.u(.26,.34):c-K.u(.26,.34),F=mx(flat(h0+.06),tri(c,hp,k),tri(c2,hp-K.u(.16,.24),k)),th=hp-K.u(.12,.16);
+  const kat=[[K.p(['orman','koyuToprak']),flat(h0)],[K.p(['dag','lacivert']),F,{islak:true}],['kar',u=>F(u)+.06*smooth(th-.03,th+.05,F(u)),{ince:1,islak:true}]];
+  gokEkle(K,kat,K.c(.6)?'gun':'aksam');
+  const sus=[],u1=(c+c2)/2<.5?K.u(.86,.9):K.u(.1,.14);if(F(u1)<h0+.08)sus.push(susYer('camAgaci',1,1,u1));
+  gokSus2(K,sus,kat,['balon','gunes','mart'],1);
+  return {katman:kat,sus,ortam:'ruzgar'};},
+ dagGolu(K,d,g){const c=K.u(.4,.6),k=K.u(.3,.42),h0=K.u(.1,.13),V=u=>h0+k*Math.abs(u-c),hl=h0+K.u(.08,.11),G=u=>Math.max(V(u),hl);
+  const S=sirt(K,hl+K.u(.1,.14),3,K.u(.2,.28),.8,1.1),kat=[[K.p(['orman','dag']),V],[K.p(['nehir','turkuaz','vaha']),flat(hl),{ince:1}],[K.p(['sis','mor','lacivert']),ustune(G,S.f,.05),{islak:true}]];
+  gokEkle(K,kat,K.c(.5)?'gun':'aksam');
+  const sus=[susYer('kugu',1,1,c)];gokSus2(K,sus,kat,['mart','gunes','balon'],1);
+  return {katman:kat,sus,ortam:'deniz'};},
+ gecit(K,d,g){const pal=K.p([['lacivert','dag'],['uzum','mor'],['orman','bag']]),h0=K.u(.1,.14),S1=sirt(K,h0+.04,2,K.u(.16,.22)),S2=sirt(K,S1.h+K.u(.16,.2),3,K.u(.14,.2));
+  const kat=[[K.p(['koyuToprak','toprak']),flat(h0)],[pal[0],S1.f],[pal[1],ustune(S1.f,S2.f,.05)]];gokEkle(K,kat,'aksam'); // rüzgârda kuru kum: yumuşak sırtlar
+  const sus=[];gokSus2(K,sus,kat,['balon','mart'],1);
+  return {katman:kat,sus,ortam:'ruzgar',ruzgar:{g:+K.u(1.5,1.9+d*1.6).toFixed(2),p:+K.u(5,7).toFixed(1)}};},
+ geceDoruk(K,d,g){const h0=K.u(.1,.14),S1=sirt(K,h0+.05,K.p([2,3]),K.u(.22,.3),.8,1.1),W=profil(K,'dalga',S1.max+K.u(.04,.08));
+  const kat=[[K.p(['buz','sis','dag']),S1.f,{islak:true}],['geceMavi',ustune(S1.f,W.f,.05)],['kuzey',kopya(W,K.u(.12,.16))]];if(K.c(.5))kat[2].push({gecis:'mor'});
+  kat.gok0=kat.length;kat.push(['gece',flat(1)]);const sus=[];gokSus2(K,sus,kat,['ay','yildiz','yildiz'],K.p([1,2]));
+  return {katman:kat,sus,ortam:'gece',minor:true};},
  kuzey(K,d,g){if(g<ACIL.isilti)return null;const P=profil(K,K.p(['tepe','ikiTepe']),K.u(.1,.13)),W=profil(K,'dalga',Math.max(P.max+.12,K.u(.42,.48)));
   const kat=[['kar',P.f],['geceMavi',W.f],['kuzey',kopya(W,K.u(.12,.16))],['gece',flat(1)]];if(K.c(.5))kat[2].push({gecis:'mor'});
   const sus=[];if(P.peaks.length&&K.c(.7))sus.push(susYer('camAgaci',0,1,P.peaks[0]));
@@ -295,7 +385,7 @@ function uret(tema,g,seed,zorla){const T=TEMA[tema],K=kit(seed),d=clamp01((g-1)/
   if(L.kart&&!['kavanoz','silindir'].includes(L.sekil))L.sekil='kavanoz';
   let sf=K.p(SIFAT[tid]),is=K.p(ISIM[tid]);const kok=x=>x.toLocaleLowerCase('tr').split(' ').map(w=>w.slice(0,5));
   for(let t=0;t<6&&kok(sf[0]).some(a=>kok(is[0]).includes(a));t++){sf=K.p(SIFAT[tid]);is=K.p(ISIM[tid]);}L.ad=sf[0]+' '+is[0];EN[L.ad]=sf[1]+' '+is[1];
-  const ip=IPUCU[tid],ek=L.ruzgar||L.uc||L.kart||L.katman.some(q=>q[2]&&q[2].islak)?null:L.cubuk?EK.cubuk:L.katman.some(q=>q[2]&&q[2].gecis)?EK.gecis:L.ufle?EK.ufle:L.sus?EK.sus:null;
+  const ip=IPUCU[tid],ek=TEKIP.has(tid)||L.ruzgar||L.uc||L.kart||L.katman.some(q=>q[2]&&q[2].islak)?null:L.cubuk?EK.cubuk:L.katman.some(q=>q[2]&&q[2].gecis)?EK.gecis:L.ufle?EK.ufle:L.sus?EK.sus:null;
   L.ipucu=ip[0]+(ek?' '+ek[0]:'');EN[L.ipucu]=ip[1]+(ek?' '+ek[1]:'');
   return L;}
  return null;}

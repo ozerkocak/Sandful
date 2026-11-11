@@ -335,10 +335,11 @@ const PAL={kum:'#e8c483',deniz:'#4d93cf',gok:'#b4dcf0',toprak:'#8f6343',cimen:'#
  mercan:'#f2826f',turkuaz:'#3fb7c6',isilti:'#5ff2e6',geceMavi:'#16244a',kaya:'#8d8a86',beyaz:'#f5f6f7',buz:'#cfe9f5',firtina:'#5d6b80',kumAcik:'#f1d9a6',
  kiraz:'#f7bfd0',yaprak:'#b2d96c',lale:'#e0473f',bugday:'#dfb24e',bag:'#5e8f3c',uzum:'#6e3f86',sonbahar:'#e07a2e',kizil:'#b8432e',bulut:'#8f9bad',kuzey:'#6ff0a2',islakKum:'#bf9257',islakKoyu:'#9a6b45',
  krema:'#f7ecd6',cikolata:'#6e4331',sutluCik:'#a8714f',cilek:'#f08da0',karamel:'#d08a42',nane:'#a6e2c8',yabanMersini:'#5d62ad',limon:'#f5e07a',biskuvi:'#d8a96c',
- vaha:'#3fae8f',kumul:'#e9a15a',gul:'#f5b8c8'};
+ vaha:'#3fae8f',kumul:'#e9a15a',gul:'#f5b8c8',
+ asfalt:'#3b3f55',isik:'#ffcf7a',orman:'#2f6b4f',sis:'#c9cfe0'};
 // süsler: dünya biriminde boyut, ikon (sıra çubuğu için) ve tuvale çizim
 // Işıldayan kumlar karanlıkta parlar (finalde ışık söner). Canlanan finalde su kumu parıldar, gece kumunda yıldızlar kırpışır.
-const GLOW={isilti:1,kuzey:.9},FX_SU=new Set(['deniz','koyuDeniz','nehir','turkuaz']),FX_YILDIZ=new Set(['gece','geceMavi']);
+const GLOW={isilti:1,kuzey:.9,isik:.85},FX_SU=new Set(['deniz','koyuDeniz','nehir','turkuaz']),FX_YILDIZ=new Set(['gece','geceMavi']);
 const DEC={
  tekne:{e:'⛵',w:.3,h:.27},kaktus:{e:'🌵',w:.18,h:.29},gunes:{e:'☀️',w:.24,h:.24},kugu:{e:'🦢',w:.26,h:.22},
  agac:{e:'🌳',w:.24,h:.32},ay:{e:'🌙',w:.18,h:.21},yildiz:{e:'⭐',w:.16,h:.16},
@@ -346,6 +347,7 @@ const DEC={
  denizyildizi:{e:'🌟',w:.17,h:.16},yelkenli:{e:'⛵',w:.26,h:.3},
  kirazAgaci:{e:'🌸',w:.36,h:.42},kelebek:{e:'🦋',w:.16,h:.13},aycicegi:{e:'🌻',w:.18,h:.34},mantar:{e:'🍄',w:.15,h:.15},akcaagac:{e:'🍁',w:.16,h:.16},
  semsiye:{e:'☂️',w:.26,h:.27},kardanadam:{e:'⛄',w:.17,h:.27},camAgaci:{e:'🌲',w:.18,h:.3},ev:{e:'🏠',w:.26,h:.24},karTanesi:{e:'❄️',w:.17,h:.17},
+ gokdelen:{e:'🏢',w:.23,h:.85},kule:{e:'🏙️',w:.2,h:.71},blok:{e:'🏬',w:.36,h:.43},bina:{e:'🏢',w:.27,h:.59},saatKulesi:{e:'🕰️',w:.18,h:.64},kubbe:{e:'🏛️',w:.38,h:.34},balon:{e:'🎈',w:.2,h:.27},
  deve:{e:'🐪',w:.3,h:.24},lale:{e:'🌷',w:.13,h:.27},ari:{e:'🐝',w:.15,h:.12},cilekMeyve:{e:'🍓',w:.15,h:.17},kirazMeyve:{e:'🍒',w:.16,h:.18},nane:{e:'🌿',w:.15,h:.14},limonDilim:{e:'🍋',w:.17,h:.15}};
 
 // Katman üst sınırları u∈[0,1] (camın sol→sağ) için dolgu yüksekliğinin oranı. Eğim ≤ 0,5 kalmalı (kum 34°'de durur).
@@ -1219,6 +1221,9 @@ function drawWall(x,w,h){const gr=x.createLinearGradient(0,0,w*.35,h);gr.addColo
  for(let k=0;k<5000;k++){x.fillStyle='rgba('+(Math.random()<.5?'255,250,240':'120,95,70')+','+Math.random()*.05+')';x.fillRect(Math.random()*w,Math.random()*h,1.5,1.5);}
  const vg=x.createRadialGradient(w*.45,h*.42,w*.2,w*.5,h*.5,w*.8);vg.addColorStop(0,'rgba(60,40,20,0)');vg.addColorStop(1,'rgba(60,40,20,.28)');x.fillStyle=vg;x.fillRect(0,0,w,h);}
 // süslerin vektör çizimleri (her platformda aynı görünür)
+// Şehir binaları: koyu silüet, ışıklı pencereler (gece finalinde pencereler parlak kalır)
+const BINA={gokdelen:{c:['#2f3668','#1d2247'],cols:3,rows:11,top:'duz'},kule:{c:['#3d3870','#272450'],cols:2,rows:8,top:'sivri'},blok:{c:['#374476','#232c52'],cols:5,rows:5,top:'duz'},
+ bina:{c:['#443d74','#2a264f'],cols:3,rows:7,top:'basamak'},saatKulesi:{c:['#4d4169','#2f2847'],cols:1,rows:4,top:'saat'},kubbe:{c:['#3f3e78','#26264f'],cols:4,rows:2,top:'kubbe'}};
 function drawDecor(id,x,w,h){x.lineJoin='round';x.lineCap='round';const G=(x0,y0,x1,y1,s)=>{const g=x.createLinearGradient(x0,y0,x1,y1);s.forEach(q=>g.addColorStop(q[0],q[1]));return g;};
  if(id==='tekne'){x.fillStyle=G(0,h*.7,0,h,[[0,'#a8653b'],[1,'#6e3d22']]);x.beginPath();x.moveTo(w*.04,h*.68);x.lineTo(w*.96,h*.68);x.lineTo(w*.8,h*.96);x.lineTo(w*.2,h*.96);x.closePath();x.fill();
   x.fillStyle='#f3e3c8';x.fillRect(w*.1,h*.71,w*.8,h*.04);x.fillStyle='#5b3a24';x.fillRect(w*.49,h*.06,w*.035,h*.63);
@@ -1296,6 +1301,18 @@ function drawDecor(id,x,w,h){x.lineJoin='round';x.lineCap='round';const G=(x0,y0
   x.fillStyle='#ffd77a';x.fillRect(w*.22,h*.6,w*.18,h*.17);x.fillRect(w*.6,h*.6,w*.18,h*.17);x.fillStyle='#6b3e22';x.fillRect(w*.43,h*.66,w*.14,h*.34);
   x.fillStyle='#7a4a33';x.fillRect(w*.66,h*.06,w*.1,h*.26);x.fillStyle='#5a3a2c';x.beginPath();x.moveTo(w*.02,h*.5);x.lineTo(w*.5,h*.1);x.lineTo(w*.98,h*.5);x.closePath();x.fill();
   x.fillStyle='#ffffff';x.beginPath();x.moveTo(w*.0,h*.5);x.lineTo(w*.5,h*.08);x.lineTo(w*1,h*.5);x.lineTo(w*.9,h*.52);x.quadraticCurveTo(w*.5,h*.3,w*.1,h*.52);x.closePath();x.fill();x.fillRect(w*.65,h*.03,w*.12,h*.05);}
+ else if(BINA[id]){const B=BINA[id];let y0=0;x.fillStyle=G(0,0,w,0,[[0,B.c[0]],[1,B.c[1]]]);
+  if(B.top==='duz'){y0=h*.03;x.fillRect(w*.04,y0,w*.92,h-y0);x.fillRect(w*.3,0,w*.4,h*.04);}
+  else if(B.top==='sivri'){y0=h*.2;x.fillRect(w*.08,y0,w*.84,h-y0);x.beginPath();x.moveTo(w*.08,y0);x.lineTo(w*.5,0);x.lineTo(w*.92,y0);x.closePath();x.fill();}
+  else if(B.top==='basamak'){y0=h*.14;x.fillRect(w*.04,y0,w*.92,h-y0);x.fillRect(w*.22,h*.06,w*.56,h*.1);x.fillRect(w*.38,0,w*.24,h*.08);}
+  else if(B.top==='saat'){y0=h*.3;x.fillRect(w*.14,y0,w*.72,h-y0);x.fillRect(w*.06,h*.14,w*.88,h*.17);x.beginPath();x.moveTo(w*.06,h*.14);x.lineTo(w*.5,0);x.lineTo(w*.94,h*.14);x.closePath();x.fill();
+   x.fillStyle='#ffe9b0';x.beginPath();x.arc(w*.5,h*.225,w*.26,0,6.283);x.fill();x.strokeStyle='#2f2847';x.lineWidth=w*.05;x.beginPath();x.moveTo(w*.5,h*.225);x.lineTo(w*.5,h*.225-w*.17);x.moveTo(w*.5,h*.225);x.lineTo(w*.63,h*.225);x.stroke();}
+  else if(B.top==='kubbe'){y0=h*.5;x.fillRect(w*.03,y0,w*.94,h-y0);x.beginPath();x.ellipse(w*.5,y0,w*.3,h*.42,0,Math.PI,0);x.fill();x.fillRect(w*.485,0,w*.03,h*.1);}
+  const m0=w*(B.top==='saat'?.26:.14),cw=(w-2*m0)/B.cols,ch=(h-y0-h*.05)/B.rows;
+  for(let r=0;r<B.rows;r++)for(let c=0;c<B.cols;c++){const lit=((r*7+c*13+id.length*5)%5)<3;x.fillStyle=lit?(((r+c)%3)?'#ffd98a':'#fff0c0'):'rgba(12,16,40,.55)';x.fillRect(m0+c*cw+cw*.2,y0+h*.03+r*ch+ch*.22,cw*.6,ch*.5);}}
+ else if(id==='balon'){const cx=w*.5,R=w*.46;x.save();x.beginPath();x.moveTo(cx-R,h*.34);x.bezierCurveTo(cx-R,h*-.06,cx+R,h*-.06,cx+R,h*.34);x.bezierCurveTo(cx+R,h*.56,cx+w*.14,h*.66,cx+w*.1,h*.76);x.lineTo(cx-w*.1,h*.76);x.bezierCurveTo(cx-w*.14,h*.66,cx-R,h*.56,cx-R,h*.34);x.closePath();x.clip();
+  const cs=['#e9544a','#ffd166','#3fa7d6','#ffd166','#e9544a'];for(let k=0;k<5;k++){x.fillStyle=cs[k];x.fillRect(w*k/5,0,w/5+1,h);}x.fillStyle='rgba(255,255,255,.22)';x.beginPath();x.ellipse(cx-R*.35,h*.24,R*.22,h*.16,.3,0,6.283);x.fill();x.restore();
+  x.strokeStyle='#6b4a2a';x.lineWidth=w*.02;x.beginPath();x.moveTo(cx-w*.09,h*.76);x.lineTo(cx-w*.07,h*.86);x.moveTo(cx+w*.09,h*.76);x.lineTo(cx+w*.07,h*.86);x.stroke();x.fillStyle='#8a5a34';x.fillRect(cx-w*.1,h*.86,w*.2,h*.13);}
  else if(id==='deve'){x.fillStyle=G(0,0,0,h,[[0,'#d9a35c'],[1,'#b07a3c']]);x.beginPath();x.moveTo(w*.18,h*.62);x.quadraticCurveTo(w*.24,h*.2,w*.4,h*.4);x.quadraticCurveTo(w*.5,h*.14,w*.66,h*.42);x.quadraticCurveTo(w*.76,h*.58,w*.8,h*.62);x.closePath();x.fill();
   x.beginPath();x.moveTo(w*.74,h*.56);x.quadraticCurveTo(w*.86,h*.34,w*.84,h*.16);x.lineTo(w*.96,h*.14);x.quadraticCurveTo(w*.99,h*.2,w*.92,h*.24);x.quadraticCurveTo(w*.94,h*.46,w*.82,h*.64);x.closePath();x.fill();
   x.strokeStyle='#a8743a';x.lineWidth=w*.045;for(const lx of[.24,.33,.64,.74]){x.beginPath();x.moveTo(w*lx,h*.58);x.lineTo(w*(lx+.01),h*.98);x.stroke();}
@@ -1480,7 +1497,7 @@ function gfxLevel(){const T3=RD.T3,sc=RD.scene;
   const cm=add(new T3.Mesh(new T3.BoxGeometry(.012,HF*1.04,dep),new T3.MeshStandardMaterial({color:0xf3e9d6,roughness:.85,metalness:0})));cm.position.set(KART.x,HF*.52,0);cm.renderOrder=3;RD.card=cm;}
  RD.grains.a=[];RD.conf.a=[];}
 // Işıldayan kumlu bölümlerin finalinde ışık söner: sahne kararır, ışıldayan taneler parlar. Ay ve yıldız süsü kararmaz.
-const LUMDEC=new Set(['ay','yildiz','gunes','fener']);
+const LUMDEC=new Set(['ay','yildiz','gunes','fener','gokdelen','kule','blok','bina','saatKulesi','kubbe']);
 function setNight(nf,force){if(!RD||(!force&&Math.abs(nf-RD.nightSet)<.004))return;RD.nightSet=nf;const k=1-.8*nf;
  RD.wallMat.uniforms.uNight.value=nf;RD.hfMat.uniforms.uNight.value=nf;RD.frontMat.uniforms.uEnvK.value=RD.backMat.uniforms.uEnvK.value=1-.75*nf;
  RD.hemi.intensity=.5*k;RD.key.intensity=1.1*k;RD.rimL.intensity=.4*k;RD.wallM.material.color.setScalar(k);RD.sunP.material.opacity=.55*k;RD.caus.material.opacity=.55*k;
@@ -1794,7 +1811,7 @@ function botThink(pf,B){const lim=rMouth-.04;
  const it=queue[qi];if(!it||it.t!=='kum'){pouring=false;return;}
  if(pf==='kusursuz'){if(T>=B.next){B.next=T+DT*3;B.def=deficits(it.c,0);let bx=-1;for(let c=0;c<NC;c++)if(B.def[c]>-90&&(bx<0||B.def[c]>B.def[bx]))bx=c;B.tx=xOf(bx);B.best=B.def[bx];
    if(L.uc&&T>=(B.ucT||0)){let w=0;for(let c=bx;c<NC&&B.def[c]>.6;c++)w++;for(let c=bx-1;c>=0&&B.def[c]>.6;c--)w++;setUc(w>34&&B.best>2.5?1:2);B.ucT=T+.5;}}
-  const aim=B.tx-windDrift(B.tx);nozT=noz+clamp(aim-noz,-3*DT,3*DT);const here=B.def[colOf(noz+windDrift(noz))];pouring=Math.abs(noz-aim)<DX*3||here>.6;if(B.best<.3)pouring=Math.abs(noz-aim)<DX*3;return;}
+  const aim=clamp(B.tx-windDrift(B.tx),-lim,lim);nozT=noz+clamp(aim-noz,-3*DT,3*DT);const here=B.def[colOf(noz+windDrift(noz))];pouring=Math.abs(noz-aim)<DX*3||here>.6;if(B.best<.3)pouring=Math.abs(noz-aim)<DX*3;return;}
  const P={insan:{vb:1.33,vmax:2.1,vmin:.25,re:.15,bn:.04,sn:.3,slow:.8,pn:4,thr:.8,wc:.75},daginik:{vb:1.19,vmax:1.68,vmin:.42,re:.35,bn:.13,sn:.6,slow:.35,pn:10,thr:-99,wc:.25}}[pf];
  if(T>=B.next){B.next=T+P.re+DT;B.def=deficits(it.c,P.pn);let a=-1,b=-1,bx=0;
   let c0=0,c1=NC;if(kartOn()){let sl=0,sr=0;for(let c=0;c<NC;c++)if(B.def[c]>0){if(c<KART.c)sl+=B.def[c];else sr+=B.def[c];}if(sl>2*sr)c1=KART.c;else if(sr>2*sl)c0=KART.c;bx=c0;} // kart varken insan bir tarafa odaklanır

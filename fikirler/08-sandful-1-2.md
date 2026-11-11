@@ -217,3 +217,31 @@ Sebep: yerleşen süs ışıksız, düz bir resimdi; kenarı keskin, gölgesi yo
 | 91-200 | 5-6 tema daha (öneri: Dağlar, Gece Gökyüzü, Şehir Silüetleri, Kıyı II, Kış II, Sonbahar) | her 10 bölümde bir |
 
 Her 10 bölümde 1 el yapımı imza bölüm ve 9 üretilmiş bölüm (en fazla 2'si mekanikli).
+
+## 8. "Hep benzer olmasın": dama, Şehir Silüetleri, Dağlar (11 Kasım 2026)
+
+> Ozer: "82. bölüm güzel görünmüyor, sadece iç içe geçmiş gibi." ve "Biraz benzer şeyler çıkıyor gibi görünüyor bölümler. Belki daha farklı bir şeyler mi
+> eklenmeli? Hep aynı olmasın. Şehir silüetleri demiştin mesela, o olabilir."
+
+Kendi değerlendirmem de aynı: ilk üç temanın bölümlerinin çoğu yatay bantlar ve küçük bir süs. Farklı görünmesi için bölümün **yapısı** değişmeli, sadece rengi değil.
+
+- **82 (iki tat yan yana) düzeltildi.** İki düz blok farklı boydaydı ve taban iki yanda eşit dolmadığı için renk karşıya taşıyordu.
+  Kart artık taban döküldükten sonra yukarıdan iner (`kart.gir`; sırada ⇣ işareti, "Kart girdi"), taban düz kalır.
+  Tarif **dama** oldu: iki yana iki renk, üst sırada çapraz renkler (dört kare), kart kalkınca ince bir bant ve krema.
+- **Şehir Silüetleri (yeni tema).** Zemine yan yana 3-4 büyük bina bırakılır (gökdelen, sivri kule, blok, basamaklı bina, saat kulesi, kubbeli bina;
+  koyu silüet, ışıklı pencereler), gökyüzü bantları aralarına dolar. Tarifler: gün batımı silüeti, gece şehri (binaların arasında ışıldayan "şehir ışığı" kumu,
+  finalde ışıklar sönünce pencereler parlak kalır), rıhtım (önde su), yağmurlu şehir (çubukla yağmur). Oynanışta ağırlık yerleştirmede: art arda birkaç süs.
+- **Dağlar (yeni tema).** Kuru kumla sırtlar yumuşak tepe gibi kalıyordu (34° sınırı), mevcut bölümlere benziyordu. Sırtlar **ıslak kumdan**: sivri, zikzak zirveler,
+  öndeki koyu, arkadaki açık. Tarifler: sırtlar, karlı doruk, dağ gölü (arkada sivri sırt), rüzgârlı geçit (rüzgârda kuru kum), gece dorukları (kuzey ışığı).
+- Yeni süsler: 6 bina, sıcak hava balonu. Yeni renkler: asfalt, şehir ışığı (ışıldar), orman, sis.
+- Gökyüzü süsleri (güneş, balon, martı) artık cama sığacak yüksekliğe ve binaların üstüne gelmeyecek yere konuyor.
+- Islak kum "mekanikli bölüm" sayısına dahil değil (ayrı bir hareket gerektirmiyor); rüzgâr, uç, kart, sallanan kavanoz 10 bölümde en fazla 2.
+
+Yapı çeşitleri (üretici artık bunlardan seçiyor): yatay bantlar, dalgalar, kubbeler (gökkuşağı, dondurma), mercek (vaha, göl), dama (kart), büyük nesneler (şehir),
+sivri zirveler (ıslak kum), eğik katmanlar (sallanan kavanoz), çubuk desenleri (mermer, yağmur), ışıldayan gece sahneleri.
+
+Sonuç (11 Kasım): Şehir Silüetleri 10 ve Dağlar 10 bölüm bot elemesinden geçti; önizlemede beş temadan 52 bölüm var. Notlar:
+- Kusursuz bot, en eksik sütun cam kenarında olunca huniyle oraya uzanamayıp takılıyordu (canlı oynatmada bölüm bitmiyordu); hedef artık huninin ulaşabildiği yere çekiliyor. 34 bölümde kusursuz yine 3 yıldız.
+- Açık iş: 15. bölümde (Gün doğumu) hiç dokunmayan bot %74 ile 1 yıldız alıyor (1.1'de %70, 0 yıldızdı). 1.1.1'deki süs düzeltmesinden beri ortaya dökülen kum
+  güneşin üstünden iki yana kayıp daha düzgün yayılıyor. 1.2'de güneş ortadan biraz kaydırılarak düzeltilecek.
+- Önizleme aracı görüntüyü beklemeden alıyordu; bekleme süresi `BEKLE` ile ayarlanabiliyor.

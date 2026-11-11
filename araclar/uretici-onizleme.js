@@ -18,7 +18,7 @@ fs.mkdirSync(OUT,{recursive:true});
  for(const it of list){
   const st=await p.evaluate(it=>{const L=URET.uret(it.tema,it.g,it.seed,it.zorla);const n=URET.ekle(L);__game.setTS(0);__game.start(n);__game.autoplay('kusursuz');__game.begin();
    let k=0;while(k<6000&&__game.state().state!=='result'){__game.sim(50);k++;}__game.autoplay(null);return __game.state();},it);
-  await p.waitForTimeout(3200);
+  await p.waitForTimeout(+process.env.BEKLE||3200);
   if(process.env.TAM)await p.screenshot({path:path.join(OUT,'tam.png')});const f=path.join(OUT,it.tema+'-'+it.g+'.jpg');await p.screenshot({path:f,type:'jpeg',quality:82,clip:{x:0,y:150,width:390,height:470}});
   console.log(it.tema,it.g,it.ad,st.pct,st.stars);}
  fs.writeFileSync(path.join(OUT,'liste.json'),JSON.stringify(list));
