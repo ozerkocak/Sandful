@@ -51,7 +51,7 @@ const SIFAT={kumsal:[['Sakin','Calm'],['Sessiz','Quiet'],['Gizli','Hidden'],['Be
  cicekTarlasi:[['Renkli','Colorful'],['Bahar','Spring'],['Kırmızı','Red'],['Pembe','Pink'],['Güneşli','Sunny']],bahceTepe:[['Yeşil','Green'],['Yumuşak','Soft'],['Sakin','Calm'],['Çiçekli','Blooming']],
  gokkusagi:[['Parlak','Bright'],['Renkli','Colorful'],['Büyük','Big'],['Yumuşak','Soft']],cicekUc:[['İnce','Delicate'],['Bahar','Spring'],['Küçük','Little']],ikiBahce:[['İki','Twin'],['Komşu','Neighbor']],
  katmanli:[['Çilekli','Strawberry'],['Kremalı','Creamy'],['Yumuşak','Soft'],['Tatlı','Sweet']],cikolatali:[['Çikolatalı','Chocolate'],['Karamelli','Caramel'],['Sıcak','Warm']],
- dondurma:[['Naneli','Mint'],['Limonlu','Lemon'],['Serin','Cool'],['Yaban Mersinli','Blueberry']],mermer:[['Mermer','Marble'],['Dalgalı','Swirled']],ikiTat:[['İki Tatlı','Two-Flavor'],['Yarım Yarım','Half and Half']]};
+ dondurma:[['Naneli','Mint'],['Limonlu','Lemon'],['Serin','Cool'],['Yaban Mersinli','Blueberry']],mermer:[['Mermer','Marble'],['Dalgalı','Swirled']],ikiTat:[['Damalı','Checkered'],['İki Renkli','Two-Tone'],['Kareli','Patchwork']]};
 const ISIM={kumsal:[['Koy','Cove'],['Kumsal','Beach'],['Kıyı','Shore'],['Liman','Harbor'],['Lagün','Lagoon']],dalgalar:[['Dalgalar','Waves'],['Gelgit','Tide'],['Köpükler','Surf']],
  aksam:[['Akşam','Evening'],['Ufuk','Horizon'],['Alacakaranlık','Dusk']],gece:[['Gece','Night'],['Mehtap','Moonlight']],firtina:[['Fırtına','Storm'],['Rüzgâr','Gale']],
  karliTepe:[['Tepeler','Hills'],['Yamaç','Slope'],['Orman','Woods']],dagKar:[['Zirve','Peak'],['Dağlar','Mountains']],gol:[['Göl','Lake'],['Gölet','Pond']],kuzey:[['Işıklar','Lights'],['Gökyüzü','Sky']],tipi:[['Tipi','Blizzard'],['Ayaz','Frost']],
@@ -60,7 +60,7 @@ const ISIM={kumsal:[['Koy','Cove'],['Kumsal','Beach'],['Kıyı','Shore'],['Liman
  cicekTarlasi:[['Tarla','Field'],['Lale Bahçesi','Tulip Garden'],['Çayır','Meadow']],bahceTepe:[['Bahçe','Garden'],['Tepe','Hill'],['Bostan','Orchard']],
  gokkusagi:[['Gökkuşağı','Rainbow']],cicekUc:[['Çiçekler','Flowers'],['Filizler','Sprouts']],ikiBahce:[['Bahçeler','Gardens'],['Tarlalar','Fields']],
  katmanli:[['Kup','Trifle'],['Pasta','Cake'],['Parfe','Parfait']],cikolatali:[['Puding','Pudding'],['Kup','Trifle'],['Pasta','Cake']],dondurma:[['Dondurma','Ice Cream'],['Sorbe','Sorbet']],
- mermer:[['Kek','Cake'],['Puding','Pudding']],ikiTat:[['Kup','Cup'],['Tatlı','Dessert']]};
+ mermer:[['Kek','Cake'],['Puding','Pudding']],ikiTat:[['Kup','Cup'],['Pasta','Cake'],['Kek','Cake']]};
 const IPUCU={kumsal:['Kumu silik çizgilere göre yığ, sonra denizi düz yay.','Pile the sand along the faint lines, then spread the sea flat.'],
  dalgalar:['Dalgaları çizgileri izleyerek dök: tepelerde biraz bekle.','Pour the waves along the lines: wait a little on the crests.'],
  aksam:['Katmanları sırayla, çizgileri izleyerek dök.','Pour the layers one by one along the lines.'],
@@ -80,12 +80,12 @@ const IPUCU={kumsal:['Kumu silik çizgilere göre yığ, sonra denizi düz yay.'
  bahceTepe:['Tepeleri yığ, ağaç tepeye.','Pile the hills, the tree goes on top.'],
  gokkusagi:['Her rengi kubbe gibi dök: ortaya daha çok, kenarlara az.','Pour each color like a dome: more in the middle, less at the sides.'],
  cicekUc:['Çiçekleri ince uçla sivri yap, düz yerlere geniş uç.','Make the flowers pointed with the thin spout, the wide one for flat parts.'],
- ikiBahce:['Kart bahçeyi ikiye böler: iki yana iki ayrı çiçek.','The card splits the garden: a different flower on each side.'],
+ ikiBahce:['Kart girince iki yana iki ayrı çiçek dök, sonra üstüne tepeyi yığ.','When the card drops in, pour a different flower on each side, then pile the hill on top.'],
  katmanli:['Katmanları sırayla düz yay, meyveler kremanın içine.','Spread the layers flat one by one, the fruit goes into the cream.'],
  cikolatali:['Çikolatayı dalga gibi dök, üstüne krema.','Pour the chocolate in waves, cream on top.'],
  dondurma:['Topları kubbe gibi yığ, ortası yüksek.','Pile the scoops like domes, high in the middle.'],
  mermer:['Kremayı dök, çubukla çikolataya it.','Pour the cream and push it into the chocolate with the stick.'],
- ikiTat:['Kart kupu ikiye böler: bir yana çilek, bir yana çikolata.','The card splits the cup: strawberry on one side, chocolate on the other.']};
+ ikiTat:['Kart girince iki yana iki tat dök, üst sırada renkleri çaprazla.','When the card drops in, pour a flavor on each side, then swap them for the top row.']};
 const EK={sus:['Süsleri halkaların içine bırak.','Drop the decorations inside their rings.'],cubuk:['Çubukla kesik çizgilere göre aşağı çek.','Drag down along the dashed lines with the stick.'],
  gecis:['Renk döküldükçe değişir: her yere eşit yay.','The color changes as you pour: spread it evenly.'],ufle:['Fazla kumu 💨 ile üfle.','Blow away extra sand with 💨.']};
 
@@ -235,10 +235,11 @@ const TARIF={
   const kat=[[K.p(['toprak','koyuToprak']),flat(h0-.06)],['cimen',flat(h0)],[ck,mx(flat(h0+.05),...cs.map(c=>tri(c,h0+K.u(.2,.26),.48)))],[K.p(['yaprak','cimen']),flat(K.u(.44,.5))]];gokEkle(K,kat,'gun');
   const sus=[];if(K.c(.6))gokSus(K,sus,kat.length-1,['kelebek','ari'],1);
   return {katman:kat,sus,ortam:'ruzgar',uc:true};},
- ikiBahce(K,d,g){const h0=K.u(.16,.22),hl=K.u(.48,.56),hr=K.u(.48,.56),cl=K.p(['lale','gul']),cr=K.p(['sari','mor']);
-  const kat=[[K.p(['toprak','koyuToprak']),flat(h0)],['cimen',flat(h0+.07)],[cl,u=>u<.5?hl:0],[cr,u=>u>=.5?hr:0]];gokEkle(K,kat,'gun');
-  const sus=[susYer('lale',2,.5,K.u(.18,.32)),susYer('aycicegi',3,.5,K.u(.68,.82))];
-  return {katman:kat,sus,ortam:'ruzgar',kart:{u:.5,katman:4}};}, // kart iki çiçek bittikten sonra kalkar
+ ikiBahce(K,d,g){const h0=K.u(.14,.18),h1=h0+.07,h2=h1+K.u(.16,.2),cl=K.p(['lale','gul']),cr=K.p(['sari','mor']);
+  const P=profil(K,K.p(['tepe','ikiTepe']),h2+K.u(.06,.09));
+  const kat=[[K.p(['toprak','koyuToprak']),flat(h0)],['cimen',flat(h1)],[cl,u=>u<.5?h2:0],[cr,u=>u>=.5?h2:0],[K.p(['yaprak','cimen']),P.f]];gokEkle(K,kat,'gun');
+  const sus=[susYer(K.p(['kirazAgaci','agac']),4,1,P.peaks[0])];if(K.c(.6))gokSus(K,sus,kat.length-1,['kelebek','ari'],1);
+  return {katman:kat,sus,ortam:'ruzgar',kart:{u:.5,gir:2,katman:4}};}, // kart çimenden sonra girer, iki çiçek tarhı bitince kalkar
  // ── Tatlı Kavanozları (gökyüzü yok, en üstte krema)
  katmanli(K,d,g){const tur=K.p(['duz','dalga','egim']),n=K.p(d>.3?[4,5]:[3,4]),seri=K.p([['biskuvi','krema','cilek','krema','cilek'],['biskuvi','limon','krema','limon','krema'],['cikolata','krema','cilek','krema','yabanMersini'],['biskuvi','yabanMersini','krema','yabanMersini','krema']]);
   const kat=[];let h=K.u(.14,.18);const st=(.8-h)/n,f=K.p([1,1.5]),a=K.u(.025,.04),ph=K.r();
@@ -260,10 +261,12 @@ const TARIF={
  mermer(K,d,g){const kat=[['biskuvi',flat(K.u(.12,.15))],['cikolata',flat(K.u(.36,.42))],['krema',flat(K.u(.54,.6))],['sutluCik',flat(K.u(.72,.78))],['krema',flat(1)]],X={};
   const c=cubukEkle(K,kat,2,K.p([3,4]),null);if(!c)return null;X.cubuk=[c];
   return Object.assign({katman:kat,ortam:'deniz'},X);},
- ikiTat(K,d,g){const h0=K.u(.14,.18),hl=K.u(.52,.6),hr=K.u(.52,.6),pr=K.p([['cilek','cikolata'],['limon','yabanMersini'],['nane','cikolata'],['cilek','limon']]);
-  const kat=[['biskuvi',flat(h0)],[pr[0],u=>u<.5?hl:0],[pr[1],u=>u>=.5?hr:0],['krema',flat(1)]];
-  const sus=[susYer(K.p(['cilekMeyve','kirazMeyve']),3,.5,K.u(.3,.7))];
-  return {katman:kat,sus,ortam:'deniz',kart:{u:.5,katman:3}};},
+ // İki tat dama gibi: taban düz dökülür, sonra kart girer; iki yana iki renk, üstlerine çapraz renkler (dört kare), kart kalkar, ince bir bant ve krema
+ ikiTat(K,d,g){const h0=K.u(.12,.15),h1=h0+K.u(.23,.26),h2=h1+K.u(.23,.26),pr=K.p([['cilek','cikolata','karamel'],['limon','yabanMersini','cilek'],['nane','cikolata','karamel'],['cilek','limon','sutluCik'],['krema','cikolata','karamel']]);
+  const sol=h=>u=>u<.5?h:0,sag=h=>u=>u>=.5?h:0;
+  const kat=[['biskuvi',flat(h0)],[pr[0],sol(h1)],[pr[1],sag(h1)],[pr[1],sol(h2)],[pr[0],sag(h2)],[pr[2],flat(h2+K.u(.07,.09))],['krema',flat(1)]];
+  const sus=[susYer(K.p(['cilekMeyve','kirazMeyve']),6,.5,K.u(.24,.4))];if(K.c(.6))sus.push(susYer(K.p(['nane','limonDilim']),6,.5,K.u(.6,.76)));
+  return {katman:kat,sus,ortam:'deniz',kart:{u:.5,gir:1,katman:5}};},
  kuzey(K,d,g){if(g<ACIL.isilti)return null;const P=profil(K,K.p(['tepe','ikiTepe']),K.u(.1,.13)),W=profil(K,'dalga',Math.max(P.max+.12,K.u(.42,.48)));
   const kat=[['kar',P.f],['geceMavi',W.f],['kuzey',kopya(W,K.u(.12,.16))],['gece',flat(1)]];if(K.c(.5))kat[2].push({gecis:'mor'});
   const sus=[];if(P.peaks.length&&K.c(.7))sus.push(susYer('camAgaci',0,1,P.peaks[0]));

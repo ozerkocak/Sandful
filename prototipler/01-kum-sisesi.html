@@ -299,7 +299,7 @@ const EN={
  'Rüzgâr kumu savuruyor: huniyi rüzgârın geldiği yana kaydır.':'The wind blows the sand sideways: move the funnel into the wind.',
  'Geniş uç hızlı doldurur, ince uç ince çizer. Kuleleri ince uçla yap.':'The wide spout fills fast, the thin spout draws fine. Build the towers with the thin one.',
  'Kart kavanozu ikiye böler: sola gündüz, sağa gece. Sonra kart kalkar.':'A card splits the jar: day on the left, night on the right. Then the card lifts.',
- 'Kart çekildi':'Card pulled','Yeni':'New','Başla':'Start','Rüzgâr':'Wind','İnce ve geniş uç':'Thin and wide spout','Islak kum':'Wet sand','Ayırıcı kart':'Divider card',
+ 'Kart çekildi':'Card pulled','Kart girdi':'Card in','Yeni':'New','Başla':'Start','Rüzgâr':'Wind','İnce ve geniş uç':'Thin and wide spout','Islak kum':'Wet sand','Ayırıcı kart':'Divider card',
  'Sırası gelince bir süs gelir: kesikli halkanın üstüne getir, parmağını kaldır. Kum onu sarar.':'When its turn comes, a decoration appears: move it onto the dashed ring and lift your finger. The sand wraps around it.',
  '💨 düğmesi fazla yığılan yeri düzler. Hakkın sınırlı, gerektiğinde kullan.':'The 💨 button flattens a spot that piled up too high. You only have a few, so use them when needed.',
  'Sırası gelince çubukla kumu it: kesikli çizgileri izleyerek aşağı çek.':'When its turn comes, push the sand with the stick: follow the dashed lines downward.',
@@ -499,16 +499,16 @@ function buildLevel(){
  scoreCols=[];for(let c=0;c<NC;c++)if(valid[c]&&tTop[ncol-1][c]>floorY[c]+CELL)scoreCols.push(c);
  layerY=[];for(let k=0;k<ncol;k++){let s=0;for(const c of scoreCols)s+=tTop[k][c];layerY.push(s/scoreCols.length);}
  queue=[];decorList=[];stickMarks=[];
- for(let k=0;k<ncol;k++){if(L.kart&&L.kart.katman===k)queue.push({t:'kart'});const ev=[...(L.sus||[]).filter(s=>s.katman===k).map(s=>({o:s.oran,s})),...(L.cubuk||[]).filter(s=>s.katman===k).map(s=>({o:s.oran,cb:s}))].sort((a,b)=>a.o-b.o);let used=0;
+ for(let k=0;k<ncol;k++){if(L.kart&&L.kart.gir>0&&L.kart.gir===k)queue.push({t:'kartGir'});if(L.kart&&L.kart.katman===k)queue.push({t:'kart'});const ev=[...(L.sus||[]).filter(s=>s.katman===k).map(s=>({o:s.oran,s})),...(L.cubuk||[]).filter(s=>s.katman===k).map(s=>({o:s.oran,cb:s}))].sort((a,b)=>a.o-b.o);let used=0;
   for(const e of ev){const upto=amounts[k]*e.o;if(upto>used+1e-6){queue.push({t:'kum',c:k,a:upto-used,a0:upto-used});used=upto;}
    if(e.s){const rec=decorRec(e.s,k);decorList.push(rec);queue.push({t:'sus',rec});}
    else{const marks=e.cb.izler.map(m=>({x:-rTop+m.u*2*rTop,d:m.d,ok:false}));queue.push({t:'cubuk',marks,done:0,w:e.cb.gen||SPW});stickMarks.push(...marks);}}
   if(amounts[k]>used+1e-6)queue.push({t:'kum',c:k,a:amounts[k]-used,a0:amounts[k]-used});}
  // süs camda yer kaplar: alanı sonraki kumdan düşülür (yoksa kavanoz hedef çizgisinin üstüne taşar)
  if(L.kart&&L.kart.katman>=ncol)queue.push({t:'kart'});
- let carry=0;for(const it of queue){if(it.t==='sus')carry+=it.rec.D.w*it.rec.D.h*.92;else if(carry>0){const sub=Math.min(carry,it.a*.5);it.a-=sub;it.a0-=sub;carry-=sub;}}
+ let carry=0;for(const it of queue){if(it.t==='sus')carry+=it.rec.D.w*it.rec.D.h*.92;else if(it.t==='kum'&&carry>0){const sub=Math.min(carry,it.a*.5);it.a-=sub;it.a0-=sub;carry-=sub;}}
  qi=0;poured=new Array(ncol).fill(0);
- KART=null;if(L.kart){const xw=-rTop+L.kart.u*2*rTop;let c=0;while(c<NC&&xOf(c)<xw)c++;KART={c,x:xw,gone:false,t0:0};}}
+ KART=null;if(L.kart){const xw=-rTop+L.kart.u*2*rTop;let c=0;while(c<NC&&xOf(c)<xw)c++;KART={c,x:xw,on:!(L.kart.gir>0),gone:false,t0:0,t1:-9};}} // gir: kartın girdiği katman (yoksa baştan beri durur)
 // Geçişli kum: katman {gecis:'renk'} ile verilir. Döküldükçe huni rengi A'dan B'ye 6 adımda geçer; ara adımlar
 // iki rengin tanelerinin karışımıdır (gerçek kum sanatındaki gibi). Ara adımlar paletin sonuna eklenen kodlardır, puanda aynı katman sayılır.
 const GSTEP=[.2,.4,.6,.8,1];
@@ -525,7 +525,7 @@ function decorRec(s,k){const D=DEC[s.id],zx=-rTop+s.u*2*rTop,c0=colOf(zx-D.w/2),
 
 // katman yığını işlemleri
 function addTop(c,col,a){if(a<=0)return;const b=c*MAXS,n=segN[c];if(n>0&&segC[b+n-1]===col)segH[b+n-1]+=a;else if(n<MAXS){segC[b+n]=col;segH[b+n]=a;segN[c]=n+1;}else segH[b+n-1]+=a;topY[c]+=a;dirty[c]=1;}
-const wallBetween=(a,b)=>!!KART&&!KART.gone&&((a<KART.c)!==(b<KART.c));
+const kartOn=()=>!!KART&&KART.on&&!KART.gone,wallBetween=(a,b)=>!!KART&&KART.on&&!KART.gone&&((a<KART.c)!==(b<KART.c));
 function transfer(s,d,m){if(wallBetween(s,d))return 0;let moved=0;const b=s*MAXS;while(m>1e-9&&segN[s]>0){const k=b+segN[s]-1;if(segC[k]>=100)break;const t=Math.min(segH[k],m);addTop(d,segC[k],t);segH[k]-=t;topY[s]-=t;m-=t;moved+=t;if(segH[k]<=1e-9)segN[s]--;}
  if(moved>0)dirty[s]=1;return moved;}
 
@@ -564,6 +564,7 @@ function windDrift(x){if(Math.abs(windNow)<1e-4)return 0;const h=Math.max(.05,FU
 const UCF=[1,1.4,.6],UCS=[1,1,.5],UCW=[0,11,0]; // akış çarpanı, iz genişliği, geniş ucun perde yarı genişliği (sütun)
 function setUc(m){if(!L.uc||m===UC)return;UC=m;if(!BOT){stickTick();vib(10);updateUcBtn();}}
 // Ayırıcı kart: bölüm başından beri kavanozu iki yana ayırır, sıra gelince çekilir; iki yan buluşur
+function dropCard(){if(!KART||KART.on)return;KART.on=true;KART.t1=T;qi++;pourStart=T+.6;if(!BOT){nz(900,.5,.1,.5,0,'bandpass',3200);vib(18);toast(t('Kart girdi'));}}
 function pullCard(){if(!KART||KART.gone)return;KART.gone=true;KART.t0=T;qi++;pourStart=T+.5;
  for(let c=KART.c-3;c<=KART.c+2;c++)if(c>=0&&c<NC)avCheck(c);
  if(!BOT){cardSnd();vib(25);toast(t('Kart çekildi'));}}
@@ -692,6 +693,7 @@ function emit(){
  const it=queue[qi];if(!it){if(!slices.length){state='settle';settleT=0;}return;}
  if(it.t==='sus'){if(!slices.length)beginHold(it.rec);return;}
  if(it.t==='cubuk'){if(!slices.length&&!avs.length)beginStick(it);return;}
+ if(it.t==='kartGir'){if(!slices.length&&!avs.length)dropCard();return;}
  if(it.t==='kart'){if(!slices.length&&!avs.length)pullCard();return;}
  if(flowNow<.03||T<pourStart)return;
  if(!snaps[qi]&&it.a>=it.a0-1e-12)snaps[qi]=snapTake(qi);
@@ -767,7 +769,7 @@ function evalMarks(){for(const m of stickMarks)m.ok=false;
 // (arada süs yerleştiyse o da geri alınır). Bölüm başına bir hak.
 const SNAPP=[]; // kopya dizileri bölümler arasında yeniden kullanılır (çöp birikmez)
 function snapTake(j){let S=SNAPP[j];if(!S)S=SNAPP[j]={c:new Uint8Array(NC*MAXS),h:new Float32Array(NC*MAXS),n:new Uint8Array(NC),top:new Float32Array(NC)};
- S.c.set(segC);S.h.set(segH);S.n.set(segN);S.top.set(topY);S.sl=slices.map(o=>Object.assign({},o));S.av=avs.map(o=>Object.assign({},o));S.puffs=puffs;S.poured=poured.slice();S.kart=KART?KART.gone:null;return S;}
+ S.c.set(segC);S.h.set(segH);S.n.set(segN);S.top.set(topY);S.sl=slices.map(o=>Object.assign({},o));S.av=avs.map(o=>Object.assign({},o));S.puffs=puffs;S.poured=poured.slice();S.kart=KART?[KART.on,KART.gone]:null;return S;}
 function undoTarget(){for(let j=Math.min(qi,queue.length-1);j>=0;j--){const it=queue[j];if(it.t==='kum'&&snaps[j]&&(j<qi||it.a<it.a0-1e-9))return j;}return -1;}
 function canUndo(){return undoLeft>0&&(state==='pour'||state==='hold'||state==='stick')&&undoTarget()>=0;}
 function doUndo(){if(!canUndo())return;const j=undoTarget(),S=snaps[j];
@@ -778,7 +780,7 @@ function doUndo(){if(!canUndo())return;const j=undoTarget(),S=snaps[j];
  decorList.forEach(r=>{if(r.placed&&r.qi>j){r.placed=false;r.ok=false;}});
  if(RD){RD.placed=RD.placed.filter(m=>{if(m.userData.qi>j){RD.scene.remove(m);m.geometry.dispose();m.material.dispose();const i=RD.lvl.indexOf(m);if(i>=0)RD.lvl.splice(i,1);return false;}return true;});
   decorList.forEach((r,i)=>{if(!r.placed&&RD.ghosts[i])RD.ghosts[i].visible=true;});}
- if(KART&&S.kart!=null)KART.gone=S.kart;
+ if(KART&&S.kart){KART.on=S.kart[0];KART.gone=S.kart[1];}
  qi=j;state='pour';decor=null;pouring=false;down=false;activeId=null;pourStart=T+.15;pendingCheck=null;streakT=0;offT=9;puffs=S.puffs;
  pct=score();undoLeft--;
  if(!BOT){updatePuffBtn();toast(t('Geri alındı'));undoSnd();vib([8,30,8]);}}
@@ -1575,7 +1577,7 @@ function gfxFrame(now){if(!RD)return;const t=now/1000,fdt=clamp((now-lastGfx)/10
  visTops();fillIdx();updateSurf();
  // huni
  const showF=state==='ready'||state==='pour'||state==='hold'||state==='drop'||state==='settle';RD.fun.visible=showF;
- if(RD.card&&KART){const up=KART.gone?clamp((T-KART.t0)/.9,0,1):0;RD.card.position.y=HF*.52+up*up*(HJ+.8);RD.card.visible=up<1;}
+ if(RD.card&&KART){const up=KART.gone?clamp((T-KART.t0)/.9,0,1):1-clamp((T-KART.t1)/.7,0,1);RD.card.position.y=HF*.52+up*up*(HJ+.8);RD.card.visible=KART.on&&up<1;} // girerken yukarıdan iner, çekilince yukarı çıkar
  if(showF){RD.fun.position.set(noz,FUNY,0);RD.fun.rotation.z=tiltA;const fs=UC===1?1.3:UC===2?.75:1;RD.fun.scale.set(fs,1,fs);const it=queue[qi];
   if(it&&it.t==='kum'){const fr=it.a/it.a0,h=.12+fr*.2,rr=.014+(h-.1)/.24*.116,pc=RD.plin[codeFor(it.c)];RD.fTop.visible=true;RD.fSandM.color.setRGB(pc[0],pc[1],pc[2]);RD.fTop.scale.set(rr,rr,1);RD.fTop.position.y=h;}
   else RD.fTop.visible=false;}
@@ -1654,7 +1656,7 @@ let lastPct=-1,toastT=null;
 function toast(s){if(BOT)return;const e=$('toast');e.textContent=s;e.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('show'),1100);}
 function buildQueueBar(){const q=$('queue');q.innerHTML='';queue.forEach(it=>{const e=document.createElement('div');
  if(it.t==='kum'){const kk=L.katman[it.c];e.className='seg';e.style.flexGrow=Math.round(it.a0*1000);e.style.background=kk[2]&&kk[2].gecis?'linear-gradient(90deg,'+PAL[kk[0]]+','+PAL[kk[2].gecis]+')':PAL[kk[0]];e.innerHTML='<div class="f"></div>'+(kk[2]&&kk[2].islak?'<b class="wet">💧</b>':'');}
- else{e.className='chip';e.textContent=it.t==='sus'?it.rec.D.e:it.t==='kart'?'⇡':'🥢';}it.el=e;q.appendChild(e);});}
+ else{e.className='chip';e.textContent=it.t==='sus'?it.rec.D.e:it.t==='kart'?'⇡':it.t==='kartGir'?'⇣':'🥢';}it.el=e;q.appendChild(e);});}
 function updateHud(){const p=Math.round(pct);
  if(p!==lastPct){lastPct=p;$('pct').textContent=pctS(p);$('pfill').style.width=p+'%';['m1','m2','m3'].forEach((id,k)=>$(id).classList.toggle('on',p>=STAR_TH[k]));}
  queue.forEach((it,k)=>{if(!it.el)return;it.el.classList.toggle('cur',k===qi&&state!=='finale'&&state!=='result');
@@ -1795,7 +1797,7 @@ function botThink(pf,B){const lim=rMouth-.04;
   const aim=B.tx-windDrift(B.tx);nozT=noz+clamp(aim-noz,-3*DT,3*DT);const here=B.def[colOf(noz+windDrift(noz))];pouring=Math.abs(noz-aim)<DX*3||here>.6;if(B.best<.3)pouring=Math.abs(noz-aim)<DX*3;return;}
  const P={insan:{vb:1.33,vmax:2.1,vmin:.25,re:.15,bn:.04,sn:.3,slow:.8,pn:4,thr:.8,wc:.75},daginik:{vb:1.19,vmax:1.68,vmin:.42,re:.35,bn:.13,sn:.6,slow:.35,pn:10,thr:-99,wc:.25}}[pf];
  if(T>=B.next){B.next=T+P.re+DT;B.def=deficits(it.c,P.pn);let a=-1,b=-1,bx=0;
-  let c0=0,c1=NC;if(KART&&!KART.gone){let sl=0,sr=0;for(let c=0;c<NC;c++)if(B.def[c]>0){if(c<KART.c)sl+=B.def[c];else sr+=B.def[c];}if(sl>2*sr)c1=KART.c;else if(sr>2*sl)c0=KART.c;bx=c0;} // kart varken insan bir tarafa odaklanır
+  let c0=0,c1=NC;if(kartOn()){let sl=0,sr=0;for(let c=0;c<NC;c++)if(B.def[c]>0){if(c<KART.c)sl+=B.def[c];else sr+=B.def[c];}if(sl>2*sr)c1=KART.c;else if(sr>2*sl)c0=KART.c;bx=c0;} // kart varken insan bir tarafa odaklanır
   for(let c=c0;c<c1;c++){if(B.def[c]>.7){if(a<0)a=c;b=c;}if(B.def[c]>B.def[bx])bx=c;}
   if(a<0)a=b=bx;let sm=0,sn=0;for(let c=a;c<=b;c++)if(B.def[c]>0){sm+=B.def[c];sn++;}B.mean=sn?sm/sn:0;
   B.a=xOf(a)+gauss()*P.bn;B.b=Math.max(B.a,xOf(b)+gauss()*P.bn);B.allLow=B.def[bx]<P.thr;}
