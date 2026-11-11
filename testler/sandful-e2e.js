@@ -21,7 +21,7 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
  await p.route('**/fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
  await p.goto('file://'+FILE);await p.waitForTimeout(1200);return {b,ctx,p,errs};}
 (async()=>{
- // 1) ilk açılış, 10 bölüm baştan sona (insan botu, 3D ile), kayıt ve raf
+ // 1) ilk açılış, bütün bölümler baştan sona (insan botu, 3D ile), kayıt ve raf
  {const {b,ctx,p,errs}=await launch();
   const first=await p.evaluate(()=>({state:__game.state().state,level:__game.state().level,hand:document.getElementById('hand').classList.contains('show'),gfx:!!RD}));
   ok('İlk açılış doğrudan 1. bölüm, el ipucu görünür, 3D açık',first.state==='ready'&&first.level===0&&first.hand&&first.gfx,first);
@@ -43,8 +43,12 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
   ok('Sayfa hatası yok (10 bölüm)',errs.length===0,errs.slice(0,3));
   // yeniden açılış: raf açılır, sıradaki bölüm hazır
   await p.reload();await p.waitForTimeout(1500);
-  const re=await p.evaluate(()=>({raf:document.getElementById('raf').classList.contains('show'),slots:document.querySelectorAll('.slot').length,imgs:document.querySelectorAll('.slot img').length,wh:document.querySelectorAll('.wh').length,nw:DUNYA.length,close:getComputedStyle(document.getElementById('rafClose')).display,state}));
-  ok('Yeniden açılışta raf görünür, '+NL+' yuva ve küçük resimler, dünya başlıkları',re.raf&&re.slots===NL&&re.imgs===NL&&re.wh===re.nw,re);
+  // uzun yol: açılışta sadece sıradaki dünyanın yuvaları çizilir; katlı dünyalar başlığa dokununca açılır
+  const re=await p.evaluate(()=>{const out={raf:document.getElementById('raf').classList.contains('show'),wh:document.querySelectorAll('.wh').length,nw:DUNYA.length,acik0:document.querySelectorAll('.world.open').length,slots0:document.querySelectorAll('.slot').length,close:getComputedStyle(document.getElementById('rafClose')).display,state};
+   document.querySelectorAll('.world:not(.locked):not(.open) .wh').forEach(h=>h.click());
+   let bek=0,res=0;LEVELS.forEach((l,k)=>{const w=l.dunya||0,ilk=LEVELS.findIndex(q=>(q.dunya||0)===w);if(lvOpen(ilk)){bek++;if(SAVE.lv[k]&&SAVE.lv[k].img)res++;}});
+   return Object.assign(out,{slots:document.querySelectorAll('.slot').length,imgs:document.querySelectorAll('.slot img').length,bek,res});});
+  ok('Yeniden açılışta raf görünür: dünya başlıkları, tek dünya açık, katlılar açılınca yuvalar ve küçük resimler',re.raf&&re.wh===re.nw&&re.acik0===1&&re.slots0>0&&re.slots0<=20&&re.slots===re.bek&&re.imgs===re.res&&re.imgs>=30,re);
   await b.close();}
  // 2) uç durumlar (3D'siz mantık + 3D ile birkaç durum)
  {const {b,p,errs}=await launch();
@@ -73,7 +77,7 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
    // yeni mekanik kartı: ilk kez çıkar, kanvası örter, Başla ile kapanır, afiş görünür, bir daha çıkmaz; begin() de kapatır
    SAVE.mek={};SAVE.lv={};__game.start(30);const m1=mekOn,rows=document.querySelectorAll('#mekRows .row').length,top=document.elementFromPoint(200,600),blocked=!!(top&&top.closest&&top.closest('#mek'));
    document.getElementById('mekGo').click();const m2=mekOn,bn=document.getElementById('banner').classList.contains('show'),seen=!!(SAVE.mek&&SAVE.mek.ruzgar);
-   __game.start(30);const m3=mekOn;__game.start(31);const m4=mekOn;__game.begin();out.mek=[m1,rows>=1,blocked,m2,bn,seen,m3,m4,mekOn,S().state];
+   __game.start(30);const m3=mekOn;__game.start(35);const m4=mekOn;__game.begin();out.mek=[m1,rows>=1,blocked,m2,bn,seen,m3,m4,mekOn,S().state];
    // dar ekran: yeniden boyutlandırma
    return out;});
   ok('Döküşte raf aç/kapat: menüye geçer, kapatınca döküşe döner, akış durur',r.rafPour[0]==='menu'&&r.rafPour[1]==='pour'&&r.rafPour[2]===false,r.rafPour);
@@ -109,7 +113,7 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
  {const trChars=/[ğüşıöçĞÜŞİÖÇ]/;
   for(const loc of ['en-US','de-DE','tr-TR']){const {b,p,errs}=await launch({locale:loc,no3d:true});
    const r=await p.evaluate(()=>{const got=new Set();const orig=toast;window.toast=s=>{got.add(s);orig(s);};__game.setTS(0);
-    for(const lv of [0,3,7,9,10,13,15,19,20,23,24,26,28,29,30,31,32,33]){__game.start(lv);if(mekOn)document.getElementById('mek').innerText.split('\n').forEach(x=>got.add(x));__game.autoplay('insan');__game.begin();let k=0;while(k<4000&&__game.state().state!=='result'){__game.sim(50);k++;}__game.autoplay(null);}
+    for(const lv of [0,3,7,9,10,13,15,19,20,23,24,26,28,29,30,35,40,45,33,49,50,59,72,89,92,109,112,129]){__game.start(lv);if(mekOn)document.getElementById('mek').innerText.split('\n').forEach(x=>got.add(x));__game.autoplay('insan');__game.begin();let k=0;while(k<4000&&__game.state().state!=='result'){__game.sim(50);k++;}__game.autoplay(null);}
     const miss=LEVELS.flatMap(l=>[l.ad,l.ipucu]).concat(DUNYA,MEK.flatMap(m=>[m.ad,m.tx])).filter(x=>EN[x]==null);
     const res=document.body.innerText+'\n'+miss.join('\n');openRaf();
     return {lang:LANG,html:document.documentElement.lang,lines:[...got,...(res+'\n'+document.body.innerText).split('\n')].map(l=>l.trim()).filter(Boolean),rafH:document.getElementById('rafH').textContent};});

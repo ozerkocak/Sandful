@@ -8,7 +8,7 @@ function kit(seed){const r=rngOf(seed*7919+13);
   w:prs=>{let s=0;for(const q of prs)s+=q[1];let x=r()*s;for(const q of prs){if((x-=q[1])<0)return q[0];}return prs[prs.length-1][0];}};}
 const clamp01=x=>Math.max(0,Math.min(1,x));
 // mekaniklerin oyuncuya tanıtıldığı yer (el yapımı bölümler): bundan önce üretilmiş bölümde çıkmaz
-const ACIL={ufle:8,cubuk:11,gecis:14,salla:16,isilti:20,ruzgar:31,islak:38,uc:51,kart:72}; // 1.2: rüzgâr çölde, ıslak kum piramitlerde, uç bahçede, kart tatlılarda tanıtılır
+const ACIL={ufle:8,cubuk:11,gecis:14,salla:16,isilti:20,ruzgar:32,uc:37,islak:42,kart:47}; // 1.2: dördü de Çöl dünyasında el yapımı bölümle tanıtılır (31 rüzgâr, 36 uç, 41 ıslak kum, 46 kart)
 
 // ── şekil kalıpları: bir katmanın üst sınırı (u: camın solu 0, sağı 1; değer dolgu yüksekliğinin oranı). Eğim ≤ 0,5
 function profil(K,tur,h){const R={tur,h,peaks:[],low:.5};

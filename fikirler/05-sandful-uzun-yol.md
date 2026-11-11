@@ -78,3 +78,10 @@ Sonra yeni temalar güncellemeyle eklenir; istenirse üretici sonu olmayan bir "
 - Önizleme: `araclar/uretici-onizleme.js` (3D'de bitirip görüntü alır). 32 bölüm Ozer'e gösterildi.
 - Kendi değerlendirmem: el yapımılardan sade ve birbirine benziyor. Gökyüzü kavanozun yarısından fazlası (özellikle gri bulutlu kış göğü), süs az, art arda yelkenli.
   Sıradaki düzeltmeler: yer katmanları daha yüksek (gökyüzü ≤ %40), renkli/geçişli gökler, bulut bantları, daha çok süs ve süs çeşitliliği kuralı, ada/fener/kaya gibi yeni kompozisyonlar.
+
+## Oyuna yerleşti (11 Kasım 2026)
+
+Tek parça yolun ilk hâli oyunda: 130 bölüm, 8 dünya; ayrıntı ve bölüm tablosu `08-sandful-1-2.md` bölüm 9'da. Bu belgedeki öneriden farklar:
+- Dünyalar hâlâ kart olarak duruyor ama duvar yok: bölümler sırayla açılıyor, sıradaki dünya açık, diğerleri katlı.
+- Her 5 bölümde bir el yapımı sahne yerine şimdilik dört el yapımı tanıtım bölümü (31, 36, 41, 46) var; diğer "onluk" bölümler üreticinin seçilmiş tarifleri.
+- Hedef 200; 130'dan sonrası için 2-3 tema daha gerekiyor.

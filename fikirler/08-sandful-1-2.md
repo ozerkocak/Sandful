@@ -245,3 +245,26 @@ Sonuç (11 Kasım): Şehir Silüetleri 10 ve Dağlar 10 bölüm bot elemesinden 
 - Açık iş: 15. bölümde (Gün doğumu) hiç dokunmayan bot %74 ile 1 yıldız alıyor (1.1'de %70, 0 yıldızdı). 1.1.1'deki süs düzeltmesinden beri ortaya dökülen kum
   güneşin üstünden iki yana kayıp daha düzgün yayılıyor. 1.2'de güneş ortadan biraz kaydırılarak düzeltilecek.
 - Önizleme aracı görüntüyü beklemeden alıyordu; bekleme süresi `BEKLE` ile ayarlanabiliyor.
+
+## 9. Uzun yol oyunun içinde: 130 bölüm (11 Kasım 2026)
+
+Ozer: "Tamam, 1.2'ye devam edelim." Beş tema oyuna yerleştirildi; "Yeni Bölümler" geçici dünyası kalktı.
+
+| Bölüm | Dünya | İçerik |
+|---|---|---|
+| 1-30 | Kıyı ve Kara, Okyanus, Dört Mevsim | 1.1'deki el yapımı bölümler (aynen) |
+| 31-50 | Çöl ve Vaha | Dört yeni mekaniğin el yapımı tanıtımı: **31 Kum fırtınası** (rüzgâr), **36 Üç tepe** (ince/geniş uç), **41 Kum kulesi** (ıslak kum), **46 Gece ve gündüz** (kart); 50 piramitler; 15 üretilmiş bölüm |
+| 51-70 | Bahçe ve Çiçekler | 20 üretilmiş bölüm (60 gökkuşağı, 70 bahçe tepesi) |
+| 71-90 | Tatlı Kavanozları | 20 üretilmiş bölüm (80 dondurma, 90 dama) |
+| 91-110 | Şehir Silüetleri | 20 üretilmiş bölüm (100 rıhtım, 110 gece şehri) |
+| 111-130 | Dağlar | 20 üretilmiş bölüm (120 karlı doruk, 130 gece dorukları) |
+
+- **Nasıl saklanıyor:** bölümler dosyada tek tek durmuyor. Üretici (`araclar/uretici.js`) oyun dosyasına gömülü; yol tablosu (`araclar/yol.json`: tema, sıra, tohum)
+  açılışta 96 bölümü kurar (`yolKur`). Tohumları botlar seçti (`araclar/uretici-sec.js`). Gömme: `node araclar/yol-gom.js`.
+  **Yayınlanan bir bölümün tarifi değiştirilmez** (oyuncunun oynadığı bölüm değişir); yeni içerik yeni tarif ya da yeni tohumla gelir.
+- **Kontrol:** oyunun kurduğu 100 yeni bölümün adı seçimdekiyle aynı; hepsinde kusursuz bot 3 yıldız, dokunmayan 0 yıldız. Tanıtım bölümleri yeni yerlerinde:
+  31 insan ★3, 36 ★2,7, 41 ★2,7, 46 ★3 (Gece ve gündüz'de kart artık kum tabandan sonra giriyor).
+- **Ana ekran:** sıradaki bölümün dünyası açık, diğer dünyalar katlı (başlık, yıldız, ilerleme çubuğu; dokununca açılır ve kavanozlar o zaman çizilir).
+  Kilitli dünyalar birer satır; ilk kilitlide ne zaman açılacağı yazar. Başlıkta bölüm aralığı var ("DÜNYA 4 · 31–50").
+- **Açık işler:** imza bölümlerin çoğu şimdilik üreticiden (sadece dört tanıtım bölümü el yapımı); 200'e ulaşmak için 2-3 tema daha (öneri: Gece Gökyüzü, Kıyı II, Kış II);
+  küçük resimler kayıtta duruyor (130 bölümde ~1 MB), 200'de dosyaya taşınması gerekebilir (`05-sandful-uzun-yol.md`); 15. bölümde dokunmayan botun 1 yıldızı.
