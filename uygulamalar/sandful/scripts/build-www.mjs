@@ -14,7 +14,8 @@ const cdn='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
 if(!html.includes(cdn))throw new Error('three.js CDN adresi kaynakta bulunamadı');
 html=html.replace(cdn,'lib/three.min.js');
 html=html.replace(/<link rel="preconnect"[^>]*>\s*/g,'').replace(/<link href="https:\/\/fonts\.googleapis\.com[^>]*>\s*/g,'');
-const rest=html.replace(/xmlns="http:\/\/www\.w3\.org\/2000\/svg"/g,'');
+// İzin verilen tek dış adres: Ayarlar'daki gizlilik politikası bağlantısı (Safari'de açılır)
+const rest=html.replace(/xmlns="http:\/\/www\.w3\.org\/2000\/svg"/g,'').replace('https://www.investa.com.tr/sandful/privacy.html','');
 if(/https?:\/\//.test(rest))throw new Error('www/index.html hâlâ dış adres içeriyor: '+rest.match(/https?:\/\/[^\s'"`)]+/)[0]);
 writeFileSync(join(www,'index.html'),html);
 console.log('www/index.html hazır');

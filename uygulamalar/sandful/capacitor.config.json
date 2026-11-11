@@ -10,5 +10,22 @@
   },
   "android": {
     "backgroundColor": "#d9c4a5"
+  },
+  "experimental": {
+    "ios": {
+      "spm": {
+        "swiftToolsVersion": "6.1",
+        "packageOptions": {
+          "@capacitor-firebase/analytics": {
+            "symlink": true
+          }
+        },
+        "packageTraits": {
+          "@capacitor-firebase/analytics": [
+            "AnalyticsWithoutAdIdSupport"
+          ]
+        }
+      }
+    }
   }
 }

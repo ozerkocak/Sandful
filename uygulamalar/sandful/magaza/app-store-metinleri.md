@@ -5,6 +5,86 @@ App Store Connect > Sandful > Distribution > **iOS App Version 1.1** ve **App In
 Birincil dil İngilizce (ABD); Türkçe yerelleştirmede (sağ üstteki dil menüsü > Türkçe) Türkçe sütun girilir.
 Karakter sınırları kontrol edildi.
 
+## 1.2: 130 bölüm, reklam ve Reklamsız (hazırlanıyor)
+
+### Bu sürümde yenilikler (What's New)
+
+**İngilizce**
+
+```
+100 new levels in five new worlds: Desert and Oasis, Garden and Flowers, Dessert Jars, City Skylines and Mountains.
+
+• New ways to pour: wind that carries the sand, thin and wide spouts, wet sand that stands steep, and a divider card
+• Build city skylines with glowing windows and sharp mountain peaks
+• Decorations now nestle into the sand
+• A new home screen for the longer journey
+
+This version adds occasional ads between levels (never while you pour, and none in the first 10 levels) and a one-time "Play without ads" purchase.
+```
+
+**Türkçe**
+
+```
+Beş yeni dünyada 100 yeni bölüm: Çöl ve Vaha, Bahçe ve Çiçekler, Tatlı Kavanozları, Şehir Silüetleri ve Dağlar.
+
+• Yeni döküş yolları: kumu savuran rüzgâr, ince ve geniş uç, dik duran ıslak kum ve ayırıcı kart
+• Pencereleri ışıldayan şehir silüetleri ve sivri dağ zirveleri
+• Süsler artık kumun içine yerleşiyor
+• Uzun yol için yeni ana ekran
+
+Bu sürümle bölümler arasına seyrek reklam (dökerken asla, ilk 10 bölümde hiç) ve tek seferlik "Reklamsız oyna" satın alması eklendi.
+```
+
+### Satın alma ürünü (Monetization > In-App Purchases)
+
+| Alan | Değer |
+|---|---|
+| Type | Non-Consumable |
+| Reference Name | `Reklamsiz` |
+| Product ID | `com.investateknoloji.sandful.reklamsiz` |
+| Price | 3,99 $ kademesi (Türkiye fiyatını Apple kademeden hesaplar; istersen elle ayarlanır) |
+| Display Name (EN) | `Play Without Ads` |
+| Description (EN) | `Removes the ads between levels. Extra undos, puffs and level skips no longer need an ad.` |
+| Display Name (TR) | `Reklamsız Oyna` |
+| Description (TR) | `Bölümler arasındaki reklamları kaldırır. Ek geri alma, üfleme ve bölüm geçme reklamsız olur.` |
+| Review Screenshot | Ayarlar ekranı ("Reklamsız oyna" satırı görünen); Claude 1.2 ekran görüntüleriyle birlikte hazırlar |
+| Review Notes | `Non-consumable purchase that removes interstitial ads. Open the home screen, tap the gear icon, then "Play without ads". "Restore purchases" is in the same sheet.` |
+
+### Uygulama gizliliği (App Privacy) · 1.2
+
+"Data Not Collected" kaldırılır. Hepsi için: **kimliğe bağlı değil** (Not Linked to You), **takip için kullanılmıyor** (Tracking: No; takip izni istenmiyor).
+
+| Veri türü | Amaç | Kaynak |
+|---|---|---|
+| Location > Coarse Location | Third-Party Advertising, Analytics | Google reklamları IP adresinden yaklaşık konum çıkarır |
+| Identifiers > Device ID | Third-Party Advertising, Analytics | Uygulamaya özel tanımlayıcı (AdMob, Firebase) |
+| Usage Data > Product Interaction | Analytics | Bölüm ve ayar olayları (Firebase) |
+| Usage Data > Advertising Data | Third-Party Advertising, Analytics | Reklam gösterimi ve etkileşimi (AdMob) |
+| Purchases > Purchase History | Analytics | "Reklamsız alındı" olayı (ödeme bilgisi yok) |
+| Diagnostics > Performance Data, Other Diagnostic Data | Analytics, App Functionality | Reklam ve ölçüm SDK'larının tanı verileri |
+
+Google'ın güncel beyan rehberleri (göndermeden önce karşılaştır): AdMob "Apple App Store data disclosure", Firebase "Prepare for Apple's App Store data disclosure requirements".
+
+### Yaş derecelendirmesi · 1.2
+
+Anketteki reklam sorusu (Advertising / "Does your app contain ads?"): **Yes**. Diğer cevaplar aynı (None/No). Sonuç 4+ kalır. AdMob'da en yüksek reklam içerik derecesi **G**, hassas kategoriler kapalı.
+
+### App Review notu · 1.2 (öncekine eklenir)
+
+```
+Version 1.2 adds ads (Google AdMob) and one non-consumable in-app purchase.
+- Interstitial ads appear only after a level ends and the player taps "Next", never in the first 10 levels, at most once every 3 levels and 4 minutes.
+- Rewarded ads are optional: after the free undo is used, the undo button shows "+1"; a confirmation card appears before the ad.
+- In-app purchase "Play Without Ads" (com.investateknoloji.sandful.reklamsiz): home screen > gear icon > "Play without ads". "Restore purchases" is in the same sheet.
+- The app does not request tracking permission (no ATT); ads are non-personalized. In the EEA/UK a Google consent form is shown before ads are requested.
+- Usage statistics are collected with Google Analytics for Firebase without the advertising identifier.
+```
+
+### Yapılacaklar · 1.2
+
+- Ekran görüntüleri (şehir, dağlar, tatlı, çöl; yeni ana ekran) ve gerekirse açıklama metni: bölümler onaylanınca Claude hazırlar.
+- Tanıtım metni (Promotional Text) önerisi: `130 calm levels across eight worlds. Pour colored sand, shape dunes, cities and mountains.`
+
 ## 1.1.1: düzeltme sürümü (9 Kasım 2026)
 
 1.1 yayında (9 Kasım'da "Ready for Distribution"). 1.1.1'de sadece iki şey değişiyor: süsün üstünde kum kulesi hatası düzeltildi ve **Marketing URL** eklendi

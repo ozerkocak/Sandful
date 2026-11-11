@@ -36,5 +36,7 @@ Sandful oyununun deposu (`ozerkocak/Sandful`, önceki adı Game-Ideas); rahatlat
 - SwiftShader'da three.js PMREM ortam yansıması (`PMREMGenerator`) bütün PBR malzemeleri siyah yapıyor; bazı telefonlarda da olabilir. Yansıma için 6 tuvalden `CubeTexture` kullan.
 - Sesi dinleyemediğin için spektrumunu ölç (sentez kodunu Node'da çalıştır, merkez frekans ve 500 Hz altı enerji). Gerekirse örnek WAV yaz.
 - Uygulamaya göndermeden önce uçtan uca testi koş: `NODE_PATH=$(npm root -g) node testler/sandful-e2e.js` (uygulama derlemesi için sona `uygulamalar/sandful/www/index.html` ekle).
+  Reklam, satın alma ve ölçüm kuralları sahte eklentilerle ayrı sınanır: `NODE_PATH=$(npm root -g) node testler/sandful-para.js` (kurallar `fikirler/09-sandful-reklam-olcum.md`).
+  iPhone derlemesi bulut ortamında yapılamaz; eklenti ya da iOS ayarı değişince Ozer'e Mac'te ne deneyeceğini `uygulamalar/sandful/TESTFLIGHT.md`'ye yaz.
 - Zorluk ayarı için farklı oyuncu profilleriyle (hiç dokunmayan, kusursuz, insan gibi geç kalan, dağınık) bot simülasyonu çalıştır.
   Bölümler ilk başta kolay olmalı; zorluk ilerleyen bölümlerde açılmalı ve strateji fark yaratmalı.

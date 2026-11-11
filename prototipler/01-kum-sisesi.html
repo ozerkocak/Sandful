@@ -53,19 +53,21 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webki
 #bPuff{position:fixed;right:14px;bottom:calc(var(--safeB) + 62px);height:50px;padding:0 16px;border-radius:25px;font-size:20px;display:none;pointer-events:auto}
 #bPuff b{font-size:17px;font-weight:900}
 #bPuff.off{opacity:.4}
+#bPuff.rek:after,#bUndo.rek:after,#rSkip.rek:after{content:'▶';display:inline-block;margin-left:6px;font-size:10px;vertical-align:2px;color:var(--amber)}
 /* Yeni mekanik kartı: bir mekanik ilk kez çıkınca bölüm başında */
-#mek{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:0 22px;background:rgba(74,56,38,.22);opacity:0;pointer-events:none;transition:opacity .35s}
-#mek.show{opacity:1;pointer-events:auto}
-#mek .mcard{width:100%;max-width:340px;border-radius:28px;padding:20px 20px 18px;text-align:center;background:rgba(255,251,244,.9);transform:translateY(18px) scale(.96);transition:transform .45s cubic-bezier(.2,.9,.3,1.15)}
-#mek.show .mcard{transform:none}
+#mek,#dlg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:0 22px;background:rgba(74,56,38,.22);opacity:0;pointer-events:none;transition:opacity .35s}
+#mek.show,#dlg.show{opacity:1;pointer-events:auto}
+#mek .mcard,#dlg .mcard{width:100%;max-width:340px;border-radius:28px;padding:20px 20px 18px;text-align:center;background:rgba(255,251,244,.9);transform:translateY(18px) scale(.96);transition:transform .45s cubic-bezier(.2,.9,.3,1.15)}
+#mek.show .mcard,#dlg.show .mcard{transform:none}
 #mek .kick{display:inline-block;padding:4px 12px;border-radius:12px;background:var(--amber);color:#fff;font-weight:900;font-size:12px;letter-spacing:1.6px;text-transform:uppercase}
 #mek .row{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:14px}
 #mek .row+.row{padding-top:14px;border-top:1px solid rgba(74,56,38,.1)}
-#mek .ic{width:76px;height:76px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;line-height:1;background:radial-gradient(circle at 50% 40%,#fff,#f6ead6);box-shadow:inset 0 -3px 0 rgba(74,56,38,.08),0 4px 12px rgba(74,56,38,.12);overflow:hidden}
-#mek .ic>*{display:block}
-#mek h3{margin:2px 0 0;font-size:22px;font-weight:900}
-#mek p{margin:0;max-width:30ch;color:var(--ink2);font-size:14.5px;font-weight:700;line-height:1.38;text-wrap:balance}
-#mek .btn{flex:none;width:100%;margin-top:18px}
+#mek .ic,#dlg .ic{width:76px;height:76px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;line-height:1;background:radial-gradient(circle at 50% 40%,#fff,#f6ead6);box-shadow:inset 0 -3px 0 rgba(74,56,38,.08),0 4px 12px rgba(74,56,38,.12);overflow:hidden}
+#mek .ic>*,#dlg .ic>*{display:block}
+#mek h3,#dlg h3{margin:2px 0 0;font-size:22px;font-weight:900}
+#mek p,#dlg p{margin:0;max-width:30ch;color:var(--ink2);font-size:14.5px;font-weight:700;line-height:1.38;text-wrap:balance}
+#mek .btn,#dlg .btn{flex:none;width:100%;margin-top:18px}
+#dlg .ic{margin:0 auto 10px}#dlg .btn+.btn{margin-top:10px}
 #mek .a-ruzgar>*{animation:mkWind 2.4s ease-in-out infinite}
 #mek .a-islak>*{animation:mkDrip 1.8s ease-in infinite}
 #mek .a-kart>*{animation:mkCard 2.6s ease-in-out infinite}
@@ -160,7 +162,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webki
 .world.locked .wh{opacity:.75}
 #setBg{position:fixed;inset:0;background:rgba(60,40,22,.32);display:none}
 #setBg.show{display:block;animation:fadeIn .25s}
-#setSheet{position:fixed;left:12px;right:12px;bottom:calc(var(--safeB) + 12px);max-width:460px;margin:0 auto;border-radius:26px;padding:10px 18px 16px;background:rgba(255,251,244,.95);display:none}
+#setSheet{position:fixed;left:12px;right:12px;bottom:calc(var(--safeB) + 12px);max-width:460px;max-height:calc(100% - var(--safeT) - var(--safeB) - 36px);overflow-y:auto;margin:0 auto;border-radius:26px;padding:10px 18px 16px;background:rgba(255,251,244,.95);display:none}
+#setMsg{min-height:0;margin:8px 2px 0;font-size:13.5px;font-weight:800;color:var(--amber);text-align:center}#setMsg:empty{display:none}
+#tani{display:none;margin:8px 0 0;font:600 10.5px/1.5 ui-monospace,Menlo,monospace;color:var(--ink2);white-space:pre-wrap;text-align:left}
+.rsp{align-self:center;margin-top:-4px;padding:8px 16px;border-radius:18px;font-weight:900;font-size:13.5px;color:var(--ink2);background:rgba(255,251,244,.6);border:1px solid rgba(255,255,255,.8)}
 #setSheet.show{display:block;animation:sheetUp .4s cubic-bezier(.2,.9,.3,1.08)}
 @keyframes sheetUp{from{transform:translateY(110%)}to{transform:none}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -197,12 +202,13 @@ button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
 <button id="bUc" class="frost"></button>
 <button id="bUndo" class="frost" aria-label="Geri al">↶<b>1</b></button>
 <div id="mek"><div class="mcard frost" role="dialog" aria-modal="true"><span class="kick"></span><div id="mekRows"></div><button class="btn pri" id="mekGo"></button></div></div>
+<div id="dlg"><div class="mcard frost" role="dialog" aria-modal="true"><div class="ic"><span id="dlgIc"></span></div><h3 id="dlgH"></h3><p id="dlgP"></p><button class="btn pri" id="dlgOk"></button><button class="btn sec" id="dlgNo"></button></div></div>
 <div id="result" class="sheet frost">
   <h2 id="rTitle"></h2>
   <div class="big" id="rPct"></div>
   <div class="stars" id="rStars"><span>★</span><span>★</span><span>★</span></div>
   <p id="rMsg"></p>
-  <div class="btns"><button class="btn sec" id="rAgain">Tekrar</button><button class="btn pri" id="rNext">Sonraki</button></div>
+  <div class="btns"><button class="btn sec" id="rAgain">Tekrar</button><button class="btn sec" id="rSkip"></button><button class="btn pri" id="rNext">Sonraki</button></div>
 </div>
 <div id="raf">
  <div class="hm">
@@ -221,6 +227,7 @@ button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
     <button class="btn pri" id="heroPlay">Oyna</button><button class="btn pri" id="rafClose">Devam</button>
    </div>
   </section>
+  <button class="rsp" id="rsPill"></button>
   <h2 id="rafH">Rafım</h2>
   <div id="shelves"></div>
  </div>
@@ -234,8 +241,14 @@ button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
  <button class="srow" id="sKum"></button>
  <button class="srow" id="sHap" role="switch"></button>
  <button class="srow" id="sLang"></button>
+ <button class="srow" id="sNoAds"></button>
+ <button class="srow" id="sRestore"></button>
+ <button class="srow" id="sPriv"></button>
+ <button class="srow" id="sPol"></button>
+ <div id="setMsg" role="status"></div>
  <button class="btn sec" id="setDone">Tamam</button>
- <div class="ver">Sandful 1.1.1</div>
+ <div class="ver" id="setVer">Sandful 1.2</div>
+ <pre id="tani"></pre>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -302,7 +315,14 @@ const EN={
  'Rüzgâr kumu savuruyor: huniyi rüzgârın geldiği yana kaydır.':'The wind blows the sand sideways: move the funnel into the wind.',
  'Geniş uç hızlı doldurur, ince uç ince çizer. Kuleleri ince uçla yap.':'The wide spout fills fast, the thin spout draws fine. Build the towers with the thin one.',
  'Kart kavanozu ikiye böler: sola gündüz, sağa gece. Sonra kart kalkar.':'A card splits the jar: day on the left, night on the right. Then the card lifts.',
- 'Kart çekildi':'Card pulled','Kart girdi':'Card in','Yeni':'New','Başla':'Start','Rüzgâr':'Wind','İnce ve geniş uç':'Thin and wide spout','Islak kum':'Wet sand','Ayırıcı kart':'Divider card',
+ 'Kart çekildi':'Card pulled','Reklamsız oyna':'Play without ads','Satın alımları geri yükle':'Restore purchases','Gizlilik seçenekleri':'Privacy options','Gizlilik politikası':'Privacy policy','önizleme':'preview',
+ 'Bölümü geç':'Skip level','İzle':'Watch','Vazgeç':'Not now','Bir geri alma daha':'One more undo','Kısa bir reklam izle, +1 geri alma kazan.':'Watch a short ad to get +1 undo.',
+ 'Bir üfleme daha':'One more puff','Kısa bir reklam izle, +1 üfleme kazan.':'Watch a short ad to get +1 puff.',
+ 'Kısa bir reklam izle, sonraki bölüm açılsın. Bu bölüm yıldız kazandırmaz.':'Watch a short ad to unlock the next level. This level earns no stars.',
+ 'Reklam (önizleme)':'Ad (preview)','Uygulamada burada kısa bir reklam çıkar.':'In the app, a short ad appears here.','Reklam yok, bu seferlik bizden':'No ad right now, this one is on us',
+ 'Reklam hazırlanıyor…':'Getting the ad ready…','Reklam bitmeden kapandı':'The ad was closed early','Önizleme: reklamlar kaldırıldı.':'Preview: ads removed.',
+ 'Mağazaya ulaşılamadı. Biraz sonra tekrar dene.':'Could not reach the store. Please try again in a moment.','Teşekkürler! Reklamlar kaldırıldı.':'Thank you! Ads are removed.',
+ 'Satın alma tamamlanmadı.':'The purchase was not completed.','Satın alma geri yüklendi.':'Purchase restored.','Geri yüklenecek satın alma bulunamadı.':'No purchase to restore.','Kart girdi':'Card in','Yeni':'New','Başla':'Start','Rüzgâr':'Wind','İnce ve geniş uç':'Thin and wide spout','Islak kum':'Wet sand','Ayırıcı kart':'Divider card',
  'Sırası gelince bir süs gelir: kesikli halkanın üstüne getir, parmağını kaldır. Kum onu sarar.':'When its turn comes, a decoration appears: move it onto the dashed ring and lift your finger. The sand wraps around it.',
  '💨 düğmesi fazla yığılan yeri düzler. Hakkın sınırlı, gerektiğinde kullan.':'The 💨 button flattens a spot that piled up too high. You only have a few, so use them when needed.',
  'Sırası gelince çubukla kumu it: kesikli çizgileri izleyerek aşağı çek.':'When its turn comes, push the sand with the stick: follow the dashed lines downward.',
@@ -487,7 +507,7 @@ const dc=k=>k>=100?k-100:k>=64?k-64:k;let NCODE=0,CL=new Int8Array(16),CODES=[];
 let LV=0,L=null,BOT=false,ncol=0,pr=[],pg=[],pb=[],amounts=[],queue=[],qi=0,tTop=[],scoreCols=[],layerScore=[],layerY=[],rTop=RW,rMouth=RW,decorList=[];
 let slices=[],noz=0,nozT=0,state='ready',T=0,pourStart=0,pouring=false,flowNow=0,emitting=false,wasEmit=false,pourGroup=0,landed=0,glassLand=0,impact=0,landX=0,landY=0,landC=0,slideFlux=0;
 let onTarget=false,streakT=0,offT=9,streakLvl=0,nextBeat=0,mi=0,melody=[],pct=0,puffs=0,decor=null,holdT=0,settleT=0,finT=0,popped=false,waveY=-9,sweep=-1,lidY=null;
-let undoLeft=1,snaps=[],stickMarks=[],stick=null,spikes=[],poured=[];
+let undoLeft=1,undoEk=0,ufleEk=0,kulU=0,kulP=0,snaps=[],stickMarks=[],stick=null,spikes=[],poured=[];
 // 1.2 mekanikleri: rüzgâr (akan kumu yana iter), huni ucu (0 normal, 1 geniş, 2 ince), ayırıcı kart (iki yanı ayıran duvar)
 let windNow=0,UC=0,KART=null;
 let resultShown=false,snapped=false,pendingCheck=null,nextTick=0,tickDue=false,wavePlayed=[],prevState=null,finalStars=0,nextCricket=0;
@@ -621,7 +641,7 @@ function startLevel(n,opt={}){clearStars();down=false;activeId=null;
  buildLevel();
  slices=[];avs=[];avMoved=0;noz=nozT=0;state='ready';tiltK=tiltS=tiltA=0;tiltC=1;T=0;pourStart=1e9;pouring=false;flowNow=0;emitting=false;wasEmit=false;landed=0;slideFlux=0;onTarget=false;streakT=0;offT=9;streakLvl=0;
  nextBeat=0;mi=0;melody=makeMelody(!!L.minor,n*7919+13);pct=0;puffs=L.ufle||0;decor=null;holdT=0;settleT=0;popped=false;waveY=-9;sweep=-1;lidY=null;
- resultShown=false;snapped=false;pendingCheck=null;nextTick=0;wavePlayed=[];finalStars=0;undoLeft=1;snaps=[];stick=null;spikes=[];windNow=0;UC=L.uc?1:0;
+ resultShown=false;snapped=false;pendingCheck=null;nextTick=0;wavePlayed=[];finalStars=0;undoLeft=1;undoEk=REKLAM.undoEk;ufleEk=REKLAM.ufleEk;kulU=0;kulP=0;snaps=[];stick=null;spikes=[];windNow=0;UC=L.uc?1:0;
  if(BOT)return;
  updateUcBtn();$('wind').classList.toggle('show',!!L.ruzgar);
  $('title').firstChild.innerHTML='<b>'+(n+1)+'</b>'+t(L.ad);$('hint').textContent=t(L.ipucu);
@@ -653,12 +673,13 @@ const MEK=[
 const mekOf=l=>MEK.filter(m=>m.has(l));
 const mekSeen=m=>!!(SAVE.mek&&SAVE.mek[m.k])||LEVELS.some((q,i)=>SAVE.lv[i]&&m.has(q)); // önceki sürümde oynanmış bölümler de sayılır
 let mekOn=false,mekT0=0;
-function showMek(list){$('mek').querySelector('.kick').textContent=t('Yeni');$('mekGo').textContent=t('Başla');
+function showMek(list){list.forEach(m=>OLC.ev('mechanic_intro',Object.assign(olcB(),{mech:m.k})));$('mek').querySelector('.kick').textContent=t('Yeni');$('mekGo').textContent=t('Başla');
  $('mekRows').innerHTML=list.map(m=>'<div class="row"><div class="ic a-'+(['ruzgar','islak','kart','uc'].includes(m.k)?m.k:'diger')+'"><span>'+m.ic(L)+'</span></div><h3>'+t(m.ad)+'</h3><p>'+t(m.tx)+'</p></div>').join('');
  $('mek').classList.add('show');mekOn=true;mekT0=performance.now();if(!BOT)vib(12);}
 function closeMek(){if(!mekOn)return;mekOn=false;$('mek').classList.remove('show');SAVE.mek=Object.assign({},SAVE.mek);for(const m of mekOf(L))SAVE.mek[m.k]=1;persist();if(state==='ready')showBanner();}
 function beginPour(){if(state!=='ready')return;if(mekOn)closeMek();state='pour';pourStart=T+.12;
- if(!BOT){$('hand').classList.remove('show');$('banner').classList.remove('show');if(!SAVE.seen){SAVE.seen=true;persist();}}}
+ if(!BOT){$('hand').classList.remove('show');$('banner').classList.remove('show');if(!SAVE.seen){SAVE.seen=true;persist();}
+  OLC.ev('level_start',Object.assign(olcB(),{mech:mekOf(L).map(m=>m.k).join(',')||'-'}));REK.hazirla();}}
 
 function step(){
  if(state==='menu')return;
@@ -794,7 +815,7 @@ function doUndo(){if(!canUndo())return;const j=undoTarget(),S=snaps[j];
 
 // ───────── Üfleme ─────────
 // Huninin altındaki tepenin üstünü iki yana savurur: ortada derin, kenarda sığ.
-function puff(){if(puffs<=0||!(state==='pour'||state==='hold'))return;puffs--;
+function puff(){if(puffs<=0||!(state==='pour'||state==='hold'))return;puffs--;kulP++;
  const c0=colOf(noz),R=18;
  for(let d=-R;d<=R;d++){const c=c0+d;if(c<0||c>=NC||!valid[c])continue;const m=.055*(1-Math.abs(d)/(R+1));
   const dst=clamp(c0+(d<0?-1:1)*(R+1+Math.abs(d)),0,NC-1);if(valid[dst]){const k=segN[c]?dc(segC[c*MAXS+segN[c]-1]):0;if(transfer(c,dst,m)>0&&!BOT)spawnPuffGrains(c,dst,k);}}
@@ -815,7 +836,8 @@ function finaleStep(){const f=T-finT;
  if(f>=2.75&&!snapped){snapped=true;saveResult();}
  if(f>=2.85&&!resultShown){resultShown=true;state='result';showResult();}}
 function saveResult(){const r=SAVE.lv[LV]||{p:0,s:0};const p=Math.round(pct);
- if(p>=r.p){const im=snapshot();if(im)r.img=im;r.p=p;}r.s=Math.max(r.s||0,finalStars);SAVE.lv[LV]=r;persist();}
+ if(p>=r.p){const im=snapshot();if(im)r.img=im;r.p=p;}r.s=Math.max(r.s||0,finalStars);SAVE.lv[LV]=r;rk().b++;persist();
+ OLC.ev('level_end',Object.assign(olcB(),{pct:p,stars:finalStars,sec:Math.round(T),undo:kulU,puff:kulP}));OLC.oz('levels_done',Object.keys(SAVE.lv).length);}
 function showResult(){
  const p=Math.round(pct),s=finalStars;
  $('rTitle').textContent=t(['Şişe hazır','Güzel bir şişe','Çok güzel!','Kusursuz şişe!'][s]);
@@ -828,8 +850,10 @@ function showResult(){
  if(decorList.length)msg+=t(' Süs: {0}/{1}.',decorList.filter(d=>d.ok).length,decorList.length);
  if(stickMarks.length)msg+=t(' Çubuk: {0}/{1}.',stickMarks.filter(m=>m.ok).length,stickMarks.length);
  $('rMsg').textContent=msg;
- const last=LV>=LEVELS.length-1;$('rNext').textContent=t(last?'Raf':'Sonraki');$('rNext').disabled=!last&&s<1;
- $('result').classList.add('show');}
+ const last=LV>=LEVELS.length-1,gec=!last&&s<1&&!(SAVE.lv[LV]&&SAVE.lv[LV].s>=1); // yıldızsız bitti: sonraki bölüm kapalı, "Bölümü geç" çıkar
+ $('rNext').textContent=t(last?'Raf':'Sonraki');$('rNext').disabled=!last&&s<1&&!lvOpen(LV+1);$('rNext').style.display=gec?'none':'';
+ $('rSkip').style.display=gec?'':'none';$('rSkip').textContent=t('Bölümü geç');$('rSkip').classList.toggle('rek',!SAVE.rs);
+ $('result').classList.add('show');puanIste();}
 </script>
 <script>
 // ───────── Enstrüman kayıtları ─────────
@@ -1689,8 +1713,11 @@ function updateHud(){const p=Math.round(pct);
 function updateWind(){const w=$('wind'),on=!!(L&&L.ruzgar)&&state!=='finale'&&state!=='result'&&state!=='menu';w.classList.toggle('show',on);if(!on)return;
  const f=clamp(windNow/L.ruzgar.g,-1,1),u=w.querySelector('u'),a=Math.max(.16,Math.abs(f))*50;u.className=f<0?'l':'r';u.style.width=a.toFixed(1)+'%';u.style.left=(f<0?50-a:50).toFixed(1)+'%';}
 function updateUcBtn(){const b=$('bUc');b.style.display=L&&L.uc?'block':'none';if(!L||!L.uc)return;b.innerHTML=UC===2?'<i class="u2"></i>'+t('İnce uç'):'<i class="u1"></i>'+t('Geniş uç');}
-function updateUndo(){const ok=canUndo(),b=$('bUndo');if(b.classList.contains('show')!==ok)b.classList.toggle('show',ok);const tx=String(undoLeft);if(b.lastChild.textContent!==tx)b.lastChild.textContent=tx;}
-function updatePuffBtn(){$('bPuff').querySelector('b').textContent=puffs;$('bPuff').classList.toggle('off',puffs<=0);}
+const undoEkVar=()=>undoLeft<=0&&undoEk>0&&(state==='pour'||state==='hold'||state==='stick')&&undoTarget()>=0; // ücretsiz hak bitti: +1 (ödüllü)
+function updateUndo(){const ok=canUndo(),ek=!ok&&undoEkVar(),b=$('bUndo'),gor=ok||ek;if(b.classList.contains('show')!==gor)b.classList.toggle('show',gor);
+ const tx=ek?'+1':String(undoLeft);if(b.lastChild.textContent!==tx){b.lastChild.textContent=tx;b.classList.toggle('rek',ek&&!SAVE.rs);}}
+const ufleEkVar=()=>puffs<=0&&!!(L&&L.ufle)&&ufleEk>0;
+function updatePuffBtn(){const ek=ufleEkVar(),b=$('bPuff');b.querySelector('b').textContent=ek?'+1':puffs;b.classList.toggle('off',puffs<=0&&!ek);b.classList.toggle('rek',ek&&!SAVE.rs);}
 // Dünya renkleri (alttan üste, döküldüğü sıra): başlık simgesi ve ilerleme çubuğu bu kum katmanlarıyla çizilir
 const WCOL=[['#e8c483','#4d93cf','#b4dcf0'],['#f1d9a6','#f2826f','#3fb7c6','#336fa8'],['#f7bfd0','#dfb24e','#e07a2e','#cfe9f5'],
  ['#e9a15a','#f8e4ab','#3fae8f','#ef9d55'],['#86c063','#e0473f','#f5b8c8','#b4dcf0'],['#d8a96c','#6e4331','#f08da0','#f7ecd6'],['#3b3f55','#ffcf7a','#ef9d55','#9175c4'],['#414d8c','#958fb0','#f3f4f8','#b4dcf0']];
@@ -1715,9 +1742,9 @@ function feats(l){const f=[];if(l.cubuk)f.push('🥢 '+t('Çubuk'));if(l.katman.
  if(l.katman.some(q=>GLOW[q[0]]))f.push('✨ '+t('Işıldayan kum'));if(l.ufle)f.push('💨 '+t('Üfleme'));if(l.ruzgar)f.push('🍃 '+t('Rüzgâr'));if(l.uc)f.push(t('İnce ve geniş uç'));if(l.katman.some(q=>q[2]&&q[2].islak))f.push('💧 '+t('Islak kum'));if(l.kart)f.push(t('Ayırıcı kart'));
  if(l.sus)f.push(DEC[l.sus[0].id].e+' '+t('Süsler'));return f.slice(-3);}
 const starRow=s=>'★'.repeat(s)+'<i>'+'★'.repeat(3-s)+'</i>';
-const lvOpen=k=>k===0||(SAVE.lv[k-1]&&SAVE.lv[k-1].s>=1)||UNLOCK;
+const lvOpen=k=>k===0||(SAVE.lv[k-1]&&(SAVE.lv[k-1].s>=1||SAVE.lv[k-1].gec))||UNLOCK; // gec: yıldızsız geçilen bölüm
 let rafAcik=null,rafHw=-1; // ana ekranda açık duran dünyalar (oturum boyunca hatırlanır; sıradaki dünya değişince sıfırlanır)
-function openRaf(){clearStars();if(state!=='menu'){prevState=state;state='menu';}pouring=false;setPour(0,0,0,null,null);$('result').classList.remove('show');
+function openRaf(){clearStars();if(state!=='menu'){if(L&&(state==='pour'||state==='hold'||state==='stick'))OLC.ev('level_quit',Object.assign(olcB(),{progress:Math.round(100*qi/Math.max(1,queue.length))}));prevState=state;state='menu';}pouring=false;setPour(0,0,0,null,null);$('result').classList.remove('show');
  const sh=$('shelves');sh.innerHTML='';let total=0,nextIdx=-1,low=-1;
  LEVELS.forEach((l,k)=>{const rec=SAVE.lv[k];total+=rec?rec.s:0;if(lvOpen(k)&&!rec&&nextIdx<0)nextIdx=k;if(rec&&rec.s<3&&low<0)low=k;});
  // Sıradaki: oyun ortasında açıldıysa o bölüme dönüş; değilse ilk oynanmamış bölüm, o da yoksa 3 yıldızı eksik ilk bölüm
@@ -1748,10 +1775,11 @@ function openRaf(){clearStars();if(state!=='menu'){prevState=state;state='menu';
  $('heroJar').innerHTML=hr&&hr.img?'<img alt="" src="'+hr.img+'">':jarSVG(hk,'h','full');
  $('heroPlay').style.display=mid?'none':'block';$('heroPlay').onclick=()=>{closeRaf(true);startLevel(hk);};
  $('rafSub').innerHTML=total+' / '+LEVELS.length*3+' <i>★</i>';
- setTexts();
+ setTexts();if(!mid)REK.onayGoster();
+ $('rsPill').style.display=!SAVE.rs&&rk().top>=3?'':'none';$('rsPill').textContent=t('Reklamsız oyna')+' ›';
  $('rafClose').style.display=mid?'block':'none';const rf=$('raf'),was=rf.classList.contains('show');rf.classList.add('show');if(!was)rf.scrollTop=0;}
 function openSet(){$('setBg').classList.add('show');$('setSheet').classList.add('show');}
-function closeSet(){$('setBg').classList.remove('show');$('setSheet').classList.remove('show');}
+function closeSet(){setMsg('');$('setBg').classList.remove('show');$('setSheet').classList.remove('show');}
 function closeRaf(skip){closeSet();$('raf').classList.remove('show');if(!skip&&prevState){state=prevState;if(state==='result')$('result').classList.add('show');}prevState=null;}
 
 // ───────── Girdi ─────────
@@ -1766,36 +1794,45 @@ const cancel=e=>{if(!down||e.pointerId!==activeId)return;down=false;activeId=nul
 cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',cancel);
 ['pointerup','touchend','click','keydown'].forEach(ev=>addEventListener(ev,()=>initAudio(),{passive:true}));
 $('bRaf').onclick=()=>openRaf();
-$('bRe').onclick=()=>startLevel(LV);
-$('bPuff').onclick=()=>puff();
-$('bUndo').onclick=()=>doUndo();
+$('bRe').onclick=()=>{if(state!=='ready')OLC.ev('level_retry',Object.assign(olcB(),{where:'play',progress:Math.round(100*qi/Math.max(1,queue.length))}));startLevel(LV);};
+$('bPuff').onclick=()=>{if(puffs>0)puff();else if(ufleEkVar()&&(state==='pour'||state==='hold'))REK.odul('ufle',()=>{ufleEk--;puffs=1;updatePuffBtn();});};
+$('bUndo').onclick=()=>{if(canUndo()){kulU++;doUndo();}else if(undoEkVar())REK.odul('undo',()=>{undoEk--;undoLeft=1;kulU++;doUndo();});};
 $('bUc').onclick=()=>setUc(UC===1?2:1);
 $('mekGo').onclick=e=>{e.stopPropagation();closeMek();};
 $('mek').addEventListener('click',e=>{if(e.target===$('mek')&&performance.now()-mekT0>600)closeMek();});
-$('rAgain').onclick=()=>startLevel(LV);
-$('rNext').onclick=()=>{if(LV>=LEVELS.length-1){state='menu';prevState=null;openRaf();}else startLevel(LV+1);};
+$('rAgain').onclick=()=>{OLC.ev('level_retry',Object.assign(olcB(),{where:'result'}));startLevel(LV);};
+$('rNext').onclick=()=>{if(LV>=LEVELS.length-1){state='menu';prevState=null;openRaf();}else REK.gecis(()=>startLevel(LV+1));}; // geçiş reklamı sadece burada çıkabilir
+$('rSkip').onclick=()=>REK.odul('gec',()=>{const r=SAVE.lv[LV]||{p:0,s:0};r.gec=1;SAVE.lv[LV]=r;persist();OLC.ev('level_skip',olcB());startLevel(LV+1);});
 $('rafClose').onclick=()=>closeRaf();$('bSet').onclick=openSet;$('setDone').onclick=closeSet;$('setBg').onclick=closeSet;
-$('sSnd').onclick=()=>{SAVE.snd=SAVE.snd===false;persist();if(master)master.gain.value=SAVE.snd?.75:0;setTexts();};
-$('sMuz').onclick=()=>{SAVE.muz=SAVE.muz===false;persist();if(musicBus)musicBus.gain.value=SAVE.muz?1:0;setTexts();};
-$('sKum').onclick=()=>{initAudio();SAVE.kum10=((SAVE.kum10|0)+1)%3;persist();setTexts();if(kumAdi()==='yumusak')sndNeed(['yumusak','kay']);attachPour();previewKum();};
-$('sHap').onclick=()=>{SAVE.hap=SAVE.hap===false;persist();setTexts();if(SAVE.hap)vib(20);};
-$('sLang').onclick=()=>{SAVE.lang=LANG==='tr'?'en':'tr';persist();setTexts();openRaf();};
+const ayarOlc=(ad,v)=>OLC.ev('setting_change',{setting:ad,value:String(v)});
+$('sSnd').onclick=()=>{SAVE.snd=SAVE.snd===false;persist();if(master)master.gain.value=SAVE.snd?.75:0;setTexts();ayarOlc('sound',SAVE.snd);};
+$('sMuz').onclick=()=>{SAVE.muz=SAVE.muz===false;persist();if(musicBus)musicBus.gain.value=SAVE.muz?1:0;setTexts();ayarOlc('music',SAVE.muz);};
+$('sKum').onclick=()=>{initAudio();SAVE.kum10=((SAVE.kum10|0)+1)%3;persist();setTexts();if(kumAdi()==='yumusak')sndNeed(['yumusak','kay']);attachPour();previewKum();ayarOlc('sand_sound',kumAdi());};
+$('sHap').onclick=()=>{SAVE.hap=SAVE.hap===false;persist();setTexts();if(SAVE.hap)vib(20);ayarOlc('haptics',SAVE.hap);};
+$('sLang').onclick=()=>{SAVE.lang=LANG==='tr'?'en':'tr';persist();setTexts();openRaf();ayarOlc('language',SAVE.lang);};
+$('sNoAds').onclick=()=>SAT.al();$('sRestore').onclick=()=>SAT.geri();$('sPriv').onclick=()=>{try{PLG.AdMob.showPrivacyOptionsForm().catch(()=>{});}catch(e){}};
+$('sPol').onclick=()=>{window.open(GIZLILIK_URL,'_blank');};$('rsPill').onclick=()=>{openSet();};
+$('setVer').onclick=()=>{if(++taniN>=5){$('tani').textContent=tani();$('tani').style.display='block';}};
 // sabit metinler ve ayar düğmeleri seçili dilde; bölüm açıksa başlık ve ipucu da
 function setTexts(){LANG=langNow();document.documentElement.lang=LANG;
  const sw=(id,lb,v)=>{const e=$(id);e.innerHTML='<span>'+t(lb)+'</span><span class="sw'+(v===false?'':' on')+'"><i></i></span>';e.setAttribute('aria-checked',v===false?'false':'true');};
  const sv=(id,lb,v)=>{$(id).innerHTML='<span>'+t(lb)+'</span><span class="sv">'+v+'</span>';};
  sw('sSnd','Ses',SAVE.snd);sw('sMuz','Müzik',SAVE.muz);sv('sKum','Kum sesi',t(KUM_AD[SAVE.kum10|0]));sw('sHap','Titreşim',SAVE.hap);sv('sLang','Dil',LANG==='tr'?'Türkçe':'English');
+ // Reklamsız: adı ve fiyatı mağazadan; alındıysa ✓. Geri yükleme sadece uygulamada; gizlilik seçenekleri sadece onay gereken bölgelerde
+ sv('sNoAds','Reklamsız oyna',SAVE.rs?'✓':SAT.urun?SAT.urun.priceString||'':NATIVE?'…':t('önizleme'));$('sNoAds').style.display=NATIVE&&!PLG.NativePurchases?'none':'';
+ sv('sRestore','Satın alımları geri yükle','');$('sRestore').style.display=NATIVE&&PLG.NativePurchases&&!SAVE.rs?'':'none';
+ sv('sPriv','Gizlilik seçenekleri','');$('sPriv').style.display=REK.gizlilikGerek()?'':'none';sv('sPol','Gizlilik politikası','↗');
  $('setH').textContent=t('Ayarlar');$('setDone').textContent=t('Tamam');$('heroPlay').textContent=t('Oyna');$('bSet').setAttribute('aria-label',t('Ayarlar'));
  $('rafH').textContent=t('Rafım');$('rafClose').textContent=t('Devam');$('rAgain').textContent=t('Tekrar');$('gfxErr').textContent=t('Bu cihazda 3D grafik açılamadı.');
  $('bRaf').setAttribute('aria-label',t('Raf'));$('bRe').setAttribute('aria-label',t('Baştan'));$('bUndo').setAttribute('aria-label',t('Geri al'));
  if(L){$('title').firstChild.innerHTML='<b>'+(LV+1)+'</b>'+t(L.ad);$('hint').textContent=t(L.ipucu);lastPct=-1;}}
-function setBg(bg){if(bg){pouring=false;down=false;activeId=null;hapEnd();if(AC)AC.suspend().catch(()=>{});}else if(AC)AC.resume().catch(()=>{});}
+function setBg(bg){if(bg){pouring=false;down=false;activeId=null;hapEnd();if(AC)AC.suspend().catch(()=>{});}else if(AC&&!REK.acik)AC.resume().catch(()=>{});}
 document.addEventListener('visibilitychange',()=>setBg(document.hidden));if(PLG.App)PLG.App.addListener('appStateChange',st=>setBg(!st.isActive));
 
 // ───────── Döngü ─────────
 let TS=1,last=performance.now(),acc=0,AUTO=null,FREEZE=false;
 function frame(now){requestAnimationFrame(frame);if(sndJob)sndJob.run(state==='pour'||state==='hold'?4:10);const dt=Math.min(.1,(now-last)/1000);last=now;
- if(TS>0&&!document.hidden&&L){acc+=dt*TS;let n=0;while(acc>=DT&&n<4){step();acc-=DT;n++;}if(n===4)acc=0;}
+ if(TS>0&&!document.hidden&&L&&!REK.acik){acc+=dt*TS;let n=0;while(acc>=DT&&n<4){step();acc-=DT;n++;}if(n===4)acc=0;}
  if(L&&state!=='menu'&&!FREEZE){gfxFrame(now);updateHud();}}
 
 // ───────── Botlar (zorluk ayarı için) ─────────
@@ -1847,6 +1884,85 @@ window.__game={setTS:v=>{TS=v;},sim:ms=>{const n=Math.round(ms/1000/DT);for(let 
 
 // İlk açılış: menü yok, doğrudan 1. bölüm. Sonraki açılışlar raf.
 initGfx();resize();
+// ───────── Reklam, Reklamsız satın alma, ölçüm (1.2; kurallar: fikirler/09-sandful-reklam-olcum.md) ─────────
+// Para kazanma rahatlamayı bozmaz: döküşte hiçbir şey çıkmaz. Geçiş reklamı sadece bölüm bitip "Sonraki"ye basılınca ve seyrek;
+// ödüllü reklam sadece oyuncu isterse. Eklenti yoksa (tarayıcı) hepsi sessizce çalışır; önizlemede reklam yerine kısa bir kart çıkar.
+const REKLAM={ilkBolum:10,araSn:240,araBolum:3,gunluk:8,undoEk:3,ufleEk:2,onayBolum:8}; // sıklık ayarı tek yerde
+const URUN='com.investateknoloji.sandful.reklamsiz',BIRIM={gecis:'ca-app-pub-2387022770405877/8673265075',odul:'ca-app-pub-2387022770405877/9999769129'};
+const GIZLILIK_URL='https://www.investa.com.tr/sandful/privacy.html';
+const simdi=()=>Date.now(),gunAd=()=>new Date().toISOString().slice(0,10),olcB=()=>({level:LV+1,world:((L&&L.dunya)||0)+1});
+// Ölçüm (Firebase Analytics): kişisel veri yok; sadece bölüm ve oyun olayları
+const OLC={ev(ad,p){try{if(window.__olc)window.__olc.push([ad,p||{}]);if(PLG.FirebaseAnalytics)PLG.FirebaseAnalytics.logEvent({name:ad,params:p||{}}).catch(()=>{});}catch(e){}},
+ oz(k,v){try{if(PLG.FirebaseAnalytics)PLG.FirebaseAnalytics.setUserProperty({key:k,value:String(v)}).catch(()=>{});}catch(e){}}};
+// reklam sayacı kayıtta durur: t son reklamın zamanı, b son geçiş reklamından beri biten bölüm, n bugünkü geçiş reklamı, top toplam
+const rk=()=>{const g=gunAd();if(!SAVE.rk||typeof SAVE.rk!=='object')SAVE.rk={t:0,b:0,g,n:0,top:0};if(SAVE.rk.g!==g){SAVE.rk.g=g;SAVE.rk.n=0;}return SAVE.rk;};
+const izinVar=o=>!!o&&o.canRequestAds!==false&&o.status!=='REQUIRED';
+const REK={test:false,izin:false,onay:null,gY:false,oY:false,acik:false,sonra:null,odulSon:null,kazandi:false,onaySoruldu:false,deneme:{gecis:0,odul:0},yukleniyor:{},
+ async init(){const A=PLG.AdMob;if(!A)return;
+  try{A.addListener('interstitialAdDismissed',()=>REK.gecisBitti());A.addListener('interstitialAdFailedToShow',()=>REK.gecisBitti());
+   A.addListener('onRewardedVideoAdReward',()=>{REK.kazandi=true;});A.addListener('onRewardedVideoAdDismissed',()=>REK.odulBitti(false));A.addListener('onRewardedVideoAdFailedToShow',()=>REK.odulBitti(true));}catch(e){}
+  try{REK.test=await SAT.denemeOrtami();}catch(e){}            // TestFlight ve inceleme: Google'ın test reklamları
+  try{await A.initialize({});}catch(e){return;}
+  try{REK.onay=await A.requestConsentInfo({});REK.izin=izinVar(REK.onay);}catch(e){REK.izin=false;} // onay bilgisi alınamadıysa bu oturumda reklam istenmez
+  REK.hazirla();setTexts();},
+ // Avrupa onay penceresi: açılışta değil, reklamların başlamasına yakın ve ana ekranda
+ async onayGoster(){if(!PLG.AdMob||!REK.onay||REK.onaySoruldu||SAVE.rs||REK.onay.status!=='REQUIRED'||!REK.onay.isConsentFormAvailable||Object.keys(SAVE.lv).length<REKLAM.onayBolum)return;
+  REK.onaySoruldu=true;try{REK.onay=await PLG.AdMob.showConsentForm();REK.izin=izinVar(REK.onay);}catch(e){}REK.hazirla();setTexts();},
+ gizlilikGerek(){return !!(PLG.AdMob&&REK.onay&&REK.onay.privacyOptionsRequirementStatus==='REQUIRED');},
+ hazirla(){if(!PLG.AdMob||!REK.izin||SAVE.rs)return;if(!REK.oY)REK.yukle('odul');if(!REK.gY&&Object.keys(SAVE.lv).length>=REKLAM.ilkBolum-2)REK.yukle('gecis');},
+ yukle(tur){const A=PLG.AdMob;if(!A||REK.yukleniyor[tur])return;REK.yukleniyor[tur]=true;
+  (tur==='gecis'?A.prepareInterstitial({adId:BIRIM.gecis,isTesting:REK.test}):A.prepareRewardVideoAd({adId:BIRIM.odul,isTesting:REK.test}))
+   .then(()=>{REK[tur==='gecis'?'gY':'oY']=true;REK.deneme[tur]=0;},()=>{if(++REK.deneme[tur]<=3)setTimeout(()=>REK.yukle(tur),30000*REK.deneme[tur]);}).then(()=>{REK.yukleniyor[tur]=false;});},
+ // Geçiş reklamı: ilk 10 bölümde yok; en az 3 bölüm ve 4 dakika arayla; günde en fazla 8; hazır değilse hiç gösterilmez
+ gecisUygun(){if(SAVE.rs||LV<REKLAM.ilkBolum)return false;const r=rk();if(r.b<REKLAM.araBolum||simdi()-r.t<REKLAM.araSn*1000||r.n>=REKLAM.gunluk)return false;return NATIVE?(REK.izin&&REK.gY):true;},
+ gecis(sonra){if(REK.acik)return;if(!REK.gecisUygun()){sonra();return;}const r=rk();r.t=simdi();r.b=0;r.n++;r.top=(r.top||0)+1;persist();OLC.ev('ad_interstitial',olcB());
+  REK.acik=true;REK.sonra=sonra;setBg(true);if(!NATIVE){onizleReklam(()=>REK.gecisBitti());return;}
+  REK.gY=false;REK.bekci=setTimeout(()=>REK.gecisBitti(),90000);PLG.AdMob.showInterstitial().catch(()=>REK.gecisBitti());},
+ gecisBitti(){if(!REK.sonra)return;clearTimeout(REK.bekci);const f=REK.sonra;REK.sonra=null;REK.acik=false;setBg(false);REK.hazirla();f();},
+ // Ödüllü reklam: önce onay kartı; Reklamsız alan reklamsız alır; reklam yoksa hak yine verilir
+ odul(ne,ver){const say=Object.assign(olcB(),{reward:ne});if(SAVE.rs){OLC.ev('ad_free',say);ver();return;}OLC.ev('ad_offer',say);odulKart(ne,()=>REK.odulGoster(say,ver));},
+ odulGoster(say,ver){const bedava=()=>{toast(t('Reklam yok, bu seferlik bizden'));OLC.ev('ad_free',say);ver();},kazan=()=>{rk().t=simdi();persist();OLC.ev('ad_rewarded',say);ver();};
+  if(!NATIVE){REK.acik=true;setBg(true);onizleReklam(()=>{REK.acik=false;setBg(false);kazan();});return;}
+  if(!PLG.AdMob||!REK.izin){bedava();return;}
+  const goster=()=>{REK.oY=false;REK.kazandi=false;REK.acik=true;setBg(true);
+   REK.odulSon=hata=>{REK.odulSon=null;REK.acik=false;setBg(false);REK.hazirla();if(REK.kazandi)kazan();else if(hata)bedava();else toast(t('Reklam bitmeden kapandı'));};
+   REK.bekci=setTimeout(()=>REK.odulBitti(true),120000);PLG.AdMob.showRewardVideoAd().then(()=>{REK.kazandi=true;},()=>{if(!REK.kazandi)REK.odulBitti(true);});};
+  if(REK.oY){goster();return;}
+  REK.acik=true;toast(t('Reklam hazırlanıyor…'));REK.yukle('odul');let n=0;const bek=setInterval(()=>{if(REK.oY){clearInterval(bek);goster();}else if(++n>=20){clearInterval(bek);REK.acik=false;bedava();}},250);},
+ odulBitti(hata){clearTimeout(REK.bekci);if(REK.odulSon)REK.odulSon(hata);}};
+// Reklamsız: tek seferlik satın alma. Ad ve fiyat mağazadan okunur; açılışta mağazadaki satın alma kontrol edilir (yeni telefonda kendiliğinden geri gelir).
+const SAT={urun:null,mesgul:false,ortam:'',
+ async denemeOrtami(){const N=PLG.NativePurchases;if(!N)return false;
+  const r=await Promise.race([N.getAppTransaction(),new Promise(ok=>setTimeout(()=>ok(null),3000))]),o=r&&r.appTransaction&&r.appTransaction.environment;SAT.ortam=o||'?';return o==='Sandbox'||o==='Xcode';},
+ async init(){const N=PLG.NativePurchases;if(!N)return;
+  try{const r=await N.getProducts({productIdentifiers:[URUN],productType:'inapp'});SAT.urun=(r.products||[])[0]||null;}catch(e){}
+  try{await SAT.kontrol();}catch(e){}setTexts();},
+ async kontrol(){const r=await PLG.NativePurchases.getPurchases({productType:'inapp',onlyCurrentEntitlements:true}),v=(r.purchases||[]).some(x=>x.productIdentifier===URUN&&!x.revocationDate);if(v)SAT.ver();return v;},
+ ver(){if(SAVE.rs)return;SAVE.rs=true;persist();OLC.oz('noads','1');setTexts();},
+ async al(){if(SAT.mesgul||SAVE.rs)return;if(!NATIVE){SAT.ver();setMsg(t('Önizleme: reklamlar kaldırıldı.'));return;}
+  if(!SAT.urun){setMsg(t('Mağazaya ulaşılamadı. Biraz sonra tekrar dene.'));SAT.init();return;}
+  SAT.mesgul=true;setMsg('');try{const tx=await PLG.NativePurchases.purchaseProduct({productIdentifier:URUN,productType:'inapp',quantity:1});
+   if(tx&&tx.transactionId){SAT.ver();setMsg(t('Teşekkürler! Reklamlar kaldırıldı.'));OLC.ev('noads_buy',{result:'ok'});}else setMsg(t('Satın alma tamamlanmadı.'));}
+  catch(e){setMsg(t('Satın alma tamamlanmadı.'));OLC.ev('noads_buy',{result:'fail'});}SAT.mesgul=false;},
+ async geri(){if(SAT.mesgul||!PLG.NativePurchases)return;SAT.mesgul=true;setMsg('');let ok=false;try{await PLG.NativePurchases.restorePurchases();ok=await SAT.kontrol();}catch(e){}
+  setMsg(t(ok?'Satın alma geri yüklendi.':'Geri yüklenecek satın alma bulunamadı.'));OLC.ev('noads_restore',{result:ok?'ok':'none'});SAT.mesgul=false;}};
+function setMsg(s){$('setMsg').textContent=s;}
+// Küçük kart: ödüllü reklamdan önce onay; tarayıcı önizlemesinde reklamın yerine geçen 2 saniyelik kart
+const ODUL={undo:['↶','Bir geri alma daha','Kısa bir reklam izle, +1 geri alma kazan.'],ufle:['💨','Bir üfleme daha','Kısa bir reklam izle, +1 üfleme kazan.'],gec:['⏭️','Bölümü geç','Kısa bir reklam izle, sonraki bölüm açılsın. Bu bölüm yıldız kazandırmaz.']};
+function dlgAc(ic,h,p,ok,no){$('dlgIc').textContent=ic;$('dlgH').textContent=h;$('dlgP').textContent=p;$('dlgOk').textContent=ok||'';$('dlgNo').textContent=no||'';
+ $('dlgOk').style.display=ok?'':'none';$('dlgNo').style.display=no?'':'none';$('dlg').classList.add('show');}
+function dlgKapat(){$('dlg').classList.remove('show');}
+function odulKart(ne,evet){const o=ODUL[ne];REK.acik=true;pouring=false;down=false;dlgAc(o[0],t(o[1]),t(o[2]),t('İzle'),t('Vazgeç'));
+ $('dlgOk').onclick=()=>{dlgKapat();REK.acik=false;evet();};$('dlgNo').onclick=()=>{dlgKapat();REK.acik=false;};}
+function onizleReklam(bitti){dlgAc('📺',t('Reklam (önizleme)'),t('Uygulamada burada kısa bir reklam çıkar.'));setTimeout(()=>{dlgKapat();bitti();},2000);}
+// Puan isteme: Apple'ın kendi penceresi; üç yıldızlı bir bitişte, ilk kez 12. bölümden sonra (Apple yılda en fazla üç kez gösterir)
+function puanIste(){const n=SAVE.puan|0;if(!PLG.AppReview||finalStars<3||!((n===0&&LV>=11)||(n===1&&LV>=59)))return;SAVE.puan=n+1;persist();setTimeout(()=>{try{PLG.AppReview.requestReview().catch(()=>{});}catch(e){}},1500);}
+// Tanı: Ayarlar'da sürüm yazısına 5 kez dokununca (telefonda sorun olursa ekran görüntüsü yeter)
+let taniN=0;
+function tani(){const r=rk(),o=REK.onay||{};return ['uygulama: '+(NATIVE?'evet':'tarayıcı')+' · eklenti: '+['AdMob','FirebaseAnalytics','NativePurchases','AppReview'].map(k=>k.slice(0,4)+(PLG[k]?'✓':'✗')).join(' '),
+  'reklam: '+(REK.test?'test':'gerçek')+' · ortam '+(SAT.ortam||'-')+' · izin '+(REK.izin?'✓':'✗')+' · onay '+(o.status||'-')+' · geçiş '+(REK.gY?'hazır':'yok')+' · ödül '+(REK.oY?'hazır':'yok'),
+  'sayaç: bugün '+r.n+'/'+REKLAM.gunluk+' · toplam '+(r.top||0)+' · bölüm '+r.b+' · son '+(r.t?Math.round((simdi()-r.t)/1000)+' sn önce':'-'),
+  'ürün: '+(SAT.urun?(SAT.urun.title||'')+' '+(SAT.urun.priceString||''):'yok')+' · reklamsız '+(SAVE.rs?'✓':'✗')+' · bölüm '+Object.keys(SAVE.lv).length+'/'+LEVELS.length].join('\n');}
 // ───────── Uzun yol (1.2) ─────────
 // 31. bölümden sonrası: el yapımı tanıtım bölümleri (EL12) ve üreticinin sabit tohumlarla kurduğu bölümler. Tohumları botlar seçti (araclar/uretici-sec.js);
 // aynı tohum her telefonda aynı bölümü verir. Yayınlanmış bir bölümün tarifi değiştirilmez (oyuncunun oynadığı bölüm değişir): yeni içerik = yeni tarif ya da yeni tohum.
@@ -2262,10 +2378,11 @@ const TEMA_D={col:3,bahce:4,tatli:5,sehir:6,dag:7};
 function yolKur(){for(const y of YOL){let lv;if(y[0]==='el'){lv=EL12[y[2]];lv.dunya=3;}else{lv=URET.uret(y[0],y[1],y[2],y[3]);if(lv)lv.dunya=TEMA_D[y[0]];}
   if(!lv){console.warn('yol: bölüm kurulamadı',y);continue;}LEVELS.push(lv);}}
 yolKur();
-function boot(){setTexts();sndStart();if(!SAVE.seen)startLevel(0);else{startLevel(Math.min(LEVELS.length-1,Object.keys(SAVE.lv).length));state='menu';prevState=null;openRaf();}}
+function boot(){setTexts();sndStart();if(NATIVE){SAT.init();REK.init();}if(!SAVE.seen)startLevel(0);else{startLevel(Math.min(LEVELS.length-1,Object.keys(SAVE.lv).length));state='menu';prevState=null;openRaf();}}
 // iki kopyadan (tarayıcı deposu, uygulama tercihleri) her bölüm için en iyi sonucu al; biri kaybolsa da ilerleme gitmez
 function mergeSave(v){if(!v||typeof v!=='object')return;const lv=Object.assign({},SAVE.lv);for(const k in v.lv||{}){const a=lv[k],b=v.lv[k];if(!b)continue;if(!a){lv[k]=b;continue;}
- lv[k]={p:Math.max(a.p||0,b.p||0),s:Math.max(a.s||0,b.s||0),img:(b.p||0)>(a.p||0)?(b.img||a.img):(a.img||b.img)};}SAVE=Object.assign(SAVE,v,{lv,seen:!!(SAVE.seen||v.seen),mek:Object.assign({},v.mek,SAVE.mek)});}
+ lv[k]={p:Math.max(a.p||0,b.p||0),s:Math.max(a.s||0,b.s||0),img:(b.p||0)>(a.p||0)?(b.img||a.img):(a.img||b.img)};if(a.gec||b.gec)lv[k].gec=1;}
+ SAVE=Object.assign(SAVE,v,{lv,seen:!!(SAVE.seen||v.seen),mek:Object.assign({},v.mek,SAVE.mek),rs:!!(SAVE.rs||v.rs),rk:v.rk&&(!SAVE.rk||(v.rk.t||0)>(SAVE.rk.t||0))?v.rk:SAVE.rk,puan:Math.max(SAVE.puan|0,v.puan|0)});}
 if(PLG.Preferences)PLG.Preferences.get({key:SKEY}).then(r=>{if(r&&r.value){try{mergeSave(JSON.parse(r.value));}catch(e){}}}).catch(()=>{}).then(boot);
 else boot();
 requestAnimationFrame(frame);

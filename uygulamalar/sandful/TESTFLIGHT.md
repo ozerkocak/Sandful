@@ -10,13 +10,13 @@ Uygulama internetsiz çalışır.
 |---|---|
 | İlk açılış | Doğrudan 1. bölüm; elle sürükleme ipucu ve "Basılı tut: kum akar" yazısı |
 | Sonraki açılışlar | Ana ekran: Sıradaki kartı ("Oyna"), dünya kartları, raflarda bölümler, yıldızlar ve bitmiş şişelerin küçük resimleri |
-| Bölümler | 30 bölüm, 3 dünya (Kıyı ve Kara, Okyanus, Dört Mevsim); bir bölümü açmak için öncekinden en az 1 yıldız |
+| Bölümler | 1.2: 130 bölüm, 8 dünya (ilk 30 el yapımı, sonrası üretilmiş; `fikirler/08`). Bir bölümü açmak için öncekinden en az 1 yıldız ya da "Bölümü geç" |
 | Dil | Telefon Türkçeyse Türkçe, değilse İngilizce. Ayarlar'daki (dişli) "Dil" ile değişir |
 | Ses | Gerçek kum kaydı (Pixabay), marimba ve glockenspiel müziği (VSCO-2, CC0). Ayarlar'da Ses, Müzik ve Kum sesi (Gerçek kum, Yumuşak, Kapalı) |
 | Sessiz anahtar | iPhone sessizdeyse oyun sesi çıkmaz (oyunlarda olağan davranış). Arkada çalan müzik kesilmez, oyunla karışır |
 | Titreşim | iPhone titreşim motoru: kum düşerken en hafif "seçim" tıkları, kayma ve renk değişiminde hafif, kapakta ve yıldızlarda güçlü |
 | Kayıt | Yıldızlar, en iyi yüzde, ayarlar cihazda saklanır (iOS'un silebileceği tarayıcı deposu yerine uygulama tercihleri) |
-| Reklam, satın alma, hesap | Yok. Hiç veri toplanmaz |
+| Reklam, satın alma, ölçüm | 1.2: Google AdMob (seyrek geçiş reklamı, isteğe bağlı ödüllü reklam), tek seferlik "Reklamsız" satın alma, Firebase Analytics. Kurallar: `fikirler/09-sandful-reklam-olcum.md`. Hesap yok |
 
 Oyun Domino Chase gibi global: mağaza ve oyun adı İngilizce, arayüz İngilizce ve Türkçe.
 
@@ -26,7 +26,7 @@ Varsayılanlar:
 |---|---|
 | Uygulama adı | Sandful (App Store başlığı: "Sandful: Relaxing Sand Art") |
 | Paket kimliği (Bundle ID) | `com.investateknoloji.sandful` |
-| Sürüm | 1.1.1 (4) yüklendi (1.1 (2) yayında). Projede derleme 4; bir sonraki yüklemeden önce Claude 5'e çıkarır |
+| Sürüm | 1.1.1 (4) yayında. Projede **1.2 (5)** hazırlanıyor (henüz yüklenmedi) |
 | Cihaz | Sadece iPhone, dikey, tam ekran |
 | Ekip | İnvesta Teknoloji (`3ANJ967SS2`) |
 
@@ -84,6 +84,39 @@ Uygulama Bilgileri'nde **Türkçe** yerelleştirmeyi ekle; ad her dilde aynı ka
 6. **Version Release**: "Manually release" ya da "Automatically release". **Add for Review** > **Submit for Review**.
    Fiyat, ülkeler, gizlilik beyanı ve yaş derecesi 1.0'dan aynen kalır; yeniden girmen gerekmez.
 
+### 7. 1.2: reklam, satın alma ve ölçüm (ilk kez)
+
+1.2 dört yeni eklenti getiriyor (AdMob, Firebase Analytics, satın alma, puan isteme). Bunlar bulut ortamında derlenemedi; ilk derleme Mac'te yapılacak, o yüzden adımları sırayla izle ve takıldığın yerde ekran görüntüsü gönder.
+
+**Yüklemeden önce (App Store Connect)**
+
+1. **Satın alma ürünü:** Sandful > Monetization > **In-App Purchases** > **+** > **Non-Consumable**.
+   Reference Name: `Reklamsiz`, Product ID: **`com.investateknoloji.sandful.reklamsiz`** (harfi harfine; sonradan değişmez). Fiyat: 3,99 $ kademesi.
+   Yerelleştirme ve inceleme bilgileri: `magaza/app-store-metinleri.md` > "1.2 · Satın alma ürünü". Durumu "Ready to Submit" olmalı.
+2. **Gizlilik sayfası:** `magaza/site/privacy.html`'i sitede `sandful/privacy.html` üzerine yükle (reklam, ölçüm ve satın alma anlatıldı). İstersen önce hukuk danışmanına göster.
+
+**Mac'te**
+
+3. Xcode **16.3 ya da daha yeni** olmalı (Xcode > About Xcode). Daha eskiyse App Store'dan güncelle.
+4. Her zamanki gibi: Pull, `sh scripts/ios-hazirla.sh`. Xcode açılınca paketleri indirir (Google Mobile Ads ve Firebase büyük; ilk sefer 5-10 dakika sürebilir, alttaki "Resolving/Fetching packages" bitene kadar bekle).
+   `Missing package product` hatası çıkarsa: File > Packages > **Reset Package Caches**, sonra Product > **Clean Build Folder**.
+5. Product > Archive > Distribute App. Derleme numarası projede 5.
+
+**TestFlight'ta dene** (gerçek reklam çıkmaz: oyun TestFlight'ı tanır ve Google'ın "Test Ad" yazan deneme reklamlarını gösterir; satın alma TestFlight'ta ücretsizdir)
+
+6. Ana ekran > dişli > en alttaki **Sandful 1.2** yazısına 5 kez dokun: tanı satırları açılır. Ekran görüntüsünü gönder. Beklenen:
+   `eklenti: AdMo✓ Fire✓ Nati✓ AppR✓`, `reklam: test · ortam Sandbox · izin ✓`, `ürün: … 3,99 $` (ürün görünmüyorsa 1. adımdaki ürün hazır değildir).
+7. 11. bölümü bitirip **Sonraki**'ye bas: tam ekran deneme reklamı çıkmalı, kapatınca 12. bölüm başlamalı. Sonraki iki bölümde çıkmamalı.
+8. Bir bölümde geri almayı kullan, tekrar dök: ↶ düğmesi **+1 ▸** olur. Bas > **İzle**: deneme reklamı, sonra geri alma.
+9. Ayarlar > **Reklamsız oyna** > satın al (ücretsiz): satır ✓ olur, reklam çıkmaz. Oyunu silip yeniden kur: açılışta kendiliğinden ✓ olmalı (ya da "Satın alımları geri yükle").
+10. Firebase konsolu > Analytics > **Realtime**: birkaç dakika içinde `level_start`, `level_end` olayları görünmeli.
+
+**Mağazaya gönderirken** (ayrıntılar `magaza/app-store-metinleri.md` > 1.2)
+
+11. Sürüm sayfasında **In-App Purchases and Subscriptions** bölümünden `Reklamsiz` ürününü seç (ilk satın alma ürünü sürümle birlikte incelenir).
+12. **App Privacy**'yi güncelle ("Data Not Collected" artık doğru değil) ve **Age Rating** anketinde reklam sorusunu "Yes" yap.
+13. App Review notuna reklam ve satın alma açıklamasını yapıştır.
+
 ### Sorunlar
 
 - **Xcode'da `Missing package product 'app_CapacitorApp'`** (9 Kasım 2026, depo yeni klasöre klonlandıktan sonra): File > Packages > **Reset Package Caches**, "Resolving packages" bitince Product > **Clean Build Folder**, sonra Archive. Olmazsa Xcode kapalıyken `rm -rf ~/Library/Developer/Xcode/DerivedData/App-*` ve `sh scripts/ios-hazirla.sh`.
@@ -111,7 +144,7 @@ Bütün alanların değerleri: `magaza/app-store-metinleri.md` (ad, alt başlık
    destek `https://www.investa.com.tr/sandful/`, gizlilik `https://www.investa.com.tr/sandful/privacy.html`. Bu adresler App Store Connect'te Support URL ve Privacy Policy URL alanlarına girilir; Apple göndermeden önce açılıp açılmadığına bakar.
 2. **Ekran görüntüleri:** `magaza/ekran-goruntuleri/en/` ve `tr/` (1.1'de 7'şer, 1206×2622). "iPhone with Dynamic Island (medium display)" kutusuna 01 → 07 sırasıyla sürüklenir.
 3. **Metinler** İngilizce ve Türkçe sayfaya girilir, **Build** olarak TestFlight'taki derleme seçilir.
-4. **App Privacy:** "Data Not Collected". **Age Rating:** bütün cevaplar "None/No" → 4+.
+4. **App Privacy:** 1.1.1'e kadar "Data Not Collected"; 1.2'de reklam ve ölçüm verileri beyan edilir (`magaza/app-store-metinleri.md` > 1.2). **Age Rating:** 4+ (1.2'de reklam sorusu "Yes").
 5. **Business:** AB'de yayın için "trader" (DSA) bilgisi girilmiş olmalı (hesap düzeyinde, bir kez).
 6. **Add for Review** → **Submit**. İnceleme genelde 1-2 gün; onaylanınca "Manually release" seçildiyse yayın düğmesine sen basarsın.
 
