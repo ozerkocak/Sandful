@@ -188,3 +188,32 @@ Sebep: yerleşen süs ışıksız, düz bir resimdi; kenarı keskin, gölgesi yo
 - **Kenarda kum taneleri:** süsün arkasındaki kumun rengi okunuyor, kenarına o renkte taneler biniyor (altta daha çok). Kum henüz yetişmemişse (süs kumun üstünde duruyorsa) tane yok.
 - **Yumuşak gölge:** süsün çevresindeki kumda, ışığın tersine (sağ alta) hafif kaymış, kumun koyu tonunda bir gölge.
 - Gece bölümlerinde süsler kumla birlikte kararıyor; ay, yıldız, güneş, fener parlak kalıyor.
+
+## 7. Üretici ikinci deneme: üç yeni tema (11 Kasım 2026)
+
+İlk denemedeki sorunlar (gökyüzü kavanozun yarısı, süs az, hep yatay bantlar) için üretici geliştirildi (`araclar/uretici.js`):
+- **Gökyüzü en fazla %40:** yer alçak kalınca tek renk koca bir gök yerine 2-3 bant: gündüz mavi gök ve beyaz bulut şeridi, gün batımı (sarı-turuncu-pembe-mor), gece (mor-gece mavisi-lacivert).
+- **Yeni sahne kalıpları:** kubbe (gökkuşağı, dondurma topları), mercek (vahanın suyu), şekli izleyen katmanlar, iki yana ayrılmış katmanlar (kart).
+- **Yeni mekanikler üretilen bölümlerde:** rüzgâr (kum fırtınası), ıslak kum (piramitler), ince/geniş uç (sivri çiçekler), ayırıcı kart (iki tatlı kup). Mekanikli bölüm her 10 bölümde en fazla 2, art arda değil.
+- **Adlar:** sıfat ve isim aynı kökten olmuyor ("Rüzgârlı Rüzgâr" gibi adlar elenir).
+- Oyuna 7 yeni süs (deve, lale, arı, çilek, kiraz, nane, limon dilimi) ve tatlı renkleri (krema, çikolata, sütlü çikolata, çilek, karamel, nane, yaban mersini, limon, bisküvi) eklendi.
+
+| Tema | Tarifler | Mekanikler |
+|---|---|---|
+| **Çöl ve Vaha** | kumullar, vaha (palmiyeli su), çöl gecesi, kum fırtınası, piramitler | rüzgâr, ıslak kum |
+| **Bahçe ve Çiçekler** | çiçek tarlası, bahçe tepesi, gökkuşağı, sivri çiçekler, iki bahçe | ince/geniş uç, kart |
+| **Tatlı Kavanozları** | katmanlı kup, çikolatalı puding, dondurma, mermer kek, iki tatlı kup | çubuk, kart. Gökyüzü yok, en üstte krema |
+
+İlk sonuç: 32 bölüm (her temadan 10-12), hepsi bot elemesinden geçti (kusursuz 3 yıldız, dokunmayan 0, insan botu 2-3 yıldız).
+
+### Uzun yol önerisi
+
+| Bölüm | Dünya | El yapımı imza bölümler |
+|---|---|---|
+| 1-30 | Kıyı ve Kara, Okyanus, Dört Mevsim | mevcut 30 bölüm |
+| 31-50 | Çöl ve Vaha | 31 Kum fırtınası (rüzgâr), 40 ıslak kum tanıtımı, 50 dünya finali |
+| 51-70 | Bahçe ve Çiçekler | 51 Üç tepe (ince/geniş uç), 60, 70 |
+| 71-90 | Tatlı Kavanozları | 71 kart tanıtımı (iki tatlı), 80, 90 |
+| 91-200 | 5-6 tema daha (öneri: Dağlar, Gece Gökyüzü, Şehir Silüetleri, Kıyı II, Kış II, Sonbahar) | her 10 bölümde bir |
+
+Her 10 bölümde 1 el yapımı imza bölüm ve 9 üretilmiş bölüm (en fazla 2'si mekanikli).

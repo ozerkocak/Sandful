@@ -15,7 +15,7 @@ const bant=g=>g<=20?[2.3,3]:g<=60?[2,3]:g<=120?[1.7,2.7]:[1.4,2.5];
  await p.goto('file://'+path.join(ROOT,'prototipler','01-kum-sisesi.html'));await p.waitForTimeout(800);
  await p.addScriptTag({path:path.join(__dirname,'uretici.js')});
  const out=[];
- for(const pl of plan){let onceki=null;const adlar=new Set(),say={},tavan=Math.ceil(pl.g.length*.3);
+ for(const pl of plan){let onceki=null;const adlar=new Set(),say={},tavan=Math.ceil(pl.g.length*.3),secilen=[];
   for(const g of pl.g){let ok=null,denenen=0;const neden={};
    for(let sd=g*1000+1;sd<g*1000+60&&!ok;sd++){denenen++;
     const r=await p.evaluate(([tema,g,sd])=>{const L=URET.uret(tema,g,sd);if(!L)return {red:'üretilemedi'};
@@ -28,7 +28,8 @@ const bant=g=>g<=20?[2.3,3]:g<=60?[2,3]:g<=120?[1.7,2.7]:[1.4,2.5];
      const I=[1,2,3].map(s=>run('insan',s)),G=[1,2].map(s=>run('daginik',s));
      const avg=a=>a.reduce((s,x)=>s+x.yildiz,0)/a.length,pc=a=>Math.round(a.reduce((s,x)=>s+x.yuzde,0)/a.length);
      LEVELS.pop();
-     return {ad:L.ad,en:EN[L.ad],tarif:L.uretim.tarif,sekil:L.sekil,mek:[L.cubuk?'çubuk':'',L.katman.some(q=>q[2]&&q[2].gecis)?'geçiş':'',L.salla?'salla':'',L.katman.some(q=>q[0]==='isilti'||q[0]==='kuzey')?'ışıltı':'',L.ufle?'üfleme':'',L.sus?L.sus.length+' süs':''].filter(Boolean).join(', '),
+     return {ad:L.ad,en:EN[L.ad],tarif:L.uretim.tarif,sekil:L.sekil,mek:[L.cubuk?'çubuk':'',L.katman.some(q=>q[2]&&q[2].gecis)?'geçiş':'',L.salla?'salla':'',L.katman.some(q=>q[0]==='isilti'||q[0]==='kuzey')?'ışıltı':'',L.ufle?'üfleme':'',L.ruzgar?'rüzgâr':'',L.uc?'uç':'',L.kart?'kart':'',L.katman.some(q=>q[2]&&q[2].islak)?'ıslak':'',L.sus?L.sus.length+' süs':''].filter(Boolean).join(', '),
+      ym:!!(L.ruzgar||L.uc||L.kart||L.salla||L.katman.some(q=>q[2]&&q[2].islak)),
       kus:pc(K),ins:pc(I),insY:+avg(I).toFixed(2),dag:pc(G),dagY:+avg(G).toFixed(2),dok:D.yuzde,sn:K[0].sn};},[pl.tema,g,sd]);
     if(r.red){neden[r.red.split(' ')[0]]=(neden[r.red.split(' ')[0]]||0)+1;continue;}
     const [lo,hi]=bant(g);
@@ -36,8 +37,10 @@ const bant=g=>g<=20?[2.3,3]:g<=60?[2,3]:g<=120?[1.7,2.7]:[1.4,2.5];
     if(r.dagY>r.insY+.34){neden.daginik=(neden.daginik||0)+1;continue;}
     // çeşitlilik: art arda aynı tarif yok (ilk 5 bölüm hariç), bir tarif temanın en fazla %30'u, ad tekrarı yok
     if((g>5&&r.tarif===onceki)||(say[r.tarif]||0)>=tavan||adlar.has(r.ad)){neden.tekrar=(neden.tekrar||0)+1;continue;}
+    // mekanikli bölüm (rüzgâr, uç, kart, ıslak kum, sallanan kavanoz): 10 bölümde en fazla 2, art arda değil
+    if(r.ym&&(secilen.slice(-1).some(x=>x.ym)||secilen.slice(-9).filter(x=>x.ym).length>=2)){neden.mekanik=(neden.mekanik||0)+1;continue;}
     ok=Object.assign({tema:pl.tema,g,seed:sd},r);}
-   if(ok){onceki=ok.tarif;adlar.add(ok.ad);say[ok.tarif]=(say[ok.tarif]||0)+1;out.push(ok);}
+   if(ok){onceki=ok.tarif;adlar.add(ok.ad);say[ok.tarif]=(say[ok.tarif]||0)+1;secilen.push(ok);out.push(ok);}
    console.log(ok?`${pl.tema} ${g}: ${ok.ad} (${ok.en}) · ${ok.tarif} · ${ok.sekil} · ${ok.mek||'-'} · kusursuz ${ok.kus}% insan ${ok.ins}% ★${ok.insY} dağınık ${ok.dag}% ★${ok.dagY} dokunmayan ${ok.dok}% · ${ok.sn}sn · ${denenen}. deneme`
     :`${pl.tema} ${g}: BULUNAMADI ${JSON.stringify(neden)}`);}}
  fs.writeFileSync(OUT,JSON.stringify(out,null,1));console.log('yazıldı',OUT,out.length,'bölüm; hatalar',errs.slice(0,3));await b.close();})();
