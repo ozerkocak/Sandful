@@ -73,7 +73,7 @@ Anketteki reklam sorusu (Advertising / "Does your app contain ads?"): **Yes**. D
 
 ```
 Version 1.2 adds ads (Google AdMob) and one non-consumable in-app purchase.
-- Interstitial ads appear only after a level ends and the player taps "Next", never in the first 10 levels, at most once every 3 levels and 4 minutes.
+- Interstitial ads appear only after a level ends and the player taps "Next", never in the first 10 levels, and at most once every 3 levels.
 - Rewarded ads are optional: after the free undo is used, the undo button shows "+1"; a confirmation card appears before the ad.
 - In-app purchase "Play Without Ads" (com.investateknoloji.sandful.reklamsiz): home screen > gear icon > "Play without ads". "Restore purchases" is in the same sheet.
 - The app does not request tracking permission (no ATT); ads are non-personalized. In the EEA/UK a Google consent form is shown before ads are requested.

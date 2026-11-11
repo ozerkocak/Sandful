@@ -106,7 +106,7 @@ Uygulama Bilgileri'nde **Türkçe** yerelleştirmeyi ekle; ad her dilde aynı ka
 
 6. Ana ekran > dişli > en alttaki **Sandful 1.2** yazısına 5 kez dokun: tanı satırları açılır. Ekran görüntüsünü gönder. Beklenen:
    `eklenti: AdMo✓ Fire✓ Nati✓ AppR✓`, `reklam: test · ortam Sandbox · izin ✓`, `ürün: … 3,99 $` (ürün görünmüyorsa 1. adımdaki ürün hazır değildir).
-7. 11. bölümü bitirip **Sonraki**'ye bas: tam ekran deneme reklamı çıkmalı, kapatınca 12. bölüm başlamalı. Sonraki iki bölümde çıkmamalı.
+7. 11. bölümü bitirip **Sonraki**'ye bas: tam ekran deneme reklamı çıkmalı, kapatınca 12. bölüm başlamalı. Sonraki iki bölümde çıkmamalı, üçüncüde (14. bölümden sonra) yine çıkmalı.
 8. Bir bölümde geri almayı kullan, tekrar dök: ↶ düğmesi **+1 ▸** olur. Bas > **İzle**: deneme reklamı, sonra geri alma.
 9. Ayarlar > **Reklamsız oyna** > satın al (ücretsiz): satır ✓ olur, reklam çıkmaz. Oyunu silip yeniden kur: açılışta kendiliğinden ✓ olmalı (ya da "Satın alımları geri yükle").
 10. Firebase konsolu > Analytics > **Realtime**: birkaç dakika içinde `level_start`, `level_end` olayları görünmeli.

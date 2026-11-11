@@ -11,13 +11,19 @@ Değişmeyen kural (`03-sandful-gelir.md`): para kazanma rahatlamayı bozmaz. Ba
 |---|---|---|
 | İlk reklamsız bölümler | **İlk 10 bölümde hiç yok** (ilk dünya) | Oyuncu önce oyunu sever. Önceki plan 6. bölümdü; "bunaltmasın" için 10'a çekildi |
 | Ne zaman | Sadece bölüm bitip **Sonraki**'ye basılınca | "Tekrar"da, açılışta, rafa dönerken, bölüm içinde asla |
-| En az ara | **4 dakika** (her tür reklamdan sonra) ve **3 bölüm** | Art arda iki bölümde reklam çıkmaz; ödüllü reklam izleyen oyuncuya hemen geçiş reklamı gelmez |
-| Günlük sınır | **En fazla 8** | Uzun oynayan oyuncu yorulmaz |
+| Sıklık | **3 bölümde bir**; iki reklam arasında en az **90 saniye** | Art arda iki bölümde reklam çıkmaz; ödüllü reklam izleyen oyuncuya hemen geçiş reklamı gelmez |
+| Günlük sınır | **En fazla 12** | Uzun oynayan oyuncu yorulmaz |
 | Hazır değilse | Hiç gösterilmez | Reklam yüklensin diye bekletme, dönen simge yok |
 | Reklamsız alındıysa | Hiç yok | |
 
-Aralıksız oynayan biri için bu yaklaşık 5 bölümde bir, 15 dakikalık oturumda 2-3 reklam demek (türdeki oyunların çoğu her bölümde ya da 30-45 saniyede bir gösteriyor).
+Bir bölüm 30-40 saniye sürdüğü için bu yaklaşık 2 dakikada bir reklam demek; 15 dakikalık oturumda 6-7 (türdeki oyunların çoğu her bölümde ya da 30-45 saniyede bir gösteriyor).
 Sayılar oyun dosyasında tek satırda (`REKLAM`); ölçüm sonuçlarına göre değiştirilebilir.
+
+> **Ozer (11 Kasım 2026, ilk sürümden sonra):** "Geri alma bence bu oyunda gitmez… Belki 2-3 bölümde bir reklam çıkabilir. Geri almalık bir durum olmayabilir burada."
+> İlk ayar 4 dakika ve 3 bölümdü (pratikte 5 bölümde bir), günlük 8. Ozer haklı: bu oyunda hata tek bir hamle değil, yüzde düşüyor; ücretsiz geri alma çoğu durumu karşılıyor,
+> ödüllü geri almayı az kişi ister. Gelirin asıl kaynağı geçiş reklamı olacağı için sıklık **3 bölümde bir**e çekildi (4 dakika şartı kalktı, 90 saniye taban kaldı), günlük sınır 12 oldu.
+> İlk 10 bölüm yine reklamsız. Ödüllü haklar duruyor (kimseyi rahatsız etmiyor, kaç kişinin istediği ölçümde görünecek); gelir beklentisi onlardan değil.
+> 2 bölümde bire inmek tek sayı değişikliği; önce 3 ile geri dönüş (D1/D7) ve bölüm hunisi ölçülecek.
 
 ## Ödüllü reklam: sadece oyuncu isterse
 

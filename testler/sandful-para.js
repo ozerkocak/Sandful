@@ -52,9 +52,9 @@ async function launch(cfg={}){const b=await chromium.launch();const ctx=await b.
    // 11. bölüm bitince: reklam çıkar, kapanana kadar sonraki bölüm başlamaz, oyun durur
    bitir(10);const a=await ileri();o.onbir=[a.ad,a.nextLv,cnt('AdMob.showInterstitial'),SAVE.rk.b,SAVE.rk.n];
    __ad.fire('interstitialAdDismissed');await bekle(30);o.onbirSonra=[REK.acik,LV,__game.state().state];
-   // art arda bölümde yok; 3 bölüm dolsa da 4 dakika dolmadan yok
+   // art arda bölümde yok; 3 bölüm dolsa da en az süre (90 sn) dolmadan yok
    o.ara=[];for(const k of [11,12,13]){bitir(k);const x=await ileri();o.ara.push(x.ad?1:0);}
-   // 4 dakika geçince: 3 bölüm de dolmuş, çıkar
+   // süre geçince: 3 bölüm de dolmuş, çıkar
    window.__skew+=5*60*1000;bitir(14);const c=await ileri();o.sureSonra=c.ad;__ad.fire('interstitialAdDismissed');await bekle(30);
    // hazır değilse hiç gösterilmez ve bekletmez
    window.__skew+=5*60*1000;for(const k of [15,16])bitir(k);REK.gY=false;bitir(17);const d=await ileri();o.hazirDegil=[d.ad,d.nextLv];REK.gY=true;
@@ -65,13 +65,17 @@ async function launch(cfg={}){const b=await chromium.launch();const ctx=await b.
    // gerçek reklam birimi ve test bayrağı
    o.birim=__ad.opts.filter(x=>/8673265075$/.test(x.adId)).length>0&&__ad.opts.every(x=>x.isTesting===false);
    o.olay=window.__fa.filter(x=>x[0]==='ad_interstitial').length;o.pill=(()=>{SAVE.rk.top=3;state='menu';prevState=null;openRaf();return getComputedStyle(document.getElementById('rsPill')).display!=='none';})();
+   // gerçekçi akış: her bölüm ~40 sn sürerse reklam tam 3 bölümde bir çıkar
+   SAVE.rk.t=Date.now();SAVE.rk.b=0;SAVE.rk.n=0;REK.gY=true;o.ucte=[];
+   for(const k of [20,21,22,23,24,25]){window.__skew+=40000;bitir(k);const x=await ileri();o.ucte.push(x.ad?1:0);if(x.ad){__ad.fire('interstitialAdDismissed');await bekle(30);REK.gY=true;}}
    return o;});
   ok('Açılışta reklam SDK\'sı ve onay bilgisi istenir; mağaza ortamı Production ise gerçek reklam',r.init[0]===1&&r.init[1]===1&&r.init[2]===true&&r.init[3]===false,r.init);
   ok('İlk 10 bölümde geçiş reklamı yok',r.ilk.every(x=>x===0)&&r.goster10===0,r.ilk);
   ok('Geçiş reklamı 8 bölüm bitmeden yüklenmez, sonra yüklenir',r.yukOnce===0&&r.yukSonra>=1,[r.yukOnce,r.yukSonra]);
   ok('11. bölümden sonra "Sonraki"de reklam çıkar; kapanana kadar bölüm başlamaz, sonra başlar',r.onbir[0]===true&&r.onbir[1]===10&&r.onbir[2]===1&&r.onbirSonra[0]===false&&r.onbirSonra[1]===11,[r.onbir,r.onbirSonra]);
-  ok('Reklamdan sonra art arda bölümlerde ve 4 dakika dolmadan reklam yok',r.ara.every(x=>x===0),r.ara);
-  ok('3 bölüm ve 4 dakika dolunca tekrar çıkar',r.sureSonra===true,r.sureSonra);
+  ok('Reklamdan sonra art arda bölümlerde ve en az süre dolmadan reklam yok',r.ara.every(x=>x===0),r.ara);
+  ok('3 bölüm ve en az süre dolunca tekrar çıkar',r.sureSonra===true,r.sureSonra);
+  ok('Olağan akışta (bölüm başına ~40 sn) reklam 3 bölümde bir çıkar',r.ucte.join('')==='001001',r.ucte);
   ok('Reklam hazır değilse gösterilmez, sonraki bölüm hemen başlar',r.hazirDegil[0]===false&&r.hazirDegil[1]===18,r.hazirDegil);
   ok('Günlük sınır dolunca reklam yok',r.gunluk===false,r.gunluk);
   ok('"Tekrar" reklam göstermez',r.tekrar[0]===0&&r.tekrar[1]===19,r.tekrar);
@@ -128,7 +132,7 @@ async function launch(cfg={}){const b=await chromium.launch();const ctx=await b.
    __np.cancel=false;row('sNoAds').click();await bekle(40);o.alindi=[SAVE.rs,row('sNoAds').textContent,row('setMsg').textContent,gor('sRestore'),JSON.parse(localStorage.getItem(SKEY)).rs];
    // Reklamsız: geçiş reklamı yok, ödüllü haklar reklamsız
    for(let k=0;k<12;k++)SAVE.lv[k]={p:90,s:3};SAVE.rk={t:0,b:9,g:gunAd(),n:0,top:0};REK.gY=true;bitir(12);document.getElementById('rNext').click();await bekle(30);o.gecisYok=[REK.acik,LV,cnt('AdMob.showInterstitial')];
-   dok();const U=document.getElementById('bUndo');U.click();const k1=dok();
+   __game.start(2);dok();const U=document.getElementById('bUndo');U.click();const k1=dok();
    o.rsUndo=[U.lastChild.textContent,U.classList.contains('rek')];U.click();await bekle(20);o.rsUndoSonra=[__game.sand()<k1-.01,document.getElementById('dlg').classList.contains('show'),cnt('AdMob.showReward')];
    o.olay=window.__fa.filter(x=>x[0]==='noads_buy').map(x=>x[1].result);return o;});
   ok('Ayarlarda Reklamsız satırı fiyatı mağazadan gösterir; geri yükleme ve gizlilik politikası var',/\$3\.99/.test(r.satir[0])&&r.satir[1]&&!r.satir[2]&&r.satir[3],r.satir);
@@ -179,7 +183,7 @@ async function launch(cfg={}){const b=await chromium.launch();const ctx=await b.
   const r=await p.evaluate(async()=>{const o={};const tr=/[ğüşıöçĞÜŞİÖÇ]/;
    for(let k=0;k<10;k++)SAVE.lv[k]={p:90,s:3};SAVE.rk={t:0,b:5,g:gunAd(),n:0,top:0};bitir(10);document.getElementById('rNext').click();await bekle(40);
    o.kart=[document.getElementById('dlg').classList.contains('show'),document.getElementById('dlgH').textContent,LV];await bekle(2200);o.sonra=[document.getElementById('dlg').classList.contains('show'),LV,REK.acik];
-   dok();const U=document.getElementById('bUndo');U.click();const k1=dok();U.click();await bekle(20);
+   __game.start(2);dok();const U=document.getElementById('bUndo');U.click();const k1=dok();U.click();await bekle(20); // sade bölüm (süs ve çubuk yok): geri almanın denk geldiği an değişmez
    o.metin=[document.getElementById('dlg').innerText];document.getElementById('dlgOk').click();await bekle(2300);o.odul=[__game.sand()<k1-.01,undoEk];
    openSet();o.metin.push(document.getElementById('setSheet').innerText);document.getElementById('sNoAds').click();await bekle(20);o.metin.push(document.getElementById('setSheet').innerText);o.rs=SAVE.rs;
    for(let i=0;i<5;i++)document.getElementById('setVer').click();o.tani=document.getElementById('tani').textContent.split('\n').length;

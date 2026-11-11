@@ -1887,7 +1887,7 @@ initGfx();resize();
 // ───────── Reklam, Reklamsız satın alma, ölçüm (1.2; kurallar: fikirler/09-sandful-reklam-olcum.md) ─────────
 // Para kazanma rahatlamayı bozmaz: döküşte hiçbir şey çıkmaz. Geçiş reklamı sadece bölüm bitip "Sonraki"ye basılınca ve seyrek;
 // ödüllü reklam sadece oyuncu isterse. Eklenti yoksa (tarayıcı) hepsi sessizce çalışır; önizlemede reklam yerine kısa bir kart çıkar.
-const REKLAM={ilkBolum:10,araSn:240,araBolum:3,gunluk:8,undoEk:3,ufleEk:2,onayBolum:8}; // sıklık ayarı tek yerde
+const REKLAM={ilkBolum:10,araSn:90,araBolum:3,gunluk:12,undoEk:3,ufleEk:2,onayBolum:8}; // sıklık ayarı tek yerde: ilk 10 bölüm reklamsız, sonra 3 bölümde bir
 const URUN='com.investateknoloji.sandful.reklamsiz',BIRIM={gecis:'ca-app-pub-2387022770405877/8673265075',odul:'ca-app-pub-2387022770405877/9999769129'};
 const GIZLILIK_URL='https://www.investa.com.tr/sandful/privacy.html';
 const simdi=()=>Date.now(),gunAd=()=>new Date().toISOString().slice(0,10),olcB=()=>({level:LV+1,world:((L&&L.dunya)||0)+1});
@@ -1913,7 +1913,7 @@ const REK={test:false,izin:false,onay:null,gY:false,oY:false,acik:false,sonra:nu
  yukle(tur){const A=PLG.AdMob;if(!A||REK.yukleniyor[tur])return;REK.yukleniyor[tur]=true;
   (tur==='gecis'?A.prepareInterstitial({adId:BIRIM.gecis,isTesting:REK.test}):A.prepareRewardVideoAd({adId:BIRIM.odul,isTesting:REK.test}))
    .then(()=>{REK[tur==='gecis'?'gY':'oY']=true;REK.deneme[tur]=0;},()=>{if(++REK.deneme[tur]<=3)setTimeout(()=>REK.yukle(tur),30000*REK.deneme[tur]);}).then(()=>{REK.yukleniyor[tur]=false;});},
- // Geçiş reklamı: ilk 10 bölümde yok; en az 3 bölüm ve 4 dakika arayla; günde en fazla 8; hazır değilse hiç gösterilmez
+ // Geçiş reklamı: ilk 10 bölümde yok; sonra 3 bölümde bir (iki reklam arası en az 90 sn); günde en fazla 12; hazır değilse hiç gösterilmez
  gecisUygun(){if(SAVE.rs||LV<REKLAM.ilkBolum)return false;const r=rk();if(r.b<REKLAM.araBolum||simdi()-r.t<REKLAM.araSn*1000||r.n>=REKLAM.gunluk)return false;return NATIVE?(REK.izin&&REK.gY):true;},
  gecis(sonra){if(REK.acik)return;if(!REK.gecisUygun()){sonra();return;}const r=rk();r.t=simdi();r.b=0;r.n++;r.top=(r.top||0)+1;persist();OLC.ev('ad_interstitial',olcB());
   REK.acik=true;REK.sonra=sonra;setBg(true);if(!NATIVE){onizleReklam(()=>REK.gecisBitti());return;}

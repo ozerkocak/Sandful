@@ -274,7 +274,7 @@ Ozer: "Tamam, 1.2'ye devam edelim." Beş tema oyuna yerleştirildi; "Yeni Bölü
 > Ozer: "130 bölümle devam edelim, Firebase ve reklama geç. Reklamlar insanları bunaltmasın ama."
 
 Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ödüllü haklar, satın alma ve ölçüm olayları `09-sandful-reklam-olcum.md`'de.
-Özet: geçiş reklamı ilk 10 bölümde yok, sonra en az 3 bölüm ve 4 dakika arayla, günde en fazla 8, sadece "Sonraki"de; ödüllü reklam sadece oyuncu isterse
+Özet: geçiş reklamı ilk 10 bölümde yok, sonra 3 bölümde bir (Ozer'in isteğiyle 5'ten 3'e çekildi), günde en fazla 12, sadece "Sonraki"de; ödüllü reklam sadece oyuncu isterse
 (+1 geri alma, +1 üfleme, bölümü geç) ve reklam yoksa hak yine verilir; Reklamsız tek seferlik satın alma.
 
 - Oyun tarafı yazıldı ve sahte eklentilerle sınandı: `testler/sandful-para.js` 47/47 (oyun dosyası ve uygulama derlemesi), ana uçtan uca test 31/31.
