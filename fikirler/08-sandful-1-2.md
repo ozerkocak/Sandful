@@ -127,6 +127,12 @@ Uygulama çocuklara yönelik olarak işaretlenmez (Kids kategorisinde değil). i
 - **Satın alma: sadece "Reklamsız"** (tek seferlik, yaklaşık 3,99 $): geçiş reklamları kalkar, ödüllü reklamla açılan haklar (geri al, üfleme) reklamsız gelir. Sandful+ sonraki bir sürümde (önce satılacak özel içerik gerekir).
 - 1.2'ye başlandı. Mekanikler için Ozer'in ayrıca seçimi olmadığından önerilen ilk dört: ayırıcı kart, rüzgâr, ıslak kum, ince/geniş uç.
 - 1.1.1 onaylandı (10 Kasım). AdMob doğrulaması: "Güncellemeleri kontrol edin" basıldı, sonuç bekleniyor.
+- **11 Kasım 2026, AdMob kontrolü:** Durum "İnceleme gerekli / Sınırlı reklam sunumu", doğrulama hatası "app-ads.txt dosyası var ama bilgiler eşleşmiyor".
+  Bizim tarafımız kontrol edildi, sorun yok: `https://investa.com.tr/app-ads.txt` ve `https://www.investa.com.tr/app-ads.txt` Google robotu kimliğiyle de
+  200, `text/plain`, yönlendirme yok, içerik bayt bayt doğru (tek satır, gizli karakter yok); site LiteSpeed, robot koruması yok; robots.txt gerçek 404 (engel yok);
+  App Store'da geliştirici web sitesi bağlantısı çalışıyor; AdMob'daki mağaza kimliği `6822243071` doğru. AdMob'un app-ads.txt sayfası boş ("henüz reklam isteği yok",
+  uygulamada reklam kodu 1.2'de gelecek) ve "değişikliklerin algılanması 7 günü bulabilir" diyor. Muhtemel sebep: AdMob'un mağaza bilgisini (Marketing URL 10 Kasım'da yayında)
+  ve dosyayı henüz yeniden taramaması. Yapılacak: "Güncellemeleri kontrol edin"e bir kez basıp ~18 Kasım'a kadar beklemek; düzelmezse AdMob desteğine bu bulgularla yazmak.
 
 
 ## 6. Yeni mekanikler: ilk sürüm (10 Kasım 2026)
