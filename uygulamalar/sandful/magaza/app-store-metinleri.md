@@ -44,9 +44,9 @@ Bu sürümle bölümler arasına seyrek reklam (dökerken asla, ilk 10 bölümde
 | Product ID | `com.investateknoloji.sandful.reklamsiz` |
 | Price | 3,99 $ kademesi (Türkiye fiyatını Apple kademeden hesaplar; istersen elle ayarlanır) |
 | Display Name (EN) | `Play Without Ads` |
-| Description (EN) | `Removes the ads between levels. Extra undos, puffs and level skips no longer need an ad.` |
+| Description (EN) | `Removes all ads between levels.` (Apple bu alanı kısa tutuyor: en fazla 45 karakter) |
 | Display Name (TR) | `Reklamsız Oyna` |
-| Description (TR) | `Bölümler arasındaki reklamları kaldırır. Ek geri alma, üfleme ve bölüm geçme reklamsız olur.` |
+| Description (TR) | `Bölümler arasındaki reklamları kaldırır.` |
 | Review Screenshot | `magaza/satin-alma-inceleme.png` (Ayarlar ekranı, "Play without ads" satırı) |
 | Review Notes | `Non-consumable purchase that removes interstitial ads. Open the home screen, tap the gear icon, then "Play without ads". "Restore purchases" is in the same sheet.` |
 
