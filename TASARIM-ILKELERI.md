@@ -69,6 +69,8 @@ Bu dosya bütün oyunlar için ortak kuralları toplar. Kaynağı Domino Chase'i
 | Çok bölümde çeşitlilik renkten değil yapıdan gelir: bantlar, kubbeler, dama, büyük nesneler (binalar), sivri zirveler ayrı ayrı "resim türleri"dir. Sadece renk ve süs değişince bölümler "hep aynı" görünür | Sandful 1.2 (Ozer: "biraz benzer şeyler çıkıyor, hep aynı olmasın") |
 | Yeni bir mekanik ilk kez çıkınca bölüm başında kısa bir kartla tanıt (ikon, ad, tek cümle, Başla). Alttaki ipucu yazısı tek başına fark edilmiyor; sonraki bölümlerde mekaniğin adı bölüm afişinde yazsın | Sandful 1.2 (Ozer: "yeni bir şey geldiğinde bölüme başlarken belli eden bir şey olmalı") |
 | Yeni mekaniğin tanıtım bölümü, mekaniksiz oynanınca kusursuz bota bile zor gelmeli (kartsız keskin dikey sınır, kuru kumla sivri kule); yoksa mekanik süs olarak kalır | Sandful 1.2 |
+| Küçük bir el kayması bölümü yakmamalı: yan yana duran nesnelerde (binalar) komşuya azıcık taşarak bırakılan nesne komşunun üstüne tünemez, yanına kayar. Tünediğinde tek hata bölümü 0 yıldıza düşürüyordu (%85'ten %58'e) | Sandful 1.2 (101. bölüm, uçtan uca testte bir kez görüldü) |
+| Nadir felaketleri (yüzde birkaç) üç tohumluk bot koşusu göstermez: ortalama iyi görünür. Bölümü insan botuyla 100+ kez oynatıp en kötü sonuçlara bak; 0 yıldıza düşen koşu varsa nedeni mekanikte ara | Sandful 1.2 |
 | Uygulamaya çıkmadan önce: ikinci parmak ve dokunma iptali (sistem hareketleri) ayrı ele alınır, ekranda yazan sayı ile ödülü belirleyen sayı aynı yuvarlanır, kayıt iki kopya tutulur ve birleştirilirken en iyisi alınır, ağır hesap küçük parçalara bölünür, bölüm değişince grafik kaynakları temizlenir | Kum Şişesi sürüm 7 (bağımsız kod incelemesi) |
 
 ## Reddedilmiş yönler

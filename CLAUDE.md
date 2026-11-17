@@ -40,3 +40,5 @@ Sandful oyununun deposu (`ozerkocak/Sandful`, önceki adı Game-Ideas); rahatlat
   iPhone derlemesi bulut ortamında yapılamaz; eklenti ya da iOS ayarı değişince Ozer'e Mac'te ne deneyeceğini `uygulamalar/sandful/TESTFLIGHT.md`'ye yaz.
 - Zorluk ayarı için farklı oyuncu profilleriyle (hiç dokunmayan, kusursuz, insan gibi geç kalan, dağınık) bot simülasyonu çalıştır.
   Bölümler ilk başta kolay olmalı; zorluk ilerleyen bölümlerde açılmalı ve strateji fark yaratmalı.
+  Sandful'da: `NODE_PATH=$(npm root -g) node araclar/bot-kos.js '[14,30]' 3` (beş profil, tohumlu). Nadir felaketler ortalamada görünmez;
+  mekaniğe dokununca ilgili bölümleri `araclar/bot-kuyruk.js <bölüm> 200` ile çok kez oynat ve en kötü koşulara bak.

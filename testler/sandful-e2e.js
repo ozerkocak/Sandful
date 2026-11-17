@@ -78,6 +78,11 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
    SAVE.mek={};SAVE.lv={};__game.start(30);const m1=mekOn,rows=document.querySelectorAll('#mekRows .row').length,top=document.elementFromPoint(200,600),blocked=!!(top&&top.closest&&top.closest('#mek'));
    document.getElementById('mekGo').click();const m2=mekOn,bn=document.getElementById('banner').classList.contains('show'),seen=!!(SAVE.mek&&SAVE.mek.ruzgar);
    __game.start(30);const m3=mekOn;__game.start(35);const m4=mekOn;__game.begin();out.mek=[m1,rows>=1,blocked,m2,bn,seen,m3,m4,mekOn,S().state];
+   // komşu binaya taşarak bırakılan süs çatıya tünemez, yanına kayar (101. bölüm: yan yana binalar)
+   SAVE.mek={sus:1,ufle:1,cubuk:1,gecis:1,salla:1,isilti:1,ruzgar:1,uc:1,islak:1,kart:1};__game.start(100);__game.autoplay('kusursuz');__game.begin();k=0;
+   while(k<3000&&!(S().state==='hold'&&decorList.some(d=>d.placed))){__game.sim(50);k++;}__game.autoplay(null);
+   {const a=decorList.find(d=>d.placed),b2=decor&&decor.rec;if(a&&b2){const tx=a.wx+(a.D.w+b2.D.w)/2-.05;__game.input(tx);__game.sim(1500);const nz=noz;__game.release();k=0;while(k<200&&S().state==='drop'){__game.sim(50);k++;}
+     out.kay=[b2.placed===true,+(b2.wy-a.wy).toFixed(3),+(Math.abs(b2.wx-a.wx)-(a.D.w+b2.D.w)/2).toFixed(3),+(b2.wx-nz).toFixed(3),S().state];}else out.kay=[false];}
    // dar ekran: yeniden boyutlandırma
    return out;});
   ok('Döküşte raf aç/kapat: menüye geçer, kapatınca döküşe döner, akış durur',r.rafPour[0]==='menu'&&r.rafPour[1]==='pour'&&r.rafPour[2]===false,r.rafPour);
@@ -89,6 +94,7 @@ async function launch(opts={}){const b=await chromium.launch({args:['--use-angle
   ok('Üfleme hakkı 3 ile sınırlı',r.puff===0,r.puff);
   ok('Arka plana geçiş akışı durdurur',r.vis[0]===false&&r.vis[1]===false,r.vis);
   ok('Yeni mekanik kartı: ilk kez çıkar, dokunmayı tutar, Başla ile kapanır, afiş gelir, aynı mekanik için bir daha çıkmaz',r.mek[0]&&r.mek[1]&&r.mek[2]&&!r.mek[3]&&r.mek[4]&&r.mek[5]&&!r.mek[6]&&r.mek[7]&&!r.mek[8]&&r.mek[9]==='pour',r.mek);
+  ok('Komşu binaya taşan süs çatıya tünemez, yanına kayar',r.kay[0]&&Math.abs(r.kay[1])<.15&&r.kay[2]>=-1e-6&&r.kay[2]<.06&&r.kay[3]>.03&&r.kay[4]!=='drop',r.kay);
   ok('Geri al: son renk baştan dökülür, hak biter, bölüm üç yıldızla biter',r.undo[0]&&r.undo[1]&&r.undo[2]&&!r.undo[3]&&r.undo[4]==='result'&&r.undo[5]===3,r.undo);
   await p.setViewportSize({width:320,height:568});await p.waitForTimeout(800);await p.setViewportSize({width:430,height:932});await p.waitForTimeout(800);
   ok('Uç durumlarda ve yeniden boyutlandırmada sayfa hatası yok',errs.length===0,errs.slice(0,3));

@@ -294,7 +294,7 @@ const EN={
  'Kayaları sağa yığ, fener tepeye. Denizden sonra çubukla küçük dalgalar çiz.':'Pile the rocks on the right, the lighthouse on top. After the sea, draw small waves with the stick.',
  'Derin deniz düz. Balina mavinin ortasında yüzsün, martı göğe.':'Keep the deep sea flat. The whale swims in the middle of the blue, the gull goes in the sky.',
  'Adayı sola yığ, palmiye tepesine. Deniz döküldükçe koyudan açığa döner: kenarlardan başla, her yere eşit yay.':'Pile the island on the left, the palm on top. The sea turns from deep to light as you pour: start at the edges and spread it evenly.',
- 'Önce deniz. Güneş ufka, sonra gökyüzü turuncudan pembeye döner: düz yay.':'Sea first. The sun sits on the horizon, then the sky turns from orange to pink: spread it flat.',
+ 'Önce deniz. Güneş ufka, sonra gökyüzü turuncudan pembeye döner: kenarlara biraz daha çok dök.':'Sea first. The sun sits on the horizon, then the sky turns from orange to pink: pour a little more at the sides.',
  'Kavanoz sallanıyor: kum hep yere paralel yatar. Kavanoz sağa yatınca dök, katman eğik kalır.':'The jar is rocking: sand always settles level with the ground. Pour while the jar leans right and the layer stays tilted.',
  'Kumsal düz. Kabuk ve deniz yıldızı kuma, sonra dalgaları çubukla çiz.':'Keep the beach flat. The shell and the starfish go on the sand, then draw the waves with the stick.',
  'Dalgalar eğik: kavanoz yatınca dök. İki yelkenli dalgaların üstüne.':'The waves are tilted: pour while the jar leans. Two sailboats ride on the waves.',
@@ -421,8 +421,8 @@ const LEVELS=[
  {ad:'Ada',sekil:'lale',ortam:'deniz',akis:600,kok:65,dunya:1,ipucu:'Adayı sola yığ, palmiye tepesine. Deniz döküldükçe koyudan açığa döner: kenarlardan başla, her yere eşit yay.',
   katman:[['kumAcik',mx(flat(.06),tri(.36,.52,.5))],['koyuDeniz',mx(flat(.44),u=>tri(.36,.52,.5)(u)+.015),{gecis:'turkuaz'}],['gok',flat(1)]],
   sus:[{id:'palmiye',katman:0,oran:1,u:.36}]},
- {ad:'Gün doğumu',sekil:'kadeh',ortam:'deniz',akis:620,kok:66,dunya:1,ipucu:'Önce deniz. Güneş ufka, sonra gökyüzü turuncudan pembeye döner: düz yay.',
-  katman:[['koyuDeniz',flat(.24)],['deniz',flat(.38)],['turuncu',flat(.78),{gecis:'pembe'}],['mor',flat(1)]],
+ {ad:'Gün doğumu',sekil:'kadeh',ortam:'deniz',akis:620,kok:66,dunya:1,ipucu:'Önce deniz. Güneş ufka, sonra gökyüzü turuncudan pembeye döner: kenarlara biraz daha çok dök.',
+  katman:[['koyuDeniz',flat(.24)],['deniz',flat(.38)],['turuncu',yay(.76),{gecis:'pembe'}],['mor',flat(1)]], // gök sınırı yay: kadeh dar olduğu için düz sınırda hiç dokunmayan da 1 yıldız alıyordu
   sus:[{id:'gunes',katman:2,oran:.06,u:.5}]},
  {ad:'Fırtına',sekil:'kavanoz',ortam:'firtina',akis:620,kok:57,minor:true,dunya:1,salla:{a:9,p:6.5},ipucu:'Kavanoz sallanıyor: kum hep yere paralel yatar. Kavanoz sağa yatınca dök, katman eğik kalır.',
   katman:[['koyuDeniz',lin(.3,.14)],['firtina',lin(.34,.54)],['gok',flat(1)]]},
@@ -752,8 +752,21 @@ function beginHold(rec){state='hold';holdT=0;decor={rec,x:noz,y:0,vy:0,held:true
  if(!BOT){toast(t('Yerine getir, parmağını kaldır'));softBell();}}
 function decorFollow(){const D=decor.rec.D;decor.x=noz;decor.y=FUNY-D.h-.03;}
 function releaseDecor(){if(state!=='hold')return;state='drop';decor.held=false;decor.vy=.3;}
-function decorLandY(){const D=decor.rec.D,c0=colOf(decor.x-D.w/2),c1=colOf(decor.x+D.w/2);let m=0;for(let c=c0;c<=c1;c++)if(valid[c])m=Math.max(m,topY[c]);return m;}
-function dropDecor(){decor.vy+=GRAVW*DT*tiltC;decor.y-=decor.vy*DT;decor.x=clamp(decor.x+decor.vy*tiltS/Math.max(.2,tiltC)*DT,-rMouth+decor.rec.D.w/2,rMouth-decor.rec.D.w/2);const ly=decorLandY();if(decor.y<=ly){decor.y=ly;landDecor();}}
+function decorLandY(x){if(x==null)x=decor.x;const D=decor.rec.D,c0=colOf(x-D.w/2),c1=colOf(x+D.w/2);let m=0;for(let c=c0;c<=c1;c++)if(valid[c])m=Math.max(m,topY[c]);return m;}
+// Açıkta duran bir süsün çatısına denk gelen süs (binayı komşusuna taşırarak bırakmak) orada tünemez: en yakın boş yana kayar.
+// Yan taraf da doluysa ya da çatı yandaki kumdan belirgin yüksek değilse (kuma gömülmüş süsün üstüne konan güneş, balon) olduğu yere konar.
+function decorSlideX(ly){const D=decor.rec.D,hw=D.w/2,lim=rMouth-hw;let best=null;
+ for(const r of decorList){if(!r.placed||r===decor.rec||Math.abs(r.wy+r.D.h-ly)>.02)continue;
+  const rc0=colOf(r.wx-r.D.w/2),rc1=colOf(r.wx+r.D.w/2);if(colOf(decor.x+hw)<rc0||colOf(decor.x-hw)>rc1)continue;
+  for(const sg of(decor.x>=r.wx?[1,-1]:[-1,1])){let nx=r.wx+sg*(r.D.w/2+hw),k=0;
+   while(k++<4&&(sg>0?colOf(nx-hw)<=rc1:colOf(nx+hw)>=rc0))nx+=sg*DX*.5;
+   if(Math.abs(nx)>lim)continue;
+   if(ly-decorLandY(nx)>.15){if(best==null||Math.abs(nx-decor.x)<Math.abs(best-decor.x))best=nx;break;}}}
+ return best;}
+function dropDecor(){
+ if(decor.sx!=null){const d=decor.sx-decor.x,v=1.4*DT;if(Math.abs(d)<=v){decor.x=decor.sx;decor.sx=null;decor.vy=.3;}else decor.x+=Math.sign(d)*v;return;} // çatıdan yana kayıyor
+ decor.vy+=GRAVW*DT*tiltC;decor.y-=decor.vy*DT;decor.x=clamp(decor.x+decor.vy*tiltS/Math.max(.2,tiltC)*DT,-rMouth+decor.rec.D.w/2,rMouth-decor.rec.D.w/2);const ly=decorLandY();
+ if(decor.y<=ly){decor.y=ly;const sx=(decor.slid|0)<2?decorSlideX(ly):null;if(sx!=null){decor.sx=sx;decor.slid=(decor.slid|0)+1;return;}landDecor();}}
 function landDecor(){const r=decor.rec,D=r.D,c0=colOf(decor.x-D.w/2),c1=colOf(decor.x+D.w/2),ly=decor.y;
  const la=Math.min(ncol-1,r.s.oran>=1?r.k+1:r.k);
  for(let c=c0;c<=c1;c++)if(valid[c])addTop(c,100+la,ly+D.h-topY[c]);
@@ -1662,7 +1675,7 @@ function gfxFrame(now){if(!RD)return;const t=now/1000,fdt=clamp((now-lastGfx)/10
  // süs: tutulurken huninin altında, düşerken ön cama doğru
  if(decor){const D=decor.rec.D,m=RD.decorM;m.visible=true;m.material.map=RD.decTex[decor.rec.s.id];m.scale.set(D.w,D.h,1);const cy=decor.y+D.h/2;
   const zq=zFront(decor.x,cy)*smooth(HJ+.1,HJ-.4,cy);m.position.set(decor.x,cy,zq+.002);m.rotation.y=Math.atan2(decor.x,Math.max(zq,.3));
-  if(decor.held){const ly=decorLandY();const a=RD.dropLine.geometry.attributes.position;a.setXYZ(0,decor.x,decor.y,.01);a.setXYZ(1,decor.x,ly,zFront(decor.x,ly)*.5);a.needsUpdate=true;RD.dropLine.computeLineDistances();RD.dropLine.visible=true;}
+  if(decor.held){let lx=decor.x,ly=decorLandY();const sx=decorSlideX(ly);if(sx!=null){lx=sx;ly=decorLandY(sx);}const a=RD.dropLine.geometry.attributes.position;a.setXYZ(0,decor.x,decor.y,.01);a.setXYZ(1,lx,ly,zFront(lx,ly)*.5);a.needsUpdate=true;RD.dropLine.computeLineDistances();RD.dropLine.visible=true;}
   else RD.dropLine.visible=false;}
  else{RD.decorM.visible=false;RD.dropLine.visible=false;}
  (RD.ghosts||[]).forEach((g,k)=>{if(!g.visible)return;g.material.opacity=decor&&decor.rec===decorList[k]?.3+.2*Math.sin(t*5):.22;});

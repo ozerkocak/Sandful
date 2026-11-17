@@ -7,13 +7,14 @@ const font=[700,800,900].map(w=>['latin','latin-ext'].map(s=>`@font-face{font-fa
 const OUT=path.join(__dirname,'..','magaza','ekran-goruntuleri');
 // sıra, ham dosya, başlık (en/tr), arka plan, yazı rengi
 const S=[
- ['01','01-ana',{en:'Three worlds,<br>thirty calm scenes',tr:'Üç dünya,<br>otuz sakin manzara'},['#f6ecd9','#ecd7b1','#dfc08e'],'#4a3826'],
- ['02','02-kuzey',{en:'Glowing sand<br>under the night sky',tr:'Gece göğünde<br>ışıldayan kum'},['#2c3566','#1d2350','#121636'],'#fff6e6'],
- ['03','03-gunbatimi',{en:'Pour sand.<br>Watch a scene appear.',tr:'Kum dök,<br>manzara ortaya çıksın.'},['#fbe3d6','#f3c0a8','#e79a86'],'#4a2a22'],
- ['04','04-yagmur',{en:'Draw rain and waves<br>with a stick',tr:'Çubukla yağmur<br>ve dalga çiz'},['#e6ecf2','#c9d4e0','#a9b8ca'],'#2a3442'],
- ['05','05-ilkkar',{en:'Pour while<br>the jar rocks',tr:'Kavanoz sallanırken<br>dök'},['#eef3f8','#d5e2ee','#b8cde0'],'#2a3a4a'],
- ['06','06-lale',{en:'Sand that changes<br>color as you pour',tr:'Döktükçe renk<br>değiştiren kum'},['#fde8e2','#f6c6b8','#eea08f'],'#4a2522'],
- ['07','07-koy',{en:'Place a house,<br>a pine, a star',tr:'Ev, çam, yıldız:<br>yerine bırak'},['#e3e9f6','#c3cde8','#9eabd6'],'#232c58'],
+ ['01','01-gunbatimi',{en:'Pour sand.<br>Watch a scene appear.',tr:'Kum dök,<br>manzara ortaya çıksın.'},['#fbe3d6','#f3c0a8','#e79a86'],'#4a2a22'],
+ ['02','02-geceSehri',{en:'Light up<br>a city skyline',tr:'Bir şehrin<br>ışıklarını yak'},['#2c3566','#1d2350','#121636'],'#fff6e6'],
+ ['03','03-zirve',{en:'Wet sand holds<br>sharp mountain peaks',tr:'Islak kumla<br>sivri zirveler'},['#eef3f8','#d5e2ee','#b8cde0'],'#2a3a4a'],
+ ['04','04-ana',{en:'Eight worlds,<br>130 calm scenes',tr:'Sekiz dünya,<br>130 sakin manzara'},['#f6ecd9','#ecd7b1','#dfc08e'],'#4a3826'],
+ ['05','05-dama',{en:'Split the jar<br>with a card',tr:'Kavanozu kartla<br>ikiye böl'},['#fbeadf','#f3d1bd','#e8b59a'],'#4a2e22'],
+ ['06','06-ruzgar',{en:'Pour against<br>the wind',tr:'Rüzgâra karşı<br>dök'},['#fbeed2','#f3d59a','#e9b76a'],'#4a3414'],
+ ['07','07-siluet',{en:'Build the skyline<br>piece by piece',tr:'Silüeti parça parça<br>kur'},['#f6e0ee','#e8bfdc','#cf9ac6'],'#3d2348'],
+ ['08','08-gokkusagi',{en:'Rainbows, gardens<br>and dessert jars',tr:'Gökkuşağı, bahçeler,<br>tatlı kavanozları'},['#e6f3e2','#c6e3c0','#a3cf9c'],'#24402a'],
 ];
 (async()=>{const b=await chromium.launch({args:['--allow-file-access-from-files']});
  const VW=402,VH=874,Z=VW/430;const p=await (await b.newContext({viewport:{width:VW,height:VH},deviceScaleFactor:3})).newPage();

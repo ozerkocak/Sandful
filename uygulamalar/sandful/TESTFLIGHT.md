@@ -116,6 +116,8 @@ Uygulama Bilgileri'nde **Türkçe** yerelleştirmeyi ekle; ad her dilde aynı ka
 11. Sürüm sayfasında **In-App Purchases and Subscriptions** bölümünden `Reklamsiz` ürününü seç (ilk satın alma ürünü sürümle birlikte incelenir).
 12. **App Privacy**'yi güncelle ("Data Not Collected" artık doğru değil) ve **Age Rating** anketinde reklam sorusunu "Yes" yap.
 13. App Review notuna reklam ve satın alma açıklamasını yapıştır.
+14. **Ekran görüntüleri ve metinler:** eski 7 görüntüyü sil, `magaza/ekran-goruntuleri/en/` ve `tr/` içindeki 8 yeni görüntüyü 01 → 08 sırasıyla sürükle.
+    Açıklama, tanıtım metni ve "What's New" metinlerini İngilizce ve Türkçe sayfaya yapıştır. Satın alma ürününün **Review Screenshot** alanına `magaza/satin-alma-inceleme.png`.
 
 ### Sorunlar
 
@@ -142,7 +144,7 @@ Bütün alanların değerleri: `magaza/app-store-metinleri.md` (ad, alt başlık
 
 1. **Gizlilik ve destek sayfası:** `magaza/site/` klasöründeki iki dosya şirket sitesinde `sandful` klasörüne yüklenir:
    destek `https://www.investa.com.tr/sandful/`, gizlilik `https://www.investa.com.tr/sandful/privacy.html`. Bu adresler App Store Connect'te Support URL ve Privacy Policy URL alanlarına girilir; Apple göndermeden önce açılıp açılmadığına bakar.
-2. **Ekran görüntüleri:** `magaza/ekran-goruntuleri/en/` ve `tr/` (1.1'de 7'şer, 1206×2622). "iPhone with Dynamic Island (medium display)" kutusuna 01 → 07 sırasıyla sürüklenir.
+2. **Ekran görüntüleri:** `magaza/ekran-goruntuleri/en/` ve `tr/` (1.2'de 8'er, 1206×2622). "iPhone with Dynamic Island (medium display)" kutusuna 01 → 08 sırasıyla sürüklenir.
 3. **Metinler** İngilizce ve Türkçe sayfaya girilir, **Build** olarak TestFlight'taki derleme seçilir.
 4. **App Privacy:** 1.1.1'e kadar "Data Not Collected"; 1.2'de reklam ve ölçüm verileri beyan edilir (`magaza/app-store-metinleri.md` > 1.2). **Age Rating:** 4+ (1.2'de reklam sorusu "Yes").
 5. **Business:** AB'de yayın için "trader" (DSA) bilgisi girilmiş olmalı (hesap düzeyinde, bir kez).

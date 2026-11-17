@@ -267,7 +267,7 @@ Ozer: "Tamam, 1.2'ye devam edelim." Beş tema oyuna yerleştirildi; "Yeni Bölü
 - **Ana ekran:** sıradaki bölümün dünyası açık, diğer dünyalar katlı (başlık, yıldız, ilerleme çubuğu; dokununca açılır ve kavanozlar o zaman çizilir).
   Kilitli dünyalar birer satır; ilk kilitlide ne zaman açılacağı yazar. Başlıkta bölüm aralığı var ("DÜNYA 4 · 31–50").
 - **Açık işler:** imza bölümlerin çoğu şimdilik üreticiden (sadece dört tanıtım bölümü el yapımı); 200'e ulaşmak için 2-3 tema daha (öneri: Gece Gökyüzü, Kıyı II, Kış II);
-  küçük resimler kayıtta duruyor (130 bölümde ~1 MB), 200'de dosyaya taşınması gerekebilir (`05-sandful-uzun-yol.md`); 15. bölümde dokunmayan botun 1 yıldızı.
+  küçük resimler kayıtta duruyor (130 bölümde ~1 MB), 200'de dosyaya taşınması gerekebilir (`05-sandful-uzun-yol.md`). (15. bölümde dokunmayan botun 1 yıldızı: düzeltildi, bölüm 11.)
 
 ## 10. Reklam, Reklamsız ve ölçüm (11 Kasım 2026)
 
@@ -283,3 +283,25 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
 - **Denenmedi:** iPhone derlemesi (bulut ortamında Xcode yok). İlk derleme Ozer'in Mac'inde; adımlar ve kontrol listesi `uygulamalar/sandful/TESTFLIGHT.md` bölüm 7.
 - Reklam ağı kimlik listesi (SKAdNetwork) Google'ın rehberine buradan ulaşılamadığı için karşılaştırılamadı; Google'ın kendi kimliği kesin, diğerleri doğrulanmalı (yanlış kimlik zararsız).
 - Ozer'in yapacakları: satın alma ürünü (`com.investateknoloji.sandful.reklamsiz`), gizlilik sayfasını siteye yükleme, App Privacy ve yaş anketi, TestFlight kontrolü.
+
+## 11. Son hazırlık: 15. bölüm ve mağaza malzemeleri (17 Kasım 2026)
+
+> Ozer: "Tamam, ilerleyelim."
+
+- **15. bölüm (Gün doğumu):** kadeh dar olduğu için gök sınırı düzken huniye hiç dokunmayan oyuncu da %74 ile 1 yıldız alıyordu (130 bölümde tek istisna).
+  Gök sınırı hafif yay oldu (kenarlar yüksek), ipucu "kenarlara biraz daha çok dök". Botlar: kusursuz %96 ★3, insan ★3, dağınık ★2,3, süpürücü ★2, dokunmayan %68 ★0.
+  Bu bölüm yayında olan bir bölüm; değişiklik küçük (sınırın biçimi), oyuncunun kayıtlı yıldızı ve küçük resmi yerinde kalır. Üretilmiş bölümlere dokunulmadı.
+  Bot koşusu artık depoda: `NODE_PATH=$(npm root -g) node araclar/bot-kos.js '[14]'`.
+- **Komşusuna taşan bina (yeni bulundu):** uçtan uca testte 101. bölüm (Pembe Şehir) bir kez %60 ile 0 yıldız verdi. Neden: şehir bölümlerinde binalar yan yana (aralarında ~0,1 boşluk);
+  bir bina komşusuna birkaç milim taşarak bırakılınca yere değil komşunun **çatısına** konuyordu ve bölüm kurtarılamıyordu. İnsan botunda 101'de 250 oyunun 9'u, beş şehir bölümünde 600 oyunun 8'i böyle bitiyordu.
+  Düzeltme: açıkta duran bir süsün çatısına denk gelen süs en yakın boş yana **kayar** (yan taraf da doluysa ya da süs kuma gömülüyse eskisi gibi konar; güneş, balon gibi gök süsleri etkilenmez).
+  Süs asılıyken kesikli çizgi kayacağı yeri gösterir. Sonra: 101'de 250 oyunda 0, beş şehir bölümünde 600 oyunda 0 düşük sonuç. 130 bölümde kusursuz ve insan botlarının (3 tohum) sonuçları birebir aynı;
+  dağınık oyuncu şehir bölümlerinde biraz daha iyi (ortalama 1,06 → 1,11 yıldız). Uçtan uca teste kontrol eklendi.
+  Bilinen küçük kusurlar (dokunulmadı): 35. bölümde hiç dokunmayan bot üç tohumdan birinde 1 yıldız alıyor (%71-72, sınırda); 107. bölümde kusursuz bot üç tohumdan birinde bir gök süsünü kaçırıyor.
+- **Mağaza ekran görüntüleri:** 8 kare, İngilizce ve Türkçe, 1206×2622 (`uygulamalar/sandful/magaza/ekran-goruntuleri/`). Sıra: gün batımı dökülürken, gece şehri,
+  karlı zirve (ıslak kum), ana ekran (sekiz dünya), dama (kart), rüzgâr, silüet kurma, gökkuşağı. İlk üçü arama sonuçlarında göründüğü için en çarpıcı üç sahne başta.
+- **Mağaza metinleri:** tanıtım metni, 1.2 açıklaması (EN/TR), "What's New", satın alma ürünü alanları ve inceleme görüntüsü (`magaza/satin-alma-inceleme.png`),
+  App Privacy cevapları: hepsi `uygulamalar/sandful/magaza/app-store-metinleri.md`'de.
+- **Kontrol (17 Kasım):** uçtan uca test 32/32, reklam ve satın alma testi 48/48 (oyun dosyası ve uygulama derlemesi). 130 bölümün hepsi insan botuyla 40'ar kez oynatıldı (5200 oyun):
+  tek 0 yıldız 19. bölümde (%68, zor bölüm, felaket değil); en zor bölümler 7, 19, 117, 124, 127, 130 (ortalama 1,4-1,6 yıldız).
+

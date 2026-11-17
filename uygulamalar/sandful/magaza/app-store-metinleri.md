@@ -47,7 +47,7 @@ Bu sürümle bölümler arasına seyrek reklam (dökerken asla, ilk 10 bölümde
 | Description (EN) | `Removes the ads between levels. Extra undos, puffs and level skips no longer need an ad.` |
 | Display Name (TR) | `Reklamsız Oyna` |
 | Description (TR) | `Bölümler arasındaki reklamları kaldırır. Ek geri alma, üfleme ve bölüm geçme reklamsız olur.` |
-| Review Screenshot | Ayarlar ekranı ("Reklamsız oyna" satırı görünen); Claude 1.2 ekran görüntüleriyle birlikte hazırlar |
+| Review Screenshot | `magaza/satin-alma-inceleme.png` (Ayarlar ekranı, "Play without ads" satırı) |
 | Review Notes | `Non-consumable purchase that removes interstitial ads. Open the home screen, tap the gear icon, then "Play without ads". "Restore purchases" is in the same sheet.` |
 
 ### Uygulama gizliliği (App Privacy) · 1.2
@@ -80,10 +80,76 @@ Version 1.2 adds ads (Google AdMob) and one non-consumable in-app purchase.
 - Usage statistics are collected with Google Analytics for Firebase without the advertising identifier.
 ```
 
-### Yapılacaklar · 1.2
+### Tanıtım metni (Promotional Text, 170) · 1.2
 
-- Ekran görüntüleri (şehir, dağlar, tatlı, çöl; yeni ana ekran) ve gerekirse açıklama metni: bölümler onaylanınca Claude hazırlar.
-- Tanıtım metni (Promotional Text) önerisi: `130 calm levels across eight worlds. Pour colored sand, shape dunes, cities and mountains.`
+| İngilizce | Türkçe |
+|---|---|
+| Now 130 calm scenes in eight worlds. Pour colored sand and shape dunes, gardens, dessert jars, city skylines and mountain peaks, one layer at a time. | Artık sekiz dünyada 130 sakin sahne. Renkli kum dök; kumullar, bahçeler, tatlı kavanozları, şehir silüetleri ve dağ zirveleri katman katman ortaya çıksın. |
+
+Ad, alt başlık ve anahtar kelimeler aynı kalır.
+
+### Açıklama (Description) · 1.2
+
+**İngilizce**
+
+```
+Sandful is a calm, hands-on sand art game.
+
+Hold your finger on the screen and colored sand flows from a little funnel. Move the funnel left and right, follow the faint lines on the glass, and a scene slowly appears inside the jar: a beach, a lighthouse, a desert oasis, a tulip garden, a city skyline at night, a snowy mountain peak.
+
+The sand behaves like the real thing. It piles up where you wait, spreads thin when you sweep, and slides down the slope when it gets too steep. Every grain whispers as it lands, and your phone ticks softly in your hand.
+
+• 130 scenes in eight worlds: Coast & Land, Ocean, Four Seasons, Desert and Oasis, Garden and Flowers, Dessert Jars, City Skylines and Mountains
+• Realistic sand that piles, spreads and slides
+• New ways to pour: wind that carries the sand, thin and wide spouts, wet sand that stands steep, a card that splits the jar in two
+• Draw waves, rain and marble swirls with a stick, the way sand artists do
+• Sand that fades from one color to another, and sand that glows in the dark
+• Things to place: lighthouses, whales, cherry trees, camels, and city buildings with glowing windows
+• Every finished jar comes alive for a moment before it joins your shelf
+• A real recorded sand sound, soft marimba music and gentle haptics
+• No timers, no pressure: play at your own pace
+• Plays offline, no account needed
+• English and Turkish
+
+Free to play with occasional ads between levels, never while you pour. A one-time purchase removes them.
+
+Pour, breathe, relax.
+```
+
+**Türkçe**
+
+```
+Sandful sakin, elle oynanan bir kum sanatı oyunu.
+
+Parmağını ekranda tut, küçük bir huniden renkli kum aksın. Huniyi sağa sola gezdir, camdaki silik çizgileri izle; kavanozun içinde yavaş yavaş bir manzara belirsin: kumsal, deniz feneri, çölde bir vaha, lale bahçesi, gece ışıldayan bir şehir, karlı bir dağ zirvesi.
+
+Kum gerçek kum gibi davranır. Beklediğin yerde yığılır, hızlı gezdirince ince serilir, yamaç dikleşince aşağı kayar. Her tane düşerken hışırdar, telefonun avucunda hafifçe tıklar.
+
+• Sekiz dünyada 130 sahne: Kıyı ve Kara, Okyanus, Dört Mevsim, Çöl ve Vaha, Bahçe ve Çiçekler, Tatlı Kavanozları, Şehir Silüetleri, Dağlar
+• Yığılan, serilen ve kayan gerçekçi kum
+• Yeni döküş yolları: kumu savuran rüzgâr, ince ve geniş uç, dik duran ıslak kum, kavanozu ikiye bölen kart
+• Kum sanatçıları gibi çubukla dalga, yağmur ve mermer deseni çiz
+• Döktükçe bir renkten ötekine geçen kum, karanlıkta ışıldayan kum
+• Yerine bırakılan süsler: deniz fenerleri, balinalar, kiraz ağaçları, develer, pencereleri ışıklı şehir binaları
+• Biten her şişe rafına girmeden önce bir an canlanır
+• Gerçek kum kaydı, yumuşak marimba müziği ve hafif titreşim
+• Süre yok, baskı yok: kendi temponda oyna
+• İnternetsiz çalışır, hesap gerekmez
+• Türkçe ve İngilizce
+
+Ücretsiz oynanır; bölümler arasında seyrek reklam çıkar, dökerken asla. Tek seferlik satın almayla reklamlar kalkar.
+
+Dök, nefes al, rahatla.
+```
+
+### Ekran görüntüleri · 1.2
+
+`ekran-goruntuleri/en/` ve `tr/`: 8'er adet, 1206×2622. App Store Connect'te eski 7 görüntüyü sil, yenileri 01 → 08 sırasıyla sürükle.
+Sıra (ilk üçü arama sonuçlarında görünür): 01 gün batımı dökülürken, 02 gece şehri (pencereler ışıklı), 03 karlı zirve (ıslak kum), 04 ana ekran (sekiz dünya),
+05 dama (ayırıcı kart), 06 rüzgâr, 07 silüet kurma (bina yerleştirme), 08 gökkuşağı.
+Üretim: `scripts/ekran-ham.js` (ham çekim) ve `scripts/ekran-kare.js` (başlıklı kareler).
+
+Satın alma ürününün inceleme görüntüsü (Review Screenshot): `satin-alma-inceleme.png` (Ayarlar'da "Play without ads" satırı; fiyat örnek, gerçek fiyat mağazadan okunur).
 
 ## 1.1.1: düzeltme sürümü (9 Kasım 2026)
 
