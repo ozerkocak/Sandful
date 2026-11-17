@@ -133,6 +133,8 @@ Uygulama çocuklara yönelik olarak işaretlenmez (Kids kategorisinde değil). i
   App Store'da geliştirici web sitesi bağlantısı çalışıyor; AdMob'daki mağaza kimliği `6822243071` doğru. AdMob'un app-ads.txt sayfası boş ("henüz reklam isteği yok",
   uygulamada reklam kodu 1.2'de gelecek) ve "değişikliklerin algılanması 7 günü bulabilir" diyor. Muhtemel sebep: AdMob'un mağaza bilgisini (Marketing URL 10 Kasım'da yayında)
   ve dosyayı henüz yeniden taramaması. Yapılacak: "Güncellemeleri kontrol edin"e bir kez basıp ~18 Kasım'a kadar beklemek; düzelmezse AdMob desteğine bu bulgularla yazmak.
+- **17 Kasım 2026, AdMob doğrulandı** (Ozer: "doğrulanmış admob"). Beklendiği gibi AdMob'un yeniden taramasıyla çözüldü; bizim tarafta bir şey değişmedi, desteğe yazmaya gerek kalmadı.
+  Bakılacak tek şey: uygulama durumunun da "Hazır" olması ("İnceleme gerekli / Sınırlı reklam sunumu" yazısı kalktı mı). 1.2'nin reklam tarafında AdMob'dan beklenen bir şey kalmadı.
 
 
 ## 6. Yeni mekanikler: ilk sürüm (10 Kasım 2026)
