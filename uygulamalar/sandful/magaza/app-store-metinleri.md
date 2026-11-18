@@ -52,7 +52,10 @@ Bu sürümle bölümler arasına seyrek reklam (dökerken asla, ilk 10 bölümde
 
 ### Uygulama gizliliği (App Privacy) · 1.2
 
-"Data Not Collected" kaldırılır. Hepsi için: **kimliğe bağlı değil** (Not Linked to You), **takip için kullanılmıyor** (Tracking: No; takip izni istenmiyor).
+"Data Not Collected" kaldırılır. Hepsi için: **kimliğe bağlı: Evet** (Linked to You), **takip için kullanılmıyor** (Tracking: No; takip izni istenmiyor).
+İlk plan "kimliğe bağlı değil"di. Apple'ın soru ekranı (18 Kasım 2026) şunu söylüyor: veri, toplanmadan önce kimliksizleştirilmediyse hesap, **cihaz** ya da ayrıntılar üzerinden kimliğe bağlı sayılır;
+gizlilik yasalarındaki "kişisel veri" de bağlı sayılır. Google'ın paketleri veriyi cihaz düzeyindeki tanımlayıcıyla topluyor ve biz kimliksizleştirmiyoruz; hesap, ad ya da e-posta olmasa da güvenli cevap "Evet".
+Etkisi sadece mağaza sayfasındaki etiketin başlığı ("Data Linked to You"); eksik beyan riski kalkar. Gizlilik politikasındaki anlatım (uygulamaya özel tanımlayıcı, ad ya da e-posta yok) bununla çelişmez.
 
 | Veri türü | Amaç | Kaynak |
 |---|---|---|
