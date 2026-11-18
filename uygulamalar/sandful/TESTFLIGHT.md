@@ -26,7 +26,7 @@ Varsayılanlar:
 |---|---|
 | Uygulama adı | Sandful (App Store başlığı: "Sandful: Relaxing Sand Art") |
 | Paket kimliği (Bundle ID) | `com.investateknoloji.sandful` |
-| Sürüm | 1.1.1 (4) yayında. Projede **1.2 (5)** hazırlanıyor (henüz yüklenmedi) |
+| Sürüm | 1.1.1 (4) yayında. **1.2 (5)** 18 Kasım 2026'da TestFlight'a yüklendi. Projede sıradaki derleme numarası **6** (yeni bir yükleme gerekirse hazır) |
 | Cihaz | Sadece iPhone, dikey, tam ekran |
 | Ekip | İnvesta Teknoloji (`3ANJ967SS2`) |
 
@@ -101,7 +101,7 @@ Uygulama Bilgileri'nde **Türkçe** yerelleştirmeyi ekle; ad her dilde aynı ka
 3. Xcode **16.3 ya da daha yeni** olmalı (Xcode > About Xcode). Daha eskiyse App Store'dan güncelle.
 4. Her zamanki gibi: Pull, `sh scripts/ios-hazirla.sh`. Xcode açılınca paketleri indirir (Google Mobile Ads ve Firebase büyük; ilk sefer 5-10 dakika sürebilir, alttaki "Resolving/Fetching packages" bitene kadar bekle).
    `Missing package product` hatası çıkarsa: File > Packages > **Reset Package Caches**, sonra Product > **Clean Build Folder**.
-5. Product > Archive > Distribute App. Derleme numarası projede 5.
+5. Product > Archive > Distribute App. Derleme numarası projede hazır gelir (ilk 1.2 yüklemesi 5 idi).
 
 **TestFlight'ta dene** (gerçek reklam çıkmaz: oyun TestFlight'ı tanır ve Google'ın "Test Ad" yazan deneme reklamlarını gösterir; satın alma TestFlight'ta ücretsizdir)
 
@@ -123,6 +123,8 @@ Uygulama Bilgileri'nde **Türkçe** yerelleştirmeyi ekle; ad her dilde aynı ka
 ### Sorunlar
 
 - **Xcode'da `Missing package product 'app_CapacitorApp'`** (9 Kasım 2026, depo yeni klasöre klonlandıktan sonra): File > Packages > **Reset Package Caches**, "Resolving packages" bitince Product > **Clean Build Folder**, sonra Archive. Olmazsa Xcode kapalıyken `rm -rf ~/Library/Developer/Xcode/DerivedData/App-*` ve `sh scripts/ios-hazirla.sh`.
+- **Yüklemede `Upload Symbols Failed … did not include a dSYM for FirebaseAnalytics / GoogleAppMeasurement / GoogleMobileAds`** (18 Kasım 2026, 1.2'nin ilk yüklemesi): zararsız uyarı, yükleme tamamlanmıştır; **Done**'a bas.
+  Google bu paketleri derlenmiş olarak veriyor ve hata ayıklama dosyası (dSYM) koymuyor; sadece bu paketlerin içindeki bir çökme raporda okunaksız görünür.
 - **Yüklenen derleme numarası projedekinden büyük çıkabilir:** Distribute App'teki "Manage Version and Build Number" açıkken Xcode numarayı kendisi artırır (1.1.1'de 3 yerine 4). Sonraki sürümde projedeki numara yüklenenin üstüne çıkarılır.
 
 - **Pull sırasında `fatal: mmap failed: Operation canceled`** (3 Kasım 2026): depo iCloud'a eşitlenen `~/Documents` içindeydi;

@@ -316,3 +316,6 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
 - **18 Kasım:** ürün sayfası dolduruldu ve kaydedildi (ülkeler, 3,99 $, EN/TR adlar, inceleme görüntüsü ve notu). Durum "Prepare for Submission" olarak kalıyor (bu arayüzde "Ready to Submit" yazmıyor);
   "Add for Review" 1.2 sürümüyle birlikte basılacak. Ürünün mağazadan okunabildiği TestFlight tanı satırında (`ürün: … 3,99 $`) doğrulanacak.
 - **18 Kasım:** yeni gizlilik sayfası siteye yüklendi (Ozer; `investa.com.tr` bulut ortamından açılamadığı için buradan kontrol edilemedi). Sırada: Mac'te ilk 1.2 derlemesi.
+- **18 Kasım:** Sandful deposu Mac'te yoktu (GitHub Desktop eski `Documents/GitHub/Sandful` yolunu arıyordu); `~/Developer/Sandful`'a yeniden klonlandı.
+- **18 Kasım, 16:00: 1.2 (5) ilk denemede derlendi ve TestFlight'a yüklendi.** Dört yeni eklenti (AdMob, Firebase Analytics, satın alma, puan isteme), paket ayarları ve proje dosyası değişikliği Mac'te sorunsuz derlendi.
+  Yüklemede üç "Upload Symbols Failed" uyarısı çıktı (Google paketlerinin dSYM dosyası yok): zararsız. Projede derleme numarası 6'ya çıkarıldı (sonraki yükleme için). Sırada: TestFlight'ta telefonda deneme.
