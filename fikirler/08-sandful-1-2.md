@@ -334,3 +334,5 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
   "Purchase restored" ve ✓. İki küçük kusur görüldü, depoda düzeltildi (yeni yükleme gerektirmez, bir sonraki derlemeye girer): geri yüklemeden sonra tanı satırı eski durumu gösteriyordu
   ("yok sayılıyor"); mesaj yazıldıktan sonra dil değiştirilince mesaj eski dilde kalıyordu. Para testi 54/54. Sırada: Firebase'de olaylar.
 - **18 Kasım, Firebase:** Analytics panosunda "son 30 dakikada 2 etkin kullanıcı" (Türkiye), son sürüm iOS Sandful 1.2 "Successful". Ölçüm TestFlight derlemesinden geliyor. Olay adları (level_start vb.) Realtime sayfasında ayrıca bakılacak.
+- **18 Kasım, Firebase olayları:** Realtime'da bizim olaylarımız görünüyor (`ad_interstitial`, `level_quit`, `noads_buy`, `setting_change`; toplam 10 farklı olay). **TestFlight denemeleri tamam:** eklentiler, deneme reklamları (geçiş ve ödüllü),
+  satın alma, geri yükleme ve ölçüm çalışıyor. Mağazaya **1.2 (6)** gönderilecek; depodaki iki küçük düzeltme (tanı satırının yenilenmesi, dil değişince mesajın silinmesi) bir sonraki sürüme kalır.
