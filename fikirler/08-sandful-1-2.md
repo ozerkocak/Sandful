@@ -313,4 +313,5 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
 
 - **18 Kasım:** satın alma ürünü App Store Connect'te oluşturuldu: `com.investateknoloji.sandful.reklamsiz`, Reference Name `Reklamsiz`, Apple ID `6836297731`, durum "Prepare for Submission".
   Sırada: ülkeler, fiyat (3,99 $), adlar (EN/TR), inceleme görüntüsü ve notu. Family Sharing şimdilik kapalı (açılınca kapatılamıyor; eklentiyle denenmedi).
-
+- **18 Kasım:** ürün sayfası dolduruldu ve kaydedildi (ülkeler, 3,99 $, EN/TR adlar, inceleme görüntüsü ve notu). Durum "Prepare for Submission" olarak kalıyor (bu arayüzde "Ready to Submit" yazmıyor);
+  "Add for Review" 1.2 sürümüyle birlikte basılacak. Ürünün mağazadan okunabildiği TestFlight tanı satırında (`ürün: … 3,99 $`) doğrulanacak.

@@ -92,7 +92,8 @@ Uygulama Bilgileri'nde **Türkçe** yerelleştirmeyi ekle; ad her dilde aynı ka
 
 1. **Satın alma ürünü:** Sandful > Monetization > **In-App Purchases** > **+** > **Non-Consumable**.
    Reference Name: `Reklamsiz`, Product ID: **`com.investateknoloji.sandful.reklamsiz`** (harfi harfine; sonradan değişmez). Fiyat: 3,99 $ kademesi.
-   Yerelleştirme ve inceleme bilgileri: `magaza/app-store-metinleri.md` > "1.2 · Satın alma ürünü". Durumu "Ready to Submit" olmalı.
+   Yerelleştirme ve inceleme bilgileri: `magaza/app-store-metinleri.md` > "1.2 · Satın alma ürünü". Kaydedince durum "Prepare for Submission" kalır, bu normal.
+   Sayfadaki **Add for Review**'e şimdi basma: ilk satın alma ürünü 1.2 sürümüyle birlikte gönderilir (11. adım). Ürünün hazır olduğunu TestFlight'taki tanı satırı gösterir (6. adım).
 2. **Gizlilik sayfası:** `magaza/site/privacy.html`'i sitede `sandful/privacy.html` üzerine yükle (reklam, ölçüm ve satın alma anlatıldı). İstersen önce hukuk danışmanına göster.
 
 **Mac'te**
