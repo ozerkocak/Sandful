@@ -69,11 +69,18 @@ Google'ın güncel beyan rehberleri (göndermeden önce karşılaştır): AdMob 
 
 Anketteki reklam sorusu (Advertising / "Does your app contain ads?"): **Yes**. Diğer cevaplar aynı (None/No). Sonuç 4+ kalır. AdMob'da en yüksek reklam içerik derecesi **G**, hassas kategoriler kapalı.
 
-### App Review notu · 1.2 (öncekine eklenir)
+### App Review notu · 1.2 (Notes alanının tamamı; eskisinin yerine)
 
 ```
+Sandful needs no account and plays offline; ads and usage statistics use the network when it is available.
+Hold your finger anywhere on the screen to pour sand; drag left and right to move the funnel. Lift your finger to stop.
+In some levels a decoration (boat, lighthouse, tree, building) appears under the funnel: drag it over the dashed ring and lift your finger.
+In stick levels, drag down along the dashed V lines to draw with the stick.
+The home screen shows all levels; the gear icon opens the settings (sound, music, sand sound, haptics, language, purchases). In a level, the button at the top left returns to the home screen.
+Sound credits: sand recording "Pouring Sand onto Sand" from Pixabay (Pixabay Content License); marimba and glockenspiel samples from VSCO-2 Community Edition (CC0).
+
 Version 1.2 adds ads (Google AdMob) and one non-consumable in-app purchase.
-- Interstitial ads appear only after a level ends and the player taps "Next", never in the first 10 levels, and at most once every 3 levels.
+- Interstitial ads appear only after a level ends and the player taps "Next", never in the first 10 levels, and at most once every 3 levels. To see one: finish level 11 and tap "Next".
 - Rewarded ads are optional: after the free undo is used, the undo button shows "+1"; a confirmation card appears before the ad.
 - In-app purchase "Play Without Ads" (com.investateknoloji.sandful.reklamsiz): home screen > gear icon > "Play without ads". "Restore purchases" is in the same sheet.
 - The app does not request tracking permission (no ATT), so ads are not personalized through cross-app tracking. In the EEA/UK a Google consent form is shown before ads are requested.
