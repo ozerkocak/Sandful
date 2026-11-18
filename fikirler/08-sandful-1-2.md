@@ -309,3 +309,8 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
 - **Kontrol (17 Kasım):** uçtan uca test 32/32, reklam ve satın alma testi 48/48 (oyun dosyası ve uygulama derlemesi). 130 bölümün hepsi insan botuyla 40'ar kez oynatıldı (5200 oyun):
   tek 0 yıldız 19. bölümde (%68, zor bölüm, felaket değil); en zor bölümler 7, 19, 117, 124, 127, 130 (ortalama 1,4-1,6 yıldız).
 
+## 12. Yayın adımları (Ozer ile adım adım, 18 Kasım 2026'dan)
+
+- **18 Kasım:** satın alma ürünü App Store Connect'te oluşturuldu: `com.investateknoloji.sandful.reklamsiz`, Reference Name `Reklamsiz`, Apple ID `6836297731`, durum "Prepare for Submission".
+  Sırada: ülkeler, fiyat (3,99 $), adlar (EN/TR), inceleme görüntüsü ve notu. Family Sharing şimdilik kapalı (açılınca kapatılamıyor; eklentiyle denenmedi).
+
