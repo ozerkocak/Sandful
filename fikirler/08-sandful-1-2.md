@@ -339,3 +339,5 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
 - **18 Kasım, mağaza sayfası:** App Store Connect'te 1.2 sürümü açıldı; İngilizce ve Türkçe sayfalar dolduruldu (8'er ekran görüntüsü, tanıtım metni, açıklama, What's New). Sırada: derleme (6) ve satın alma ürününün sürüme eklenmesi, inceleme notu, App Privacy, yaş anketi, gönderim.
 - **18 Kasım, App Privacy yayımlandı:** 8 veri türü (Coarse Location, Device ID, Purchase History, Product Interaction, Advertising Data, Crash Data, Performance Data, Other Diagnostic Data); hepsi "kimliğe bağlı: Evet", takip yok
   ("Data Used to Track You" bölümü yok). Karar ve gerekçe `uygulamalar/sandful/magaza/app-store-metinleri.md`'de. Sürüm sayfasında derleme 6 seçili, inceleme notu yenilendi, yayın elle. Sırada: yaş anketi, sonra sürüm ve satın alma ürününün incelemeye eklenmesi.
+- **18 Kasım, yaş anketi:** "Advertising: Yes" yapıldı, diğer cevaplar aynı. Sonuç: 172 ülkede 4+; Apple'ın bölgesel hesabında Brezilya A12, Kore ALL, Vietnam 00+ (Apple'ın kendi tablosu, yapılacak bir şey yok).
+  Sırada: sürümün ve satın alma ürününün incelemeye eklenmesi.
