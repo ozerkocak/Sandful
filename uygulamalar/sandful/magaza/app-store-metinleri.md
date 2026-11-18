@@ -58,10 +58,10 @@ Bu sürümle bölümler arasına seyrek reklam (dökerken asla, ilk 10 bölümde
 |---|---|---|
 | Location > Coarse Location | Third-Party Advertising, Analytics | Google reklamları IP adresinden yaklaşık konum çıkarır |
 | Identifiers > Device ID | Third-Party Advertising, Analytics | Uygulamaya özel tanımlayıcı (AdMob, Firebase) |
-| Usage Data > Product Interaction | Analytics | Bölüm ve ayar olayları (Firebase) |
+| Usage Data > Product Interaction | Third-Party Advertising, Analytics | Bölüm ve ayar olayları (Firebase); reklam SDK'sının kullanım sinyalleri |
 | Usage Data > Advertising Data | Third-Party Advertising, Analytics | Reklam gösterimi ve etkileşimi (AdMob) |
 | Purchases > Purchase History | Analytics | "Reklamsız alındı" olayı (ödeme bilgisi yok) |
-| Diagnostics > Performance Data, Other Diagnostic Data | Analytics, App Functionality | Reklam ve ölçüm SDK'larının tanı verileri |
+| Diagnostics > Crash Data, Performance Data, Other Diagnostic Data | Analytics, App Functionality | Reklam ve ölçüm SDK'larının tanı verileri (Crash Data: reklam SDK'sı çökme kaydı gönderebildiği için, eksik beyan etmemek adına) |
 
 Google'ın güncel beyan rehberleri (göndermeden önce karşılaştır): AdMob "Apple App Store data disclosure", Firebase "Prepare for Apple's App Store data disclosure requirements".
 
