@@ -319,3 +319,9 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
 - **18 Kasım:** Sandful deposu Mac'te yoktu (GitHub Desktop eski `Documents/GitHub/Sandful` yolunu arıyordu); `~/Developer/Sandful`'a yeniden klonlandı.
 - **18 Kasım, 16:00: 1.2 (5) ilk denemede derlendi ve TestFlight'a yüklendi.** Dört yeni eklenti (AdMob, Firebase Analytics, satın alma, puan isteme), paket ayarları ve proje dosyası değişikliği Mac'te sorunsuz derlendi.
   Yüklemede üç "Upload Symbols Failed" uyarısı çıktı (Google paketlerinin dSYM dosyası yok): zararsız. Projede derleme numarası 6'ya çıkarıldı (sonraki yükleme için). Sırada: TestFlight'ta telefonda deneme.
+- **18 Kasım, TestFlight'ta ilk kontrol (1.2 (5)):** dört eklenti yüklü, ürün mağazadan okunuyor ("Play Without Ads $3.99"), satın alma penceresi açılıyor (deneme, ücret alınmıyor), onay gerekmiyor (Türkiye), reklamlar yükleniyor.
+  **Sorun:** tanı satırında `reklam: gerçek · ortam -`. Oyun TestFlight'ta olduğunu StoreKit'in uygulama kaydından anlayacaktı; kayıt okunamadı, oyun gerçek reklam istedi. Ozer'e reklamlara dokunmaması söylendi.
+  **Düzeltme (1.2 (6)):** uygulama açılışta kendi işaretini yazıyor (`AppDelegate.swift`: makbuz adı `sandboxReceipt` ise deneme), oyun önce onu okuyor, StoreKit ikinci kaynak. Tanı ekranına iki deneme düğmesi eklendi
+  (Deneme reklamı; Satın almayı yok say), tanıya ortam hatası ve mağaza ülkesi yazılıyor. `AppDelegate.swift` değişikliği burada derlenemedi; Mac'te denenecek.
+  **Bakılacak:** Ayarlar'da fiyat "$3.99", satın alma penceresinde "199,99 TL" çıktı. Ürün bilgisi ile satın alma hesabı farklı mağaza ülkesinden gelmiş görünüyor (TestFlight'a özgü olabilir); 1.2 (6)'nın tanı satırındaki "mağaza" bilgisiyle anlaşılacak.
+  Kontrol: reklam ve satın alma testi 53/53 (beş yeni kontrol), uçtan uca 32/32; ikisi de oyun dosyasında ve uygulama derlemesinde.

@@ -10,6 +10,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Oyun sesi kullanıcının müziğiyle karışsın (kesmesin) ve sessiz anahtarına uysun.
         try? AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default)
+        // TestFlight'tan (ve Xcode'dan) kurulan derlemede mağaza makbuzunun adı "sandboxReceipt" olur. Oyun bu işareti okur
+        // (Preferences anahtarı "sandful_ortam") ve gerçek reklam yerine Google'ın deneme reklamlarını ister.
+        let deneme = Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
+        UserDefaults.standard.set(deneme ? "sandbox" : "magaza", forKey: "CapacitorStorage.sandful_ortam")
         return true
     }
 

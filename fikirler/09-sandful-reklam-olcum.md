@@ -73,6 +73,10 @@ Apple'ın kendi penceresi; ilk kez 12. bölümden sonra üç yıldızlı bir bit
 
 ## Deneme
 
-- TestFlight'ta ve Apple incelemesinde Google'ın **test reklamları** çıkar (oyun mağaza ortamını okuyup kendisi anlar); gerçek reklam sadece App Store sürümünde.
-- Ayarlar'da sürüm yazısına 5 kez dokununca tanı satırları açılır (eklentiler, onay durumu, reklam hazır mı, ürün fiyatı); sorun olursa ekran görüntüsü yeter.
+- TestFlight'ta ve Apple incelemesinde Google'ın **test reklamları** çıkar; gerçek reklam sadece App Store sürümünde. Oyun deneme ortamını iki kaynaktan anlar, biri "deneme" derse deneme sayar:
+  uygulamanın açılışta yazdığı işaret (`AppDelegate.swift`: mağaza makbuzunun adı `sandboxReceipt` ise deneme; oyun `sandful_ortam` anahtarından okur) ve StoreKit'in uygulama kaydı.
+  İlk yüklemede (1.2 (5)) sadece StoreKit kaydına bakılıyordu; TestFlight'ta okunamadı ve oyun **gerçek** reklam istedi. İşaret 1.2 (6) ile geldi.
+- Ayarlar'da sürüm yazısına 5 kez dokununca tanı satırları açılır (eklentiler, deneme ortamı, onay durumu, reklam hazır mı, ürün fiyatı, mağaza ülkesi); sorun olursa ekran görüntüsü yeter.
+  Altında iki deneme düğmesi çıkar (oyuncu görmez): **Deneme reklamı** (ortam anlaşılamazsa reklamları elle deneme moduna alır, telefonda kalıcı) ve
+  **Satın almayı yok say** (sadece o oturumda; TestFlight'ta yapılan satın alma geri alınamadığı için, satın aldıktan sonra da reklamları deneyebilmek için).
 - Tarayıcı önizlemesinde gerçek reklam yok; yerine 2 saniyelik "Reklam (önizleme)" kartı çıkar, sıklığı böyle denenebilir.

@@ -11,11 +11,12 @@ function sahte(cfg){const _now=Date.now.bind(Date);window.__skew=0;Date.now=()=>
  const np=window.__np={env:cfg.env||'Production',owned:!!cfg.owned,cancel:false};window.__fa=[];
  const P={
   Haptics:new Proxy({},{get:()=>()=>Promise.resolve()}),
-  Preferences:{get:()=>Promise.resolve({value:null}),set:()=>Promise.resolve()},
+  Preferences:{get:o=>Promise.resolve({value:o&&o.key==='sandful_ortam'?(cfg.isaret||null):null}),set:()=>Promise.resolve()}, // isaret: AppDelegate'in yazdığı 'sandbox' / 'magaza'
   App:{addListener:()=>Promise.resolve({remove(){}})},
   AppReview:{requestReview:()=>{log.push('AppReview.requestReview');return Promise.resolve();}},
   FirebaseAnalytics:{logEvent:o=>{window.__fa.push([o.name,o.params]);return Promise.resolve();},setUserProperty:o=>{log.push('FA.prop:'+o.key+'='+o.value);return Promise.resolve();}},
-  NativePurchases:{getAppTransaction:()=>Promise.resolve({appTransaction:{environment:np.env}}),
+  NativePurchases:{getAppTransaction:()=>cfg.atHata?Promise.reject(new Error('Failed to get app transaction')):Promise.resolve({appTransaction:{environment:np.env}}),
+   getStorefront:()=>Promise.resolve({countryCode:'TUR'}),
    getProducts:()=>{log.push('NP.getProducts');return Promise.resolve({products:[{identifier:'com.investateknoloji.sandful.reklamsiz',title:'Remove Ads',priceString:'$3.99'}]});},
    getPurchases:()=>Promise.resolve({purchases:np.owned?[{productIdentifier:'com.investateknoloji.sandful.reklamsiz',transactionId:'1'}]:[]}),
    purchaseProduct:o=>{log.push('NP.purchase');if(np.cancel)return Promise.reject(new Error('cancel'));np.owned=true;return Promise.resolve({transactionId:'42',productIdentifier:o.productIdentifier});},
@@ -86,6 +87,25 @@ async function launch(cfg={}){const b=await chromium.launch();const ctx=await b.
  {const {b,p,errs}=await launch({env:'Sandbox'});
   const r=await p.evaluate(async()=>{await bekle(100);for(let k=0;k<9;k++)bitir(k);REK.hazirla();await bekle(30);return {test:REK.test,opts:__ad.opts.map(x=>x.isTesting)};});
   ok('TestFlight ve incelemede (Sandbox) test reklamı istenir',r.test===true&&r.opts.length>=2&&r.opts.every(x=>x===true),r);await b.close();}
+ // 2b) StoreKit ortamı veremezse (1.2 (5)'te TestFlight'ta böyle oldu) uygulamanın yazdığı işaret geçerli; tanı ekranındaki deneme düğmeleri
+ {const {b,p,errs}=await launch({isaret:'sandbox',atHata:true});
+  const r=await p.evaluate(async()=>{await bekle(100);for(let k=0;k<9;k++)bitir(k);REK.hazirla();await bekle(30);return {test:REK.test,ortam:SAT.ortam,opts:__ad.opts.map(x=>x.isTesting)};});
+  ok('StoreKit ortamı veremese de uygulamanın işaretiyle (sandboxReceipt) test reklamı istenir',r.test===true&&r.ortam==='Sandbox'&&r.opts.length>=2&&r.opts.every(x=>x===true),r);await b.close();}
+ {const {b,p,errs}=await launch({isaret:'magaza',atHata:true});
+  const r=await p.evaluate(async()=>{await bekle(100);for(let k=0;k<9;k++)bitir(k);REK.hazirla();await bekle(30);
+   const o={test:REK.test,ortam:SAT.ortam,opts:__ad.opts.map(x=>x.isTesting)},T=document.getElementById('tani');
+   openSet();for(let i=0;i<5;i++)document.getElementById('setVer').click();o.satir=T.textContent.split('\n').length;o.ulke=/mağaza TUR/.test(T.textContent);
+   const n0=__ad.opts.length;document.getElementById('tTest').click();await bekle(30);o.elle=[SAVE.rt,REK.test,__ad.opts.slice(n0).map(x=>x.isTesting),/test \(elle\)/.test(T.textContent)];
+   const n1=__ad.opts.length;document.getElementById('tTest').click();await bekle(30);o.geri=[SAVE.rt,REK.test,__ad.opts.slice(n1).map(x=>x.isTesting)];return o;});
+  ok('Mağaza sürümünde (işaret: magaza) gerçek reklam istenir; ortam hatası ve mağaza ülkesi tanıda görünür',r.test===false&&r.ortam==='Production'&&r.opts.length>=2&&r.opts.every(x=>x===false)&&r.satir===5&&r.ulke,[r.test,r.ortam,r.opts,r.satir,r.ulke]);
+  ok('Tanı ekranından deneme reklamı elle açılıp kapatılır',r.elle[0]===1&&r.elle[1]===true&&r.elle[2].length>=2&&r.elle[2].every(x=>x===true)&&r.elle[3]&&!r.geri[0]&&r.geri[1]===false&&r.geri[2].length>=2&&r.geri[2].every(x=>x===false),[r.elle,r.geri]);
+  ok('Deneme düğmeleri testinde sayfa hatası yok',errs.length===0,errs.slice(0,3));await b.close();}
+ {const {b,p,errs}=await launch({owned:true,isaret:'sandbox'});
+  const r=await p.evaluate(async()=>{await bekle(100);for(let k=0;k<9;k++)bitir(k);const o={once:[SAVE.rs,__ad.opts.length]};
+   openSet();for(let i=0;i<5;i++)document.getElementById('setVer').click();
+   document.getElementById('tYok').click();await bekle(30);o.yok=[SAVE.rs,SAT.yokSay,__ad.opts.length,REK.gY,/yok sayılıyor/.test(document.getElementById('tani').textContent)];
+   document.getElementById('tYok').click();await bekle(30);o.geri=[SAVE.rs,SAT.yokSay];return o;});
+  ok('Tanı ekranından satın alma bu oturumda yok sayılır (reklam denenebilir), kapatınca geri gelir',r.once[0]===true&&r.once[1]===0&&r.yok[0]===false&&r.yok[1]===true&&r.yok[2]>=2&&r.yok[3]===true&&r.yok[4]&&r.geri[0]===true&&r.geri[1]===false,r);await b.close();}
  // 3) Ödüllü haklar: geri alma, üfleme, bölümü geçme
  {const {b,p,errs}=await launch({env:'Production'});
   const r=await p.evaluate(async()=>{const o={};await bekle(100);const U=document.getElementById('bUndo'),S=()=>__game.state();

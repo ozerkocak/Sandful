@@ -165,6 +165,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webki
 #setSheet{position:fixed;left:12px;right:12px;bottom:calc(var(--safeB) + 12px);max-width:460px;max-height:calc(100% - var(--safeT) - var(--safeB) - 36px);overflow-y:auto;margin:0 auto;border-radius:26px;padding:10px 18px 16px;background:rgba(255,251,244,.95);display:none}
 #setMsg{min-height:0;margin:8px 2px 0;font-size:13.5px;font-weight:800;color:var(--amber);text-align:center}#setMsg:empty{display:none}
 #tani{display:none;margin:8px 0 0;font:600 10.5px/1.5 ui-monospace,Menlo,monospace;color:var(--ink2);white-space:pre-wrap;text-align:left}
+#taniBtn{display:none;gap:8px;margin:8px 0 0;flex-wrap:wrap}
+#taniBtn button{flex:1 1 140px;font-family:inherit;font-weight:700;font-size:11.5px;line-height:1.2;color:var(--ink2);background:rgba(120,90,50,.1);border:0;border-radius:10px;padding:9px 8px}
 .rsp{align-self:center;margin-top:-4px;padding:8px 16px;border-radius:18px;font-weight:900;font-size:13.5px;color:var(--ink2);background:rgba(255,251,244,.6);border:1px solid rgba(255,255,255,.8)}
 #setSheet.show{display:block;animation:sheetUp .4s cubic-bezier(.2,.9,.3,1.08)}
 @keyframes sheetUp{from{transform:translateY(110%)}to{transform:none}}
@@ -249,6 +251,7 @@ button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
  <button class="btn sec" id="setDone">Tamam</button>
  <div class="ver" id="setVer">Sandful 1.2</div>
  <pre id="tani"></pre>
+ <div id="taniBtn"><button id="tTest" type="button"></button><button id="tYok" type="button"></button></div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -1825,7 +1828,7 @@ $('sHap').onclick=()=>{SAVE.hap=SAVE.hap===false;persist();setTexts();if(SAVE.ha
 $('sLang').onclick=()=>{SAVE.lang=LANG==='tr'?'en':'tr';persist();setTexts();openRaf();ayarOlc('language',SAVE.lang);};
 $('sNoAds').onclick=()=>SAT.al();$('sRestore').onclick=()=>SAT.geri();$('sPriv').onclick=()=>{try{PLG.AdMob.showPrivacyOptionsForm().catch(()=>{});}catch(e){}};
 $('sPol').onclick=()=>{window.open(GIZLILIK_URL,'_blank');};$('rsPill').onclick=()=>{openSet();};
-$('setVer').onclick=()=>{if(++taniN>=5){$('tani').textContent=tani();$('tani').style.display='block';}};
+$('setVer').onclick=()=>{if(++taniN>=5)taniCiz();};$('tTest').onclick=taniTest;$('tYok').onclick=taniYok;
 // sabit metinler ve ayar düğmeleri seçili dilde; bölüm açıksa başlık ve ipucu da
 function setTexts(){LANG=langNow();document.documentElement.lang=LANG;
  const sw=(id,lb,v)=>{const e=$(id);e.innerHTML='<span>'+t(lb)+'</span><span class="sw'+(v===false?'':' on')+'"><i></i></span>';e.setAttribute('aria-checked',v===false?'false':'true');};
@@ -1910,11 +1913,11 @@ const OLC={ev(ad,p){try{if(window.__olc)window.__olc.push([ad,p||{}]);if(PLG.Fir
 // reklam sayacı kayıtta durur: t son reklamın zamanı, b son geçiş reklamından beri biten bölüm, n bugünkü geçiş reklamı, top toplam
 const rk=()=>{const g=gunAd();if(!SAVE.rk||typeof SAVE.rk!=='object')SAVE.rk={t:0,b:0,g,n:0,top:0};if(SAVE.rk.g!==g){SAVE.rk.g=g;SAVE.rk.n=0;}return SAVE.rk;};
 const izinVar=o=>!!o&&o.canRequestAds!==false&&o.status!=='REQUIRED';
-const REK={test:false,izin:false,onay:null,gY:false,oY:false,acik:false,sonra:null,odulSon:null,kazandi:false,onaySoruldu:false,deneme:{gecis:0,odul:0},yukleniyor:{},
+const REK={test:false,oto:false,izin:false,onay:null,gY:false,oY:false,acik:false,sonra:null,odulSon:null,kazandi:false,onaySoruldu:false,deneme:{gecis:0,odul:0},yukleniyor:{},
  async init(){const A=PLG.AdMob;if(!A)return;
   try{A.addListener('interstitialAdDismissed',()=>REK.gecisBitti());A.addListener('interstitialAdFailedToShow',()=>REK.gecisBitti());
    A.addListener('onRewardedVideoAdReward',()=>{REK.kazandi=true;});A.addListener('onRewardedVideoAdDismissed',()=>REK.odulBitti(false));A.addListener('onRewardedVideoAdFailedToShow',()=>REK.odulBitti(true));}catch(e){}
-  try{REK.test=await SAT.denemeOrtami();}catch(e){}            // TestFlight ve inceleme: Google'ın test reklamları
+  try{REK.oto=await SAT.denemeOrtami();}catch(e){}REK.test=REK.oto||!!SAVE.rt; // TestFlight ve inceleme: Google'ın test reklamları (SAVE.rt: tanı ekranından elle)
   try{await A.initialize({});}catch(e){return;}
   try{REK.onay=await A.requestConsentInfo({});REK.izin=izinVar(REK.onay);}catch(e){REK.izin=false;} // onay bilgisi alınamadıysa bu oturumda reklam istenmez
   REK.hazirla();setTexts();},
@@ -1944,20 +1947,27 @@ const REK={test:false,izin:false,onay:null,gY:false,oY:false,acik:false,sonra:nu
   REK.acik=true;toast(t('Reklam hazırlanıyor…'));REK.yukle('odul');let n=0;const bek=setInterval(()=>{if(REK.oY){clearInterval(bek);goster();}else if(++n>=20){clearInterval(bek);REK.acik=false;bedava();}},250);},
  odulBitti(hata){clearTimeout(REK.bekci);if(REK.odulSon)REK.odulSon(hata);}};
 // Reklamsız: tek seferlik satın alma. Ad ve fiyat mağazadan okunur; açılışta mağazadaki satın alma kontrol edilir (yeni telefonda kendiliğinden geri gelir).
-const SAT={urun:null,mesgul:false,ortam:'',
- async denemeOrtami(){const N=PLG.NativePurchases;if(!N)return false;
-  const r=await Promise.race([N.getAppTransaction(),new Promise(ok=>setTimeout(()=>ok(null),3000))]),o=r&&r.appTransaction&&r.appTransaction.environment;SAT.ortam=o||'?';return o==='Sandbox'||o==='Xcode';},
+const SAT={urun:null,mesgul:false,ortam:'',ortamHata:'',ulke:'',yokSay:false,
+ // Deneme ortamı (TestFlight, Xcode, Apple incelemesi). İki kaynak, biri "deneme" derse deneme: uygulamanın açılışta yazdığı işaret
+ // (AppDelegate: mağaza makbuzunun adı "sandboxReceipt" ise 'sandbox') ve StoreKit'in uygulama kaydı (TestFlight'ta hata verebiliyor: 1.2 (5)'te ortam okunamadı).
+ async denemeOrtami(){let o='';
+  try{const r=PLG.Preferences&&await PLG.Preferences.get({key:'sandful_ortam'});if(r&&r.value==='sandbox')o='Sandbox';else if(r&&r.value==='magaza')o='Production';}catch(e){}
+  const N=PLG.NativePurchases;
+  if(o!=='Sandbox'&&N)try{const r=await Promise.race([N.getAppTransaction(),new Promise(ok=>setTimeout(()=>ok(null),3000))]),e=r&&r.appTransaction&&r.appTransaction.environment;if(e==='Sandbox'||e==='Xcode'||!o)o=e||o;}
+   catch(e){SAT.ortamHata=String(e&&e.message||e).slice(0,80);}
+  SAT.ortam=o||'?';return o==='Sandbox'||o==='Xcode';},
  async init(){const N=PLG.NativePurchases;if(!N)return;
   try{const r=await N.getProducts({productIdentifiers:[URUN],productType:'inapp'});SAT.urun=(r.products||[])[0]||null;}catch(e){}
-  try{await SAT.kontrol();}catch(e){}setTexts();},
- async kontrol(){const r=await PLG.NativePurchases.getPurchases({productType:'inapp',onlyCurrentEntitlements:true}),v=(r.purchases||[]).some(x=>x.productIdentifier===URUN&&!x.revocationDate);if(v)SAT.ver();return v;},
- ver(){if(SAVE.rs)return;SAVE.rs=true;persist();OLC.oz('noads','1');setTexts();},
+  try{await SAT.kontrol();}catch(e){}setTexts();
+  try{const u=await N.getStorefront();SAT.ulke=(u&&u.countryCode)||'';}catch(e){}},
+ async kontrol(){const r=await PLG.NativePurchases.getPurchases({productType:'inapp',onlyCurrentEntitlements:true}),v=(r.purchases||[]).some(x=>x.productIdentifier===URUN&&!x.revocationDate);if(v&&!SAT.yokSay)SAT.ver();return v;},
+ ver(){SAT.yokSay=false;if(SAVE.rs)return;SAVE.rs=true;persist();OLC.oz('noads','1');setTexts();},
  async al(){if(SAT.mesgul||SAVE.rs)return;if(!NATIVE){SAT.ver();setMsg(t('Önizleme: reklamlar kaldırıldı.'));return;}
   if(!SAT.urun){setMsg(t('Mağazaya ulaşılamadı. Biraz sonra tekrar dene.'));SAT.init();return;}
   SAT.mesgul=true;setMsg('');try{const tx=await PLG.NativePurchases.purchaseProduct({productIdentifier:URUN,productType:'inapp',quantity:1});
    if(tx&&tx.transactionId){SAT.ver();setMsg(t('Teşekkürler! Reklamlar kaldırıldı.'));OLC.ev('noads_buy',{result:'ok'});}else setMsg(t('Satın alma tamamlanmadı.'));}
   catch(e){setMsg(t('Satın alma tamamlanmadı.'));OLC.ev('noads_buy',{result:'fail'});}SAT.mesgul=false;},
- async geri(){if(SAT.mesgul||!PLG.NativePurchases)return;SAT.mesgul=true;setMsg('');let ok=false;try{await PLG.NativePurchases.restorePurchases();ok=await SAT.kontrol();}catch(e){}
+ async geri(){if(SAT.mesgul||!PLG.NativePurchases)return;SAT.mesgul=true;SAT.yokSay=false;setMsg('');let ok=false;try{await PLG.NativePurchases.restorePurchases();ok=await SAT.kontrol();}catch(e){}
   setMsg(t(ok?'Satın alma geri yüklendi.':'Geri yüklenecek satın alma bulunamadı.'));OLC.ev('noads_restore',{result:ok?'ok':'none'});SAT.mesgul=false;}};
 function setMsg(s){$('setMsg').textContent=s;}
 // Küçük kart: ödüllü reklamdan önce onay; tarayıcı önizlemesinde reklamın yerine geçen 2 saniyelik kart
@@ -1973,9 +1983,16 @@ function puanIste(){const n=SAVE.puan|0;if(!PLG.AppReview||finalStars<3||!((n===
 // Tanı: Ayarlar'da sürüm yazısına 5 kez dokununca (telefonda sorun olursa ekran görüntüsü yeter)
 let taniN=0;
 function tani(){const r=rk(),o=REK.onay||{};return ['uygulama: '+(NATIVE?'evet':'tarayıcı')+' · eklenti: '+['AdMob','FirebaseAnalytics','NativePurchases','AppReview'].map(k=>k.slice(0,4)+(PLG[k]?'✓':'✗')).join(' '),
-  'reklam: '+(REK.test?'test':'gerçek')+' · ortam '+(SAT.ortam||'-')+' · izin '+(REK.izin?'✓':'✗')+' · onay '+(o.status||'-')+' · geçiş '+(REK.gY?'hazır':'yok')+' · ödül '+(REK.oY?'hazır':'yok'),
+  'reklam: '+(REK.test?(REK.oto?'test':'test (elle)'):'gerçek')+' · ortam '+(SAT.ortam||'-')+' · izin '+(REK.izin?'✓':'✗')+' · onay '+(o.status||'-')+' · geçiş '+(REK.gY?'hazır':'yok')+' · ödül '+(REK.oY?'hazır':'yok'),
   'sayaç: bugün '+r.n+'/'+REKLAM.gunluk+' · toplam '+(r.top||0)+' · bölüm '+r.b+' · son '+(r.t?Math.round((simdi()-r.t)/1000)+' sn önce':'-'),
-  'ürün: '+(SAT.urun?(SAT.urun.title||'')+' '+(SAT.urun.priceString||''):'yok')+' · reklamsız '+(SAVE.rs?'✓':'✗')+' · bölüm '+Object.keys(SAVE.lv).length+'/'+LEVELS.length].join('\n');}
+  'ürün: '+(SAT.urun?(SAT.urun.title||'')+' '+(SAT.urun.priceString||''):'yok')+' · mağaza '+(SAT.ulke||'-')+' · reklamsız '+(SAVE.rs?'✓':SAT.yokSay?'yok sayılıyor':'✗')+' · bölüm '+Object.keys(SAVE.lv).length+'/'+LEVELS.length]
+  .concat(SAT.ortamHata?['ortam hatası: '+SAT.ortamHata]:[]).join('\n');}
+// Tanı açıkken iki deneme düğmesi (oyuncu görmez): reklamları elle deneme moduna al; satın almayı bu oturumda yok say
+// (TestFlight'ta yapılan satın alma geri alınamıyor; reklamları denemek için). İkisi de gerçek satın almayı ya da mağazayı değiştirmez.
+function taniCiz(){$('tani').textContent=tani();$('tani').style.display='block';$('taniBtn').style.display='flex';
+ $('tTest').textContent='Deneme reklamı: '+(REK.oto?'açık (otomatik)':SAVE.rt?'açık (elle)':'kapalı');$('tYok').textContent=SAT.yokSay?'Satın alma yok sayılıyor':'Satın almayı yok say';}
+function taniTest(){if(REK.oto)return;SAVE.rt=SAVE.rt?0:1;persist();REK.test=!!SAVE.rt;REK.gY=REK.oY=false;REK.hazirla();taniCiz();setTimeout(taniCiz,1500);}
+function taniYok(){if(!NATIVE)return;SAT.yokSay=!SAT.yokSay;if(SAT.yokSay)SAVE.rs=false;else SAT.kontrol().catch(()=>{}).then(taniCiz);REK.hazirla();setTexts();taniCiz();setTimeout(taniCiz,1500);}
 // ───────── Uzun yol (1.2) ─────────
 // 31. bölümden sonrası: el yapımı tanıtım bölümleri (EL12) ve üreticinin sabit tohumlarla kurduğu bölümler. Tohumları botlar seçti (araclar/uretici-sec.js);
 // aynı tohum her telefonda aynı bölümü verir. Yayınlanmış bir bölümün tarifi değiştirilmez (oyuncunun oynadığı bölüm değişir): yeni içerik = yeni tarif ya da yeni tohum.

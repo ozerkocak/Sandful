@@ -106,7 +106,10 @@ Uygulama Bilgileri'nde **Türkçe** yerelleştirmeyi ekle; ad her dilde aynı ka
 **TestFlight'ta dene** (gerçek reklam çıkmaz: oyun TestFlight'ı tanır ve Google'ın "Test Ad" yazan deneme reklamlarını gösterir; satın alma TestFlight'ta ücretsizdir)
 
 6. Ana ekran > dişli > en alttaki **Sandful 1.2** yazısına 5 kez dokun: tanı satırları açılır. Ekran görüntüsünü gönder. Beklenen:
-   `eklenti: AdMo✓ Fire✓ Nati✓ AppR✓`, `reklam: test · ortam Sandbox · izin ✓`, `ürün: … 3,99 $` (ürün görünmüyorsa 1. adımdaki ürün hazır değildir).
+   `eklenti: AdMo✓ Fire✓ Nati✓ AppR✓`, `reklam: test · ortam Sandbox · izin ✓`, `ürün: … (fiyat) · mağaza …` (ürün görünmüyorsa 1. adımdaki ürün hazır değildir).
+   **`reklam: gerçek` yazıyorsa reklam denemesine geçme ve reklamlara dokunma** (kendi reklamına dokunmak AdMob hesabına zarar verir): tanı satırlarının altındaki
+   **Deneme reklamı** düğmesine bas (`reklam: test (elle)` olur) ve ekran görüntüsünü gönder.
+   Reklamsız'ı satın aldıktan sonra reklamları denemek için aynı yerdeki **Satın almayı yok say** düğmesi (sadece o oturumda geçerli; oyunu kapatıp açınca satın alma geri gelir).
 7. 11. bölümü bitirip **Sonraki**'ye bas: tam ekran deneme reklamı çıkmalı, kapatınca 12. bölüm başlamalı. Sonraki iki bölümde çıkmamalı, üçüncüde (14. bölümden sonra) yine çıkmalı.
 8. Bir bölümde geri almayı kullan, tekrar dök: ↶ düğmesi **+1 ▸** olur. Bas > **İzle**: deneme reklamı, sonra geri alma.
 9. Ayarlar > **Reklamsız oyna** > satın al (ücretsiz): satır ✓ olur, reklam çıkmaz. Oyunu silip yeniden kur: açılışta kendiliğinden ✓ olmalı (ya da "Satın alımları geri yükle").
