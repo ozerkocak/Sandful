@@ -333,3 +333,4 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
 - **18 Kasım, satın alma ve geri yükleme (1.2 (6), TestFlight):** satın alma çalıştı (Apple hesap şifresini sordu: iPhone'un kendi penceresi, olağan), "Satın almayı yok say" ile geri yükleme denendi:
   "Purchase restored" ve ✓. İki küçük kusur görüldü, depoda düzeltildi (yeni yükleme gerektirmez, bir sonraki derlemeye girer): geri yüklemeden sonra tanı satırı eski durumu gösteriyordu
   ("yok sayılıyor"); mesaj yazıldıktan sonra dil değiştirilince mesaj eski dilde kalıyordu. Para testi 54/54. Sırada: Firebase'de olaylar.
+- **18 Kasım, Firebase:** Analytics panosunda "son 30 dakikada 2 etkin kullanıcı" (Türkiye), son sürüm iOS Sandful 1.2 "Successful". Ölçüm TestFlight derlemesinden geliyor. Olay adları (level_start vb.) Realtime sayfasında ayrıca bakılacak.
