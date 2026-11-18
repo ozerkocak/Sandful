@@ -26,7 +26,7 @@ Varsayılanlar:
 |---|---|
 | Uygulama adı | Sandful (App Store başlığı: "Sandful: Relaxing Sand Art") |
 | Paket kimliği (Bundle ID) | `com.investateknoloji.sandful` |
-| Sürüm | 1.1.1 (4) yayında. **1.2 (5)** 18 Kasım 2026'da TestFlight'a yüklendi. Projede sıradaki derleme numarası **6** (yeni bir yükleme gerekirse hazır) |
+| Sürüm | 1.1.1 (4) yayında. **1.2 (5)** ve **1.2 (6)** 18 Kasım 2026'da TestFlight'a yüklendi (6: deneme reklamı düzeltmesi). Projede sıradaki derleme numarası **7** (yeni bir yükleme gerekirse hazır) |
 | Cihaz | Sadece iPhone, dikey, tam ekran |
 | Ekip | İnvesta Teknoloji (`3ANJ967SS2`) |
 
@@ -128,6 +128,8 @@ Uygulama Bilgileri'nde **Türkçe** yerelleştirmeyi ekle; ad her dilde aynı ka
 - **Xcode'da `Missing package product 'app_CapacitorApp'`** (9 Kasım 2026, depo yeni klasöre klonlandıktan sonra): File > Packages > **Reset Package Caches**, "Resolving packages" bitince Product > **Clean Build Folder**, sonra Archive. Olmazsa Xcode kapalıyken `rm -rf ~/Library/Developer/Xcode/DerivedData/App-*` ve `sh scripts/ios-hazirla.sh`.
 - **Yüklemede `Upload Symbols Failed … did not include a dSYM for FirebaseAnalytics / GoogleAppMeasurement / GoogleMobileAds`** (18 Kasım 2026, 1.2'nin ilk yüklemesi): zararsız uyarı, yükleme tamamlanmıştır; **Done**'a bas.
   Google bu paketleri derlenmiş olarak veriyor ve hata ayıklama dosyası (dSYM) koymuyor; sadece bu paketlerin içindeki bir çökme raporda okunaksız görünür.
+- **GitHub Desktop'ta `Package.resolved` değişikliği görünürse** (Xcode paket sürümlerini güncellediğinde): silme, **Commit** ve **Push** et. Bu dosya derlemenin kullandığı paket sürümlerini sabitler
+  (18 Kasım 2026: Google Mobile Ads 13.11.0, Firebase 12.19.3, UMP 3.1.0); depoda durdukça sonraki derlemeler aynı sürümleri kullanır.
 - **Yüklenen derleme numarası projedekinden büyük çıkabilir:** Distribute App'teki "Manage Version and Build Number" açıkken Xcode numarayı kendisi artırır (1.1.1'de 3 yerine 4). Sonraki sürümde projedeki numara yüklenenin üstüne çıkarılır.
 
 - **Pull sırasında `fatal: mmap failed: Operation canceled`** (3 Kasım 2026): depo iCloud'a eşitlenen `~/Documents` içindeydi;

@@ -325,3 +325,5 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
   (Deneme reklamı; Satın almayı yok say), tanıya ortam hatası ve mağaza ülkesi yazılıyor. `AppDelegate.swift` değişikliği burada derlenemedi; Mac'te denenecek.
   **Bakılacak:** Ayarlar'da fiyat "$3.99", satın alma penceresinde "199,99 TL" çıktı. Ürün bilgisi ile satın alma hesabı farklı mağaza ülkesinden gelmiş görünüyor (TestFlight'a özgü olabilir); 1.2 (6)'nın tanı satırındaki "mağaza" bilgisiyle anlaşılacak.
   Kontrol: reklam ve satın alma testi 53/53 (beş yeni kontrol), uçtan uca 32/32; ikisi de oyun dosyasında ve uygulama derlemesinde.
+- **18 Kasım, 16:50: 1.2 (6) yüklendi.** `AppDelegate.swift` değişikliği Mac'te derlendi. Xcode'un yazdığı `Package.resolved` (paket sürümleri: Google Mobile Ads 13.11.0, Firebase 12.19.3, UMP 3.1.0)
+  Ozer tarafından depoya eklendi; sonraki derlemeler aynı sürümleri kullanır. Projede derleme numarası 7'ye çıkarıldı. Sırada: TestFlight'ta tanı ekranı (`reklam: test · ortam Sandbox` bekleniyor), sonra reklam ve satın alma denemeleri.
