@@ -315,3 +315,4 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
   Sırada: ülkeler, fiyat (3,99 $), adlar (EN/TR), inceleme görüntüsü ve notu. Family Sharing şimdilik kapalı (açılınca kapatılamıyor; eklentiyle denenmedi).
 - **18 Kasım:** ürün sayfası dolduruldu ve kaydedildi (ülkeler, 3,99 $, EN/TR adlar, inceleme görüntüsü ve notu). Durum "Prepare for Submission" olarak kalıyor (bu arayüzde "Ready to Submit" yazmıyor);
   "Add for Review" 1.2 sürümüyle birlikte basılacak. Ürünün mağazadan okunabildiği TestFlight tanı satırında (`ürün: … 3,99 $`) doğrulanacak.
+- **18 Kasım:** yeni gizlilik sayfası siteye yüklendi (Ozer; `investa.com.tr` bulut ortamından açılamadığı için buradan kontrol edilemedi). Sırada: Mac'te ilk 1.2 derlemesi.
