@@ -341,3 +341,7 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
   ("Data Used to Track You" bölümü yok). Karar ve gerekçe `uygulamalar/sandful/magaza/app-store-metinleri.md`'de. Sürüm sayfasında derleme 6 seçili, inceleme notu yenilendi, yayın elle. Sırada: yaş anketi, sonra sürüm ve satın alma ürününün incelemeye eklenmesi.
 - **18 Kasım, yaş anketi:** "Advertising: Yes" yapıldı, diğer cevaplar aynı. Sonuç: 172 ülkede 4+; Apple'ın bölgesel hesabında Brezilya A12, Kore ALL, Vietnam 00+ (Apple'ın kendi tablosu, yapılacak bir şey yok).
   Sırada: sürümün ve satın alma ürününün incelemeye eklenmesi.
+- **18 Kasım, mağaza sayıları (1.2 öncesi başlangıç çizgisi; hiç tanıtım yapılmadan, 2-18 Kasım):** 43 ilk indirme (ABD 22, Türkiye 11, Kanada 3, Rusya 3, Birleşik Krallık 2, Almanya 1, BAE 1), 3 yeniden indirme,
+  5,27 bin gösterim, 98 ürün sayfası görüntüleme, dönüşüm %1,06 (günlük ortalama), 34 güncelleme. Apple'ın elde tutma grafiği sadece izin veren kullanıcıları sayıyor ve bu sayıda okunamıyor.
+  Okuma: karar verdirecek kadar veri yok. Mağaza oyunu aramada gösteriyor ve ABD'den tanımadığımız kişiler indiriyor (iyi); gösterimden sayfaya geçiş düşük, yani zayıf halka arama sonucundaki görünüm
+  (simge, ad, ilk üç ekran görüntüsü). 1.2 ile ilk üç görüntü değişiyor; yayından sonra dönüşüm bu sayıyla karşılaştırılacak. Asıl ölçü (ilk gün ve yedinci gün geri dönüş, bölüm hunisi) 1.2'deki Firebase ile gelecek.
