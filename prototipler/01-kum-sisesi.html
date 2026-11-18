@@ -1825,7 +1825,7 @@ $('sSnd').onclick=()=>{SAVE.snd=SAVE.snd===false;persist();if(master)master.gain
 $('sMuz').onclick=()=>{SAVE.muz=SAVE.muz===false;persist();if(musicBus)musicBus.gain.value=SAVE.muz?1:0;setTexts();ayarOlc('music',SAVE.muz);};
 $('sKum').onclick=()=>{initAudio();SAVE.kum10=((SAVE.kum10|0)+1)%3;persist();setTexts();if(kumAdi()==='yumusak')sndNeed(['yumusak','kay']);attachPour();previewKum();ayarOlc('sand_sound',kumAdi());};
 $('sHap').onclick=()=>{SAVE.hap=SAVE.hap===false;persist();setTexts();if(SAVE.hap)vib(20);ayarOlc('haptics',SAVE.hap);};
-$('sLang').onclick=()=>{SAVE.lang=LANG==='tr'?'en':'tr';persist();setTexts();openRaf();ayarOlc('language',SAVE.lang);};
+$('sLang').onclick=()=>{SAVE.lang=LANG==='tr'?'en':'tr';persist();setMsg('');setTexts();openRaf();ayarOlc('language',SAVE.lang);}; // eski dilde kalan mesaj silinir
 $('sNoAds').onclick=()=>SAT.al();$('sRestore').onclick=()=>SAT.geri();$('sPriv').onclick=()=>{try{PLG.AdMob.showPrivacyOptionsForm().catch(()=>{});}catch(e){}};
 $('sPol').onclick=()=>{window.open(GIZLILIK_URL,'_blank');};$('rsPill').onclick=()=>{openSet();};
 $('setVer').onclick=()=>{if(++taniN>=5)taniCiz();};$('tTest').onclick=taniTest;$('tYok').onclick=taniYok;
@@ -1837,7 +1837,7 @@ function setTexts(){LANG=langNow();document.documentElement.lang=LANG;
  // Reklamsız: adı ve fiyatı mağazadan; alındıysa ✓. Geri yükleme sadece uygulamada; gizlilik seçenekleri sadece onay gereken bölgelerde
  sv('sNoAds','Reklamsız oyna',SAVE.rs?'✓':SAT.urun?SAT.urun.priceString||'':NATIVE?'…':t('önizleme'));$('sNoAds').style.display=NATIVE&&!PLG.NativePurchases?'none':'';
  sv('sRestore','Satın alımları geri yükle','');$('sRestore').style.display=NATIVE&&PLG.NativePurchases&&!SAVE.rs?'':'none';
- sv('sPriv','Gizlilik seçenekleri','');$('sPriv').style.display=REK.gizlilikGerek()?'':'none';sv('sPol','Gizlilik politikası','↗');
+ sv('sPriv','Gizlilik seçenekleri','');$('sPriv').style.display=REK.gizlilikGerek()?'':'none';sv('sPol','Gizlilik politikası','↗');if(taniN>=5)taniCiz(); // tanı açıksa satın alma, geri yükleme ve reklam durumu değişince yenilenir
  $('setH').textContent=t('Ayarlar');$('setDone').textContent=t('Tamam');$('heroPlay').textContent=t('Oyna');$('bSet').setAttribute('aria-label',t('Ayarlar'));
  $('rafH').textContent=t('Rafım');$('rafClose').textContent=t('Devam');$('rAgain').textContent=t('Tekrar');$('gfxErr').textContent=t('Bu cihazda 3D grafik açılamadı.');
  $('bRaf').setAttribute('aria-label',t('Raf'));$('bRe').setAttribute('aria-label',t('Baştan'));$('bUndo').setAttribute('aria-label',t('Geri al'));

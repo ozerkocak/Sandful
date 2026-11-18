@@ -330,3 +330,6 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
 - **18 Kasım, 1.2 (6) TestFlight'ta:** tanı satırı `reklam: test · ortam Sandbox`, deneme düğmesi "açık (otomatik)": işaret çalışıyor. Ürün artık "Reklamsız Oyna ₺199,99 · mağaza TUR" olarak okunuyor
   (ilk derlemedeki "$3.99" mağazanın ilk okumasına özgüymüş; ikinci açılışta hesap ülkesiyle aynı). Sırada: geçiş ve ödüllü reklam denemesi, sonra satın alma ve geri yükleme, Firebase'de olaylar.
 - **18 Kasım, reklam denemesi (1.2 (6), TestFlight):** Ozer: "Ödül reklamı da geçiş reklamı da çalışıyor." Sırada: satın alma ve geri yükleme, Firebase'de olaylar.
+- **18 Kasım, satın alma ve geri yükleme (1.2 (6), TestFlight):** satın alma çalıştı (Apple hesap şifresini sordu: iPhone'un kendi penceresi, olağan), "Satın almayı yok say" ile geri yükleme denendi:
+  "Purchase restored" ve ✓. İki küçük kusur görüldü, depoda düzeltildi (yeni yükleme gerektirmez, bir sonraki derlemeye girer): geri yüklemeden sonra tanı satırı eski durumu gösteriyordu
+  ("yok sayılıyor"); mesaj yazıldıktan sonra dil değiştirilince mesaj eski dilde kalıyordu. Para testi 54/54. Sırada: Firebase'de olaylar.

@@ -104,8 +104,13 @@ async function launch(cfg={}){const b=await chromium.launch();const ctx=await b.
   const r=await p.evaluate(async()=>{await bekle(100);for(let k=0;k<9;k++)bitir(k);const o={once:[SAVE.rs,__ad.opts.length]};
    openSet();for(let i=0;i<5;i++)document.getElementById('setVer').click();
    document.getElementById('tYok').click();await bekle(30);o.yok=[SAVE.rs,SAT.yokSay,__ad.opts.length,REK.gY,/yok sayılıyor/.test(document.getElementById('tani').textContent)];
-   document.getElementById('tYok').click();await bekle(30);o.geri=[SAVE.rs,SAT.yokSay];return o;});
-  ok('Tanı ekranından satın alma bu oturumda yok sayılır (reklam denenebilir), kapatınca geri gelir',r.once[0]===true&&r.once[1]===0&&r.yok[0]===false&&r.yok[1]===true&&r.yok[2]>=2&&r.yok[3]===true&&r.yok[4]&&r.geri[0]===true&&r.geri[1]===false,r);await b.close();}
+   document.getElementById('tYok').click();await bekle(30);o.geri=[SAVE.rs,SAT.yokSay];
+   // yok sayılırken "Satın alımları geri yükle": satın alma geri gelir, tanı satırı ve düğme yenilenir; dil değişince eski mesaj silinir
+   document.getElementById('tYok').click();await bekle(30);document.getElementById('sRestore').click();await bekle(40);
+   o.yukle=[SAVE.rs,SAT.yokSay,/yok say/.test(document.getElementById('tani').textContent),document.getElementById('tYok').textContent,document.getElementById('setMsg').textContent.length>0];
+   document.getElementById('sLang').click();await bekle(20);o.dil=document.getElementById('setMsg').textContent;return o;});
+  ok('Tanı ekranından satın alma bu oturumda yok sayılır (reklam denenebilir), kapatınca geri gelir',r.once[0]===true&&r.once[1]===0&&r.yok[0]===false&&r.yok[1]===true&&r.yok[2]>=2&&r.yok[3]===true&&r.yok[4]&&r.geri[0]===true&&r.geri[1]===false,r);
+  ok('Yok sayılırken geri yükleme: satın alma geri gelir, tanı yenilenir; dil değişince eski mesaj silinir',r.yukle[0]===true&&r.yukle[1]===false&&r.yukle[2]===false&&/yok say$/.test(r.yukle[3])&&r.yukle[4]&&r.dil==='',[r.yukle,r.dil]);await b.close();}
  // 3) Ödüllü haklar: geri alma, üfleme, bölümü geçme
  {const {b,p,errs}=await launch({env:'Production'});
   const r=await p.evaluate(async()=>{const o={};await bekle(100);const U=document.getElementById('bUndo'),S=()=>__game.state();
