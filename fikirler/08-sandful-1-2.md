@@ -355,3 +355,6 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
   Yayından sonra bakılacaklar: Ozer'in kendi telefonunda "Deneme reklamı" (elle) açık olsun; bir hafta sonra Firebase (ertesi gün ve yedinci gün geri dönüş, bölüm hunisi), AdMob (gösterim, gelir) ve mağaza dönüşümü
   (başlangıç çizgisi: %1,06) okunacak. Açık küçük işler: Çin ana karasını satış ülkelerinden çıkarmak (31 Ocak 2027'den önce), yaş anketindeki iki yeni soru (15 Ocak 2027'den önce), reklam ağı kimlik listesinin doğrulanması,
   3 Aralık'tan sonra Türkiye fiyatına bakmak, depoda bekleyen iki küçük düzeltme (bir sonraki sürümle).
+- **20 Kasım, tanıtım: önce parasız yollar** (Ozer: "videolarla başlayalım"). Kısa dikey videolar (TikTok, Reels, Shorts): telefonda ekran kaydı, 12-20 saniye, ilk saniyede kum akıyor, sonda kapak ve konfeti, oyunun kendi sesiyle.
+  İlk altı video: 8 Gün batımı, 29 Kuzey ışıkları, 13 Balina, 25 Yağmur, 28 Karlı köy, 31 Kum fırtınası; ilerledikçe 46 Gece ve gündüz, 55 Büyük Gökkuşağı, 73 Damalı Kek, 97 Uyumayan Şehir, 117 Yalnız Zirve.
+  Sırada bekleyenler: Apple'a öne çıkarma başvurusu (Featuring > Nominations), bir hafta sonra ölçüme göre küçük bir arama reklamı denemesi.
