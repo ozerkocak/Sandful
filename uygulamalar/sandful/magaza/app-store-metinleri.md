@@ -5,7 +5,7 @@ App Store Connect > Sandful > Distribution > **iOS App Version 1.1** ve **App In
 Birincil dil İngilizce (ABD); Türkçe yerelleştirmede (sağ üstteki dil menüsü > Türkçe) Türkçe sütun girilir.
 Karakter sınırları kontrol edildi.
 
-## 1.2: 130 bölüm, reklam ve Reklamsız (hazırlanıyor)
+## 1.2: 130 bölüm, reklam ve Reklamsız (20 Kasım 2026'dan beri yayında)
 
 ### Bu sürümde yenilikler (What's New)
 

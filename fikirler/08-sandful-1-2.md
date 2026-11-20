@@ -351,3 +351,7 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
   1.2'de zaten yapıldı ya da oyunla ilgisiz). Öneri: önce 1.2'nin ölçümüyle geri dönüşü ve oyuncu başına geliri görmek; gerekirse küçük bir deneme bütçesiyle (Apple'ın arama reklamları) kendimiz ölçmek. Karar Ozer'de.
 - **20 Kasım 2026: Apple 1.2'yi onayladı.** Durum "Pending Developer Release" (yayın elle). App Store Connect'te üç bilgi notu: yaş anketine yeni sorular (Location Sharing, Dating; 15 Ocak 2027'ye kadar),
   Çin ana karası için güvenlik değerlendirmesi ve yapay zekâ içeriği beyanı (31 Ocak 2027'ye kadar). Hiçbiri yayını engellemiyor; Çin için en basit yol ülkeyi satış listesinden çıkarmak (yayından sonra bakılacak).
+- **20 Kasım 2026: 1.2 yayında.** Ozer "Release This Version"a bastı; AdMob'da uygulama durumu **"Hazır"**. Bundan sonra 31-130. bölümler yayınlanmış sayılır: tarifleri ve tohumları değiştirilmez.
+  Yayından sonra bakılacaklar: Ozer'in kendi telefonunda "Deneme reklamı" (elle) açık olsun; bir hafta sonra Firebase (ertesi gün ve yedinci gün geri dönüş, bölüm hunisi), AdMob (gösterim, gelir) ve mağaza dönüşümü
+  (başlangıç çizgisi: %1,06) okunacak. Açık küçük işler: Çin ana karasını satış ülkelerinden çıkarmak (31 Ocak 2027'den önce), yaş anketindeki iki yeni soru (15 Ocak 2027'den önce), reklam ağı kimlik listesinin doğrulanması,
+  3 Aralık'tan sonra Türkiye fiyatına bakmak, depoda bekleyen iki küçük düzeltme (bir sonraki sürümle).

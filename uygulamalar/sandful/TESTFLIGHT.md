@@ -26,7 +26,7 @@ Varsayılanlar:
 |---|---|
 | Uygulama adı | Sandful (App Store başlığı: "Sandful: Relaxing Sand Art") |
 | Paket kimliği (Bundle ID) | `com.investateknoloji.sandful` |
-| Sürüm | 1.1.1 (4) yayında. **1.2 (6)** 20 Kasım 2026'da onaylandı (satın alma ürünüyle birlikte gönderildi; yayın elle, "Pending Developer Release"). Projede sıradaki derleme numarası **7** |
+| Sürüm | **1.2 (6)** 20 Kasım 2026'dan beri yayında (reklam, Reklamsız satın alma, ölçüm; 130 bölüm). Projede sıradaki derleme numarası **7** |
 | Cihaz | Sadece iPhone, dikey, tam ekran |
 | Ekip | İnvesta Teknoloji (`3ANJ967SS2`) |
 
