@@ -358,3 +358,6 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
 - **20 Kasım, tanıtım: önce parasız yollar** (Ozer: "videolarla başlayalım"). Kısa dikey videolar (TikTok, Reels, Shorts): telefonda ekran kaydı, 12-20 saniye, ilk saniyede kum akıyor, sonda kapak ve konfeti, oyunun kendi sesiyle.
   İlk altı video: 8 Gün batımı, 29 Kuzey ışıkları, 13 Balina, 25 Yağmur, 28 Karlı köy, 31 Kum fırtınası; ilerledikçe 46 Gece ve gündüz, 55 Büyük Gökkuşağı, 73 Damalı Kek, 97 Uyumayan Şehir, 117 Yalnız Zirve.
   Sırada bekleyenler: Apple'a öne çıkarma başvurusu (Featuring > Nominations), bir hafta sonra ölçüme göre küçük bir arama reklamı denemesi.
+- **23 Kasım, ilk tanıtım videosu:** Ozer 8. bölümün (Gün batımı) ekran kaydını iki parça gönderdi (yükleme sınırı 30 MB; QuickTime'da 1080p HEVC dışa aktarma). Parçalar kare karşılaştırmasıyla birleştirildi (0,43 sn üst üste biniyordu),
+  dökme 1,5 kat hızlandı, 1080×1920'ye getirildi, başlık ve "Sandful · App Store'da ücretsiz" eklendi: 18,3 sn. Araç: `araclar/video/` (`kur.sh`, `yazi.js`). Kayıt oyunun dili Türkçeyken alındığı için bu Türkçe sürüm;
+  İngilizce sürüm için oyun İngilizceyken yeniden kayıt gerekir. Videoların kendisi depoya konmuyor.
