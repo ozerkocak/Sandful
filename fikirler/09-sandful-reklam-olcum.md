@@ -87,4 +87,9 @@ Apple'ın kendi penceresi; ilk kez 12. bölümden sonra üç yıldızlı bir bit
   12 etkin kullanıcı, 6'sı reklam gördü; günlük ortalama 5 etkin kullanıcı, günlük kullanıcı başına 0,26 gösterim ve 0,26 TL.
   Okuma: reklamlar gerçek oyuncuda çalışıyor ve her istek karşılanıyor. Sayı karar verdirmez. İki not: (1) günlük kullanıcı başına gösterim çok düşük; oyuncuların çoğu henüz reklamsız ilk 10 bölümde olabilir, bölüm hunisine bakılacak.
   (2) Gösterim oranı düşük, çünkü oyun ödüllü reklamı her açılışta önceden yüklüyor ama çok az kişi istiyor; 1.3'te ödüllü reklam ancak "+1" düğmesi göründüğünde yüklenmeli (boşa istek azalır).
+- **24 Kasım 2026, Firebase (17-23 Kasım; TestFlight denemeleri ve Apple incelemesi de içinde):** 20 kullanıcı (ABD 11, Türkiye 4, Rusya 2, Almanya, Birleşik Krallık, Singapur 1'er), günde 4-6 etkin kullanıcı, 31 oturum.
+  `level_start` 174, `level_end` 149 (%86'sı bitiyor), `level_retry` 34, `level_quit` 8; etkin gün başına ~6 bölüm ve ~5 dakika. `ad_interstitial` 4, `ad_impression` 6, `ad_offer` 21, `ad_free` 10, `ad_rewarded` 2;
+  `noads_buy` 6 ve `noads_restore` 5 (gerçek satın alma yok, gelir 0: denemeler ve inceleme). Çökme yok. Ertesi gün geri dönüş grafiği ~%10 gösteriyor ama 20 kişilik, içinde incelemeciler olan bir grup için okunamaz.
+  Okuma: oynayan kişi oturumda kalıyor (başlanan bölümlerin çoğu bitiyor). Hangi bölümde bırakıldığı görünmüyor, çünkü olay parametreleri (level, world, stars, reward...) Firebase'de özel boyut olarak kayıtlı değil;
+  kayıt geriye dönük işlemediği için hemen yapılmalı.
 
