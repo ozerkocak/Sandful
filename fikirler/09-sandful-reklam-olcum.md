@@ -80,3 +80,11 @@ Apple'ın kendi penceresi; ilk kez 12. bölümden sonra üç yıldızlı bir bit
   Altında iki deneme düğmesi çıkar (oyuncu görmez): **Deneme reklamı** (ortam anlaşılamazsa reklamları elle deneme moduna alır, telefonda kalıcı) ve
   **Satın almayı yok say** (sadece o oturumda; TestFlight'ta yapılan satın alma geri alınamadığı için, satın aldıktan sonra da reklamları deneyebilmek için).
 - Tarayıcı önizlemesinde gerçek reklam yok; yerine 2 saniyelik "Reklam (önizleme)" kartı çıkar, sıklığı böyle denenebilir.
+
+## İlk sayılar (yayından sonra)
+
+- **24 Kasım 2026, AdMob (1.2'nin ilk dört günü, uygulama toplamı):** 28 istek, eşleşme %100, 6 gösterim (gösterim oranı %21), 0 tıklama, tahmini kazanç 6,90 TL, gözlemlenen eBGBM 1.149 TL (6 gösterimle anlamlı değil).
+  12 etkin kullanıcı, 6'sı reklam gördü; günlük ortalama 5 etkin kullanıcı, günlük kullanıcı başına 0,26 gösterim ve 0,26 TL.
+  Okuma: reklamlar gerçek oyuncuda çalışıyor ve her istek karşılanıyor. Sayı karar verdirmez. İki not: (1) günlük kullanıcı başına gösterim çok düşük; oyuncuların çoğu henüz reklamsız ilk 10 bölümde olabilir, bölüm hunisine bakılacak.
+  (2) Gösterim oranı düşük, çünkü oyun ödüllü reklamı her açılışta önceden yüklüyor ama çok az kişi istiyor; 1.3'te ödüllü reklam ancak "+1" düğmesi göründüğünde yüklenmeli (boşa istek azalır).
+
