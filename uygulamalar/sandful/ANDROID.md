@@ -20,7 +20,8 @@ Oyunun kaynağı tek: `prototipler/01-kum-sisesi.html`. `npm run build` onu `www
 - [x] Deneme APK'sı bulut ortamında derleniyor (hata ayıklama imzalı; sadece deneme reklamı gösterir).
 - [ ] Gerçek telefonda ilk deneme (aşağıdaki liste).
 - [x] Google Play Console hesabı var (Ozer, 25 Kasım).
-- [ ] Play Console'da uygulama kaydı.
+- [x] Play Console'da uygulama oluşturuldu (25 Kasım; `Sandful: Relaxing Sand Art`, paket `com.investateknoloji.sandful`, Oyun, Ücretsiz).
+- [x] Uygulama içeriği beyanları tamamlandı (25 Kasım): gizlilik politikası, oturum açma (kısıtlı bölüm yok), reklam (var), içerik derecelendirmesi (ESRB Everyone, PEGI 3, USK 0, IARC 3+, Brezilya 14), hedef kitle 13+, veri güvenliği, reklam kimliği (Reklam + Analiz), resmi kurum/finans/sağlık (yok), tüccar durumu (satıcı; hizmet şartları adresi boş).
 - [x] Firebase Android uygulaması eklendi (25 Kasım): `resources/firebase/google-services.json`. Ölçüm reklam kimliği toplamaz (iPhone'daki ayarın karşılığı).
 - [x] AdMob Android uygulaması ve iki reklam birimi açıldı (25 Kasım): `admob.json`, oyun dosyasındaki `BIRIM`, manifest.
 - [ ] Mac'te Android Studio, yükleme anahtarı, imzalı AAB.

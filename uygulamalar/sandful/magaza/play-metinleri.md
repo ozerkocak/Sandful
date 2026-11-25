@@ -115,19 +115,22 @@ App Store'daki beyanların karşılığı. Ekranlar sırayla gelince birlikte do
 | Reklam kimliği | Evet, uygulama reklam kimliği kullanıyor; amaç: Reklamcılık veya pazarlama, Analiz |
 | Devlet uygulaması, finans özellikleri, sağlık | Hayır / yok |
 
-### Veri güvenliği (App Store gizlilik tablosunun karşılığı)
+### Veri güvenliği (25 Kasım 2026'da girildi; App Store gizlilik tablosunun karşılığı)
 
-Veri toplanıyor mu: **Evet**. Aktarımda şifreleniyor mu: **Evet**. Hesap oluşturma: **yok**.
+Veri toplanıyor: **Evet**. Aktarımda şifreli: **Evet**. Hesap oluşturma: **yok**; uygulama dışı hesapla giriş: **Hayır**. Silme talebi yöntemi: **Hayır**. Ek rozetler: boş.
 
-| Play'deki veri türü | Toplanıyor | Paylaşılıyor | Amaç | Zorunlu mu |
-|---|---|---|---|---|
-| Konum → Yaklaşık konum | Evet | Evet (Google reklam) | Reklamcılık, Analiz | Zorunlu |
-| Cihaz veya diğer kimlikler | Evet | Evet (Google reklam) | Reklamcılık, Analiz | Zorunlu |
-| Finansal bilgiler → Satın alma geçmişi | Evet | Hayır | Analiz | Zorunlu |
-| Uygulama etkinliği → Uygulama etkileşimleri | Evet | Evet (Google reklam) | Analiz, Reklamcılık | Zorunlu |
-| Uygulama bilgileri ve performansı → Kilitlenme günlükleri, Teşhis | Evet | Evet (Google reklam) | Analiz, Reklamcılık | Zorunlu |
+| Play'deki veri türü | Toplanıyor | Paylaşılıyor | Geçici işleme | Zorunlu | Amaç (toplama ve paylaşma) |
+|---|---|---|---|---|---|
+| Finansal bilgiler → İşlem geçmişi | Evet | Hayır | Hayır | Zorunlu | Analiz |
+| Konum → Yaklaşık konum | Evet | Evet | Hayır | Zorunlu | Analiz, Reklam veya pazarlama |
+| Uygulama bilgileri ve performansı → Kilitlenme günlükleri | Evet | Evet | Hayır | Zorunlu | Analiz, Reklam veya pazarlama |
+| Uygulama bilgileri ve performansı → Teşhisler | Evet | Evet | Hayır | Zorunlu | Analiz, Reklam veya pazarlama |
+| Uygulama etkinliği → Uygulama işlemleri | Evet | Evet | Hayır | Zorunlu | Analiz, Reklam veya pazarlama |
+| Cihaz veya diğer kimlikler | Evet | Evet | Hayır | Zorunlu | Analiz, Reklam veya pazarlama |
 
-"Kısa ömürlü işleme" sorusu: Hayır. App Store'da "takip: hayır" denmişti; Play'de böyle bir soru yok, karşılığı reklam kimliği beyanı.
+Gerekçe: satın alma bilgisi yalnız kendi ölçümümüze (Firebase, hizmet sağlayıcı) gider, paylaşım sayılmaz. Diğer beşi Google'ın reklam ağına da gittiği için Play bunu paylaşım sayar.
+App Store'da "takip: hayır" denmişti; Play'de karşılığı reklam kimliği beyanı (Evet; Reklam veya pazarlama + Analiz).
+İçerik derecelendirmesi sonucu: ESRB Everyone, PEGI 3, USK 0, IARC 3+, Brezilya 14 (uygulama içi satın alma yüzünden).
 
 ## Sürüm notu (Dahili test / Üretim → Sürüm notları)
 
