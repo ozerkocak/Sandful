@@ -95,3 +95,14 @@ Apple'ın kendi penceresi; ilk kez 12. bölümden sonra üç yıldızlı bir bit
 - **25 Kasım 2026, Firebase özel tanımları:** olay kapsamlı boyutlar `level`, `world`, `stars`, `reward`, `result`, `where`, `mech`; ölçüler `pct`, `sec` (Standard). Kayıt bu tarihten sonraki veriye işler.
   (`world` ilk girişte `word` parametresine bağlanmıştı; arşivlenip yeniden oluşturulacak.) Sırada: ABD'de Apple arama reklamlarıyla ~140 dolarlık deneme (Ozer onayladı).
 
+## İlk ücretli deneme: Apple arama reklamları, ABD (25 Kasım - 2 Aralık 2026)
+
+Amaç kazanmak değil, bir Amerikalı oyuncunun kaça geldiğini ve oyunda ne yaptığını görmek. Ozer'in kararı: "140 dolar riske edebiliriz."
+
+- Hesap: Apple Ads Advanced, para birimi USD, saat dilimi Europe/Istanbul. Kampanya `US Search Test`: Search Results, sadece ABD, günlük bütçe 20 $, 25 Kasım 13:00 - 2 Aralık 13:00 (7 gün, ~140 $), teklifler elle (Manage Bids).
+- Reklam grubu `Sand keywords`: varsayılan en yüksek dokunuş teklifi 1,00 $ (Apple'ın önerisi 1,65 $; bilerek altında başlandı), Search Match açık, kitle "Reach All Eligible Users", reklam varsayılan mağaza sayfası (ilk üç ekran görüntüsü).
+- 18 anahtar kelime. Broad, 1,50 $: sand art, sand art game, sand painting, colored sand. Exact, 1,50 $: sand game, sand games. Exact, 1,00 $: sand, sand fill, sand block, relaxing games, calming games, calm games,
+  satisfying games, asmr games, zen games, cozy games, stress relief games, anti stress games. Eklenmeyenler: sandbox (başka tür), sand sort, sand loop, sandcastles, disk clash, oyunun kendi adı (adıyla arayan zaten buluyor).
+- Bakılacaklar: iki gün sonra harcama (günde 10 $'ın altındaysa teklif yükseltilir), arama terimleri raporu (ilgisiz terimler negatif kelime yapılır); sonunda indirme başına maliyet,
+  Firebase'de bu oyuncuların bölüm hunisi, ertesi gün geri dönüşü ve oyuncu başına reklam geliri.
+
