@@ -1914,8 +1914,8 @@ initGfx();resize();
 // Para kazanma rahatlamayı bozmaz: döküşte hiçbir şey çıkmaz. Geçiş reklamı sadece bölüm bitip "Sonraki"ye basılınca ve seyrek;
 // ödüllü reklam sadece oyuncu isterse. Eklenti yoksa (tarayıcı) hepsi sessizce çalışır; önizlemede reklam yerine kısa bir kart çıkar.
 const REKLAM={ilkBolum:10,araSn:90,araBolum:3,gunluk:12,undoEk:3,ufleEk:2,onayBolum:8}; // sıklık ayarı tek yerde: ilk 10 bölüm reklamsız, sonra 3 bölümde bir
-// Reklam birimleri platforma göre ayrıdır. Android birimleri AdMob'da Android uygulaması açılınca yazılacak; boş kaldıkça Android'de hep Google'ın deneme reklamı çıkar.
-const URUN='com.investateknoloji.sandful.reklamsiz',BIRIM=ANDROID?{gecis:'',odul:''}:{gecis:'ca-app-pub-2387022770405877/8673265075',odul:'ca-app-pub-2387022770405877/9999769129'},
+// Reklam birimleri platforma göre ayrıdır (AdMob'da iPhone ve Android ayrı uygulama). Bir platformun birimi boş bırakılırsa orada hep Google'ın deneme reklamı çıkar.
+const URUN='com.investateknoloji.sandful.reklamsiz',BIRIM=ANDROID?{gecis:'ca-app-pub-2387022770405877/8576320865',odul:'ca-app-pub-2387022770405877/2010912519'}:{gecis:'ca-app-pub-2387022770405877/8673265075',odul:'ca-app-pub-2387022770405877/9999769129'},
  BIRIM_DENEME={gecis:'ca-app-pub-3940256099942544/1033173712',odul:'ca-app-pub-3940256099942544/5224354917'},BIRIM_VAR=!!(BIRIM.gecis&&BIRIM.odul);
 const GIZLILIK_URL='https://www.investa.com.tr/sandful/privacy.html';
 const simdi=()=>Date.now(),gunAd=()=>new Date().toISOString().slice(0,10),olcB=()=>({level:LV+1,world:((L&&L.dunya)||0)+1});

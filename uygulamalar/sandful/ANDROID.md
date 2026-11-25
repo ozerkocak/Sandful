@@ -10,7 +10,7 @@ Oyunun kaynağı tek: `prototipler/01-kum-sisesi.html`. `npm run build` onu `www
 | Sürüm | `versionName` **1.2**, `versionCode` **7** (`android/app/build.gradle`). Her Play yüklemesinden önce `versionCode` 1 artar |
 | En düşük Android | 7.0 (API 24); hedef API 36 |
 | Ekran | Sadece dikey, durum çubuğu gizli |
-| Reklam | AdMob. Android kimlikleri girilene kadar Google'ın örnek uygulama kimliği ve hep deneme reklamı |
+| Reklam | AdMob, Android uygulaması `ca-app-pub-2387022770405877~1080974226`; geçiş `…/8576320865`, ödüllü `…/2010912519` (25 Kasım). Deneme APK'sı hep deneme reklamı ister; gerçek birimler sadece Play'den kurulan sürümde |
 | Ölçüm | Firebase Analytics (proje `sandful-47489`, Android uygulaması 25 Kasım'da eklendi); reklam kimliği toplamaz |
 | Satın alma | Google Play Faturalandırma, ürün `com.investateknoloji.sandful.reklamsiz` (tek seferlik) |
 
@@ -22,7 +22,7 @@ Oyunun kaynağı tek: `prototipler/01-kum-sisesi.html`. `npm run build` onu `www
 - [x] Google Play Console hesabı var (Ozer, 25 Kasım).
 - [ ] Play Console'da uygulama kaydı.
 - [x] Firebase Android uygulaması eklendi (25 Kasım): `resources/firebase/google-services.json`. Ölçüm reklam kimliği toplamaz (iPhone'daki ayarın karşılığı).
-- [ ] AdMob Android uygulaması ve iki reklam birimi → `admob.json` ve oyun dosyasındaki `BIRIM`.
+- [x] AdMob Android uygulaması ve iki reklam birimi açıldı (25 Kasım): `admob.json`, oyun dosyasındaki `BIRIM`, manifest.
 - [ ] Mac'te Android Studio, yükleme anahtarı, imzalı AAB.
 - [ ] İç test, Reklamsız ürünü, satın alma denemesi.
 - [x] Mağaza metinleri ve görselleri hazır (`magaza/play-metinleri.md`, `magaza/play/`).
@@ -48,7 +48,7 @@ Bakılacaklar:
 | 5 | Geri tuşu / geri hareketi | Bölümde: rafa döner. Ayarlar açıkken: ayarları kapatır. Raftayken: uygulama arka plana gider (kapanmaz) |
 | 6 | Kayıt | Bir bölüm bitir, uygulamayı kapat-aç: yıldız duruyor |
 | 7 | Dil | Telefon Türkçeyse Türkçe; Ayarlar > Dil ile değişiyor |
-| 8 | Tanı ekranı | Ayarlar'da sürüm yazısına 5 kez dokun: ilk satırda "uygulama: android" ve dört eklentide ✓, ikinci satırda "reklam: test", altta "Deneme reklamı: açık (birim yok)" düğmesi |
+| 8 | Tanı ekranı | Ayarlar'da sürüm yazısına 5 kez dokun: ilk satırda "uygulama: android" ve dört eklentide ✓, ikinci satırda "reklam: test · ortam Sandbox", altta "Deneme reklamı: açık (otomatik)" düğmesi |
 | 9 | Deneme reklamı | Geri al hakkın bitince çıkan karttan reklam izle: üstünde "Test Ad" yazan Google reklamı gelir, bitince hak verilir. Geçiş reklamı 10. bölümden sonra bölüm aralarında seyrek çıkar |
 | 10 | Satın alma | Bu APK'da çalışmaz (Play'den kurulmadığı için "ürün bulunamadı" der); 5. adımda denenir |
 
@@ -78,7 +78,8 @@ Dosya gizli değildir (iPhone'daki `GoogleService-Info.plist` gibi uygulamaya g�
 4. Üç kimliği gönder: uygulama kimliği (`ca-app-pub-…~…`) ve iki birim kimliği (`ca-app-pub-…/…`).
 5. Uygulama Play'de yayınlanınca AdMob'da uygulamayı mağaza kaydına bağla; `app-ads.txt` iPhone için zaten yayında, aynı dosya Android için de geçer.
 
-Kimlikler gelince: `admob.json` → `android`, oyun dosyasında `BIRIM` (Android satırı), `python3 scripts/configure-native.py` (manifest), `npm run build && npx cap sync android`.
+Kimlikler 25 Kasım'da geldi ve yazıldı: `admob.json` → `android`, oyun dosyasında `BIRIM` (Android satırı), manifest (`scripts/configure-native.py`).
+Yeni birimlerin reklam göstermeye başlaması bir saat kadar sürebilir; uygulama Play'de yayınlanıp AdMob'da mağazaya bağlanana kadar reklam sunumu sınırlı kalır (iPhone'da da böyle olmuştu).
 
 ## 5 · Mac'te imzalı paket (AAB) ve Play'e yükleme
 

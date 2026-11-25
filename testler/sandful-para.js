@@ -205,20 +205,24 @@ async function launch(cfg={}){const b=await chromium.launch();const ctx=await b.
   ok('Olaylarda sadece sayı ve kısa etiket var (kişisel veri yok)',r.kisisel===true,r.kisisel);
   ok('Puan penceresi 12. bölümden önce istenmez; sonra üç yıldızda bir kez istenir',r.puanErken===0&&r.puan[0]===3&&r.puan[1]===1&&r.puan[2]===1&&r.puanTekrar===1,[r.puanErken,r.puan,r.puanTekrar]);
   ok('Ölçüm testinde sayfa hatası yok',errs.length===0,errs.slice(0,3));await b.close();}
- // 6b) Android: reklam birimi tanımlı değilken hep deneme reklamı; bekleyen satın alma sayılmaz, ödenmişi sayılır; geri tuşu
+ // 6b) Android: mağaza sürümünde Android'in kendi birimleri, deneme APK'sında deneme reklamı; bekleyen satın alma sayılmaz, ödenmişi sayılır; geri tuşu
  {const {b,p,errs}=await launch({platform:'android',isaret:'magaza',owned:true,pending:true});
   const r=await p.evaluate(async()=>{const o={};await bekle(100);for(let k=0;k<9;k++)bitir(k);REK.hazirla();await bekle(30);
-   o.reklam=[ANDROID,REK.test,__ad.opts.length,__ad.opts.every(x=>x.isTesting===true&&/3940256099942544/.test(x.adId))];o.bekleyen=SAVE.rs;
+   o.reklam=[ANDROID,REK.test,__ad.opts.length,__ad.opts.every(x=>!x.isTesting&&['ca-app-pub-2387022770405877/8576320865','ca-app-pub-2387022770405877/2010912519'].includes(x.adId)),__ad.opts.map(x=>x.adId).filter((x,i,a)=>a.indexOf(x)===i).length];o.bekleyen=SAVE.rs;
    const geri=()=>__app.cb.backButton[0]();o.dinleyici=(__app.cb.backButton||[]).length;
    __game.start(2);__game.begin();__game.sim(300);geri();o.g1=state;
    openSet();geri();o.g2=[document.getElementById('setSheet').classList.contains('show'),state];
    closeRaf();odulKart('undo',()=>{});geri();o.g3=[document.getElementById('dlg').classList.contains('show'),REK.acik];
    openRaf();geri();o.g4=cnt('App.minimize');o.cubuk=[cnt('Bars.hide:StatusBar'),__nlog.filter(x=>/^Bars\.hide/.test(x)).length,cnt('Bars.style:LIGHT')];return o;});
-  ok('Android: reklam birimi yokken deneme reklamı (Google\'ın örnek birimleriyle)',r.reklam[0]===true&&r.reklam[1]===true&&r.reklam[2]>=2&&r.reklam[3]===true,r.reklam);
+  ok('Android mağaza sürümü: Android\'in kendi iki reklam birimi (iPhone birimleri değil)',r.reklam[0]===true&&r.reklam[1]===false&&r.reklam[2]>=2&&r.reklam[3]===true&&r.reklam[4]===2,r.reklam);
   ok('Android: ödemesi bekleyen satın alma reklamları kaldırmaz',r.bekleyen!==true,r.bekleyen);
   ok('Android geri tuşu: bölümde rafa döner, ayarları ve kartı kapatır, rafta uygulamayı arka plana alır',r.dinleyici===1&&r.g1==='menu'&&r.g2[0]===false&&r.g2[1]==='menu'&&r.g3[0]===false&&r.g3[1]===false&&r.g4===1,[r.dinleyici,r.g1,r.g2,r.g3,r.g4]);
   ok('Android: sadece durum çubuğu gizlenir, hareket çubuğu koyu',r.cubuk[0]===1&&r.cubuk[1]===1&&r.cubuk[2]===1,r.cubuk);
   ok('Android testinde sayfa hatası yok',errs.length===0,errs.slice(0,3));await b.close();}
+ {const {b,p,errs}=await launch({platform:'android',isaret:'sandbox'});
+  const r=await p.evaluate(async()=>{await bekle(100);for(let k=0;k<9;k++)bitir(k);REK.hazirla();await bekle(30);
+   return [REK.test,REK.oto,__ad.opts.length,__ad.opts.every(x=>x.isTesting===true)];});
+  ok('Android deneme APK\'sı: deneme reklamı (isTesting; eklenti Google\'ın örnek birimlerine çevirir)',r[0]===true&&r[1]===true&&r[2]>=2&&r[3]===true,r);await b.close();}
  {const {b,p,errs}=await launch({isaret:'magaza'});
   const r=await p.evaluate(async()=>{await bekle(100);return [ANDROID,__nlog.filter(x=>/^Bars\./.test(x)).length,(__app.cb.backButton||[]).length,__ad.opts.length?__ad.opts.every(x=>!/3940256099942544/.test(x.adId)&&!x.isTesting):null];});
   ok('iPhone: Android ayrımları devreye girmez (çubuklara ve geri tuşuna dokunulmaz, gerçek birimler)',r[0]===false&&r[1]===0&&r[2]===0&&r[3]!==false,r);await b.close();}

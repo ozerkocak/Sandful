@@ -1,5 +1,5 @@
 {
-  "_not": "Sandful AdMob kimlikleri. Gizli değildir, uygulamanın içine gömülür. Uygulama kimliği iOS'ta Info.plist'e, Android'de AndroidManifest.xml'e scripts/configure-native.py ile yazılır; reklam birimleri oyun dosyasındaki BIRIM'de. TestFlight ve incelemede oyun mağaza ortamını okuyup Google'ın test reklam birimlerini kullanır. Android kimlikleri boşken Android'de Google'ın örnek uygulama kimliği ve hep deneme reklamı kullanılır.",
+  "_not": "Sandful AdMob kimlikleri. Gizli değildir, uygulamanın içine gömülür. Uygulama kimliği iOS'ta Info.plist'e, Android'de AndroidManifest.xml'e scripts/configure-native.py ile yazılır; reklam birimleri oyun dosyasındaki BIRIM'de (platforma göre). TestFlight'ta, incelemede ve Android deneme APK'sında oyun ortamı okuyup Google'ın test reklam birimlerini kullanır; bunlar sadece mağaza sürümünde.",
   "yayinci": "pub-2387022770405877",
   "ios": {
     "uygulama": "ca-app-pub-2387022770405877~2752081913",
@@ -9,6 +9,6 @@
   "android": {
     "uygulama": "ca-app-pub-2387022770405877~1080974226",
     "gecis_bolum_sonu": "ca-app-pub-2387022770405877/8576320865",
-    "odullu": ""
+    "odullu": "ca-app-pub-2387022770405877/2010912519"
   }
 }

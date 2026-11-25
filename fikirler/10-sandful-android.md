@@ -70,3 +70,5 @@ Bulut ortamında Android öykünücüsü çalışmıyor; aşağıdakiler ancak t
 - Play Console'da satıcı (tacir) beyanı: "Bu bir satıcı hesabı" (şirket, gelir elde ediyor). Mağaza sayfasında şirket iletişim bilgileri görünür.
 - Firebase'e Android uygulaması eklendi (`google-services.json` depoda). Ölçüm Android'de de reklam kimliği toplamaz
   (`google_analytics_adid_collection_enabled=false`): gizlilik politikasındaki "uygulamaya özel kimlik" cümlesi iki platformda da doğru kalır.
+- AdMob'da Android uygulaması ve iki birim açıldı (kimlikler `admob.json`'da). Artık Android de iPhone gibi davranır: deneme APK'sında deneme reklamı,
+  Play'den kurulan sürümde Android'in kendi birimleri. Dahili testte tanı ekranından "Deneme reklamı" açılır.

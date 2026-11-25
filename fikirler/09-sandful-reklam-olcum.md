@@ -106,3 +106,8 @@ Amaç kazanmak değil, bir Amerikalı oyuncunun kaça geldiğini ve oyunda ne ya
 - Bakılacaklar: iki gün sonra harcama (günde 10 $'ın altındaysa teklif yükseltilir), arama terimleri raporu (ilgisiz terimler negatif kelime yapılır); sonunda indirme başına maliyet,
   Firebase'de bu oyuncuların bölüm hunisi, ertesi gün geri dönüşü ve oyuncu başına reklam geliri.
 - 25 Kasım 2026: kampanya oluşturuldu, Apple'ın kontrolünden geçti ve aynı gün "Running" oldu. İlk bakış 27 Kasım'da (harcama ve Search Terms).
+
+## Android (25 Kasım 2026)
+
+Kurallar aynı; sadece kimlikler ayrı. AdMob'da Android uygulaması ve iki birim (`uygulamalar/sandful/admob.json`), Firebase'de aynı projede Android uygulaması.
+Android'e özel kararlar (bekleyen ödeme, deneme ortamı, geri tuşu): `10-sandful-android.md`.
