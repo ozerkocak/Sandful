@@ -6,7 +6,7 @@
 
 ## Gizlilik Politikası
 
-**Son güncelleme: 11 Kasım 2026 · 1.2 sürümünden itibaren geçerlidir**
+**Son güncelleme: 25 Kasım 2026 · 1.2 sürümünden itibaren geçerlidir (iPhone ve Android)**
 
 Sandful ("Oyun"), Investa Teknoloji Anonim Şirketi ("biz") tarafından geliştirilmektedir. Oyun hesap gerektirmez; adınızı, e-posta adresinizi, rehberinizi, fotoğraflarınızı ya da kesin konumunuzu hiçbir zaman istemez.
 
@@ -25,11 +25,11 @@ Oyun, nasıl oynandığını anlamak için Google Analytics for Firebase kullan�
 
 **Satın almalar.**
 
-İsteğe bağlı "Reklamsız oyna" satın alması Apple tarafından işlenir. Ödeme bilgileriniz bize ulaşmaz; Oyun yalnızca satın almanın var olup olmadığını öğrenir ve reklamları kaldırır. Satın almayı Ayarlar > Satın alımları geri yükle bölümünden geri getirebilirsiniz.
+İsteğe bağlı "Reklamsız oyna" satın alması, Oyunu indirdiğiniz mağaza (Apple App Store ya da Google Play) tarafından işlenir. Ödeme bilgileriniz bize ulaşmaz; Oyun yalnızca satın almanın var olup olmadığını öğrenir ve reklamları kaldırır. Satın almayı Ayarlar > Satın alımları geri yükle bölümünden geri getirebilirsiniz.
 
 **Paylaşım.**
 
-Verilerinizi satmayız. Yukarıda anlatılan bilgiler Google (reklam ve istatistik) ve Apple (satın alma) tarafından kendi gizlilik politikalarına göre işlenir: policies.google.com/privacy (https://policies.google.com/privacy), Google, hizmetlerini kullanan uygulamalardan gelen bilgileri nasıl kullanır (https://policies.google.com/technologies/partner-sites), apple.com/legal/privacy (https://www.apple.com/legal/privacy/).
+Verilerinizi satmayız. Yukarıda anlatılan bilgiler Google (reklam ve istatistik) ve satın almada Apple ya da Google Play tarafından kendi gizlilik politikalarına göre işlenir: policies.google.com/privacy (https://policies.google.com/privacy), Google, hizmetlerini kullanan uygulamalardan gelen bilgileri nasıl kullanır (https://policies.google.com/technologies/partner-sites), apple.com/legal/privacy (https://www.apple.com/legal/privacy/).
 
 **Çocuklar.**
 
@@ -47,7 +47,7 @@ Investa Teknoloji Anonim Şirketi, Gülbahçe Mahallesi, İçmeler Caddesi D:B05
 
 ## Privacy Policy
 
-**Last updated: November 11, 2026 · applies from version 1.2**
+**Last updated: November 25, 2026 · applies from version 1.2 (iPhone and Android)**
 
 Sandful (the "Game") is developed by Investa Teknoloji Anonim Şirketi ("we"). The Game needs no account and never asks for your name, email address, contacts, photos or precise location.
 
@@ -67,11 +67,11 @@ The Game uses Google Analytics for Firebase to understand how it is played: for 
 
 **Purchases.**
 
-The optional "Play without ads" purchase is processed by Apple. We do not receive your payment details; the Game only learns whether the purchase exists so it can remove ads. You can restore it under Settings > Restore purchases.
+The optional "Play without ads" purchase is processed by the store you downloaded the Game from (Apple App Store or Google Play). We do not receive your payment details; the Game only learns whether the purchase exists so it can remove ads. You can restore it under Settings > Restore purchases.
 
 **Sharing.**
 
-We do not sell your data. The information described above is processed by Google (ads and statistics) and Apple (purchases) under their own privacy policies: policies.google.com/privacy (https://policies.google.com/privacy), How Google uses information from apps that use its services (https://policies.google.com/technologies/partner-sites), apple.com/legal/privacy (https://www.apple.com/legal/privacy/).
+We do not sell your data. The information described above is processed by Google (ads and statistics) and, for purchases, by Apple or Google Play under their own privacy policies: policies.google.com/privacy (https://policies.google.com/privacy), How Google uses information from apps that use its services (https://policies.google.com/technologies/partner-sites), apple.com/legal/privacy (https://www.apple.com/legal/privacy/).
 
 **Children.**
 

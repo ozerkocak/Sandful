@@ -19,12 +19,15 @@ Oyunun kaynağı tek: `prototipler/01-kum-sisesi.html`. `npm run build` onu `www
 - [x] Oyun kodu Android'e hazır (geri tuşu, bekleyen ödeme, deneme reklamı, durum çubuğu); testler geçiyor.
 - [x] Deneme APK'sı bulut ortamında derleniyor (hata ayıklama imzalı; sadece deneme reklamı gösterir).
 - [ ] Gerçek telefonda ilk deneme (aşağıdaki liste).
-- [ ] Google Play Console hesabı ve uygulama kaydı.
+- [x] Google Play Console hesabı var (Ozer, 25 Kasım).
+- [ ] Play Console'da uygulama kaydı.
 - [ ] Firebase Android uygulaması → `resources/firebase/google-services.json`.
 - [ ] AdMob Android uygulaması ve iki reklam birimi → `admob.json` ve oyun dosyasındaki `BIRIM`.
 - [ ] Mac'te Android Studio, yükleme anahtarı, imzalı AAB.
 - [ ] İç test, Reklamsız ürünü, satın alma denemesi.
-- [ ] Mağaza sayfası, beyan formları, incelemeye gönderme.
+- [x] Mağaza metinleri ve görselleri hazır (`magaza/play-metinleri.md`, `magaza/play/`).
+- [ ] Gizlilik ve destek sayfalarını siteye yeniden yükleme.
+- [ ] Mağaza sayfasını ve beyan formlarını doldurma, incelemeye gönderme.
 
 ## 1 · Deneme APK'sını telefona kurmak
 
@@ -115,19 +118,11 @@ tanı ekranından **Deneme reklamı**nı aç ve telefonu AdMob → Ayarlar → T
 
 ## 7 · Mağaza sayfası ve beyanlar
 
-| Bölüm | Ne girilecek |
-|---|---|
-| Uygulama adı (30) | `Sandful: Relaxing Sand Art` |
-| Kısa açıklama (80) | hazırlanacak (EN, TR) |
-| Tam açıklama | App Store açıklaması uyarlanır (`magaza/app-store-metinleri.md`) |
-| Görseller | Simge 512×512, öne çıkan görsel 1024×500, en az 2 telefon ekran görüntüsü (iPhone görüntülerinden üretilecek) |
-| Gizlilik politikası | `https://www.investa.com.tr/sandful/privacy.html` (Android satırları eklenecek) |
-| Uygulama içeriği → Reklamlar | Evet, reklam içerir |
-| Uygulama içeriği → Veri güvenliği | App Store gizlilik tablosunun karşılığı: yaklaşık konum, cihaz kimliği, satın alma geçmişi, uygulama etkileşimi, tanılama; reklam ve analiz amaçlı; aktarımda şifreli |
-| Uygulama içeriği → Reklam kimliği | Evet (AdMob); amaç: reklam ve analiz |
-| İçerik derecelendirmesi | Anket: şiddet, kumar, kullanıcı içeriği yok → herkes |
-| Hedef kitle | 13 yaş ve üzeri (çocuklara yönelik değil; AdMob ayarlarıyla uyumlu) |
-| Kategori | Oyun → Bulmaca (ya da Basit) |
-| Ülkeler | App Store'dakiyle aynı |
+Bütün metinler, görsellerin yerleri ve beyan cevapları `magaza/play-metinleri.md`'de (App Store'da yayında olan 1.2'nin karşılığı):
 
-Metinler ve görseller hazırlandıkça `magaza/` altına eklenir.
+- Ana mağaza girişi: ad, kısa açıklama, tam açıklama (EN ana dil, TR çeviri).
+- Görseller: `magaza/play/simge-512.png`, `magaza/play/one-cikan-1024x500.png`, `magaza/play/ekran-goruntuleri/en|tr/01–08.jpg` (1080×1920).
+- Uygulama içeriği: gizlilik politikası, reklam, içerik derecelendirmesi, hedef kitle (13+), veri güvenliği, reklam kimliği.
+- Gizlilik ve destek sayfaları Android'i de kapsayacak şekilde güncellendi (`magaza/site/privacy.html`, `index.html`); siteye yeniden yüklenmeleri gerekir.
+
+Üretime göndermeden önce: dahili testte 1. bölümdeki liste ve 6. bölümdeki satın alma denemesi tamamlanmış olmalı.

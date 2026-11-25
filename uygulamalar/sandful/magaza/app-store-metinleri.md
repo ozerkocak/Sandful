@@ -157,7 +157,7 @@ Dök, nefes al, rahatla.
 `ekran-goruntuleri/en/` ve `tr/`: 8'er adet, 1206×2622. App Store Connect'te eski 7 görüntüyü sil, yenileri 01 → 08 sırasıyla sürükle.
 Sıra (ilk üçü arama sonuçlarında görünür): 01 gün batımı dökülürken, 02 gece şehri (pencereler ışıklı), 03 karlı zirve (ıslak kum), 04 ana ekran (sekiz dünya),
 05 dama (ayırıcı kart), 06 rüzgâr, 07 silüet kurma (bina yerleştirme), 08 gökkuşağı.
-Üretim: `scripts/ekran-ham.js` (ham çekim) ve `scripts/ekran-kare.js` (başlıklı kareler).
+Üretim: `scripts/ekran-ham.js` (ham çekim) ve `scripts/ekran-kare.js` (başlıklı kareler). Google Play karşılıkları: `play-metinleri.md`.
 
 Satın alma ürününün inceleme görüntüsü (Review Screenshot): `satin-alma-inceleme.png` (Ayarlar'da "Play without ads" satırı; fiyat örnek, gerçek fiyat mağazadan okunur).
 

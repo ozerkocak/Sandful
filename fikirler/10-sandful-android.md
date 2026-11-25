@@ -58,3 +58,13 @@ Bulut ortamında Android öykünücüsü çalışmıyor; aşağıdakiler ancak t
 - Android ekran görüntüleri ve 1024×500 öne çıkan görsel (iPhone görüntülerinden üretilecek).
 - Play mağaza metinleri (başlık 30, kısa açıklama 80 karakter) `magaza/` altına.
 - Yayın sonrası: Android ve iPhone'u Firebase'de platforma göre ayrı izlemek.
+
+## 25 Kasım 2026 (devam)
+
+> Ozer: "Play Console var, Android telefon da buluruz. App Store'da canlıda olduğu şekilde olsun her şey Android tarafında da."
+
+- Karar: Android, App Store'daki 1.2'nin birebir karşılığı olarak çıkar (aynı ad, açıklama, sekiz ekran görüntüsü, fiyat, beyanlar).
+- Hazırlananlar: `magaza/play-metinleri.md` (ad, kısa ve tam açıklama, ürün metinleri, beyan cevapları, veri güvenliği tablosu),
+  `magaza/play/` (512 simge, 1024×500 öne çıkan görsel, 1080×1920 ekran görüntüleri EN/TR).
+- Gizlilik politikası ve destek sayfası Android'i de kapsar: satın alma "indirdiğiniz mağaza (App Store ya da Google Play)" tarafından işlenir. Sayfalar siteye yeniden yüklenecek.
+- Play Console'da satıcı (tacir) beyanı: "Bu bir satıcı hesabı" (şirket, gelir elde ediyor). Mağaza sayfasında şirket iletişim bilgileri görünür.
