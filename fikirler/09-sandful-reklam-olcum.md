@@ -93,7 +93,7 @@ Apple'ın kendi penceresi; ilk kez 12. bölümden sonra üç yıldızlı bir bit
   Okuma: oynayan kişi oturumda kalıyor (başlanan bölümlerin çoğu bitiyor). Hangi bölümde bırakıldığı görünmüyor, çünkü olay parametreleri (level, world, stars, reward...) Firebase'de özel boyut olarak kayıtlı değil;
   kayıt geriye dönük işlemediği için hemen yapılmalı.
 - **25 Kasım 2026, Firebase özel tanımları:** olay kapsamlı boyutlar `level`, `world`, `stars`, `reward`, `result`, `where`, `mech`; ölçüler `pct`, `sec` (Standard). Kayıt bu tarihten sonraki veriye işler.
-  (`world` ilk girişte `word` parametresine bağlanmıştı; arşivlenip yeniden oluşturulacak.) Sırada: ABD'de Apple arama reklamlarıyla ~140 dolarlık deneme (Ozer onayladı).
+  (`world` ilk girişte `word` parametresine bağlanmıştı; aynı gün düzeltildi.) Sırada: ABD'de Apple arama reklamlarıyla ~140 dolarlık deneme (Ozer onayladı).
 
 ## İlk ücretli deneme: Apple arama reklamları, ABD (25 Kasım - 2 Aralık 2026)
 
@@ -105,4 +105,4 @@ Amaç kazanmak değil, bir Amerikalı oyuncunun kaça geldiğini ve oyunda ne ya
   satisfying games, asmr games, zen games, cozy games, stress relief games, anti stress games. Eklenmeyenler: sandbox (başka tür), sand sort, sand loop, sandcastles, disk clash, oyunun kendi adı (adıyla arayan zaten buluyor).
 - Bakılacaklar: iki gün sonra harcama (günde 10 $'ın altındaysa teklif yükseltilir), arama terimleri raporu (ilgisiz terimler negatif kelime yapılır); sonunda indirme başına maliyet,
   Firebase'de bu oyuncuların bölüm hunisi, ertesi gün geri dönüşü ve oyuncu başına reklam geliri.
-
+- 25 Kasım 2026: kampanya oluşturuldu, Apple'ın kontrolünden geçti ve aynı gün "Running" oldu. İlk bakış 27 Kasım'da (harcama ve Search Terms).
