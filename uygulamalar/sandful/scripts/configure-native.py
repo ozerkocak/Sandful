@@ -63,6 +63,10 @@ if os.path.exists(am):
     else:m=re.sub(r'<meta-data android:name="com\.google\.android\.gms\.ads\.APPLICATION_ID" android:value="[^"]*" />',satir,m)
     if 'screenOrientation' not in m:
         m=m.replace('android:name=".MainActivity"','android:name=".MainActivity"\n            android:screenOrientation="portrait"',1)
+    # Ölçüm (Firebase Analytics) reklam kimliğini toplamasın: iPhone'daki "AnalyticsWithoutAdIdSupport" ayarının karşılığı.
+    # Gizlilik politikası istatistiklerin uygulamaya özel bir kimliğe bağlı olduğunu söylüyor. (AdMob reklam kimliğini kendi işi için ayrıca kullanır.)
+    if 'google_analytics_adid_collection_enabled' not in m:
+        m=m.replace('</application>','    <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />\n    </application>',1)
     open(am,'w').write(m)
     # Ölçüm (Firebase Analytics): google-services.json varsa uygulamaya kopyala (app/build.gradle dosya varsa eklentiyi kendisi açar).
     # Dosya yokken uygulama çalışır ama ölçüm göndermez.

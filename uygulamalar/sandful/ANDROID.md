@@ -11,7 +11,7 @@ Oyunun kaynağı tek: `prototipler/01-kum-sisesi.html`. `npm run build` onu `www
 | En düşük Android | 7.0 (API 24); hedef API 36 |
 | Ekran | Sadece dikey, durum çubuğu gizli |
 | Reklam | AdMob. Android kimlikleri girilene kadar Google'ın örnek uygulama kimliği ve hep deneme reklamı |
-| Ölçüm | Firebase Analytics; `google-services.json` gelene kadar ölçüm gönderilmez |
+| Ölçüm | Firebase Analytics (proje `sandful-47489`, Android uygulaması 25 Kasım'da eklendi); reklam kimliği toplamaz |
 | Satın alma | Google Play Faturalandırma, ürün `com.investateknoloji.sandful.reklamsiz` (tek seferlik) |
 
 ## Durum (25 Kasım 2026)
@@ -21,7 +21,7 @@ Oyunun kaynağı tek: `prototipler/01-kum-sisesi.html`. `npm run build` onu `www
 - [ ] Gerçek telefonda ilk deneme (aşağıdaki liste).
 - [x] Google Play Console hesabı var (Ozer, 25 Kasım).
 - [ ] Play Console'da uygulama kaydı.
-- [ ] Firebase Android uygulaması → `resources/firebase/google-services.json`.
+- [x] Firebase Android uygulaması eklendi (25 Kasım): `resources/firebase/google-services.json`. Ölçüm reklam kimliği toplamaz (iPhone'daki ayarın karşılığı).
 - [ ] AdMob Android uygulaması ve iki reklam birimi → `admob.json` ve oyun dosyasındaki `BIRIM`.
 - [ ] Mac'te Android Studio, yükleme anahtarı, imzalı AAB.
 - [ ] İç test, Reklamsız ürünü, satın alma denemesi.
@@ -41,7 +41,7 @@ Bakılacaklar:
 
 | # | Ne | Beklenen |
 |---|---|---|
-| 1 | Açılış | Çökmeden 1. bölüm açılır (Firebase ayar dosyası henüz yok; ölçüm gitmez ama oyun çalışır) |
+| 1 | Açılış | Çökmeden 1. bölüm açılır. Birkaç bölüm oynadıktan sonra Firebase → Realtime'da Android kullanıcısı görünür |
 | 2 | Üst ve alt boşluk | Durum çubuğu görünmez; çentik ya da kamera deliği düğmelerin üstüne binmez; alttaki hareket çubuğu düğmeleri kapatmaz |
 | 3 | Ses | İlk dokunuşta kum sesi ve müzik gelir |
 | 4 | Titreşim | Kum akarken hafif tıklar, kapakta güçlü vuruş |

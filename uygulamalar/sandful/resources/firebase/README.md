@@ -12,4 +12,4 @@ Proje ayarları > Entegrasyonlar > Google Analytics belirler.
 
 `google-services.json` (Firebase'de aynı projeye eklenen Android uygulaması, paket `com.investateknoloji.sandful`) bu klasöre konur.
 `scripts/configure-native.py` onu `android/app/` altına kopyalar; `android/app/build.gradle` dosya varsa Google hizmetleri eklentisini kendisi açar.
-Dosya gelene kadar Android derlemesi çalışır ama ölçüm göndermez. Adımlar: `ANDROID.md` 3. bölüm.
+Dosya 25 Kasım 2026'da eklendi (Ozer indirdi). iPhone'daki dosya gibi gizli değildir; API anahtarı Google Cloud Console'da bu Android paket adıyla kısıtlanabilir.

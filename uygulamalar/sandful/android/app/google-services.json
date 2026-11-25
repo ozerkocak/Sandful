@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "793891996730",
+    "project_id": "sandful-47489",
+    "storage_bucket": "sandful-47489.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:793891996730:android:fe0efeac509bbe96cd2103",
+        "android_client_info": {
+          "package_name": "com.investateknoloji.sandful"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADuRUpGbEDDF00Hk5GRiRe55zMieNFSMk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

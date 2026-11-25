@@ -68,3 +68,5 @@ Bulut ortamında Android öykünücüsü çalışmıyor; aşağıdakiler ancak t
   `magaza/play/` (512 simge, 1024×500 öne çıkan görsel, 1080×1920 ekran görüntüleri EN/TR).
 - Gizlilik politikası ve destek sayfası Android'i de kapsar: satın alma "indirdiğiniz mağaza (App Store ya da Google Play)" tarafından işlenir. Sayfalar siteye yeniden yüklenecek.
 - Play Console'da satıcı (tacir) beyanı: "Bu bir satıcı hesabı" (şirket, gelir elde ediyor). Mağaza sayfasında şirket iletişim bilgileri görünür.
+- Firebase'e Android uygulaması eklendi (`google-services.json` depoda). Ölçüm Android'de de reklam kimliği toplamaz
+  (`google_analytics_adid_collection_enabled=false`): gizlilik politikasındaki "uygulamaya özel kimlik" cümlesi iki platformda da doğru kalır.
