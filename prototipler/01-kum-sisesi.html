@@ -265,7 +265,7 @@ const TOL=3*CELL;let SCALE=20*CELL;
 const GRAVW=14,FLOWK=2.25e-4,SIG=2.2,FUNY=2.38; // akış dilimlerinin yerçekimi, akış katsayısı, döküş izi (sütun), huni ucu
 const BEAT=.9,GAIN=1.25,RMAX=88;
 const IS_IOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
-const CPX=window.Capacitor,NATIVE=!!(CPX&&CPX.isNativePlatform&&CPX.isNativePlatform()),PLG=(NATIVE&&CPX.Plugins)||{};
+const CPX=window.Capacitor,NATIVE=!!(CPX&&CPX.isNativePlatform&&CPX.isNativePlatform()),PLG=(NATIVE&&CPX.Plugins)||{},ANDROID=NATIVE&&!!CPX.getPlatform&&CPX.getPlatform()==='android';
 
 let seed=1;function rnd(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;}
 function gauss(){return Math.sqrt(-2*Math.log(rnd()+1e-9))*Math.cos(6.2832*rnd());}
@@ -1844,6 +1844,16 @@ function setTexts(){LANG=langNow();document.documentElement.lang=LANG;
  if(L){$('title').firstChild.innerHTML='<b>'+(LV+1)+'</b>'+t(L.ad);$('hint').textContent=t(L.ipucu);lastPct=-1;}}
 function setBg(bg){if(bg){pouring=false;down=false;activeId=null;hapEnd();if(AC)AC.suspend().catch(()=>{});}else if(AC&&!REK.acik)AC.resume().catch(()=>{});}
 document.addEventListener('visibilitychange',()=>setBg(document.hidden));if(PLG.App)PLG.App.addListener('appStateChange',st=>setBg(!st.isActive));
+// Android geri tuşu: açık kartı ya da ayarları kapatır; bölümdeyken rafa döner; raftayken uygulamayı arka plana alır. Reklam ve tanıtım kartı açıkken bir şey yapmaz.
+function geriTusu(){const dlg=$('dlg').classList.contains('show');
+ if(dlg){if($('dlgNo').style.display!=='none')$('dlgNo').click();return 'kart';}
+ if(REK.acik||mekOn)return 'yok';
+ if($('setSheet').classList.contains('show')){closeSet();return 'ayar';}
+ if(state!=='menu'){openRaf();return 'raf';}
+ try{if(PLG.App.minimizeApp)PLG.App.minimizeApp();else if(PLG.App.exitApp)PLG.App.exitApp();}catch(e){}return 'cik';}
+if(ANDROID&&PLG.App)PLG.App.addListener('backButton',()=>geriTusu());
+// Android: iPhone'daki gibi durum çubuğu gizli (alttaki hareket çubuğu kalır; geri hareketi her zamanki gibi çalışır)
+if(ANDROID&&PLG.SystemBars)try{PLG.SystemBars.hide({bar:'StatusBar'}).catch(()=>{});PLG.SystemBars.setStyle({style:'LIGHT'}).catch(()=>{});}catch(e){} // LIGHT: açık zemin, koyu hareket çubuğu
 
 // ───────── Döngü ─────────
 let TS=1,last=performance.now(),acc=0,AUTO=null,FREEZE=false;
@@ -1904,7 +1914,9 @@ initGfx();resize();
 // Para kazanma rahatlamayı bozmaz: döküşte hiçbir şey çıkmaz. Geçiş reklamı sadece bölüm bitip "Sonraki"ye basılınca ve seyrek;
 // ödüllü reklam sadece oyuncu isterse. Eklenti yoksa (tarayıcı) hepsi sessizce çalışır; önizlemede reklam yerine kısa bir kart çıkar.
 const REKLAM={ilkBolum:10,araSn:90,araBolum:3,gunluk:12,undoEk:3,ufleEk:2,onayBolum:8}; // sıklık ayarı tek yerde: ilk 10 bölüm reklamsız, sonra 3 bölümde bir
-const URUN='com.investateknoloji.sandful.reklamsiz',BIRIM={gecis:'ca-app-pub-2387022770405877/8673265075',odul:'ca-app-pub-2387022770405877/9999769129'};
+// Reklam birimleri platforma göre ayrıdır. Android birimleri AdMob'da Android uygulaması açılınca yazılacak; boş kaldıkça Android'de hep Google'ın deneme reklamı çıkar.
+const URUN='com.investateknoloji.sandful.reklamsiz',BIRIM=ANDROID?{gecis:'',odul:''}:{gecis:'ca-app-pub-2387022770405877/8673265075',odul:'ca-app-pub-2387022770405877/9999769129'},
+ BIRIM_DENEME={gecis:'ca-app-pub-3940256099942544/1033173712',odul:'ca-app-pub-3940256099942544/5224354917'},BIRIM_VAR=!!(BIRIM.gecis&&BIRIM.odul);
 const GIZLILIK_URL='https://www.investa.com.tr/sandful/privacy.html';
 const simdi=()=>Date.now(),gunAd=()=>new Date().toISOString().slice(0,10),olcB=()=>({level:LV+1,world:((L&&L.dunya)||0)+1});
 // Ölçüm (Firebase Analytics): kişisel veri yok; sadece bölüm ve oyun olayları
@@ -1917,7 +1929,7 @@ const REK={test:false,oto:false,izin:false,onay:null,gY:false,oY:false,acik:fals
  async init(){const A=PLG.AdMob;if(!A)return;
   try{A.addListener('interstitialAdDismissed',()=>REK.gecisBitti());A.addListener('interstitialAdFailedToShow',()=>REK.gecisBitti());
    A.addListener('onRewardedVideoAdReward',()=>{REK.kazandi=true;});A.addListener('onRewardedVideoAdDismissed',()=>REK.odulBitti(false));A.addListener('onRewardedVideoAdFailedToShow',()=>REK.odulBitti(true));}catch(e){}
-  try{REK.oto=await SAT.denemeOrtami();}catch(e){}REK.test=REK.oto||!!SAVE.rt; // TestFlight ve inceleme: Google'ın test reklamları (SAVE.rt: tanı ekranından elle)
+  try{REK.oto=await SAT.denemeOrtami();}catch(e){}if(!BIRIM_VAR)REK.oto=true;REK.test=REK.oto||!!SAVE.rt; // TestFlight ve inceleme: Google'ın test reklamları (SAVE.rt: tanı ekranından elle)
   try{await A.initialize({});}catch(e){return;}
   try{REK.onay=await A.requestConsentInfo({});REK.izin=izinVar(REK.onay);}catch(e){REK.izin=false;} // onay bilgisi alınamadıysa bu oturumda reklam istenmez
   REK.hazirla();setTexts();},
@@ -1927,7 +1939,7 @@ const REK={test:false,oto:false,izin:false,onay:null,gY:false,oY:false,acik:fals
  gizlilikGerek(){return !!(PLG.AdMob&&REK.onay&&REK.onay.privacyOptionsRequirementStatus==='REQUIRED');},
  hazirla(){if(!PLG.AdMob||!REK.izin||SAVE.rs)return;if(!REK.oY)REK.yukle('odul');if(!REK.gY&&Object.keys(SAVE.lv).length>=REKLAM.ilkBolum-2)REK.yukle('gecis');},
  yukle(tur){const A=PLG.AdMob;if(!A||REK.yukleniyor[tur])return;REK.yukleniyor[tur]=true;
-  (tur==='gecis'?A.prepareInterstitial({adId:BIRIM.gecis,isTesting:REK.test}):A.prepareRewardVideoAd({adId:BIRIM.odul,isTesting:REK.test}))
+  (tur==='gecis'?A.prepareInterstitial({adId:BIRIM.gecis||BIRIM_DENEME.gecis,isTesting:REK.test}):A.prepareRewardVideoAd({adId:BIRIM.odul||BIRIM_DENEME.odul,isTesting:REK.test}))
    .then(()=>{REK[tur==='gecis'?'gY':'oY']=true;REK.deneme[tur]=0;},()=>{if(++REK.deneme[tur]<=3)setTimeout(()=>REK.yukle(tur),30000*REK.deneme[tur]);}).then(()=>{REK.yukleniyor[tur]=false;});},
  // Geçiş reklamı: ilk 10 bölümde yok; sonra 3 bölümde bir (iki reklam arası en az 90 sn); günde en fazla 12; hazır değilse hiç gösterilmez
  gecisUygun(){if(SAVE.rs||LV<REKLAM.ilkBolum)return false;const r=rk();if(r.b<REKLAM.araBolum||simdi()-r.t<REKLAM.araSn*1000||r.n>=REKLAM.gunluk)return false;return NATIVE?(REK.izin&&REK.gY):true;},
@@ -1960,12 +1972,16 @@ const SAT={urun:null,mesgul:false,ortam:'',ortamHata:'',ulke:'',yokSay:false,
   try{const r=await N.getProducts({productIdentifiers:[URUN],productType:'inapp'});SAT.urun=(r.products||[])[0]||null;}catch(e){}
   try{await SAT.kontrol();}catch(e){}setTexts();
   try{const u=await N.getStorefront();SAT.ulke=(u&&u.countryCode)||'';}catch(e){}},
- async kontrol(){const r=await PLG.NativePurchases.getPurchases({productType:'inapp',onlyCurrentEntitlements:true}),v=(r.purchases||[]).some(x=>x.productIdentifier===URUN&&!x.revocationDate);if(v&&!SAT.yokSay)SAT.ver();return v;},
+ async kontrol(){const r=await PLG.NativePurchases.getPurchases({productType:'inapp',onlyCurrentEntitlements:true}),b=(r.purchases||[]).filter(x=>x.productIdentifier===URUN&&!x.revocationDate&&SAT.odendi(x)),v=b.length>0;
+  // Android: ödemesi uygulama kapalıyken tamamlanan satın alma onaysız kalır; 3 gün içinde onaylanmazsa Google parayı iade eder
+  if(ANDROID)b.forEach(x=>{if(x.isAcknowledged===false&&x.purchaseToken)try{PLG.NativePurchases.acknowledgePurchase({purchaseToken:x.purchaseToken}).catch(()=>{});}catch(e){}});
+  if(v&&!SAT.yokSay)SAT.ver();return v;},
+ odendi(x){return !ANDROID||x.purchaseState==null||String(x.purchaseState)==='1';}, // Google Play: 1 ödendi, 2 beklemede (ör. nakit ödeme); beklemedeyken reklamlar kalkmaz
  ver(){SAT.yokSay=false;if(SAVE.rs)return;SAVE.rs=true;persist();OLC.oz('noads','1');setTexts();},
  async al(){if(SAT.mesgul||SAVE.rs)return;if(!NATIVE){SAT.ver();setMsg(t('Önizleme: reklamlar kaldırıldı.'));return;}
   if(!SAT.urun){setMsg(t('Mağazaya ulaşılamadı. Biraz sonra tekrar dene.'));SAT.init();return;}
   SAT.mesgul=true;setMsg('');try{const tx=await PLG.NativePurchases.purchaseProduct({productIdentifier:URUN,productType:'inapp',quantity:1});
-   if(tx&&tx.transactionId){SAT.ver();setMsg(t('Teşekkürler! Reklamlar kaldırıldı.'));OLC.ev('noads_buy',{result:'ok'});}else setMsg(t('Satın alma tamamlanmadı.'));}
+   if(tx&&tx.transactionId&&SAT.odendi(tx)){SAT.ver();setMsg(t('Teşekkürler! Reklamlar kaldırıldı.'));OLC.ev('noads_buy',{result:'ok'});}else setMsg(t('Satın alma tamamlanmadı.'));}
   catch(e){setMsg(t('Satın alma tamamlanmadı.'));OLC.ev('noads_buy',{result:'fail'});}SAT.mesgul=false;},
  async geri(){if(SAT.mesgul||!PLG.NativePurchases)return;SAT.mesgul=true;SAT.yokSay=false;setMsg('');let ok=false;try{await PLG.NativePurchases.restorePurchases();ok=await SAT.kontrol();}catch(e){}
   setMsg(t(ok?'Satın alma geri yüklendi.':'Geri yüklenecek satın alma bulunamadı.'));OLC.ev('noads_restore',{result:ok?'ok':'none'});SAT.mesgul=false;}};
@@ -1982,7 +1998,7 @@ function onizleReklam(bitti){dlgAc('📺',t('Reklam (önizleme)'),t('Uygulamada 
 function puanIste(){const n=SAVE.puan|0;if(!PLG.AppReview||finalStars<3||!((n===0&&LV>=11)||(n===1&&LV>=59)))return;SAVE.puan=n+1;persist();setTimeout(()=>{try{PLG.AppReview.requestReview().catch(()=>{});}catch(e){}},1500);}
 // Tanı: Ayarlar'da sürüm yazısına 5 kez dokununca (telefonda sorun olursa ekran görüntüsü yeter)
 let taniN=0;
-function tani(){const r=rk(),o=REK.onay||{};return ['uygulama: '+(NATIVE?'evet':'tarayıcı')+' · eklenti: '+['AdMob','FirebaseAnalytics','NativePurchases','AppReview'].map(k=>k.slice(0,4)+(PLG[k]?'✓':'✗')).join(' '),
+function tani(){const r=rk(),o=REK.onay||{};return ['uygulama: '+(NATIVE?(ANDROID?'android':'evet'):'tarayıcı')+' · eklenti: '+['AdMob','FirebaseAnalytics','NativePurchases','AppReview'].map(k=>k.slice(0,4)+(PLG[k]?'✓':'✗')).join(' '),
   'reklam: '+(REK.test?(REK.oto?'test':'test (elle)'):'gerçek')+' · ortam '+(SAT.ortam||'-')+' · izin '+(REK.izin?'✓':'✗')+' · onay '+(o.status||'-')+' · geçiş '+(REK.gY?'hazır':'yok')+' · ödül '+(REK.oY?'hazır':'yok'),
   'sayaç: bugün '+r.n+'/'+REKLAM.gunluk+' · toplam '+(r.top||0)+' · bölüm '+r.b+' · son '+(r.t?Math.round((simdi()-r.t)/1000)+' sn önce':'-'),
   'ürün: '+(SAT.urun?(SAT.urun.title||'')+' '+(SAT.urun.priceString||''):'yok')+' · mağaza '+(SAT.ulke||'-')+' · reklamsız '+(SAVE.rs?'✓':SAT.yokSay?'yok sayılıyor':'✗')+' · bölüm '+Object.keys(SAVE.lv).length+'/'+LEVELS.length]
@@ -1990,7 +2006,7 @@ function tani(){const r=rk(),o=REK.onay||{};return ['uygulama: '+(NATIVE?'evet':
 // Tanı açıkken iki deneme düğmesi (oyuncu görmez): reklamları elle deneme moduna al; satın almayı bu oturumda yok say
 // (TestFlight'ta yapılan satın alma geri alınamıyor; reklamları denemek için). İkisi de gerçek satın almayı ya da mağazayı değiştirmez.
 function taniCiz(){$('tani').textContent=tani();$('tani').style.display='block';$('taniBtn').style.display='flex';
- $('tTest').textContent='Deneme reklamı: '+(REK.oto?'açık (otomatik)':SAVE.rt?'açık (elle)':'kapalı');$('tYok').textContent=SAT.yokSay?'Satın alma yok sayılıyor':'Satın almayı yok say';}
+ $('tTest').textContent='Deneme reklamı: '+(!BIRIM_VAR?'açık (birim yok)':REK.oto?'açık (otomatik)':SAVE.rt?'açık (elle)':'kapalı');$('tYok').textContent=SAT.yokSay?'Satın alma yok sayılıyor':'Satın almayı yok say';}
 function taniTest(){if(REK.oto)return;SAVE.rt=SAVE.rt?0:1;persist();REK.test=!!SAVE.rt;REK.gY=REK.oY=false;REK.hazirla();taniCiz();setTimeout(taniCiz,1500);}
 function taniYok(){if(!NATIVE)return;SAT.yokSay=!SAT.yokSay;if(SAT.yokSay)SAVE.rs=false;else SAT.kontrol().catch(()=>{}).then(taniCiz);REK.hazirla();setTexts();taniCiz();setTimeout(taniCiz,1500);}
 // ───────── Uzun yol (1.2) ─────────

@@ -26,6 +26,11 @@ Sandful oyununun deposu (`ozerkocak/Sandful`, önceki adı Game-Ideas); rahatlat
 - Uygulamaya dönüşen oyun `uygulamalar/<oyun-adi>/` altına Capacitor paketi olarak girer (Domino Chase'teki `uygulama/` yapısı örnek alınır).
   Ozer TestFlight'a Domino'daki gibi yükler: GitHub Desktop'tan dalı çeker, Mac'te `scripts/ios-hazirla.sh` ve Xcode Archive. Codemagic sadece yedek yol.
   Her yeni yüklemeden önce iOS projesindeki `CURRENT_PROJECT_VERSION`'ı 1 artır.
+- Sandful Android: aynı Capacitor paketi (`uygulamalar/sandful/android`), rehber `uygulamalar/sandful/ANDROID.md`, kararlar `fikirler/10-sandful-android.md`.
+  Oyundaki Android ayrımları `ANDROID` sabitinin arkasında; iPhone davranışını değiştirme. Her Play yüklemesinden önce `android/app/build.gradle`'daki `versionCode`'u 1 artır.
+  Bulut ortamında derlenir: Android SDK `/opt/android-sdk` (yoksa `dl.google.com`'dan komut satırı araçları + `platforms;android-36` + `build-tools;36.0.0`),
+  `ANDROID_HOME=/opt/android-sdk ./gradlew assembleDebug --max-workers=2`. Maven Central vekil üzerinden 429 verirse bekleyip yeniden dene. Öykünücü çalışmaz (KVM yok).
+  Yükleme anahtarı ve şifreleri depoya girmez.
 
 ## Test
 
@@ -38,6 +43,7 @@ Sandful oyununun deposu (`ozerkocak/Sandful`, önceki adı Game-Ideas); rahatlat
 - Uygulamaya göndermeden önce uçtan uca testi koş: `NODE_PATH=$(npm root -g) node testler/sandful-e2e.js` (uygulama derlemesi için sona `uygulamalar/sandful/www/index.html` ekle).
   Reklam, satın alma ve ölçüm kuralları sahte eklentilerle ayrı sınanır: `NODE_PATH=$(npm root -g) node testler/sandful-para.js` (kurallar `fikirler/09-sandful-reklam-olcum.md`).
   iPhone derlemesi bulut ortamında yapılamaz; eklenti ya da iOS ayarı değişince Ozer'e Mac'te ne deneyeceğini `uygulamalar/sandful/TESTFLIGHT.md`'ye yaz.
+  Android'de telefonda bakılacakları `uygulamalar/sandful/ANDROID.md`'ye yaz.
 - Zorluk ayarı için farklı oyuncu profilleriyle (hiç dokunmayan, kusursuz, insan gibi geç kalan, dağınık) bot simülasyonu çalıştır.
   Bölümler ilk başta kolay olmalı; zorluk ilerleyen bölümlerde açılmalı ve strateji fark yaratmalı.
   Sandful'da: `NODE_PATH=$(npm root -g) node araclar/bot-kos.js '[14,30]' 3` (beş profil, tohumlu). Nadir felaketler ortalamada görünmez;

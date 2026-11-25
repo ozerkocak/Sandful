@@ -8,17 +8,19 @@ const results=[];const ok=(ad,c,det)=>{results.push({ad,ok:!!c});console.log((c?
 function sahte(cfg){const _now=Date.now.bind(Date);window.__skew=0;Date.now=()=>_now()+window.__skew;
  const log=window.__nlog=[];const ad=window.__ad={cb:{},consent:cfg.consent||{status:'NOT_REQUIRED',isConsentFormAvailable:false,canRequestAds:true,privacyOptionsRequirementStatus:'NOT_REQUIRED'},fail:!!cfg.adFail,reward:true,opts:[],
   fire(n,d){(ad.cb[n]||[]).forEach(f=>f(d||{}));}};
- const np=window.__np={env:cfg.env||'Production',owned:!!cfg.owned,cancel:false};window.__fa=[];
+ const np=window.__np={env:cfg.env||'Production',owned:!!cfg.owned,cancel:false};window.__fa=[];const app=window.__app={cb:{}};
  const P={
   Haptics:new Proxy({},{get:()=>()=>Promise.resolve()}),
   Preferences:{get:o=>Promise.resolve({value:o&&o.key==='sandful_ortam'?(cfg.isaret||null):null}),set:()=>Promise.resolve()}, // isaret: AppDelegate'in yazdığı 'sandbox' / 'magaza'
-  App:{addListener:()=>Promise.resolve({remove(){}})},
+  SystemBars:{hide:o=>{log.push('Bars.hide:'+(o&&o.bar));return Promise.resolve();},setStyle:o=>{log.push('Bars.style:'+(o&&o.style));return Promise.resolve();}},
+  App:{addListener:(n,f)=>{(app.cb[n]=app.cb[n]||[]).push(f);return Promise.resolve({remove(){}});},minimizeApp:()=>{log.push('App.minimize');return Promise.resolve();}},
   AppReview:{requestReview:()=>{log.push('AppReview.requestReview');return Promise.resolve();}},
   FirebaseAnalytics:{logEvent:o=>{window.__fa.push([o.name,o.params]);return Promise.resolve();},setUserProperty:o=>{log.push('FA.prop:'+o.key+'='+o.value);return Promise.resolve();}},
   NativePurchases:{getAppTransaction:()=>cfg.atHata?Promise.reject(new Error('Failed to get app transaction')):Promise.resolve({appTransaction:{environment:np.env}}),
    getStorefront:()=>Promise.resolve({countryCode:'TUR'}),
    getProducts:()=>{log.push('NP.getProducts');return Promise.resolve({products:[{identifier:'com.investateknoloji.sandful.reklamsiz',title:'Remove Ads',priceString:'$3.99'}]});},
-   getPurchases:()=>Promise.resolve({purchases:np.owned?[{productIdentifier:'com.investateknoloji.sandful.reklamsiz',transactionId:'1'}]:[]}),
+   getPurchases:()=>Promise.resolve({purchases:np.owned?[Object.assign({productIdentifier:'com.investateknoloji.sandful.reklamsiz',transactionId:'1'},cfg.platform==='android'?{purchaseState:cfg.pending?'2':'1',purchaseToken:'jeton',isAcknowledged:!cfg.onaysiz}:{})]:[]}),
+   acknowledgePurchase:o=>{log.push('NP.onay:'+(o&&o.purchaseToken));return Promise.resolve();},
    purchaseProduct:o=>{log.push('NP.purchase');if(np.cancel)return Promise.reject(new Error('cancel'));np.owned=true;return Promise.resolve({transactionId:'42',productIdentifier:o.productIdentifier});},
    restorePurchases:()=>{log.push('NP.restore');return Promise.resolve();}},
   AdMob:{addListener:(n,f)=>{(ad.cb[n]=ad.cb[n]||[]).push(f);return Promise.resolve({remove(){}});},
@@ -30,7 +32,7 @@ function sahte(cfg){const _now=Date.now.bind(Date);window.__skew=0;Date.now=()=>
    prepareRewardVideoAd:o=>{log.push('AdMob.prepareReward');ad.opts.push(o);return ad.fail?Promise.reject(new Error('no fill')):Promise.resolve({adUnitId:o.adId});},
    showInterstitial:()=>{log.push('AdMob.showInterstitial');return Promise.resolve();},
    showRewardVideoAd:()=>{log.push('AdMob.showReward');return new Promise(res=>{ad.rewardRes=res;});}}};
- if(cfg.native!==false)window.Capacitor={isNativePlatform:()=>true,Plugins:P};}
+ if(cfg.native!==false)window.Capacitor={isNativePlatform:()=>true,getPlatform:()=>cfg.platform||'ios',Plugins:P};}
 async function launch(cfg={}){const b=await chromium.launch();const ctx=await b.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,locale:cfg.locale||'tr-TR'});
  await ctx.addInitScript(sahte,cfg);const p=await ctx.newPage();const errs=[];p.on('pageerror',e=>errs.push(String(e)));
  await p.route('**/three.min.js',r=>r.abort());await p.route('**/fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
@@ -203,6 +205,32 @@ async function launch(cfg={}){const b=await chromium.launch();const ctx=await b.
   ok('Olaylarda sadece sayı ve kısa etiket var (kişisel veri yok)',r.kisisel===true,r.kisisel);
   ok('Puan penceresi 12. bölümden önce istenmez; sonra üç yıldızda bir kez istenir',r.puanErken===0&&r.puan[0]===3&&r.puan[1]===1&&r.puan[2]===1&&r.puanTekrar===1,[r.puanErken,r.puan,r.puanTekrar]);
   ok('Ölçüm testinde sayfa hatası yok',errs.length===0,errs.slice(0,3));await b.close();}
+ // 6b) Android: reklam birimi tanımlı değilken hep deneme reklamı; bekleyen satın alma sayılmaz, ödenmişi sayılır; geri tuşu
+ {const {b,p,errs}=await launch({platform:'android',isaret:'magaza',owned:true,pending:true});
+  const r=await p.evaluate(async()=>{const o={};await bekle(100);for(let k=0;k<9;k++)bitir(k);REK.hazirla();await bekle(30);
+   o.reklam=[ANDROID,REK.test,__ad.opts.length,__ad.opts.every(x=>x.isTesting===true&&/3940256099942544/.test(x.adId))];o.bekleyen=SAVE.rs;
+   const geri=()=>__app.cb.backButton[0]();o.dinleyici=(__app.cb.backButton||[]).length;
+   __game.start(2);__game.begin();__game.sim(300);geri();o.g1=state;
+   openSet();geri();o.g2=[document.getElementById('setSheet').classList.contains('show'),state];
+   closeRaf();odulKart('undo',()=>{});geri();o.g3=[document.getElementById('dlg').classList.contains('show'),REK.acik];
+   openRaf();geri();o.g4=cnt('App.minimize');o.cubuk=[cnt('Bars.hide:StatusBar'),__nlog.filter(x=>/^Bars\.hide/.test(x)).length,cnt('Bars.style:LIGHT')];return o;});
+  ok('Android: reklam birimi yokken deneme reklamı (Google\'ın örnek birimleriyle)',r.reklam[0]===true&&r.reklam[1]===true&&r.reklam[2]>=2&&r.reklam[3]===true,r.reklam);
+  ok('Android: ödemesi bekleyen satın alma reklamları kaldırmaz',r.bekleyen!==true,r.bekleyen);
+  ok('Android geri tuşu: bölümde rafa döner, ayarları ve kartı kapatır, rafta uygulamayı arka plana alır',r.dinleyici===1&&r.g1==='menu'&&r.g2[0]===false&&r.g2[1]==='menu'&&r.g3[0]===false&&r.g3[1]===false&&r.g4===1,[r.dinleyici,r.g1,r.g2,r.g3,r.g4]);
+  ok('Android: sadece durum çubuğu gizlenir, hareket çubuğu koyu',r.cubuk[0]===1&&r.cubuk[1]===1&&r.cubuk[2]===1,r.cubuk);
+  ok('Android testinde sayfa hatası yok',errs.length===0,errs.slice(0,3));await b.close();}
+ {const {b,p,errs}=await launch({isaret:'magaza'});
+  const r=await p.evaluate(async()=>{await bekle(100);return [ANDROID,__nlog.filter(x=>/^Bars\./.test(x)).length,(__app.cb.backButton||[]).length,__ad.opts.length?__ad.opts.every(x=>!/3940256099942544/.test(x.adId)&&!x.isTesting):null];});
+  ok('iPhone: Android ayrımları devreye girmez (çubuklara ve geri tuşuna dokunulmaz, gerçek birimler)',r[0]===false&&r[1]===0&&r[2]===0&&r[3]!==false,r);await b.close();}
+ {const {b,p,errs}=await launch({platform:'android',isaret:'magaza',owned:true});
+  const r=await p.evaluate(async()=>{await bekle(100);return [SAVE.rs,cnt('NP.onay:jeton')];});
+  ok('Android: ödenmiş satın alma açılışta tanınır (onaylıysa tekrar onaylanmaz)',r[0]===true&&r[1]===0,r);await b.close();}
+ {const {b,p,errs}=await launch({platform:'android',isaret:'magaza',owned:true,onaysiz:true});
+  const r=await p.evaluate(async()=>{await bekle(100);return [SAVE.rs,cnt('NP.onay:jeton')];});
+  ok('Android: ödemesi sonradan tamamlanan satın alma açılışta onaylanır (yoksa Google iade eder)',r[0]===true&&r[1]>=1,r);await b.close();}
+ {const {b,p,errs}=await launch({platform:'android',isaret:'magaza',owned:true,pending:true,onaysiz:true});
+  const r=await p.evaluate(async()=>{await bekle(100);return [SAVE.rs,cnt('NP.onay:jeton')];});
+  ok('Android: bekleyen satın alma onaylanmaz',r[0]!==true&&r[1]===0,r);await b.close();}
  // 7) Tarayıcı önizlemesi: eklenti yok, reklamın yerine kısa kart; İngilizce metinler; tanı
  {const {b,p,errs}=await launch({native:false,locale:'en-US'});
   const r=await p.evaluate(async()=>{const o={};const tr=/[ğüşıöçĞÜŞİÖÇ]/;

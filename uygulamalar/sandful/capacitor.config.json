@@ -11,6 +11,11 @@
   "android": {
     "backgroundColor": "#d9c4a5"
   },
+  "plugins": {
+    "SystemBars": {
+      "initialViewportFitValueHint": "cover"
+    }
+  },
   "experimental": {
     "ios": {
       "spm": {

@@ -73,6 +73,7 @@ Bu dosya bütün oyunlar için ortak kuralları toplar. Kaynağı Domino Chase'i
 | Uygulama "deneme ortamındayım" bilgisini tek kaynağa bağlamasın ve anlayamadığında elle açılan bir anahtarı olsun. İlk TestFlight derlemesinde ortam okunamadı, oyun deneme yerine gerçek reklam istedi. Para ve reklamla ilgili her şeyin telefondaki durumu bir tanı ekranında yazsın: tek ekran görüntüsü sorunu gösterdi | Sandful 1.2 (5) |
 | Nadir felaketleri (yüzde birkaç) üç tohumluk bot koşusu göstermez: ortalama iyi görünür. Bölümü insan botuyla 100+ kez oynatıp en kötü sonuçlara bak; 0 yıldıza düşen koşu varsa nedeni mekanikte ara | Sandful 1.2 |
 | Uygulamaya çıkmadan önce: ikinci parmak ve dokunma iptali (sistem hareketleri) ayrı ele alınır, ekranda yazan sayı ile ödülü belirleyen sayı aynı yuvarlanır, kayıt iki kopya tutulur ve birleştirilirken en iyisi alınır, ağır hesap küçük parçalara bölünür, bölüm değişince grafik kaynakları temizlenir | Kum Şişesi sürüm 7 (bağımsız kod incelemesi) |
+| İkinci platform ayrı bir oyun değil, aynı dosyanın birkaç ayrımıdır: Android'e özel her şey tek bir `ANDROID` sabitinin arkasında. Platformun kendi beklentileri atlanmaz: geri tuşu her ekranda anlamlı bir şey yapar (kart → ayarlar → raf → arka plan), ödemesi bekleyen satın alma hak vermez, sonradan tamamlanan ödeme açılışta onaylanır. Kimliği henüz olmayan şey (reklam birimi) boş bırakılır ve boşken güvenli tarafa düşer (deneme reklamı); başka platformun kimliği ödünç alınmaz | Sandful Android (`fikirler/10`) |
 
 ## Reddedilmiş yönler
 

@@ -51,16 +51,21 @@ if 'GoogleService-Info.plist' not in s:
     s=s.replace(k,k+'\t\t\t\t'+BF+' /* GoogleService-Info.plist in Resources */,\n',1)
     open(pb,'w').write(s)
 print('iOS ayarları uygulandı')
-# Android: sadece dikey
+# Android: sadece dikey, AdMob uygulama kimliği, Firebase ayar dosyası
 am=os.path.join(os.path.dirname(__file__),'..','android','app','src','main','AndroidManifest.xml')
 if os.path.exists(am):
     m=open(am).read()
-    # AdMob Android'de uygulama kimliği olmadan açılışta çöker. Android için AdMob uygulaması henüz açılmadı: Google'ın örnek kimliği duruyor,
-    # Android yayınından önce gerçek kimlikle değiştirilecek.
-    if 'com.google.android.gms.ads.APPLICATION_ID' not in m:
-        m=m.replace('</application>','    <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-3940256099942544~3347511713" />\n    </application>',1)
-        open(am,'w').write(m)
+    # AdMob Android'de uygulama kimliği olmadan açılışta çöker. admob.json'da Android kimliği boşken Google'ın örnek kimliği yazılır
+    # (oyun da o durumda hep deneme reklamı ister); gerçek kimlik girilince bu betik onu yazar.
+    ORNEK='ca-app-pub-3940256099942544~3347511713';kimlik=(adm.get('android') or {}).get('uygulama') or ORNEK
+    satir='<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="%s" />'%kimlik
+    if 'com.google.android.gms.ads.APPLICATION_ID' not in m:m=m.replace('</application>','    '+satir+'\n    </application>',1)
+    else:m=re.sub(r'<meta-data android:name="com\.google\.android\.gms\.ads\.APPLICATION_ID" android:value="[^"]*" />',satir,m)
     if 'screenOrientation' not in m:
         m=m.replace('android:name=".MainActivity"','android:name=".MainActivity"\n            android:screenOrientation="portrait"',1)
-        open(am,'w').write(m)
-    print('Android ayarları uygulandı')
+    open(am,'w').write(m)
+    # Ölçüm (Firebase Analytics): google-services.json varsa uygulamaya kopyala (app/build.gradle dosya varsa eklentiyi kendisi açar).
+    # Dosya yokken uygulama çalışır ama ölçüm göndermez.
+    gj=os.path.join(os.path.dirname(__file__),'..','resources','firebase','google-services.json')
+    if os.path.exists(gj):shutil.copyfile(gj,os.path.join(os.path.dirname(am),'..','..','google-services.json'))
+    print('Android ayarları uygulandı (AdMob: %s, Firebase: %s)'%('gerçek kimlik' if kimlik!=ORNEK else 'örnek kimlik','var' if os.path.exists(gj) else 'google-services.json yok'))
