@@ -92,4 +92,6 @@ Apple'ın kendi penceresi; ilk kez 12. bölümden sonra üç yıldızlı bir bit
   `noads_buy` 6 ve `noads_restore` 5 (gerçek satın alma yok, gelir 0: denemeler ve inceleme). Çökme yok. Ertesi gün geri dönüş grafiği ~%10 gösteriyor ama 20 kişilik, içinde incelemeciler olan bir grup için okunamaz.
   Okuma: oynayan kişi oturumda kalıyor (başlanan bölümlerin çoğu bitiyor). Hangi bölümde bırakıldığı görünmüyor, çünkü olay parametreleri (level, world, stars, reward...) Firebase'de özel boyut olarak kayıtlı değil;
   kayıt geriye dönük işlemediği için hemen yapılmalı.
+- **25 Kasım 2026, Firebase özel tanımları:** olay kapsamlı boyutlar `level`, `world`, `stars`, `reward`, `result`, `where`, `mech`; ölçüler `pct`, `sec` (Standard). Kayıt bu tarihten sonraki veriye işler.
+  (`world` ilk girişte `word` parametresine bağlanmıştı; arşivlenip yeniden oluşturulacak.) Sırada: ABD'de Apple arama reklamlarıyla ~140 dolarlık deneme (Ozer onayladı).
 
