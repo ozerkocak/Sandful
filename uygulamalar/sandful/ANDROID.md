@@ -31,6 +31,9 @@ Oyunun kaynağı tek: `prototipler/01-kum-sisesi.html`. `npm run build` onu `www
 - [x] **İncelemeye gönderildi (26 Kasım 2026, 15:49):** üretim sürümü `7 (1.2)` (dahili testteki paket, kitaplıktan eklendi), 177 ülke + dünyanın geri kalanı, mağaza girişleri, beyanlar. **Yönetilen yayınlama açık:** onay gelince kendiliğinden yayınlanmaz, Yayın özeti'nden elle yayınlanır.
 - [ ] Telefonda deneme (inceleme sürerken): dahili test bağlantısı ilk gün "uygulama bulunamadı" verdi (yeni uygulamada mağaza kaydının yayılması bekleniyor); beklerken deneme APK'sı ile 1–7. maddeler.
 - [ ] Telefonda satın alma ve geri yükleme denemesi (Play'den kurulan sürümle).
+- [ ] **Açık soru (26 Kasım): Android telefonda titreşim gelmedi.** Dahili test bağlantısı açıldı ve oyun telefonda çalışıyor. Henüz ayrılmadı: telefon ayarı mı (Medya/Dokunma titreşimi, pil tasarrufu, Rahatsız etmeyin), oyun mu.
+  Bakılacak: Ayarlar → Titreşim kapat-aç (açarken bir kez titremeli); telefon modeli ve Android sürümü; kapak ve yıldızlarda titriyor mu.
+  Not: Capacitor Haptics Android'de `selectionChanged`'i 100 ms, `impact`'i 43–60 ms dalga olarak verir (iPhone'daki kısa tıklar gibi değil). Ayarlar açıkken de sorun varsa Android'de `Haptics.vibrate({duration})` ile tarayıcı sürümündeki süreler (5–60 ms) kullanılacak ve yeni paket yüklenecek.
 - [ ] Onaydan sonra: Yayın özeti → yayınla; AdMob'da Android uygulamasını mağaza kaydına bağla.
 - [x] Mağaza metinleri ve görselleri hazır (`magaza/play-metinleri.md`, `magaza/play/`); mağaza girişi EN ve TR olarak Play Console'a girildi (25 Kasım).
 - [x] Gizlilik ve destek sayfaları siteye yüklendi (26 Kasım; cPanel → Dosya Yöneticisi → `public_html/sandful/`). Dikkat: dosyalar `public_html` köküne değil **`sandful` klasörüne** yüklenir (kökteki `index.html` şirketin ana sayfası; 26 Kasım'da yanlışlıkla üzerine yazıldı, Ozer geri aldı). Kaynak: Mac'te içteki kopya, `…/Sandful/Sandful/uygulamalar/sandful/magaza/site/`.
