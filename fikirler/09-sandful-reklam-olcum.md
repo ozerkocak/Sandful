@@ -106,6 +106,10 @@ Amaç kazanmak değil, bir Amerikalı oyuncunun kaça geldiğini ve oyunda ne ya
 - Bakılacaklar: iki gün sonra harcama (günde 10 $'ın altındaysa teklif yükseltilir), arama terimleri raporu (ilgisiz terimler negatif kelime yapılır); sonunda indirme başına maliyet,
   Firebase'de bu oyuncuların bölüm hunisi, ertesi gün geri dönüşü ve oyuncu başına reklam geliri.
 - 25 Kasım 2026: kampanya oluşturuldu, Apple'ın kontrolünden geçti ve aynı gün "Running" oldu. İlk bakış 27 Kasım'da (harcama ve Search Terms).
+- **26 Kasım 2026, ilk bakış (yaklaşık bir gün; rapor saat dilimi UTC, üç saate kadar gecikmeli):** harcama **1,49 $**, **70 gösterim, 1 dokunuş, 0 indirme**.
+  Gösterimlerin tamamı üç broad kelimeden: `sand art` 64 (1 dokunuş, 1,49 $), `sand art game` 5, `colored sand` 1. **On dört exact kelimenin hepsi ve Search Match 0 gösterim.**
+  Okuma: günlük 20 $ bütçenin %7'si harcandı; teklifler açık artırmayı kazanamıyor (tek dokunuş 1,49 $'a, yani 1,50 $'lık tavanın dibinde geldi). Bu hızla deneme hiçbir şey öğretmez.
+  Öneri (Ozer'e verildi): kum kelimeleri 2,50 $, genel rahatlama kelimeleri 2,00 $, reklam grubu varsayılanı (Search Match) 1,50 $; ertesi gün harcama ve arama terimlerine yeniden bakılır.
 
 ## Android (25 Kasım 2026)
 
