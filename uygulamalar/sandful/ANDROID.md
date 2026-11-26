@@ -33,7 +33,7 @@ Oyunun kaynağı tek: `prototipler/01-kum-sisesi.html`. `npm run build` onu `www
 - [ ] Telefonda satın alma ve geri yükleme denemesi (Play'den kurulan sürümle).
 - [ ] Onaydan sonra: Yayın özeti → yayınla; AdMob'da Android uygulamasını mağaza kaydına bağla.
 - [x] Mağaza metinleri ve görselleri hazır (`magaza/play-metinleri.md`, `magaza/play/`); mağaza girişi EN ve TR olarak Play Console'a girildi (25 Kasım).
-- [ ] Gizlilik ve destek sayfalarını siteye yeniden yükleme.
+- [x] Gizlilik ve destek sayfaları siteye yüklendi (26 Kasım; cPanel → Dosya Yöneticisi → `public_html/sandful/`). Dikkat: dosyalar `public_html` köküne değil **`sandful` klasörüne** yüklenir (kökteki `index.html` şirketin ana sayfası; 26 Kasım'da yanlışlıkla üzerine yazıldı, Ozer geri aldı). Kaynak: Mac'te içteki kopya, `…/Sandful/Sandful/uygulamalar/sandful/magaza/site/`.
 - [ ] Mağaza sayfasını ve beyan formlarını doldurma, incelemeye gönderme.
 
 ## 1 · Deneme APK'sını telefona kurmak

@@ -1,6 +1,6 @@
 # Sandful · Gizlilik Politikası / Privacy Policy
 
-> Yayınlanan sürüm: `site/privacy.html` (bu dosya ile aynı metin). 1.2 ile reklam, ölçüm ve satın alma eklendi; yayınlamadan önce hukuk danışmanına gösterilmesi iyi olur.
+> Yayınlanan sürüm: `site/privacy.html` (bu dosya ile aynı metin). Siteye yükleme: cPanel → Dosya Yöneticisi → `public_html/sandful/` (köke değil; kökteki `index.html` şirketin ana sayfasıdır). Android'i kapsayan sürüm 26 Kasım 2026'da yüklendi. 1.2 ile reklam, ölçüm ve satın alma eklendi; yayınlamadan önce hukuk danışmanına gösterilmesi iyi olur.
 
 ---
 
