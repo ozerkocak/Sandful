@@ -72,3 +72,9 @@ Bulut ortamında Android öykünücüsü çalışmıyor; aşağıdakiler ancak t
   (`google_analytics_adid_collection_enabled=false`): gizlilik politikasındaki "uygulamaya özel kimlik" cümlesi iki platformda da doğru kalır.
 - AdMob'da Android uygulaması ve iki birim açıldı (kimlikler `admob.json`'da). Artık Android de iPhone gibi davranır: deneme APK'sında deneme reklamı,
   Play'den kurulan sürümde Android'in kendi birimleri. Dahili testte tanı ekranından "Deneme reklamı" açılır.
+
+## 26 Kasım 2026
+
+- Play Console beyanları, mağaza girişi (EN/TR), dahili test sürümü `7 (1.2)` ve Reklamsız ürünü tamam. Fiyat App Store ile aynı: 3,99 USD, Türkiye ₺199,99 (Google ₺244,99 önermişti, elle eşitlendi).
+- Mağaza görselleri için yapay zekâ beyanı: görseller oyunun gerçek ekran görüntüleri, dizilimi betikle yapıldı; karar Ozer'e bırakıldı.
+- Üretim (herkese açık) sürümü henüz oluşturulmadı: önce telefonda deneme ve satın alma testi.

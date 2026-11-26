@@ -24,9 +24,11 @@ Oyunun kaynağı tek: `prototipler/01-kum-sisesi.html`. `npm run build` onu `www
 - [x] Uygulama içeriği beyanları tamamlandı (25 Kasım): gizlilik politikası, oturum açma (kısıtlı bölüm yok), reklam (var), içerik derecelendirmesi (ESRB Everyone, PEGI 3, USK 0, IARC 3+, Brezilya 14), hedef kitle 13+, veri güvenliği, reklam kimliği (Reklam + Analiz), resmi kurum/finans/sağlık (yok), tüccar durumu (satıcı; hizmet şartları adresi boş).
 - [x] Firebase Android uygulaması eklendi (25 Kasım): `resources/firebase/google-services.json`. Ölçüm reklam kimliği toplamaz (iPhone'daki ayarın karşılığı).
 - [x] AdMob Android uygulaması ve iki reklam birimi açıldı (25 Kasım): `admob.json`, oyun dosyasındaki `BIRIM`, manifest.
-- [ ] Mac'te Android Studio, yükleme anahtarı, imzalı AAB.
-- [ ] İç test, Reklamsız ürünü, satın alma denemesi.
-- [x] Mağaza metinleri ve görselleri hazır (`magaza/play-metinleri.md`, `magaza/play/`).
+- [x] Mac'te Android Studio kuruldu, yükleme anahtarı üretildi (`~/Anahtarlar/sandful-yukleme.jks`, alias `sandful`; depoda değil), imzalı AAB üretildi (26 Kasım).
+- [x] Dahili test: `7 (1.2)` 26 Kasım 14:45'te test kullanıcılarına sunuldu (liste: `Sandful Test`).
+- [x] Satıcı (ödeme) profili açıldı; Reklamsız ürünü oluşturuldu ve etkinleştirildi (satın alma seçeneği `satin-al`, 3,99 USD, Türkiye ₺199,99).
+- [ ] Lisans test kullanıcıları, telefonda satın alma denemesi.
+- [x] Mağaza metinleri ve görselleri hazır (`magaza/play-metinleri.md`, `magaza/play/`); mağaza girişi EN ve TR olarak Play Console'a girildi (25 Kasım).
 - [ ] Gizlilik ve destek sayfalarını siteye yeniden yükleme.
 - [ ] Mağaza sayfasını ve beyan formlarını doldurma, incelemeye gönderme.
 
@@ -81,6 +83,14 @@ Dosya gizli değildir (iPhone'daki `GoogleService-Info.plist` gibi uygulamaya g�
 
 Kimlikler 25 Kasım'da geldi ve yazıldı: `admob.json` → `android`, oyun dosyasında `BIRIM` (Android satırı), manifest (`scripts/configure-native.py`).
 Yeni birimlerin reklam göstermeye başlaması bir saat kadar sürebilir; uygulama Play'de yayınlanıp AdMob'da mağazaya bağlanana kadar reklam sunumu sınırlı kalır (iPhone'da da böyle olmuştu).
+
+## Mac'teki durum (26 Kasım 2026)
+
+- Depo Mac'te `~/Documents/GitHub/Sandful/Sandful` altında (iCloud'la eşitlenen Belgeler klasörü; Android Studio "Project in Protected Folder" uyarısı verir, derleme çalışıyor). İzin sorunu çıkarsa `~/Developer/Sandful`'a taşınır.
+- Android Studio Gradle için JVM 25 önerir; proje **JVM 21** ile derlenir ("Use JVM 21").
+- İmzalı paket: Build → Generate App Bundles or APKs → Generate Signed App Bundle or APK… → Android App Bundle → anahtar → listede **release** satırına tıkla → Create.
+  Çıktı: `android/app/release/app-release.aab`.
+- Play Console'da ürün sayfası: sol menüyü genişlet → Google Play ile para kazanın → Ürünler → Tek seferlik ürünler (dar menüde simgeye basmak tanıtım sayfasına götürür).
 
 ## 5 · Mac'te imzalı paket (AAB) ve Play'e yükleme
 
