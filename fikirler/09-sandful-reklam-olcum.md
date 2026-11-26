@@ -110,6 +110,10 @@ Amaç kazanmak değil, bir Amerikalı oyuncunun kaça geldiğini ve oyunda ne ya
   Gösterimlerin tamamı üç broad kelimeden: `sand art` 64 (1 dokunuş, 1,49 $), `sand art game` 5, `colored sand` 1. **On dört exact kelimenin hepsi ve Search Match 0 gösterim.**
   Okuma: günlük 20 $ bütçenin %7'si harcandı; teklifler açık artırmayı kazanamıyor (tek dokunuş 1,49 $'a, yani 1,50 $'lık tavanın dibinde geldi). Bu hızla deneme hiçbir şey öğretmez.
   Öneri (Ozer'e verildi): kum kelimeleri 2,50 $, genel rahatlama kelimeleri 2,00 $, reklam grubu varsayılanı (Search Match) 1,50 $; ertesi gün harcama ve arama terimlerine yeniden bakılır.
+  Arama terimleri raporu: üç satırın hepsi "(Low volume terms)" (Apple az aranan terimleri gizliyor); negatif kelime eklenecek bir şey çıkmadı, Search Match'ten gösterim yok.
+- **26 Kasım 2026, 16:59: teklifler yükseltildi (Ozer).** 2,50 $: sand art, sand art game, colored sand, sand painting, [sand], [sand fill], [sand block], [sand game], [sand games].
+  2,00 $: [satisfying games], [relaxing games], [calming games], [calm games], [stress relief games], [asmr games], [zen games], [anti stress games], [cozy games]. Günlük bütçe 20 $ ve bitiş 2 Aralık aynı.
+  Sırada: 27 Kasım'da harcama, gösterim ve arama terimleri; reklam grubu varsayılan teklifi (Search Match) 1,00 → 1,50 $.
 
 ## Android (25 Kasım 2026)
 
