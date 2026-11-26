@@ -27,7 +27,11 @@ Oyunun kaynağı tek: `prototipler/01-kum-sisesi.html`. `npm run build` onu `www
 - [x] Mac'te Android Studio kuruldu, yükleme anahtarı üretildi (`~/Anahtarlar/sandful-yukleme.jks`, alias `sandful`; depoda değil), imzalı AAB üretildi (26 Kasım).
 - [x] Dahili test: `7 (1.2)` 26 Kasım 14:45'te test kullanıcılarına sunuldu (liste: `Sandful Test`).
 - [x] Satıcı (ödeme) profili açıldı; Reklamsız ürünü oluşturuldu ve etkinleştirildi (satın alma seçeneği `satin-al`, 3,99 USD, Türkiye ₺199,99).
-- [ ] Lisans test kullanıcıları, telefonda satın alma denemesi.
+- [x] Lisans testi: `Sandful Test` listesi eklendi (Hesabı yönetme → Google Play uygulama ayarları → Lisans testi).
+- [x] **İncelemeye gönderildi (26 Kasım 2026, 15:49):** üretim sürümü `7 (1.2)` (dahili testteki paket, kitaplıktan eklendi), 177 ülke + dünyanın geri kalanı, mağaza girişleri, beyanlar. **Yönetilen yayınlama açık:** onay gelince kendiliğinden yayınlanmaz, Yayın özeti'nden elle yayınlanır.
+- [ ] Telefonda deneme (inceleme sürerken): dahili test bağlantısı ilk gün "uygulama bulunamadı" verdi (yeni uygulamada mağaza kaydının yayılması bekleniyor); beklerken deneme APK'sı ile 1–7. maddeler.
+- [ ] Telefonda satın alma ve geri yükleme denemesi (Play'den kurulan sürümle).
+- [ ] Onaydan sonra: Yayın özeti → yayınla; AdMob'da Android uygulamasını mağaza kaydına bağla.
 - [x] Mağaza metinleri ve görselleri hazır (`magaza/play-metinleri.md`, `magaza/play/`); mağaza girişi EN ve TR olarak Play Console'a girildi (25 Kasım).
 - [ ] Gizlilik ve destek sayfalarını siteye yeniden yükleme.
 - [ ] Mağaza sayfasını ve beyan formlarını doldurma, incelemeye gönderme.

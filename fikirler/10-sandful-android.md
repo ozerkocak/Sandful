@@ -78,3 +78,6 @@ Bulut ortamında Android öykünücüsü çalışmıyor; aşağıdakiler ancak t
 - Play Console beyanları, mağaza girişi (EN/TR), dahili test sürümü `7 (1.2)` ve Reklamsız ürünü tamam. Fiyat App Store ile aynı: 3,99 USD, Türkiye ₺199,99 (Google ₺244,99 önermişti, elle eşitlendi).
 - Mağaza görselleri için yapay zekâ beyanı: görseller oyunun gerçek ekran görüntüleri, dizilimi betikle yapıldı; karar Ozer'e bırakıldı.
 - Üretim (herkese açık) sürümü henüz oluşturulmadı: önce telefonda deneme ve satın alma testi.
+- Ozer: "Denemeden direkt çıksak ne olur ki?" Karar: beklemeden incelemeye gönderildi ama **yönetilen yayınlama** açık; inceleme sürerken telefonda denenecek, sorun çıkarsa yayınlamadan düzeltilmiş paket yüklenecek.
+  Gerekçe: Android sürümü hiçbir gerçek cihazda çalışmadı; en pahalı risk satın almanın bozuk çıkması ve ilk yorumlar. Google'ın ilk incelemesi zaten günler sürdüğü için test beklemek gün kaybettirmiyor.
+- Play Console'un yeni düzeni bildiğim menü adlarıyla uyuşmuyor; yönlendirme artık yalnızca Ozer'in gönderdiği ekranda görünenlere göre yapılıyor (Ozer: "söylediklerinin çoğunu bulamıyorum").
