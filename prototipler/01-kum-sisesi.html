@@ -509,7 +509,9 @@ const segC=new Uint8Array(NC*MAXS),segH=new Float32Array(NC*MAXS),segN=new Uint8
 const dc=k=>k>=100?k-100:k>=64?k-64:k;let NCODE=0,CL=new Int8Array(16),CODES=[];
 // Şehir binalarının görünüş çeşidi: bölüm ve sıradan türeyen sabit bir sayı (aynı bölüm hep aynı görünür; kutu ve oynanış değişmez)
 const BINA_ID=new Set(['gokdelen','kule','blok','bina','saatKulesi','kubbe']);
-function binaSec(lv,list){const kul=new Set(list.filter(r=>r.v).map(r=>(r.v>>>4)%10));let v=0;for(let t=0;t<8;t++){v=binaTur(lv,list.length+t*101);if(!kul.has((v>>>4)%10))break;}return v;}
+// En üst bit: gece bölümü (ışıldayan kum ya da gece ortamı). Pencereler sadece gece bölümlerinde ışıklıdır; gündüz, akşam ve yağmurda cam görünür.
+function binaSec(lv,list){const kul=new Set(list.filter(r=>r.v).map(r=>(r.v>>>4)%10)),gece=!!L&&(L.ortam==='gece'||(L.katman||[]).some(k=>GLOW[k[0]]));let v=0;
+ for(let t=0;t<8;t++){v=binaTur(lv,list.length+t*101);if(!kul.has((v>>>4)%10))break;}return gece?(v|0x80000000)>>>0:(v&0x7fffffff)||1;}
 function binaTur(lv,i){let a=((lv+1)*2654435761+i*40503+7)|0;a=Math.imul(a^(a>>>15),0x2c1b3c6d);a=Math.imul(a^(a>>>12),0x297a2d39);return((a^(a>>>15))>>>0)||1;}
 let LV=0,L=null,BOT=false,ncol=0,pr=[],pg=[],pb=[],amounts=[],queue=[],qi=0,tTop=[],scoreCols=[],layerScore=[],layerY=[],rTop=RW,rMouth=RW,decorList=[];
 let slices=[],noz=0,nozT=0,state='ready',T=0,pourStart=0,pouring=false,flowNow=0,emitting=false,wasEmit=false,pourGroup=0,landed=0,glassLand=0,impact=0,landX=0,landY=0,landC=0,slideFlux=0;
@@ -1276,8 +1278,11 @@ const BINA={gokdelen:{c:['#2f3668','#1d2247'],cols:3,rows:11,cat:['duz','anten',
  blok:{c:['#374476','#232c52'],cols:5,rows:5,cat:['duz','depo','testere','tabela']},bina:{c:['#443d74','#2a264f'],cols:3,rows:7,cat:['basamak','kirma','sutank','mansart']},
  saatKulesi:{c:['#4d4169','#2f2847'],cols:1,rows:4,cat:['saat','saatKubbe','can']},kubbe:{c:['#3f3e78','#26264f'],cols:4,rows:2,cat:['kubbe','sutun','carsi','kemer']}};
 const BINA_RENK=[['#2f3668','#1d2247'],['#443d74','#2a264f'],['#374476','#232c52'],['#7a4a45','#4f2d2c'],['#2f5f68','#1c3d46'],['#4a5672','#2e3650'],['#6a4a78','#432c50'],['#3a6152','#223d33'],['#6f5648','#47352c'],['#6b5a3e','#443822']]; // 10 renk (binaSec bunu bilir); gece finalinde binalar karartılmadığı için hepsi koyu ton
-function drawBina(id,x,w,h,v,G){const B=BINA[id],cat=v?B.cat[v%B.cat.length]:B.cat[0],c=v?BINA_RENK[(v>>>4)%BINA_RENK.length]:B.c,gr=G(0,0,w,0,[[0,c[0]],[1,c[1]]]);
- const sicak=!v||(v>>>16)%4>0,W1=sicak?'#ffd98a':'#cfeaff',W2=sicak?'#fff0c0':'#f2fbff',KOYU='rgba(12,16,40,.55)',duzen=v&&id!=='saatKulesi'&&id!=='kubbe'?(v>>>8)%3:0,tz=v?(v>>>11)%97:id.length;
+// Gündüz cepheleri: açık, güneş almış tonlar; pencereler gökyüzünü yansıtan cam (ışık yanmıyor)
+const BINA_GUN=[['#ead9bd','#cdb998'],['#d98a6a','#b96a4e'],['#c9d3da','#a5b2bd'],['#e3b96a','#c4974a'],['#86a3bf','#64829f'],['#c98580','#a7625e'],['#b9c7a5','#96a683'],['#d3bfd3','#b29db4'],['#8f9bad','#6e7a8c'],['#f0e6d6','#d3c5ae']];
+function drawBina(id,x,w,h,v,G){const gece=!v||v>=0x80000000,B=BINA[id],cat=v?B.cat[(v&0xffff)%B.cat.length]:B.cat[0],c=v?(gece?BINA_RENK:BINA_GUN)[(v>>>4)%10]:B.c,gr=G(0,0,w,0,[[0,c[0]],[1,c[1]]]);
+ const sicak=!v||(v>>>16)%4>0,W1=gece?(sicak?'#ffd98a':'#cfeaff'):'#9cbcd2',W2=gece?(sicak?'#fff0c0':'#f2fbff'):'#c3dbe9',KOYU=gece?'rgba(12,16,40,.55)':'rgba(52,78,104,.82)',
+  KAPI=gece?W2:'#5a4636',TABELA=gece?W1:'#fbf4e4',duzen=v&&id!=='saatKulesi'&&id!=='kubbe'?(v>>>8)%3:0,tz=v?(v>>>11)%97:id.length;
  let y0=0,m0=w*.14,cols=B.cols,rows=B.rows,son=null,alt=.05;x.fillStyle=gr;
  const R=(a,b,c2,d)=>x.fillRect(w*a,h*b,w*c2,h*d),P=(...q)=>{x.beginPath();for(let i=0;i<q.length;i+=2)i?x.lineTo(w*q[i],h*q[i+1]):x.moveTo(w*q[i],h*q[i+1]);x.closePath();x.fill();};
  if(id==='gokdelen'){
@@ -1293,8 +1298,8 @@ function drawBina(id,x,w,h,v,G){const B=BINA[id],cat=v?B.cat[v%B.cat.length]:B.c
   if(cat==='duz'){y0=h*.03;R(.04,.03,.92,.97);R(.3,0,.4,.04);}
   else if(cat==='depo'){y0=h*.17;R(.04,.17,.92,.83);R(.13,.035,.17,.1);P(.11,.04,.215,0,.32,.04);R(.15,.13,.025,.05);R(.255,.13,.025,.05);R(.6,.09,.24,.09);}
   else if(cat==='testere'){y0=h*.2;R(.04,.2,.92,.8);for(let i=0;i<4;i++)P(.04+i*.23,.202,.04+i*.23,.02,.27+i*.23,.202);}
-  else{y0=h*.16;R(.04,.16,.92,.84);R(.24,.1,.03,.07);R(.73,.1,.03,.07);x.fillStyle=W1;R(.16,0,.68,.11);x.fillStyle=c[1];R(.19,.022,.62,.066);x.fillStyle=W2;R(.25,.045,.5,.02);x.fillStyle=gr;
-   son=()=>{for(let i=0;i<8;i++){x.fillStyle=i%2?'#f6f1e8':'#e5554a';x.fillRect(w*(.08+i*.105),h*.8,w*.105,h*.055);}x.fillStyle=W2;R(.44,.87,.12,.13);x.fillStyle=KOYU;R(.14,.88,.22,.09);R(.64,.88,.22,.09);};rows=4;alt=.23;}}
+  else{y0=h*.16;R(.04,.16,.92,.84);R(.24,.1,.03,.07);R(.73,.1,.03,.07);x.fillStyle=TABELA;R(.16,0,.68,.11);x.fillStyle=gece?c[1]:'#d8433a';R(.19,.022,.62,.066);x.fillStyle=gece?W2:'#fbf4e4';R(.25,.045,.5,.02);x.fillStyle=gr;
+   son=()=>{for(let i=0;i<8;i++){x.fillStyle=i%2?'#f6f1e8':'#e5554a';x.fillRect(w*(.08+i*.105),h*.8,w*.105,h*.055);}x.fillStyle=KAPI;R(.44,.87,.12,.13);x.fillStyle=KOYU;R(.14,.88,.22,.09);R(.64,.88,.22,.09);};rows=4;alt=.23;}}
  else if(id==='bina'){
   if(cat==='basamak'){y0=h*.14;R(.04,.14,.92,.86);R(.22,.06,.56,.1);R(.38,0,.24,.08);}
   else if(cat==='kirma'){y0=h*.17;R(.05,.17,.9,.83);P(0,.175,.5,.01,1,.175);son=()=>{x.fillStyle=W2;x.beginPath();x.arc(w*.5,h*.115,w*.07,0,6.283);x.fill();};}
@@ -1308,14 +1313,14 @@ function drawBina(id,x,w,h,v,G){const B=BINA[id],cat=v?B.cat[v%B.cat.length]:B.c
    x.fillStyle='#e9b949';x.beginPath();x.moveTo(w*.36,h*.268);x.quadraticCurveTo(w*.38,h*.2,w*.5,h*.195);x.quadraticCurveTo(w*.62,h*.2,w*.64,h*.268);x.closePath();x.fill();x.beginPath();x.arc(w*.5,h*.272,w*.045,0,6.283);x.fill();x.fillStyle=gr;R(.14,.29,.72,.02);}}
  else{ // kubbe: alçak ve geniş kamu yapısı (müze, tiyatro, rasathane, gar)
   if(cat==='kubbe'){y0=h*.5;R(.03,.5,.94,.5);R(.26,.42,.48,.1);x.beginPath();x.ellipse(w*.5,h*.43,w*.2,h*.3,0,Math.PI,0);x.fill();R(.47,.05,.06,.1);x.beginPath();x.arc(w*.5,h*.045,w*.035,0,6.283);x.fill();
-   son=()=>{x.fillStyle=W2;x.beginPath();x.moveTo(w*.44,h);x.lineTo(w*.44,h*.78);x.arc(w*.5,h*.78,w*.06,Math.PI,0);x.lineTo(w*.56,h);x.closePath();x.fill();};}
+   son=()=>{x.fillStyle=KAPI;x.beginPath();x.moveTo(w*.44,h);x.lineTo(w*.44,h*.78);x.arc(w*.5,h*.78,w*.06,Math.PI,0);x.lineTo(w*.56,h);x.closePath();x.fill();};}
   else if(cat==='sutun'){y0=h*.4;R(.05,.42,.9,.5);P(0,.43,.5,.04,1,.43);R(0,.9,1,.1);cols=0;
-   son=()=>{x.fillStyle=W1;R(.1,.47,.8,.43);x.fillStyle=gr;for(let i=0;i<6;i++)R(.1+i*.146,.45,.07,.46);x.fillStyle=W2;P(.3,.36,.5,.17,.7,.36);};}
+   son=()=>{x.fillStyle=gece?W1:'rgba(60,48,40,.5)';R(.1,.47,.8,.43);x.fillStyle=gr;for(let i=0;i<6;i++)R(.1+i*.146,.45,.07,.46);x.fillStyle=gece?W2:'rgba(60,48,40,.28)';P(.3,.36,.5,.17,.7,.36);};}
   else if(cat==='carsi'){y0=h*.5;R(.03,.5,.94,.5);for(let i=0;i<3;i++){x.beginPath();x.ellipse(w*(.19+i*.31),h*.52,w*.16,h*.5,0,Math.PI,0);x.fill();}cols=0;
-   son=()=>{for(let i=0;i<3;i++){x.fillStyle=i===1?W2:W1;x.beginPath();x.ellipse(w*(.19+i*.31),h*.5,w*.1,h*.3,0,Math.PI,0);x.fill();x.fillRect(w*(.09+i*.31),h*.5,w*.2,h*.08);x.fillStyle=KOYU;x.fillRect(w*(.12+i*.31),h*.7,w*.14,h*.3);}x.fillStyle=gr;R(.03,.56,.94,.05);};}
+   son=()=>{for(let i=0;i<3;i++){x.fillStyle=i===1?W2:W1;x.beginPath();x.ellipse(w*(.19+i*.31),h*.5,w*.1,h*.3,0,Math.PI,0);x.fill();x.fillRect(w*(.09+i*.31),h*.5,w*.2,h*.08);x.fillStyle=gece?KOYU:'rgba(60,48,40,.6)';x.fillRect(w*(.12+i*.31),h*.7,w*.14,h*.3);}x.fillStyle=gr;R(.03,.56,.94,.05);};}
   else{y0=h*.56;R(.02,.56,.96,.44);x.beginPath();x.ellipse(w*.5,h*.57,w*.47,h*.53,0,Math.PI,0);x.fill();cols=0;
    son=()=>{x.fillStyle=W1;x.beginPath();x.ellipse(w*.5,h*.6,w*.34,h*.4,0,Math.PI,0);x.fill();x.strokeStyle=c[1];x.lineWidth=w*.014;for(let i=1;i<6;i++){const a=Math.PI+i*Math.PI/6;x.beginPath();x.moveTo(w*.5,h*.6);x.lineTo(w*.5+Math.cos(a)*w*.34,h*.6+Math.sin(a)*h*.4);x.stroke();}
-    x.fillStyle=gr;R(.02,.6,.96,.06);x.fillStyle=W2;for(let i=0;i<5;i++)R(.1+i*.172,.72,.11,.28);};}}
+    x.fillStyle=gr;R(.02,.6,.96,.06);x.fillStyle=gece?W2:'rgba(60,48,40,.55)';for(let i=0;i<5;i++)R(.1+i*.172,.72,.11,.28);};}}
  if(cols){const cw=(w-2*m0)/cols,ch=(h-y0-h*alt)/rows,yan=(r,c2)=>((r*7+c2*13+tz*5)%5)<3;
   for(let r=0;r<rows;r++)for(let c2=0;c2<cols;c2++){const lit=yan(r,c2);x.fillStyle=lit?(((r+c2+tz)%3)?W1:W2):KOYU;
    if(duzen===1)x.fillRect(m0+c2*cw+cw*.22,y0+h*.03+r*ch,cw*.56,ch*.93);          // dikey cam şeritler

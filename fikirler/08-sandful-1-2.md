@@ -378,3 +378,11 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
   Gece finalinde binalar karartılmadığı için bütün renkler koyu tonda tutuldu (gerçek sahnede 97 ve 104. bölümlerde bakıldı).
 - **Yayın:** oyun dosyasında; bir sonraki derlemelerle çıkar (iPhone 1.3, Android'de incelemedeki paketten sonraki ilk yükleme). Eski biten şişelerin raftaki küçük resimleri kayıtlı resim olduğu için eski binalarla kalır.
 
+> Ozer (28 Kasım, yeni binaları görünce): "Gündüz olanlarda da binaların ışığı yanıyor gibi, o mantıklı değil."
+
+- **Karar: pencere ışığı sadece gece bölümlerinde.** Gece bölümü = ışıldayan kumlu ya da gece ortamlı bölüm (91, 97, 104, 107, 110): koyu cepheler, ışıklı pencereler, final gece olur (eskisi gibi).
+- **Gündüz, akşam ve yağmur bölümleri** (diğer on beş bölüm): açık, güneş almış cepheler (`BINA_GUN`: krem, kiremit, açık gri, hardal, mavi, gül kurusu, adaçayı, leylak, arduvaz, kirli beyaz),
+  pencereler gökyüzünü yansıtan mavi-gri cam; kapılar, tabela, sütun araları ve kemer camları ışıksız. Çeşit sayısının en üst biti geceyi taşır (`binaSec`).
+- Akşam bölümlerinde "birkaç ışık yanabilir" seçeneği bilerek alınmadı: sarı-turuncu gök gündüz gibi okunuyor, kural tek ve net kalsın.
+- Botlar yine birebir aynı (5 profil, 3 tohum, 20 bölüm); gerçek sahnede 92, 93, 94, 97, 99 ve 105. bölümlerin finaline bakıldı.
+
