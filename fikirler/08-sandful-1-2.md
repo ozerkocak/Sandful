@@ -361,3 +361,20 @@ Karar: 1.2 **130 bölümle** çıkar; kalan temalar 1.3'e. Reklam kuralları, ö
 - **23 Kasım, ilk tanıtım videosu:** Ozer 8. bölümün (Gün batımı) ekran kaydını iki parça gönderdi (yükleme sınırı 30 MB; QuickTime'da 1080p HEVC dışa aktarma). Parçalar kare karşılaştırmasıyla birleştirildi (0,43 sn üst üste biniyordu),
   dökme 1,5 kat hızlandı, 1080×1920'ye getirildi, başlık ve "Sandful · App Store'da ücretsiz" eklendi: 18,3 sn. Araç: `araclar/video/` (`kur.sh`, `yazi.js`). Kayıt oyunun dili Türkçeyken alındığı için bu Türkçe sürüm;
   İngilizce sürüm için oyun İngilizceyken yeniden kayıt gerekir. Videoların kendisi depoya konmuyor.
+
+## 13. Yayın sonrası geri bildirim: şehir binaları hep aynı (28 Kasım 2026)
+
+> Ozer: "Şehir Silüetleri bölümünde hep aynı evler var. Birinin üstü kubbe gibi, onu ne diye düşündün? Evlerin hep aynı olması güzel değil bence."
+
+- **Durum:** Şehir Silüetleri'nde (91-110. bölümler) altı bina tipi vardı (gökdelen, sivri kule, geniş blok, basamaklı bina, saat kulesi, kubbeli yapı). Her bölüm bunlardan 3-4'ünü seçiyordu ama
+  her tip her bölümde aynı çizim, aynı lacivert-mor ton ve aynı pencere düzeniyle çıkıyordu; yirmi bölüm boyunca aynı altı siluet tekrar ediyordu.
+- **Kubbeli yapı neydi:** müze ya da belediye sarayı gibi alçak, geniş bir kamu binası olarak düşünülmüştü. İnce direğiyle ne olduğu okunmuyordu; haklı bir soru.
+- **Yapılan:** binanın kapladığı kutu aynı kaldı, görünüşü bölüme göre değişiyor (`BINA`, `BINA_RENK`, `drawBina`, `binaSec`):
+  - Çatılar: gökdelen (düz, antenli, kademeli taç, eğik), kule (sivri, iğne, yuvarlak), blok (düz, su depolu, testere dişli atölye, tabelalı ve tenteli dükkân),
+    bina (basamaklı, kırma çatı, su kuleli, mansart), saat kulesi (sivri, kubbeli ve bayraklı, çan kulesi), kamu yapısı (fenerli kubbe ve kapı, sütunlu alınlık, üç tonozlu çarşı, kemerli gar).
+  - On koyu renk (lacivert, mor, tuğla, petrol, gri-mavi, yeşil, toprak); aynı bölümde iki bina aynı renkte olmaz. Üç pencere düzeni (kare, dikey cam şerit, yatay bant), bazı binalarda soğuk beyaz ışık.
+  - Çeşit, bölüm numarası ve binanın sırasından türeyen sabit bir sayıdır: aynı bölüm her açılışta aynı görünür.
+- **Dokunulmayan:** bölümlerin tarifleri ve tohumları, binaların boyutu ve yeri, puanlama. Beş bot profili, üç tohum, 20 şehir bölümü: değişiklikten önce ve sonra sonuçlar birebir aynı.
+  Gece finalinde binalar karartılmadığı için bütün renkler koyu tonda tutuldu (gerçek sahnede 97 ve 104. bölümlerde bakıldı).
+- **Yayın:** oyun dosyasında; bir sonraki derlemelerle çıkar (iPhone 1.3, Android'de incelemedeki paketten sonraki ilk yükleme). Eski biten şişelerin raftaki küçük resimleri kayıtlı resim olduğu için eski binalarla kalır.
+

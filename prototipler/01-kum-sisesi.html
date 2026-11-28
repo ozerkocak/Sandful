@@ -507,6 +507,10 @@ const segC=new Uint8Array(NC*MAXS),segH=new Float32Array(NC*MAXS),segN=new Uint8
 // Renk kodu (segC): 0..15 palet girdisi; 64+kod: çubukla itilmiş kum (puanda tarafsız); 100+katman: süs.
 // CL[kod]: kodun sayıldığı katman. Normal katmanın kodu kendi sırası; geçişli kum ara kodları sona eklenir.
 const dc=k=>k>=100?k-100:k>=64?k-64:k;let NCODE=0,CL=new Int8Array(16),CODES=[];
+// Şehir binalarının görünüş çeşidi: bölüm ve sıradan türeyen sabit bir sayı (aynı bölüm hep aynı görünür; kutu ve oynanış değişmez)
+const BINA_ID=new Set(['gokdelen','kule','blok','bina','saatKulesi','kubbe']);
+function binaSec(lv,list){const kul=new Set(list.filter(r=>r.v).map(r=>(r.v>>>4)%10));let v=0;for(let t=0;t<8;t++){v=binaTur(lv,list.length+t*101);if(!kul.has((v>>>4)%10))break;}return v;}
+function binaTur(lv,i){let a=((lv+1)*2654435761+i*40503+7)|0;a=Math.imul(a^(a>>>15),0x2c1b3c6d);a=Math.imul(a^(a>>>12),0x297a2d39);return((a^(a>>>15))>>>0)||1;}
 let LV=0,L=null,BOT=false,ncol=0,pr=[],pg=[],pb=[],amounts=[],queue=[],qi=0,tTop=[],scoreCols=[],layerScore=[],layerY=[],rTop=RW,rMouth=RW,decorList=[];
 let slices=[],noz=0,nozT=0,state='ready',T=0,pourStart=0,pouring=false,flowNow=0,emitting=false,wasEmit=false,pourGroup=0,landed=0,glassLand=0,impact=0,landX=0,landY=0,landC=0,slideFlux=0;
 let onTarget=false,streakT=0,offT=9,streakLvl=0,nextBeat=0,mi=0,melody=[],pct=0,puffs=0,decor=null,holdT=0,settleT=0,finT=0,popped=false,waveY=-9,sweep=-1,lidY=null;
@@ -531,7 +535,7 @@ function buildLevel(){
  queue=[];decorList=[];stickMarks=[];
  for(let k=0;k<ncol;k++){if(L.kart&&L.kart.gir>0&&L.kart.gir===k)queue.push({t:'kartGir'});if(L.kart&&L.kart.katman===k)queue.push({t:'kart'});const ev=[...(L.sus||[]).filter(s=>s.katman===k).map(s=>({o:s.oran,s})),...(L.cubuk||[]).filter(s=>s.katman===k).map(s=>({o:s.oran,cb:s}))].sort((a,b)=>a.o-b.o);let used=0;
   for(const e of ev){const upto=amounts[k]*e.o;if(upto>used+1e-6){queue.push({t:'kum',c:k,a:upto-used,a0:upto-used});used=upto;}
-   if(e.s){const rec=decorRec(e.s,k);decorList.push(rec);queue.push({t:'sus',rec});}
+   if(e.s){const rec=decorRec(e.s,k);rec.v=BINA_ID.has(e.s.id)?binaSec(LV,decorList):0;decorList.push(rec);queue.push({t:'sus',rec});}
    else{const marks=e.cb.izler.map(m=>({x:-rTop+m.u*2*rTop,d:m.d,ok:false}));queue.push({t:'cubuk',marks,done:0,w:e.cb.gen||SPW});stickMarks.push(...marks);}}
   if(amounts[k]>used+1e-6)queue.push({t:'kum',c:k,a:amounts[k]-used,a0:amounts[k]-used});}
  // süs camda yer kaplar: alanı sonraki kumdan düşülür (yoksa kavanoz hedef çizgisinin üstüne taşar)
@@ -1109,8 +1113,8 @@ void main(){float r=length(vW.xz),th=atan(vW.z,-vW.x);
 // Kuma gömülü süs: renk dokusu + biçim dokusu (R: kenardan içeri uzaklık, G: dışarı hale, B: kabartma ışığı).
 // Süs kabarık ve ışıklı görünür, kenarında kum taneleri üstüne biner, çevresindeki kumda ince bir gölge olur (camın arkasında kumun içinde).
 const DEC_PAD=.1;
-function decShape(id){const D=DEC[id],s=256,hc=Math.round(s*D.h/D.w),P=Math.round(s*DEC_PAD),W=s+2*P,H=hc+2*P;
- const col=mkCanvas(W,H,(x)=>{x.translate(P,P);drawDecor(id,x,s,hc);});const im=col.getContext('2d').getImageData(0,0,W,H).data;
+function decShape(id,v){const D=DEC[id],s=256,hc=Math.round(s*D.h/D.w),P=Math.round(s*DEC_PAD),W=s+2*P,H=hc+2*P;
+ const col=mkCanvas(W,H,(x)=>{x.translate(P,P);drawDecor(id,x,s,hc,v);});const im=col.getContext('2d').getImageData(0,0,W,H).data;
  const N=W*H,inD=new Float32Array(N),outD=new Float32Array(N),BIG=1e6;
  for(let i=0;i<N;i++){const o=im[i*4+3]>127;inD[i]=o?BIG:0;outD[i]=o?0:BIG;}
  const cham=a=>{for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=y*W+x;let v=a[i];if(!v)continue;
@@ -1266,10 +1270,59 @@ function drawWall(x,w,h){const gr=x.createLinearGradient(0,0,w*.35,h);gr.addColo
  for(let k=0;k<5000;k++){x.fillStyle='rgba('+(Math.random()<.5?'255,250,240':'120,95,70')+','+Math.random()*.05+')';x.fillRect(Math.random()*w,Math.random()*h,1.5,1.5);}
  const vg=x.createRadialGradient(w*.45,h*.42,w*.2,w*.5,h*.5,w*.8);vg.addColorStop(0,'rgba(60,40,20,0)');vg.addColorStop(1,'rgba(60,40,20,.28)');x.fillStyle=vg;x.fillRect(0,0,w,h);}
 // süslerin vektör çizimleri (her platformda aynı görünür)
-// Şehir binaları: koyu silüet, ışıklı pencereler (gece finalinde pencereler parlak kalır)
-const BINA={gokdelen:{c:['#2f3668','#1d2247'],cols:3,rows:11,top:'duz'},kule:{c:['#3d3870','#272450'],cols:2,rows:8,top:'sivri'},blok:{c:['#374476','#232c52'],cols:5,rows:5,top:'duz'},
- bina:{c:['#443d74','#2a264f'],cols:3,rows:7,top:'basamak'},saatKulesi:{c:['#4d4169','#2f2847'],cols:1,rows:4,top:'saat'},kubbe:{c:['#3f3e78','#26264f'],cols:4,rows:2,top:'kubbe'}};
-function drawDecor(id,x,w,h){x.lineJoin='round';x.lineCap='round';const G=(x0,y0,x1,y1,s)=>{const g=x.createLinearGradient(x0,y0,x1,y1);s.forEach(q=>g.addColorStop(q[0],q[1]));return g;};
+// Şehir binaları: koyu silüet, ışıklı pencereler (gece finalinde pencereler parlak kalır).
+// Her tipin birkaç çatısı var; çatı, renk ve pencere düzeni bölüme göre seçilir (v: binaTur). v yoksa ilk çatı ve tipin kendi rengi.
+const BINA={gokdelen:{c:['#2f3668','#1d2247'],cols:3,rows:11,cat:['duz','anten','tac','egik']},kule:{c:['#3d3870','#272450'],cols:2,rows:8,cat:['sivri','igne','yuvar']},
+ blok:{c:['#374476','#232c52'],cols:5,rows:5,cat:['duz','depo','testere','tabela']},bina:{c:['#443d74','#2a264f'],cols:3,rows:7,cat:['basamak','kirma','sutank','mansart']},
+ saatKulesi:{c:['#4d4169','#2f2847'],cols:1,rows:4,cat:['saat','saatKubbe','can']},kubbe:{c:['#3f3e78','#26264f'],cols:4,rows:2,cat:['kubbe','sutun','carsi','kemer']}};
+const BINA_RENK=[['#2f3668','#1d2247'],['#443d74','#2a264f'],['#374476','#232c52'],['#7a4a45','#4f2d2c'],['#2f5f68','#1c3d46'],['#4a5672','#2e3650'],['#6a4a78','#432c50'],['#3a6152','#223d33'],['#6f5648','#47352c'],['#6b5a3e','#443822']]; // 10 renk (binaSec bunu bilir); gece finalinde binalar karartılmadığı için hepsi koyu ton
+function drawBina(id,x,w,h,v,G){const B=BINA[id],cat=v?B.cat[v%B.cat.length]:B.cat[0],c=v?BINA_RENK[(v>>>4)%BINA_RENK.length]:B.c,gr=G(0,0,w,0,[[0,c[0]],[1,c[1]]]);
+ const sicak=!v||(v>>>16)%4>0,W1=sicak?'#ffd98a':'#cfeaff',W2=sicak?'#fff0c0':'#f2fbff',KOYU='rgba(12,16,40,.55)',duzen=v&&id!=='saatKulesi'&&id!=='kubbe'?(v>>>8)%3:0,tz=v?(v>>>11)%97:id.length;
+ let y0=0,m0=w*.14,cols=B.cols,rows=B.rows,son=null,alt=.05;x.fillStyle=gr;
+ const R=(a,b,c2,d)=>x.fillRect(w*a,h*b,w*c2,h*d),P=(...q)=>{x.beginPath();for(let i=0;i<q.length;i+=2)i?x.lineTo(w*q[i],h*q[i+1]):x.moveTo(w*q[i],h*q[i+1]);x.closePath();x.fill();};
+ if(id==='gokdelen'){
+  if(cat==='duz'){y0=h*.03;R(.04,.03,.92,.97);R(.3,0,.4,.04);}
+  else if(cat==='anten'){y0=h*.085;R(.04,.085,.92,.915);R(.3,.062,.4,.03);R(.47,.012,.06,.055);x.fillStyle='#ff7a66';x.beginPath();x.arc(w*.5,h*.012,w*.05,0,6.283);x.fill();x.fillStyle=gr;}
+  else if(cat==='tac'){y0=h*.125;R(.04,.125,.92,.875);R(.17,.075,.66,.055);R(.31,.03,.38,.05);R(.47,0,.06,.035);}
+  else{y0=h*.085;R(.04,.085,.92,.915);P(.04,.087,.96,.087,.96,.01);}}
+ else if(id==='kule'){
+  if(cat==='sivri'){y0=h*.2;R(.08,.2,.84,.8);P(.08,.2,.5,0,.92,.2);}
+  else if(cat==='igne'){y0=h*.17;R(.08,.17,.84,.83);P(.08,.172,.36,.105,.64,.105,.92,.172);R(.455,0,.09,.11);}
+  else{y0=w*.42+h*.012;x.fillRect(w*.08,y0,w*.84,h-y0);x.beginPath();x.arc(w*.5,y0,w*.42,Math.PI,0);x.fill();R(.47,0,.06,.02);}}
+ else if(id==='blok'){
+  if(cat==='duz'){y0=h*.03;R(.04,.03,.92,.97);R(.3,0,.4,.04);}
+  else if(cat==='depo'){y0=h*.17;R(.04,.17,.92,.83);R(.13,.035,.17,.1);P(.11,.04,.215,0,.32,.04);R(.15,.13,.025,.05);R(.255,.13,.025,.05);R(.6,.09,.24,.09);}
+  else if(cat==='testere'){y0=h*.2;R(.04,.2,.92,.8);for(let i=0;i<4;i++)P(.04+i*.23,.202,.04+i*.23,.02,.27+i*.23,.202);}
+  else{y0=h*.16;R(.04,.16,.92,.84);R(.24,.1,.03,.07);R(.73,.1,.03,.07);x.fillStyle=W1;R(.16,0,.68,.11);x.fillStyle=c[1];R(.19,.022,.62,.066);x.fillStyle=W2;R(.25,.045,.5,.02);x.fillStyle=gr;
+   son=()=>{for(let i=0;i<8;i++){x.fillStyle=i%2?'#f6f1e8':'#e5554a';x.fillRect(w*(.08+i*.105),h*.8,w*.105,h*.055);}x.fillStyle=W2;R(.44,.87,.12,.13);x.fillStyle=KOYU;R(.14,.88,.22,.09);R(.64,.88,.22,.09);};rows=4;alt=.23;}}
+ else if(id==='bina'){
+  if(cat==='basamak'){y0=h*.14;R(.04,.14,.92,.86);R(.22,.06,.56,.1);R(.38,0,.24,.08);}
+  else if(cat==='kirma'){y0=h*.17;R(.05,.17,.9,.83);P(0,.175,.5,.01,1,.175);son=()=>{x.fillStyle=W2;x.beginPath();x.arc(w*.5,h*.115,w*.07,0,6.283);x.fill();};}
+  else if(cat==='sutank'){y0=h*.2;R(.04,.2,.92,.8);R(.3,.045,.4,.095);P(.26,.05,.5,0,.74,.05);P(.32,.135,.37,.135,.34,.205,.29,.205);P(.63,.135,.68,.135,.71,.205,.66,.205);R(.485,.135,.03,.07);}
+  else{y0=h*.18;R(.04,.18,.92,.82);P(.04,.182,.17,.045,.83,.045,.96,.182);R(.68,0,.09,.06);son=()=>{x.fillStyle=W1;R(.4,.085,.2,.06);};}}
+ else if(id==='saatKulesi'){m0=w*.26;y0=h*.3;R(.14,.3,.72,.7);
+  const saat=()=>{x.fillStyle='#ffe9b0';x.beginPath();x.arc(w*.5,h*.225,w*.26,0,6.283);x.fill();x.strokeStyle=c[1];x.lineWidth=w*.05;x.beginPath();x.moveTo(w*.5,h*.225);x.lineTo(w*.5,h*.225-w*.17);x.moveTo(w*.5,h*.225);x.lineTo(w*.63,h*.225);x.stroke();};
+  if(cat==='saat'){R(.06,.14,.88,.17);P(.06,.14,.5,0,.94,.14);saat();}
+  else if(cat==='saatKubbe'){R(.06,.14,.88,.17);x.beginPath();x.ellipse(w*.5,h*.142,w*.4,h*.085,0,Math.PI,0);x.fill();R(.47,.012,.06,.05);x.fillStyle='#e5554a';P(.53,.014,.82,.03,.53,.046);saat();}
+  else{R(.06,.12,.88,.19);P(.02,.122,.5,0,.98,.122);x.globalCompositeOperation='destination-out';x.beginPath();x.moveTo(w*.26,h*.3);x.lineTo(w*.26,h*.21);x.arc(w*.5,h*.21,w*.24,Math.PI,0);x.lineTo(w*.74,h*.3);x.closePath();x.fill();x.globalCompositeOperation='source-over';
+   x.fillStyle='#e9b949';x.beginPath();x.moveTo(w*.36,h*.268);x.quadraticCurveTo(w*.38,h*.2,w*.5,h*.195);x.quadraticCurveTo(w*.62,h*.2,w*.64,h*.268);x.closePath();x.fill();x.beginPath();x.arc(w*.5,h*.272,w*.045,0,6.283);x.fill();x.fillStyle=gr;R(.14,.29,.72,.02);}}
+ else{ // kubbe: alçak ve geniş kamu yapısı (müze, tiyatro, rasathane, gar)
+  if(cat==='kubbe'){y0=h*.5;R(.03,.5,.94,.5);R(.26,.42,.48,.1);x.beginPath();x.ellipse(w*.5,h*.43,w*.2,h*.3,0,Math.PI,0);x.fill();R(.47,.05,.06,.1);x.beginPath();x.arc(w*.5,h*.045,w*.035,0,6.283);x.fill();
+   son=()=>{x.fillStyle=W2;x.beginPath();x.moveTo(w*.44,h);x.lineTo(w*.44,h*.78);x.arc(w*.5,h*.78,w*.06,Math.PI,0);x.lineTo(w*.56,h);x.closePath();x.fill();};}
+  else if(cat==='sutun'){y0=h*.4;R(.05,.42,.9,.5);P(0,.43,.5,.04,1,.43);R(0,.9,1,.1);cols=0;
+   son=()=>{x.fillStyle=W1;R(.1,.47,.8,.43);x.fillStyle=gr;for(let i=0;i<6;i++)R(.1+i*.146,.45,.07,.46);x.fillStyle=W2;P(.3,.36,.5,.17,.7,.36);};}
+  else if(cat==='carsi'){y0=h*.5;R(.03,.5,.94,.5);for(let i=0;i<3;i++){x.beginPath();x.ellipse(w*(.19+i*.31),h*.52,w*.16,h*.5,0,Math.PI,0);x.fill();}cols=0;
+   son=()=>{for(let i=0;i<3;i++){x.fillStyle=i===1?W2:W1;x.beginPath();x.ellipse(w*(.19+i*.31),h*.5,w*.1,h*.3,0,Math.PI,0);x.fill();x.fillRect(w*(.09+i*.31),h*.5,w*.2,h*.08);x.fillStyle=KOYU;x.fillRect(w*(.12+i*.31),h*.7,w*.14,h*.3);}x.fillStyle=gr;R(.03,.56,.94,.05);};}
+  else{y0=h*.56;R(.02,.56,.96,.44);x.beginPath();x.ellipse(w*.5,h*.57,w*.47,h*.53,0,Math.PI,0);x.fill();cols=0;
+   son=()=>{x.fillStyle=W1;x.beginPath();x.ellipse(w*.5,h*.6,w*.34,h*.4,0,Math.PI,0);x.fill();x.strokeStyle=c[1];x.lineWidth=w*.014;for(let i=1;i<6;i++){const a=Math.PI+i*Math.PI/6;x.beginPath();x.moveTo(w*.5,h*.6);x.lineTo(w*.5+Math.cos(a)*w*.34,h*.6+Math.sin(a)*h*.4);x.stroke();}
+    x.fillStyle=gr;R(.02,.6,.96,.06);x.fillStyle=W2;for(let i=0;i<5;i++)R(.1+i*.172,.72,.11,.28);};}}
+ if(cols){const cw=(w-2*m0)/cols,ch=(h-y0-h*alt)/rows,yan=(r,c2)=>((r*7+c2*13+tz*5)%5)<3;
+  for(let r=0;r<rows;r++)for(let c2=0;c2<cols;c2++){const lit=yan(r,c2);x.fillStyle=lit?(((r+c2+tz)%3)?W1:W2):KOYU;
+   if(duzen===1)x.fillRect(m0+c2*cw+cw*.22,y0+h*.03+r*ch,cw*.56,ch*.93);          // dikey cam şeritler
+   else if(duzen===2)x.fillRect(m0+c2*cw+cw*.04,y0+h*.03+r*ch+ch*.26,cw*.92,ch*.42); // yatay bantlar
+   else x.fillRect(m0+c2*cw+cw*.2,y0+h*.03+r*ch+ch*.22,cw*.6,ch*.5);}}
+ if(son)son();}
+function drawDecor(id,x,w,h,v){x.lineJoin='round';x.lineCap='round';const G=(x0,y0,x1,y1,s)=>{const g=x.createLinearGradient(x0,y0,x1,y1);s.forEach(q=>g.addColorStop(q[0],q[1]));return g;};
  if(id==='tekne'){x.fillStyle=G(0,h*.7,0,h,[[0,'#a8653b'],[1,'#6e3d22']]);x.beginPath();x.moveTo(w*.04,h*.68);x.lineTo(w*.96,h*.68);x.lineTo(w*.8,h*.96);x.lineTo(w*.2,h*.96);x.closePath();x.fill();
   x.fillStyle='#f3e3c8';x.fillRect(w*.1,h*.71,w*.8,h*.04);x.fillStyle='#5b3a24';x.fillRect(w*.49,h*.06,w*.035,h*.63);
   x.fillStyle=G(w*.5,0,w*.9,0,[[0,'#fff6ea'],[1,'#e9dccb']]);x.beginPath();x.moveTo(w*.54,h*.1);x.quadraticCurveTo(w*.9,h*.4,w*.86,h*.62);x.lineTo(w*.54,h*.62);x.closePath();x.fill();
@@ -1346,15 +1399,7 @@ function drawDecor(id,x,w,h){x.lineJoin='round';x.lineCap='round';const G=(x0,y0
   x.fillStyle='#ffd77a';x.fillRect(w*.22,h*.6,w*.18,h*.17);x.fillRect(w*.6,h*.6,w*.18,h*.17);x.fillStyle='#6b3e22';x.fillRect(w*.43,h*.66,w*.14,h*.34);
   x.fillStyle='#7a4a33';x.fillRect(w*.66,h*.06,w*.1,h*.26);x.fillStyle='#5a3a2c';x.beginPath();x.moveTo(w*.02,h*.5);x.lineTo(w*.5,h*.1);x.lineTo(w*.98,h*.5);x.closePath();x.fill();
   x.fillStyle='#ffffff';x.beginPath();x.moveTo(w*.0,h*.5);x.lineTo(w*.5,h*.08);x.lineTo(w*1,h*.5);x.lineTo(w*.9,h*.52);x.quadraticCurveTo(w*.5,h*.3,w*.1,h*.52);x.closePath();x.fill();x.fillRect(w*.65,h*.03,w*.12,h*.05);}
- else if(BINA[id]){const B=BINA[id];let y0=0;x.fillStyle=G(0,0,w,0,[[0,B.c[0]],[1,B.c[1]]]);
-  if(B.top==='duz'){y0=h*.03;x.fillRect(w*.04,y0,w*.92,h-y0);x.fillRect(w*.3,0,w*.4,h*.04);}
-  else if(B.top==='sivri'){y0=h*.2;x.fillRect(w*.08,y0,w*.84,h-y0);x.beginPath();x.moveTo(w*.08,y0);x.lineTo(w*.5,0);x.lineTo(w*.92,y0);x.closePath();x.fill();}
-  else if(B.top==='basamak'){y0=h*.14;x.fillRect(w*.04,y0,w*.92,h-y0);x.fillRect(w*.22,h*.06,w*.56,h*.1);x.fillRect(w*.38,0,w*.24,h*.08);}
-  else if(B.top==='saat'){y0=h*.3;x.fillRect(w*.14,y0,w*.72,h-y0);x.fillRect(w*.06,h*.14,w*.88,h*.17);x.beginPath();x.moveTo(w*.06,h*.14);x.lineTo(w*.5,0);x.lineTo(w*.94,h*.14);x.closePath();x.fill();
-   x.fillStyle='#ffe9b0';x.beginPath();x.arc(w*.5,h*.225,w*.26,0,6.283);x.fill();x.strokeStyle='#2f2847';x.lineWidth=w*.05;x.beginPath();x.moveTo(w*.5,h*.225);x.lineTo(w*.5,h*.225-w*.17);x.moveTo(w*.5,h*.225);x.lineTo(w*.63,h*.225);x.stroke();}
-  else if(B.top==='kubbe'){y0=h*.5;x.fillRect(w*.03,y0,w*.94,h-y0);x.beginPath();x.ellipse(w*.5,y0,w*.3,h*.42,0,Math.PI,0);x.fill();x.fillRect(w*.485,0,w*.03,h*.1);}
-  const m0=w*(B.top==='saat'?.26:.14),cw=(w-2*m0)/B.cols,ch=(h-y0-h*.05)/B.rows;
-  for(let r=0;r<B.rows;r++)for(let c=0;c<B.cols;c++){const lit=((r*7+c*13+id.length*5)%5)<3;x.fillStyle=lit?(((r+c)%3)?'#ffd98a':'#fff0c0'):'rgba(12,16,40,.55)';x.fillRect(m0+c*cw+cw*.2,y0+h*.03+r*ch+ch*.22,cw*.6,ch*.5);}}
+ else if(BINA[id])drawBina(id,x,w,h,v,G);
  else if(id==='balon'){const cx=w*.5,R=w*.46;x.save();x.beginPath();x.moveTo(cx-R,h*.34);x.bezierCurveTo(cx-R,h*-.06,cx+R,h*-.06,cx+R,h*.34);x.bezierCurveTo(cx+R,h*.56,cx+w*.14,h*.66,cx+w*.1,h*.76);x.lineTo(cx-w*.1,h*.76);x.bezierCurveTo(cx-w*.14,h*.66,cx-R,h*.56,cx-R,h*.34);x.closePath();x.clip();
   const cs=['#e9544a','#ffd166','#3fa7d6','#ffd166','#e9544a'];for(let k=0;k<5;k++){x.fillStyle=cs[k];x.fillRect(w*k/5,0,w/5+1,h);}x.fillStyle='rgba(255,255,255,.22)';x.beginPath();x.ellipse(cx-R*.35,h*.24,R*.22,h*.16,.3,0,6.283);x.fill();x.restore();
   x.strokeStyle='#6b4a2a';x.lineWidth=w*.02;x.beginPath();x.moveTo(cx-w*.09,h*.76);x.lineTo(cx-w*.07,h*.86);x.moveTo(cx+w*.09,h*.76);x.lineTo(cx+w*.07,h*.86);x.stroke();x.fillStyle='#8a5a34';x.fillRect(cx-w*.1,h*.86,w*.2,h*.13);}
@@ -1534,9 +1579,10 @@ function gfxLevel(){const T3=RD.T3,sc=RD.scene;
  for(let c=0;c<NC;c++){if(!valid[c])continue;for(let r=0;r<NV;r++){const Y=(r+.5)*rowH,o=(r*NC+c)*4;if(Y<floorY[c]||Y>tTop[ncol-1][c]+rowH)continue;
   let k=0;while(k<ncol-1&&Y>tTop[k][c])k++;td[o]=Y<=tTop[ncol-1][c]?k+1:0;let dm=9;for(let q=0;q<ncol;q++)dm=Math.min(dm,Math.abs(Y-tTop[q][c]));td[o+1]=Math.max(0,1-dm/(rowH*1.1))*255;}}
  RD.tgtTex.needsUpdate=true;RD.curK=-2;
- RD.ghosts=decorList.map(rc=>{const m=add(new T3.Mesh(new T3.PlaneGeometry(rc.D.w,rc.D.h),new T3.MeshBasicMaterial({map:RD.decTex[rc.s.id],transparent:true,opacity:.3,toneMapped:false,depthWrite:false})));
+ for(const k in RD.varT||{}){const o=RD.varT[k];o.t.dispose();o.d.col.dispose();o.d.sh.dispose();}RD.varT={};
+ RD.ghosts=decorList.map(rc=>{const m=add(new T3.Mesh(new T3.PlaneGeometry(rc.D.w,rc.D.h),new T3.MeshBasicMaterial({map:decT(rc),transparent:true,opacity:.3,toneMapped:false,depthWrite:false})));
   const zf=zFront(rc.zx,rc.zy);m.position.set(rc.zx,rc.zy,zf+.002);m.rotation.y=Math.atan2(rc.zx,zf);m.renderOrder=5;return m;});
- RD.decorM.material.map=RD.decTex[decorList[0]?decorList[0].s.id:'tekne'];
+ RD.decorM.material.map=decorList[0]?decT(decorList[0]):RD.decTex.tekne;
  // ayırıcı kart: ince karton, camın önünden arkasına; kum seviyesinin üstünde görünür
  RD.card=null;if(KART){let r=9;for(let y=.02;y<=HF;y+=.05)r=Math.min(r,rIn(y));const dep=2*Math.sqrt(Math.max(.01,r*r-KART.x*KART.x))*.97;
   const cm=add(new T3.Mesh(new T3.BoxGeometry(.012,HF*1.04,dep),new T3.MeshStandardMaterial({color:0xf3e9d6,roughness:.85,metalness:0})));cm.position.set(KART.x,HF*.52,0);cm.renderOrder=3;RD.card=cm;}
@@ -1549,7 +1595,13 @@ function setNight(nf,force){if(!RD||(!force&&Math.abs(nf-RD.nightSet)<.004))retu
  RD.scene.background.setHex(0xcdb592).multiplyScalar(k);RD.scene.fog.color.setHex(0xc8ae8c).multiplyScalar(k);
  RD.placed.forEach(m=>{const u=m.material.uniforms;u.uDim.value=LUMDEC.has(m.userData.dec)?.93:.93*k;u.uK.value=k;});(RD.ghosts||[]).forEach(g=>g.material.color.setScalar(k));}
 function zFront(x,y){const rr=rIn(clamp(y,0,HJ))-.0022;return Math.sqrt(Math.max(0,rr*rr-x*x));} // kum duvarının (-.003) önünde, camın arkasında
-function gfxDecorPlaced(r){if(!RD)return;const T3=RD.T3,q=RD.dec3[r.s.id],k=1-.8*(RD.nightSet||0);
+// Çeşidi olan süs (şehir binası) için o bölüme özel doku; diğer süsler açılışta üretilen ortak dokuyu kullanır.
+function decVar(rc){const id=rc.s.id,key=id+'#'+rc.v;let o=RD.varT[key];if(o)return o;const T3=RD.T3,D=DEC[id],s=256;
+ const t=new T3.CanvasTexture(mkCanvas(s,Math.round(s*D.h/D.w),(x,w,h)=>drawDecor(id,x,w,h,rc.v)));t.encoding=T3.sRGBEncoding;
+ const q=decShape(id,rc.v),tc=new T3.CanvasTexture(q.col),ts=new T3.CanvasTexture(q.sh);ts.generateMipmaps=false;ts.minFilter=T3.LinearFilter;
+ return RD.varT[key]={t,d:{col:tc,sh:ts,fx:q.fx,fy:q.fy}};}
+const decT=rc=>rc.v?decVar(rc).t:RD.decTex[rc.s.id],dec3Of=rc=>rc.v?decVar(rc).d:RD.dec3[rc.s.id];
+function gfxDecorPlaced(r){if(!RD)return;const T3=RD.T3,q=dec3Of(r),k=1-.8*(RD.nightSet||0);
  const mat=new T3.ShaderMaterial({uniforms:Object.assign({uMap:{value:q.col},uShape:{value:q.sh},uIdx:{value:RD.idxTex},uL:{value:RD.Ldir},uKey:{value:RD.uKey},uAmb:{value:RD.uAmb},uRW:{value:RW},uYT:{value:YT},
   uDim:{value:LUMDEC.has(r.s.id)?.93:.93*k},uK:{value:k}},RD.Gu),vertexShader:DEC_VS,fragmentShader:DEC_FS,transparent:true,depthWrite:false,toneMapped:false});
  const m=new T3.Mesh(new T3.PlaneGeometry(r.D.w*q.fx,r.D.h*q.fy),mat);const zf=zFront(r.wx,r.wy+r.D.h/2);m.position.set(r.wx,r.wy+r.D.h/2,zf);m.rotation.y=Math.atan2(r.wx,zf);m.renderOrder=4;RD.scene.add(m);RD.lvl.push(m);
@@ -1676,7 +1728,7 @@ function gfxFrame(now){if(!RD)return;const t=now/1000,fdt=clamp((now-lastGfx)/10
  for(const p of P.a){if(n>=P.max)break;const o=n*3,c=RD.plin[Math.min(p.col,NCODE-1)]||[1,1,1],sh=p.sh||1;P.pos[o]=p.x;P.pos[o+1]=p.y;P.pos[o+2]=p.tr?p.zz:p.z;P.col[o]=c[0]*sh;P.col[o+1]=c[1]*sh;P.col[o+2]=c[2]*sh;P.size[n]=p.s;n++;}
  P.geo.setDrawRange(0,n);const pa=P.geo.attributes;pa.position.needsUpdate=pa.aCol.needsUpdate=pa.aSize.needsUpdate=true;
  // süs: tutulurken huninin altında, düşerken ön cama doğru
- if(decor){const D=decor.rec.D,m=RD.decorM;m.visible=true;m.material.map=RD.decTex[decor.rec.s.id];m.scale.set(D.w,D.h,1);const cy=decor.y+D.h/2;
+ if(decor){const D=decor.rec.D,m=RD.decorM;m.visible=true;m.material.map=decT(decor.rec);m.scale.set(D.w,D.h,1);const cy=decor.y+D.h/2;
   const zq=zFront(decor.x,cy)*smooth(HJ+.1,HJ-.4,cy);m.position.set(decor.x,cy,zq+.002);m.rotation.y=Math.atan2(decor.x,Math.max(zq,.3));
   if(decor.held){let lx=decor.x,ly=decorLandY();const sx=decorSlideX(ly);if(sx!=null){lx=sx;ly=decorLandY(sx);}const a=RD.dropLine.geometry.attributes.position;a.setXYZ(0,decor.x,decor.y,.01);a.setXYZ(1,lx,ly,zFront(lx,ly)*.5);a.needsUpdate=true;RD.dropLine.computeLineDistances();RD.dropLine.visible=true;}
   else RD.dropLine.visible=false;}
